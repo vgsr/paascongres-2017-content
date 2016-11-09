@@ -99,8 +99,11 @@ final class Paco2017_Content {
 	 * @since 1.0.0
 	 */
 	private function includes() {
-		require( $this->includes_dir . 'actions.php'     );
-		require( $this->includes_dir . 'sub-actions.php' );
+		require( $this->includes_dir . 'actions.php'      );
+		require( $this->includes_dir . 'capabilities.php' );
+		require( $this->includes_dir . 'functions.php'    );
+		require( $this->includes_dir . 'workshops.php'    );
+		require( $this->includes_dir . 'sub-actions.php'  );
 	}
 
 	/**
@@ -116,6 +119,9 @@ final class Paco2017_Content {
 
 		// Load textdomain
 		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ), 20 );
+
+		// Register content
+		add_action( 'paco2017_init', array( $this, 'register_post_types' ) );
 	}
 
 	/** Plugin **********************************************************/
@@ -156,6 +162,38 @@ final class Paco2017_Content {
 	}
 
 	/** Public methods **************************************************/
+
+	/**
+	 * Register initial plugin post types
+	 *
+	 * @since 1.0.0
+	 */
+	public function register_post_types() {
+
+		/** Workshop ****************************************************/
+
+		register_post_type(
+			paco2017_get_workshop_post_type(),
+			array(
+				'labels'              => paco2017_get_workshop_post_type_labels(),
+				'supports'            => paco2017_get_workshop_post_type_supports(),
+				'description'         => __( 'Paascongres 2017 workshops', 'paco2017-content' ),
+				'capabilities'        => paco2017_get_workshop_post_type_caps(),
+				'capability_type'     => array( 'paco2017_workshop', 'paco2017_workshops' ),
+				'hierarchical'        => false,
+				'public'              => true,
+				'has_archive'         => true,
+				'rewrite'             => paco2017_get_workshop_post_type_rewrite(),
+				'query_var'           => true,
+				'exclude_from_search' => false,
+				'show_ui'             => current_user_can( 'paco2017_workshop_admin' ),
+				'show_in_nav_menus'   => true,
+				'can_export'          => true,
+				// 'taxonomies'          => array( 'paco2017_workshop_category' ),
+				// 'menu_icon'           => 'dashicons-format-aside'
+			)
+		);
+	}
 }
 
 /**
