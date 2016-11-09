@@ -111,8 +111,8 @@ final class Paco2017_Content {
 	private function setup_actions() {
 
 		// Add actions to plugin activation and deactivation hooks
-		add_action( 'activate_'   . ->basename, 'paco2017_activation'   );
-		add_action( 'deactivate_' . ->basename, 'paco2017_deactivation' );
+		add_action( 'activate_'   . $this->basename, 'paco2017_activation'   );
+		add_action( 'deactivate_' . $this->basename, 'paco2017_deactivation' );
 
 		// Load textdomain
 		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ), 20 );

@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @uses do_action() Calls 'paco2017_activation'
  */
-function paco2017activation() {
+function paco2017_activation() {
 	do_action( 'paco2017_activation' );
 }
 
