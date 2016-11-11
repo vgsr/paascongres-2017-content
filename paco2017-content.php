@@ -68,11 +68,11 @@ final class Paco2017_Content {
 	 */
 	private function setup_globals() {
 
-		/** Versions **********************************************************/
+		/** Versions ****************************************************/
 
 		$this->version      = '1.0.0';
 
-		/** Paths *************************************************************/
+		/** Paths *******************************************************/
 
 		// Setup some base path and URL information
 		$this->file         = __FILE__;
@@ -87,7 +87,7 @@ final class Paco2017_Content {
 		// Languages
 		$this->lang_dir     = trailingslashit( $this->plugin_dir . 'languages' );
 
-		/** Misc **************************************************************/
+		/** Misc ********************************************************/
 
 		$this->extend       = new stdClass();
 		$this->domain       = 'paco2017-content';
@@ -99,12 +99,17 @@ final class Paco2017_Content {
 	 * @since 1.0.0
 	 */
 	private function includes() {
+
+		// Core
 		require( $this->includes_dir . 'actions.php'      );
 		require( $this->includes_dir . 'capabilities.php' );
 		require( $this->includes_dir . 'functions.php'    );
 		require( $this->includes_dir . 'lectores.php'     );
 		require( $this->includes_dir . 'workshops.php'    );
 		require( $this->includes_dir . 'sub-actions.php'  );
+
+		// Extend
+		require( $this->includes_dir . 'extend/buddypress/buddypress.php' );
 	}
 
 	/**
