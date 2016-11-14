@@ -68,14 +68,77 @@ class Paco2017_BuddyPress {
 			return $this->themes_dir;
 		}, 8 );
 
-		// General
-		add_filter( 'bp_map_meta_caps', array( $this, 'map_meta_cap' ), 20, 4 );
+		// General limitations
+		add_action( 'bp_init',          array( $this, 'hide_component_parts'            ),  5    );
+		add_action( 'bp_init',          array( $this, 'hide_component_parts_after_init' ), 99    );
+		add_filter( 'bp_map_meta_caps', array( $this, 'map_meta_cap'                    ), 20, 4 );
 
 		// VGSR
 		add_action( 'vgsr_loaded', array( $this, 'setup_vgsr_actions' ) );
 	}
 
 	/** Public methods **************************************************/
+
+	/**
+	 * Prevent the user to be exposed to certain component parts
+	 *
+	 * @since 1.0.0
+	 */
+	public function hide_component_parts() {
+
+		// Get BuddyPress
+		$bp = buddypress();
+
+		// Define hidden component parts
+		$components = array(
+			'activity' => array( 'setup_admin_bar', 'setup_nav' ),
+			'xprofile' => array(),
+		);
+
+		// Hide profile navigation on other's profiles
+		if ( ! bp_is_my_profile() ) {
+			$components['xprofile'][] = 'setup_nav';
+		}
+
+		// Walk components
+		foreach ( $components as $component => $parts ) {
+
+			// Skip inactive components
+			if ( ! bp_is_active( $component ) )
+				continue;
+
+			// Map 'xprofile' to 'profile'
+			if ( 'xprofile' === $component ) {
+				$component = 'profile';
+			}
+
+			// Get the class responsible
+			$class = $bp->{$component};
+
+			// Unhook the component parts
+			foreach ( $parts as $hook => $part ) {
+
+				// Default hook to bp_{part}
+				if ( is_numeric( $hook ) ) {
+					$hook = "bp_{$part}";
+				}
+
+				remove_action( $hook, array( $class, $part ), 10 );
+			}
+		}
+	}
+
+	/**
+	 * Prevent the user to be exposed to certain component parts, after 'bp_init'
+	 *
+	 * @since 1.0.0
+	 */
+	public function hide_component_parts_after_init() {
+
+		// Settings
+		bp_core_remove_subnav_item( bp_get_settings_slug(), 'notifications' );
+		bp_core_remove_subnav_item( bp_get_settings_slug(), 'profile'       ); // See BP_XProfile_Component::setup_settings_nav()
+	}
 
 	/**
 	 * Modify the mapped capabilities
