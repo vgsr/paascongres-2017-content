@@ -68,11 +68,43 @@ class Paco2017_BuddyPress {
 			return $this->themes_dir;
 		}, 8 );
 
+		// General
+		add_filter( 'bp_map_meta_caps', array( $this, 'map_meta_cap' ), 20, 4 );
+
 		// VGSR
 		add_action( 'vgsr_loaded', array( $this, 'setup_vgsr_actions' ) );
 	}
 
 	/** Public methods **************************************************/
+
+	/**
+	 * Modify the mapped capabilities
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $caps Mapped caps
+	 * @param string $cap Required cap
+	 * @param int $user_id User ID
+	 * @param array $args Arguments
+	 * @return array Mapped caps
+	 */
+	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
+
+		switch ( $cap ) {
+			case 'bp_xprofile_change_field_visibility' :
+
+				// Prevent chaning field visibility for non-admins
+				if ( ! user_can( $user_id, 'bp_moderate' ) ) {
+					$caps = array( 'do_not_allow' );
+				}
+
+				break;
+		}
+
+		return $caps;
+	}
+
+	/** VGSR ************************************************************/
 
 	/**
 	 * Setup actions and filters for the VGSR plugin
