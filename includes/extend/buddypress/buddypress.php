@@ -67,10 +67,26 @@ class Paco2017_BuddyPress {
 		bp_register_template_stack( function() {
 			return $this->themes_dir;
 		}, 8 );
+
+		// VGSR
+		add_action( 'vgsr_loaded', array( $this, 'setup_vgsr_actions' ) );
 	}
 
 	/** Public methods **************************************************/
 
+	/**
+	 * Setup actions and filters for the VGSR plugin
+	 *
+	 * @since 1.0.0
+	 */
+	public function setup_vgsr_actions() {
+
+		// Get VGSR
+		$vgsr = vgsr();
+
+		// Undo hiding BP for non-vgsr		
+		remove_action( 'bp_init', array( $vgsr->extend->bp, 'hide_bp' ), 1 );
+	}
 }
 
 /**
