@@ -97,7 +97,16 @@ class Paco2017_BuddyPress {
 
 		// Hide profile navigation on other's profiles
 		if ( ! bp_is_my_profile() ) {
-			$components['xprofile'][] = 'setup_nav';
+			/**
+			 * Unhooking the 'setup_nav' action has a reverse effect when primary
+			 * nav items are used outside of the displayed member profile navigation
+			 * element. See for example `bp_nav_menu_get_loggedin_pages()`.
+			 *
+			 * $components['xprofile'][] = 'setup_nav';
+			 *
+			 * Instead, the member navigation items are edited to not show for
+			 * the displayed user. See `::hide_component_parts_after_init()`.
+			 */
 		}
 
 		// Walk components
@@ -134,6 +143,12 @@ class Paco2017_BuddyPress {
 	 * @since 1.0.0
 	 */
 	public function hide_component_parts_after_init() {
+
+		// Get BuddyPress
+		$bp = buddypress();
+
+		// Members: hide Profile nav tabs on another member's profile
+		$bp->members->nav->edit_nav( array( 'show_for_displayed_user' => false ), bp_get_profile_slug() );
 
 		// Settings
 		bp_core_remove_subnav_item( bp_get_settings_slug(), 'notifications' );
