@@ -208,11 +208,12 @@ class Paco2017_BuddyPress {
 	 */
 	public function setup_vgsr_actions() {
 
-		// Get VGSR
-		$vgsr = vgsr();
+		// Still hide it all for guest users, so bail
+		if ( ! is_user_logged_in() )
+			return;
 
 		// Undo hiding BP for non-vgsr		
-		remove_action( 'bp_init', array( $vgsr->extend->bp, 'hide_bp' ), 1 );
+		remove_action( 'bp_init', array( vgsr()->extend->bp, 'hide_bp' ), 1 );
 	}
 }
 
