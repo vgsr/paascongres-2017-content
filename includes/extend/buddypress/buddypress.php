@@ -69,9 +69,9 @@ class Paco2017_BuddyPress {
 		}, 8 );
 
 		// General limitations
-		add_action( 'bp_init',          array( $this, 'hide_component_parts'            ),  5    );
-		add_action( 'bp_init',          array( $this, 'hide_component_parts_after_init' ), 99    );
-		add_filter( 'bp_map_meta_caps', array( $this, 'map_meta_cap'                    ), 20, 4 );
+		add_action( 'bp_init',          array( $this, 'hide_component_parts'     ),  5    );
+		add_action( 'bp_init',          array( $this, 'hide_component_parts_nav' ), 99    );
+		add_filter( 'bp_map_meta_caps', array( $this, 'map_meta_cap'             ), 20, 4 );
 
 		// VGSR
 		add_action( 'vgsr_loaded', array( $this, 'setup_vgsr_actions' ) );
@@ -80,7 +80,7 @@ class Paco2017_BuddyPress {
 	/** Public methods **************************************************/
 
 	/**
-	 * Prevent the user to be exposed to certain component parts
+	 * Prevent the user from being exposed to certain component parts
 	 *
 	 * @since 1.0.0
 	 */
@@ -91,8 +91,13 @@ class Paco2017_BuddyPress {
 
 		// Define hidden component parts
 		$components = array(
-			'activity' => array( 'setup_admin_bar', 'setup_nav' ),
-			'xprofile' => array(),
+			'activity' => array(
+				'setup_admin_bar',
+				'setup_nav'
+			),
+			'xprofile' => array(
+				'bp_settings_admin_nav' => array( 'setup_settings_admin_nav', 2 )
+			),
 		);
 
 		// Hide profile navigation on other's profiles
@@ -127,22 +132,33 @@ class Paco2017_BuddyPress {
 			// Unhook the component parts
 			foreach ( $parts as $hook => $part ) {
 
-				// Default hook to bp_{part}
-				if ( is_numeric( $hook ) ) {
-					$hook = "bp_{$part}";
+				// Setup hook args from array
+				if ( is_array( $part ) ) {
+					$priority = $part[1];
+					$part     = $part[0];
+				} else {
+
+					// Define priority. Most hook at 10
+					$priority = ( 'setup_admin_bar' === $part ) ? $class->adminbar_myaccount_order : 10;
+
+					// Default hook to bp_{part}
+					if ( is_numeric( $hook ) ) {
+						$hook = "bp_{$part}";
+					}
 				}
 
-				remove_action( $hook, array( $class, $part ), 10 );
+				// Remove the hook (filters and actions alike)
+				remove_action( $hook, array( $class, $part ), $priority );
 			}
 		}
 	}
 
 	/**
-	 * Prevent the user to be exposed to certain component parts, after 'bp_init'
+	 * Prevent the user from being exposed to certain component parts, after 'bp_init'
 	 *
 	 * @since 1.0.0
 	 */
-	public function hide_component_parts_after_init() {
+	public function hide_component_parts_nav() {
 
 		// Get BuddyPress
 		$bp = buddypress();
@@ -151,6 +167,7 @@ class Paco2017_BuddyPress {
 		$bp->members->nav->edit_nav( array( 'show_for_displayed_user' => false ), bp_get_profile_slug() );
 
 		// Settings
+		remove_all_actions( 'bp_notification_settings' ); // Eliminates need for Email (admin) nav
 		bp_core_remove_subnav_item( bp_get_settings_slug(), 'notifications' );
 		bp_core_remove_subnav_item( bp_get_settings_slug(), 'profile'       ); // See BP_XProfile_Component::setup_settings_nav()
 	}
