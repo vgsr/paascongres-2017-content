@@ -195,6 +195,7 @@ final class Paco2017_Content {
 				'show_ui'             => current_user_can( 'paco2017_lector_admin' ),
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,
+				'show_in_rest'        => true,
 				// 'taxonomies'          => array( 'paco2017_lector_category' ),
 				// 'menu_icon'           => 'dashicons-format-aside'
 			)
@@ -219,6 +220,7 @@ final class Paco2017_Content {
 				'show_ui'             => current_user_can( 'paco2017_workshop_admin' ),
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,
+				'show_in_rest'        => true,
 				// 'taxonomies'          => array( 'paco2017_workshop_category' ),
 				// 'menu_icon'           => 'dashicons-format-aside'
 			)
