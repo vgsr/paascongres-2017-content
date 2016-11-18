@@ -19,4 +19,4 @@ add_filter( 'map_meta_cap',      'paco2017_map_meta_caps',     10, 4 );
 
 /** Extend ********************************************************************/
 
-add_action( 'bp_loaded', 'paco2017_buddypress' );
+add_action( 'bp_core_loaded', 'paco2017_buddypress' );

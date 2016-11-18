@@ -69,12 +69,14 @@ class Paco2017_BuddyPress {
 		}, 8 );
 
 		// General limitations
-		add_action( 'bp_init',          array( $this, 'hide_component_parts'     ),  5    );
-		add_action( 'bp_init',          array( $this, 'hide_component_parts_nav' ), 99    );
-		add_filter( 'bp_map_meta_caps', array( $this, 'map_meta_cap'             ), 20, 4 );
+		add_action( 'bp_init',          array( $this, 'hide_components_parts' ),  5    );
+		add_action( 'bp_init',          array( $this, 'hide_components_nav'   ), 99    );
+		add_filter( 'bp_map_meta_caps', array( $this, 'map_meta_cap'          ), 20, 4 );
 
 		// VGSR
-		add_action( 'vgsr_loaded', array( $this, 'setup_vgsr_actions' ) );
+		if ( is_user_logged_in() ) {
+			remove_action( 'bp_core_loaded', array( vgsr()->extend->bp, 'hide_buddypress' ), 20 );
+		}
 	}
 
 	/** Public methods **************************************************/
@@ -84,7 +86,7 @@ class Paco2017_BuddyPress {
 	 *
 	 * @since 1.0.0
 	 */
-	public function hide_component_parts() {
+	public function hide_components_parts() {
 
 		// Get BuddyPress
 		$bp = buddypress();
@@ -109,8 +111,9 @@ class Paco2017_BuddyPress {
 			 *
 			 * $components['xprofile'][] = 'setup_nav';
 			 *
-			 * Instead, the member navigation items are edited to not show for
-			 * the displayed user. See `::hide_component_parts_after_init()`.
+			 * Instead, the member navigation items are edited to not show for the
+			 * displayed user, while still applying for the current user. See
+			 * `Paco2017_BuddyPress::hide_components_nav()`.
 			 */
 		}
 
@@ -154,22 +157,19 @@ class Paco2017_BuddyPress {
 	}
 
 	/**
-	 * Prevent the user from being exposed to certain component parts, after 'bp_init'
+	 * Prevent the user from being exposed to certain component navs.
+	 *
+	 * This runs after BP has registered all nav and admin nav items.
 	 *
 	 * @since 1.0.0
 	 */
-	public function hide_component_parts_nav() {
+	public function hide_components_nav() {
 
 		// Get BuddyPress
 		$bp = buddypress();
 
 		// Members: hide Profile nav tabs on another member's profile
 		$bp->members->nav->edit_nav( array( 'show_for_displayed_user' => false ), bp_get_profile_slug() );
-
-		// Settings
-		remove_all_actions( 'bp_notification_settings' ); // Eliminates need for Email (admin) nav
-		bp_core_remove_subnav_item( bp_get_settings_slug(), 'notifications' );
-		bp_core_remove_subnav_item( bp_get_settings_slug(), 'profile'       ); // See BP_XProfile_Component::setup_settings_nav()
 	}
 
 	/**
@@ -197,23 +197,6 @@ class Paco2017_BuddyPress {
 		}
 
 		return $caps;
-	}
-
-	/** VGSR ************************************************************/
-
-	/**
-	 * Setup actions and filters for the VGSR plugin
-	 *
-	 * @since 1.0.0
-	 */
-	public function setup_vgsr_actions() {
-
-		// Still hide it all for guest users, so bail
-		if ( ! is_user_logged_in() )
-			return;
-
-		// Undo hiding BP for non-vgsr		
-		remove_action( 'bp_init', array( vgsr()->extend->bp, 'hide_bp' ), 1 );
 	}
 }
 
