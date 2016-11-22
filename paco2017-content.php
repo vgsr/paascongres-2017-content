@@ -104,7 +104,7 @@ final class Paco2017_Content {
 		require( $this->includes_dir . 'actions.php'      );
 		require( $this->includes_dir . 'capabilities.php' );
 		require( $this->includes_dir . 'functions.php'    );
-		require( $this->includes_dir . 'lectores.php'     );
+		require( $this->includes_dir . 'lectors.php'      );
 		require( $this->includes_dir . 'workshops.php'    );
 		require( $this->includes_dir . 'sub-actions.php'  );
 
@@ -176,16 +176,16 @@ final class Paco2017_Content {
 	 */
 	public function register_post_types() {
 
-		/** Lectores ****************************************************/
+		/** Lectors *****************************************************/
 
 		register_post_type(
 			paco2017_get_lector_post_type(),
 			array(
 				'labels'              => paco2017_get_lector_post_type_labels(),
 				'supports'            => paco2017_get_lector_post_type_supports(),
-				'description'         => __( 'Paascongres 2017 lectores', 'paco2017-content' ),
+				'description'         => __( 'Paascongres 2017 lectors', 'paco2017-content' ),
 				'capabilities'        => paco2017_get_lector_post_type_caps(),
-				'capability_type'     => array( 'paco2017_lector', 'paco2017_lectores' ),
+				'capability_type'     => array( 'paco2017_lector', 'paco2017_lectors' ),
 				'hierarchical'        => false,
 				'public'              => true,
 				'has_archive'         => true,

@@ -33,26 +33,26 @@ function paco2017_get_lector_post_type() {
  */
 function paco2017_get_lector_post_type_labels() {
 	return apply_filters( 'paco2017_get_lector_post_type_labels', array(
-		'name'                  => __( 'Paascongres Lectores',       'paco2017-content' ),
-		'menu_name'             => __( 'Lectores',                   'paco2017-content' ),
+		'name'                  => __( 'Paascongres Lectors',       'paco2017-content' ),
+		'menu_name'             => __( 'Lectors',                   'paco2017-content' ),
 		'singular_name'         => __( 'Paascongres Lector',        'paco2017-content' ),
-		'all_items'             => __( 'All Lectores',               'paco2017-content' ),
+		'all_items'             => __( 'All Lectors',               'paco2017-content' ),
 		'add_new'               => __( 'New Lector',                'paco2017-content' ),
 		'add_new_item'          => __( 'Create New Lector',         'paco2017-content' ),
-		'edit'                  => __( 'Edit',                        'paco2017-content' ),
+		'edit'                  => __( 'Edit',                      'paco2017-content' ),
 		'edit_item'             => __( 'Edit Lector',               'paco2017-content' ),
 		'new_item'              => __( 'New Lector',                'paco2017-content' ),
 		'view'                  => __( 'View Lector',               'paco2017-content' ),
 		'view_item'             => __( 'View Lector',               'paco2017-content' ),
-		'view_items'            => __( 'View Lectores',              'paco2017-content' ), // Since WP 4.7
-		'search_items'          => __( 'Search Lectores',            'paco2017-content' ),
+		'view_items'            => __( 'View Lectors',              'paco2017-content' ), // Since WP 4.7
+		'search_items'          => __( 'Search Lectors',            'paco2017-content' ),
 		'not_found'             => __( 'No lectors found',          'paco2017-content' ),
 		'not_found_in_trash'    => __( 'No lectors found in Trash', 'paco2017-content' ),
 		'insert_into_item'      => __( 'Insert into lector',        'paco2017-content' ),
 		'uploaded_to_this_item' => __( 'Uploaded to this lector',   'paco2017-content' ),
 		'filter_items_list'     => __( 'Filter lectors list',       'paco2017-content' ),
-		'items_list_navigation' => __( 'Lectores list navigation',   'paco2017-content' ),
-		'items_list'            => __( 'Lectores list',              'paco2017-content' ),
+		'items_list_navigation' => __( 'Lectors list navigation',   'paco2017-content' ),
+		'items_list'            => __( 'Lectors list',              'paco2017-content' ),
 	) );
 }
 

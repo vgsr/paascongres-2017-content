@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
  * @return string Slug
  */
 function paco2017_get_lector_slug() {
-	return apply_filters( 'paco2017_get_lector_slug', get_option( '_paco2017_lector_slug', 'lectores' ) );
+	return apply_filters( 'paco2017_get_lector_slug', get_option( '_paco2017_lector_slug', 'lectors' ) );
 }
 
 /**
