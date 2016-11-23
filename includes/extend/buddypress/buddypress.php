@@ -70,7 +70,6 @@ class Paco2017_BuddyPress {
 
 		// General limitations
 		add_action( 'bp_init',          array( $this, 'hide_components_parts' ),  5    );
-		add_action( 'bp_init',          array( $this, 'hide_components_nav'   ), 99    );
 		add_filter( 'bp_map_meta_caps', array( $this, 'map_meta_cap'          ), 20, 4 );
 
 		// VGSR
@@ -107,14 +106,15 @@ class Paco2017_BuddyPress {
 			/**
 			 * Unhooking the 'setup_nav' action has a reverse effect when primary
 			 * nav items are used outside of the displayed member profile navigation
-			 * element. See for example `bp_nav_menu_get_loggedin_pages()`.
+			 * element. See for example {@see bp_nav_menu_get_loggedin_pages()}.
 			 *
 			 * $components['xprofile'][] = 'setup_nav';
 			 *
 			 * Instead, the member navigation items are edited to not show for the
 			 * displayed user, while still applying for the current user. See
-			 * `Paco2017_BuddyPress::hide_components_nav()`.
+			 * {@see Paco2017_BuddyPress::hide_components_nav()}.
 			 */
+			add_action( 'bp_init', array( $this, 'hide_components_nav' ), 99 );
 		}
 
 		// Walk components
@@ -168,8 +168,19 @@ class Paco2017_BuddyPress {
 		// Get BuddyPress
 		$bp = buddypress();
 
+		// Collect nav items
+		$items = array();
+
 		// Members: hide Profile nav tabs on another member's profile
-		$bp->members->nav->edit_nav( array( 'show_for_displayed_user' => false ), bp_get_profile_slug() );
+		$items[] = $bp->members->nav->edit_nav( array( 'show_for_displayed_user' => false ), bp_get_profile_slug() );
+		$items  += $bp->members->nav->get_secondary( array( 'parent_slug' => bp_get_profile_slug() ), false );
+
+		// Unhook screen functions of the edited navs
+		foreach ( $items as $item ) {
+			if ( is_callable( $item->screen_function ) ) {
+				remove_action( 'bp_screens', $item->screen_function, 3 );
+			}
+		}
 	}
 
 	/**
