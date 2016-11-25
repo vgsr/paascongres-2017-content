@@ -56,6 +56,12 @@ class Paco2017_BuddyPress {
 	 */
 	private function setup_actions() {
 
+		// For guests, hide BuddyPress entirely
+		if ( ! get_current_user_id() ) {
+			add_filter( 'bp_active_components', '__return_empty_array', 99 );
+			return;
+		}
+
 		/**
 		 * Ideas
 		 * - Toon vereniging badge
@@ -72,8 +78,8 @@ class Paco2017_BuddyPress {
 		add_action( 'bp_init',          array( $this, 'hide_components_parts' ),  5    );
 		add_filter( 'bp_map_meta_caps', array( $this, 'map_meta_cap'          ), 20, 4 );
 
-		// VGSR
-		if ( is_user_logged_in() ) {
+		// Unhide BuddyPress from VGSR
+		if ( function_exists( 'vgsr' ) ) {
 			remove_action( 'bp_core_loaded', array( vgsr()->extend->bp, 'hide_buddypress' ), 20 );
 		}
 	}
@@ -114,7 +120,7 @@ class Paco2017_BuddyPress {
 			 * displayed user, while still applying for the current user. See
 			 * {@see Paco2017_BuddyPress::hide_components_nav()}.
 			 */
-			add_action( 'bp_init', array( $this, 'hide_components_nav' ), 99 );
+			add_action( 'bp_setup_nav', array( $this, 'hide_components_nav' ), 99 );
 		}
 
 		// Walk components
