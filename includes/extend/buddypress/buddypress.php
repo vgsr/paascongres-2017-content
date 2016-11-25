@@ -114,11 +114,11 @@ class Paco2017_BuddyPress {
 			 * nav items are used outside of the displayed member profile navigation
 			 * element. See for example {@see bp_nav_menu_get_loggedin_pages()}.
 			 *
+			 * // This does not what we want
 			 * $components['xprofile'][] = 'setup_nav';
 			 *
 			 * Instead, the member navigation items are edited to not show for the
-			 * displayed user, while still applying for the current user. See
-			 * {@see Paco2017_BuddyPress::hide_components_nav()}.
+			 * displayed user, while still applying for the current user.
 			 */
 			add_action( 'bp_setup_nav', array( $this, 'hide_components_nav' ), 99 );
 		}
@@ -177,13 +177,17 @@ class Paco2017_BuddyPress {
 		// Collect nav items
 		$items = array();
 
-		// Members: hide Profile nav tabs on another member's profile
-		$items[] = $bp->members->nav->edit_nav( array( 'show_for_displayed_user' => false ), bp_get_profile_slug() );
-		$items  += $bp->members->nav->get_secondary( array( 'parent_slug' => bp_get_profile_slug() ), false );
+		// Profile component
+		if ( bp_is_active( 'xprofile' ) ) {
+
+			// Members: hide Profile nav tabs on another member's profile
+			$items[] = $bp->members->nav->edit_nav( array( 'show_for_displayed_user' => false ), bp_get_profile_slug() );
+			$items  += $bp->members->nav->get_secondary( array( 'parent_slug' => bp_get_profile_slug() ), false );
+		}
 
 		// Unhook screen functions of the edited navs
 		foreach ( $items as $item ) {
-			if ( is_callable( $item->screen_function ) ) {
+			if ( isset( $item->screen_function ) && is_callable( $item->screen_function ) ) {
 				remove_action( 'bp_screens', $item->screen_function, 3 );
 			}
 		}
