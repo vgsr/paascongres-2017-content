@@ -46,23 +46,23 @@ function paco2017_bp_add_settings_fields( $fields ) {
 	$fields['buddypress-members'] = array(
 
 		// Enrollment field
-		'_paco2017_bp_enrollment_profile_field' => array(
+		'_paco2017_bp_xprofile_enrollment_field' => array(
 			'title'             => __( 'Enrollment Field', 'paco2017-content' ),
 			'callback'          => 'paco2017_bp_admin_setting_callback_xprofile_field',
 			'sanitize_callback' => 'intval',
 			'args'              => array(
-				'setting'     => '_paco2017_bp_enrollment_profile_field',
+				'setting'     => '_paco2017_bp_xprofile_enrollment_field',
 				'description' => esc_html__( "Select the field that holds the member's enrollment status.", 'paco2017-content' ),
 			)
 		),
 
 		// Association field
-		'_paco2017_bp_association_profile_field' => array(
+		'_paco2017_bp_xprofile_association_field' => array(
 			'title'             => __( 'Association Field', 'paco2017-content' ),
 			'callback'          => 'paco2017_bp_admin_setting_callback_xprofile_field',
 			'sanitize_callback' => 'intval',
 			'args'              => array(
-				'setting'     => '_paco2017_bp_association_profile_field',
+				'setting'     => '_paco2017_bp_xprofile_association_field',
 				'description' => esc_html__( "Select the field that holds the member's association value.", 'paco2017-content' ),
 			)
 		),
@@ -110,18 +110,18 @@ function paco2017_bp_admin_setting_callback_xprofile_field( $args = array() ) {
 		return;
 	}
 
-	// Get the settings field's value
-	$field_id = (int) get_option( $args['setting'], false );
+	// Get the settings field
+	$field = paco2017_bp_xprofile_get_setting_field( $args['setting'] );
 
 	// Fields dropdown
 	paco2017_bp_admin_xprofile_fields_dropdown( array(
 		'name'     => $args['setting'],
-		'selected' => $field_id,
+		'selected' => $field ? $field->id : false,
 		'echo'     => true,
 	) );
 
 	// Display View link
-	if ( current_user_can( 'bp_moderate' ) && $field = xprofile_get_field( $field_id ) ) {
+	if ( current_user_can( 'bp_moderate' ) && $field ) {
 		printf( ' <a class="button button-secondary" href="%s" target="_blank">%s</a>', 
 			esc_url( add_query_arg(
 				array(
