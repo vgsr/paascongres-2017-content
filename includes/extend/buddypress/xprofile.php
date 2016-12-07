@@ -21,6 +21,11 @@ defined( 'ABSPATH' ) || exit;
  * @return BP_XProfile_Field|null Profile field when found, else Null.
  */
 function paco2017_bp_xprofile_get_setting_field( $setting = '' ) {
+
+	// Bail when the XProfile component is not active
+	if ( ! bp_is_active( 'xprofile' ) )
+		return null;
+
 	return xprofile_get_field( get_option( $setting, 0 ) );
 }
 
