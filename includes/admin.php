@@ -52,15 +52,24 @@ class Paco2017_Admin {
 	 * Register the admin menu pages
 	 *
 	 * @since 1.0.0
+	 *
+	 * @global array $submenu
 	 */
 	public function admin_menu() {
-		global $submenu;
 
 		// Define local variable
 		$hooks = array( 'post-new.php' );
 
 		// Main admin page
-		$this->admin_page = add_menu_page( __( 'Paascongres 2017 Administration', 'paco2017-content' ), __( 'Paascongres', 'paco2017-content' ), 'manage_paco2017', 'paco2017', 'paco2017_admin_page', 'dashicons-megaphone', 5 );
+		add_menu_page(
+			__( 'Paascongres 2017 Administration', 'paco2017-content' ),
+			__( 'Paascongres', 'paco2017-content' ),
+			'paco2017_admin_page',
+			'paco2017',
+			'paco2017_admin_page',
+			'dashicons-megaphone',
+			5
+		);
 
 		// Post type submenus
 		foreach ( array( paco2017_get_lector_post_type(), paco2017_get_workshop_post_type() ) as $post_type ) {
@@ -71,16 +80,30 @@ class Paco2017_Admin {
 
 			$menu_file = "edit.php?post_type={$post_type}";
 
-			// Remove the default admin menu
+			// Remove the default admin menu and its submenu's, to prevent
+			// the `$parent_file` override in `get_admin_page_parent()`
 			remove_menu_page( $menu_file );
-			unset( $submenu[ $menu_file ] ); // To prevent the `$parent_file` override in `get_admin_page_parent()`
+			unset( $GLOBALS['submenu'][ $menu_file ] );
 
 			// Add post type page as submenu
-			$hooks[] = add_submenu_page( 'paco2017', $post_type_object->label, $post_type_object->labels->menu_name, $post_type_object->cap->edit_posts, $menu_file );
+			$hooks[] = add_submenu_page(
+				'paco2017',
+				$post_type_object->label,
+				$post_type_object->labels->menu_name,
+				$post_type_object->cap->edit_posts,
+				$menu_file
+			);
 		}
 
 		// Settings page
-		$this->settings_page = add_submenu_page( 'paco2017', __( 'Paascongres 2017 Settings', 'paco2017-content' ), __( 'Settings', 'paco2017-content' ), 'manage_paco2017', 'paco2017-settings', 'paco2017_admin_settings_page' );
+		add_submenu_page(
+			'paco2017',
+			__( 'Paascongres 2017 Settings', 'paco2017-content' ),
+			__( 'Settings', 'paco2017-content' ),
+			'paco2017_admin_settings_page',
+			'paco2017-settings',
+			'paco2017_admin_settings_page'
+		);
 
 		foreach ( $hooks as $hook ) {
 			add_action( "admin_head-{$hook}", array( $this, 'admin_menu_highlight' ) );
@@ -91,6 +114,10 @@ class Paco2017_Admin {
 	 * Modify the highlighed menu for the current admin page
 	 *
 	 * @since 1.0.0
+	 *
+	 * @global string $parent_file
+	 * @global string $submenu_file
+	 * @global string $post_type
 	 */
 	public function admin_menu_highlight() {
 		global $parent_file, $submenu_file, $post_type;
