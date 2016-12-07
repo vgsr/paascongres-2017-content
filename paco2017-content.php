@@ -100,7 +100,8 @@ final class Paco2017_Content {
 	 */
 	private function includes() {
 
-		// Core
+		/** Core ********************************************************/
+
 		require( $this->includes_dir . 'actions.php'      );
 		require( $this->includes_dir . 'capabilities.php' );
 		require( $this->includes_dir . 'functions.php'    );
@@ -108,7 +109,15 @@ final class Paco2017_Content {
 		require( $this->includes_dir . 'workshops.php'    );
 		require( $this->includes_dir . 'sub-actions.php'  );
 
-		// Extend
+		/** Admin *******************************************************/
+
+		if ( is_admin() ) {
+			require( $this->includes_dir . 'admin.php'    );
+			require( $this->includes_dir . 'settings.php' );
+		}
+
+		/** Extend ******************************************************/
+
 		require( $this->includes_dir . 'extend/buddypress/buddypress.php' );
 	}
 
