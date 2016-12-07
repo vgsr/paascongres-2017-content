@@ -57,6 +57,7 @@ class Paco2017_BuddyPress {
 	 */
 	private function includes() {
 		require( $this->base_dir . 'actions.php'  );
+		require( $this->base_dir . 'members.php'  );
 		require( $this->base_dir . 'settings.php' );
 		require( $this->base_dir . 'xprofile.php' );
 	}
