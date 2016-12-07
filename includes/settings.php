@@ -65,7 +65,7 @@ function paco2017_admin_get_settings_fields_for_section( $section_id = '' ) {
 		return false;
 
 	$fields = paco2017_admin_get_settings_fields();
-	$retval = isset( $fields[$section_id] ) ? $fields[$section_id] : false;
+	$retval = isset( $fields[ $section_id ] ) ? $fields[ $section_id ] : false;
 
 	return (array) apply_filters( 'paco2017_admin_get_settings_fields_for_section', $retval, $section_id );
 }

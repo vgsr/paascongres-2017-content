@@ -25,6 +25,7 @@ class Paco2017_BuddyPress {
 	 */
 	public function __construct() {
 		$this->setup_globals();
+		$this->includes();
 		$this->setup_actions();
 	}
 
@@ -47,6 +48,16 @@ class Paco2017_BuddyPress {
 		// Themes
 		$this->themes_dir = trailingslashit( $this->base_dir . 'templates' );
 		$this->themes_url = trailingslashit( $this->base_url . 'templates' );
+	}
+
+	/**
+	 * Include the required files
+	 *
+	 * @since 1.0.0
+	 */
+	private function includes() {
+		require( $this->base_dir . 'actions.php'  );
+		require( $this->base_dir . 'settings.php' );
 	}
 
 	/**
