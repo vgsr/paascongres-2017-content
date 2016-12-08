@@ -114,6 +114,7 @@ function paco2017_bp_get_members_by_profile_field_value( $field, $user_id, $valu
 
 	// Setup members query
 	$query = new BP_User_Query( array(
+		'type'              => false, // Consider all registered users
 		'paco2017-xprofile' => array(
 			'field_id' => $field->id,
 			'user_id'  => $user_id,
