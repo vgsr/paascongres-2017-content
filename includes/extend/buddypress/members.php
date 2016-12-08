@@ -171,6 +171,8 @@ function paco2017_bp_pre_user_query( $user_query ) {
 /**
  * Modify the parsed members query arguments
  *
+ * This filter is paired with {@see paco2017_bp_parse_core_get_users_args()}.
+ *
  * @since 1.0.0
  *
  * @param array $args Parsed query args.
@@ -208,7 +210,7 @@ function paco2017_bp_parse_has_members_args( $args = array() ) {
 			'value'    => $value,
 			'compare'  => $compare,
 
-			// Take it along. Later we'll reset it
+			// Take the real type along. Later we'll reset it
 			'_type'    => $args['type'],
 		);
 	}
@@ -218,6 +220,8 @@ function paco2017_bp_parse_has_members_args( $args = array() ) {
 
 /**
  * Modify the to-parse members query arguments
+ *
+ * This filter is paired with {@see paco2017_bp_parse_has_members_args()}.
  *
  * @since 1.0.0
  *
@@ -229,12 +233,14 @@ function paco2017_bp_parse_core_get_users_args( $args = array() ) {
 	// This has our modified 'type' argument 
 	if ( is_array( $args['type'] ) && isset( $args['type']['_type'] ) ) {
 
-		// Preserve 'type' arg
+		// Preserve `type` argument
 		$type = $args['type']['_type'];
 		unset( $args['type']['_type'] );
 
-		// Define query modifier and reset 'type' argument
+		// Define query modifier
 		$args['paco2017-xprofile'] = $args['type'];
+
+		// Reset `type` argument
 		$args['type'] = $type;
 	}
 
