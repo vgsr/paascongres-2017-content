@@ -93,7 +93,11 @@ class Paco2017_BuddyPress {
 
 		// Unhide BuddyPress from VGSR
 		if ( function_exists( 'vgsr' ) ) {
-			remove_action( 'bp_core_loaded', array( vgsr()->extend->bp, 'hide_buddypress' ), 20 );
+			$vgsr_bp = vgsr()->extend->bp;
+
+			// Unhook some VGSR logic
+			remove_action( 'bp_core_loaded',                    array( $vgsr_bp, 'hide_buddypress'            ), 20 );
+			remove_action( 'bp_members_directory_member_types', array( $vgsr_bp, 'add_members_directory_tabs' )     );
 		}
 	}
 
