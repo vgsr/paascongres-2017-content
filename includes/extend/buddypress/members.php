@@ -28,13 +28,43 @@ function paco2017_bp_members_directory_tabs() {
 
 	// Associated members
 	if ( paco2017_bp_xprofile_get_association_field() ) {
-		printf( '<li id="members-%s"><a href="#">%s <span>%s</span></a></li>',
+		printf( '<li id="members-%s"><a href="#">%s</a></li>',
 			'paco2017_association',
-			sprintf( esc_html_x( '%s Members', 'association members', 'paco2017-content' ), paco2017_bp_xprofile_get_association_value() ),
-			paco2017_bp_get_members_count( 'association' )
+			sprintf( esc_html_x( '%s Members', 'association members', 'paco2017-content' ), paco2017_bp_xprofile_get_association_value() )
 		);
 	}
 }
+
+/**
+ * 404 and bail template loading for restricted profile views
+ *
+ * @since 1.0.0
+ */
+function paco2017_bp_members_block_member() {
+
+	// Bail when the user can moderate
+	if ( current_user_can( 'bp_moderate' ) )
+		return;
+
+	// Bail when this is not a profile view
+	if ( ! bp_is_user() )
+		return;
+
+	/**
+	 * Bail when the user can view this profile:
+	 *
+	 * 1. When the displayed user is enrolled
+	 * 2. When the displayed user is in the same association
+	 */
+	if ( paco2017_bp_xprofile_get_enrollment_status( bp_displayed_user_id() ) || paco2017_bp_xprofile_association_matches() )
+		return;
+
+	// 404 and prevent components from loading their templates
+	remove_all_actions( 'bp_template_redirect' );
+	bp_do_404();
+}
+
+/** Query ***************************************************************/
 
 /**
  * Return the specified type of member count
