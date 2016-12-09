@@ -88,8 +88,9 @@ class Paco2017_BuddyPress {
 		}, 8 );
 
 		// General limitations
-		add_action( 'bp_init',          array( $this, 'hide_components_parts' ),  5    );
-		add_filter( 'bp_map_meta_caps', array( $this, 'map_meta_cap'          ), 20, 4 );
+		add_action( 'bp_init',            array( $this, 'hide_components_parts' ),  5    );
+		add_action( 'bp_enqueue_scripts', array( $this, 'enqueue_scripts'       )        );
+		add_filter( 'bp_map_meta_caps',   array( $this, 'map_meta_cap'          ), 20, 4 );
 
 		// Unhide BuddyPress from VGSR
 		if ( function_exists( 'vgsr' ) ) {
@@ -207,6 +208,32 @@ class Paco2017_BuddyPress {
 			if ( isset( $item->screen_function ) && is_callable( $item->screen_function ) ) {
 				remove_action( 'bp_screens', $item->screen_function, 3 );
 			}
+		}
+	}
+
+	/**
+	 * Enqueue scripts and styles
+	 *
+	 * @since 1.0.0
+	 */
+	public function enqueue_scripts() {
+
+		// Define additional custom styles
+		$css = array();
+
+		// Members directory
+		if ( bp_is_current_component( 'members' ) ) {
+
+			// Use Dashicons
+			wp_enqueue_style( 'dashicons' );
+
+			// Append mark for Enrolled members
+			$css[] = "li.paco2017-enrolled .item-title a:after { content: '\\f147'; font-family: dashicons; vertical-align: bottom; }";
+		}
+
+		// Append styles
+		if ( ! empty( $css ) ) {
+			wp_add_inline_style( 'dashicons', implode( "\n", $css ) );
 		}
 	}
 

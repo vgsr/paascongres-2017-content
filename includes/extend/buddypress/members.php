@@ -114,6 +114,24 @@ function paco2017_bp_members_directory_details() {
 }
 
 /**
+ * Modify the list of member classes
+ *
+ * @since 1.0.0
+ *
+ * @param array $classes Member classes
+ * @return array Member classes
+ */
+function paco2017_bp_get_member_class( $classes ) {
+
+	// Member is Enrolled
+	if ( paco2017_bp_members_is_enrolled_scope() || paco2017_bp_xprofile_get_enrollment_status( bp_get_member_user_id() ) ) {
+		$classes[] = 'paco2017-enrolled';
+	}
+
+	return $classes;
+}
+
+/**
  * 404 and bail template loading for restricted profile views
  *
  * @since 1.0.0
