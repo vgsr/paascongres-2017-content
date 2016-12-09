@@ -10,6 +10,8 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+/** Template ************************************************************/
+
 /**
  * Add additional members directory tabs
  *
@@ -19,8 +21,7 @@ function paco2017_bp_members_directory_tabs() {
 
 	// Enrolled members
 	if ( paco2017_bp_xprofile_get_enrollment_field() ) {
-		printf( '<li id="members-%s"><a href="#">%s <span>%s</span></a></li>',
-			'paco2017_enrollment',
+		printf( '<li class="selected" id="members-all"><a href="#">%s <span>%s</span></a></li>',
 			esc_html__( 'Enrolled', 'paco2017-content' ),
 			paco2017_bp_get_members_count( 'enrollment' )
 		);
@@ -196,6 +197,25 @@ function paco2017_bp_pre_user_query( $user_query ) {
 		// Define XProfile query
 		$user_query->query_vars['xprofile_query'] = $xprofile_query;
 	}
+}
+
+/**
+ * Modify the AJAX query string
+ *
+ * @since 1.0.0
+ *
+ * @param string $query_string Query string
+ * @param string $context Query context
+ * @return string Query string
+ */
+function paco2017_bp_ajax_query_string( $query_string, $context = '' ) {
+
+	// Default the primary member query to list Enrolled members only
+	if ( 'members' === $context && ! in_array( 'scope', array_keys( wp_parse_args( $query_string ) ) ) ) {
+		$query_string .= '&scope=paco2017_enrollment';
+	}
+
+	return $query_string;
 }
 
 /**
