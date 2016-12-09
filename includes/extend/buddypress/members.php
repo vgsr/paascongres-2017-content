@@ -68,19 +68,36 @@ function paco2017_bp_members_block_member() {
 /** Query ***************************************************************/
 
 /**
- * Return the specified type of member count
+ * Return the member count of the specified subset of the registered members
  *
  * @since 1.0.0
  *
  * @param string $scope Optional. Count scope. Defaults to total member count
+ * @param int $user_id Optional. User ID. Defaults to the current user.
  * @return int Member count
  */
 function paco2017_bp_get_members_count( $scope = '', $user_id = 0 ) {
 
-	// Define return value
-	$count = null;
+	// Count the queried members
+	$members = paco2017_bp_get_members( $scope, $user_id );
+	$count   = count( $members );
 
-	// Define profile field variable(s)
+	return $count;
+}
+
+/**
+ * Return the members in the specified subset of the registered members
+ *
+ * @since 1.0.0
+ *
+ * @param string $scope Optional. Count scope. Defaults to total member count
+ * @param int $user_id Optional. User ID. Defaults to the current user.
+ * @return int Member count
+ */
+function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
+
+	// Define local variable(s)
+	$users = array();
 	$field = false;
 	$value = null;
 	$compare = '';
@@ -107,15 +124,9 @@ function paco2017_bp_get_members_count( $scope = '', $user_id = 0 ) {
 		// Query members by profile field value
 		$field = call_user_func( "paco2017_bp_xprofile_get_{$scope}_field" );
 		$users = paco2017_bp_get_members_by_profile_field_value( $field, $user_id, $value, $compare );
-		$count = count( $users );
 	}
 
-	// Default to all the site's members
-	if ( null === $count ) {
-		$count = bp_get_total_member_count();
-	}
-
-	return (int) $count;
+	return (array) $users;
 }
 
 /**
