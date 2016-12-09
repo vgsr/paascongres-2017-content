@@ -105,6 +105,10 @@ class Paco2017_BuddyPress {
 			remove_action( 'bp_core_loaded',                    array( $vgsr_bp, 'hide_buddypress'            ), 20 );
 			remove_action( 'bp_members_directory_member_types', array( $vgsr_bp, 'add_members_directory_tabs' )     );
 		}
+
+		// Activity
+		add_filter( 'bp_activity_can_comment',  '__return_false' );
+		add_filter( 'bp_activity_can_favorite', '__return_false' );
 	}
 
 	/** Public methods **************************************************/
