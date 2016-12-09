@@ -60,6 +60,11 @@ class Paco2017_BuddyPress {
 		require( $this->base_dir . 'members.php'  );
 		require( $this->base_dir . 'settings.php' );
 		require( $this->base_dir . 'xprofile.php' );
+
+		// Admin
+		if ( is_admin() ) {
+			require( $this->base_dir . 'admin.php' );
+		}
 	}
 
 	/**

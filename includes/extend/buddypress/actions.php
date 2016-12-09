@@ -10,10 +10,6 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-// Settings
-add_filter( 'paco2017_admin_get_settings_sections', 'paco2017_bp_add_settings_sections' );
-add_filter( 'paco2017_admin_get_settings_fields',   'paco2017_bp_add_settings_fields'   );
-
 // Members: Template
 add_action( 'bp_members_directory_member_types',   'paco2017_bp_members_directory_tabs'                );
 add_action( 'bp_members_directory_order_options',  'paco2017_bp_members_directory_order_options'       );
@@ -27,3 +23,12 @@ add_filter( 'bp_after_has_members_parse_args',     'paco2017_bp_parse_has_member
 add_filter( 'bp_before_core_get_users_parse_args', 'paco2017_bp_parse_core_get_users_args',       1    );
 add_action( 'bp_pre_user_query',                   'paco2017_bp_pre_user_query',                  5    );
 add_action( 'bp_user_query_uid_clauses',           'paco2017_bp_user_query_uid_clauses',         10, 2 );
+
+// Admin
+if ( is_admin() ) {
+	add_action( 'init', 'paco2017_buddypress_admin' );
+
+	// Settings
+	add_filter( 'paco2017_admin_get_settings_sections', 'paco2017_bp_add_settings_sections' );
+	add_filter( 'paco2017_admin_get_settings_fields',   'paco2017_bp_add_settings_fields'   );
+}
