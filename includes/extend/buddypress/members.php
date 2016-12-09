@@ -29,9 +29,11 @@ function paco2017_bp_members_directory_tabs() {
 
 	// Associated members
 	if ( paco2017_bp_xprofile_get_association_field() ) {
-		printf( '<li id="members-%s"><a href="#">%s</a></li>',
+		printf( '<li id="members-%s"><a href="#">%s <span>%s</span></a></li>',
 			'paco2017_association',
-			sprintf( esc_html_x( '%s Members', 'association members', 'paco2017-content' ), paco2017_bp_xprofile_get_association_value() )
+			paco2017_bp_xprofile_get_association_value(),
+			// __( 'My Association', 'paco2017-content' ),
+			sprintf( '%s/%s', paco2017_bp_get_enrolled_members_count( 'association' ), paco2017_bp_get_members_count( 'association' ) )
 		);
 	}
 }
