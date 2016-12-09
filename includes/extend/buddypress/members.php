@@ -52,35 +52,64 @@ function paco2017_bp_members_directory_order_options() {
 }
 
 /**
+ * Return the current members query scope
+ *
+ * @since 1.0.0
+ *
+ * @return string The current members query scope
+ */
+function paco2017_bp_members_get_query_scope() {
+
+	// Get the current member query's args
+	$query_vars = wp_parse_args( bp_ajax_querystring( 'members' ) );
+
+	// Bail when not viewing with a scope
+	if ( isset( $query_vars['scope'] ) ) {
+		$scope = $query_vars['scope'];
+	} else {
+		$scope = '';
+	}
+
+	return $scope;
+}
+
+/**
+ * Return whether we're viewing the Enrolled members scope
+ *
+ * @since 1.0.0
+ *
+ * @return bool Is this the Enrolled members scope?
+ */
+function paco2017_bp_members_is_enrolled_scope() {
+	return ( 'paco2017_enrollment' === paco2017_bp_members_get_query_scope() );
+}
+
+/**
+ * Return whether we're viewing the Association members scope
+ *
+ * @since 1.0.0
+ *
+ * @return bool Is this the Association members scope?
+ */
+function paco2017_bp_members_is_association_scope() {
+	return ( 'paco2017_association' === paco2017_bp_members_get_query_scope() );
+}
+
+/**
  * Display directory details before the start of the members list
  *
  * @since 1.0.0
  */
 function paco2017_bp_members_directory_details() {
 
-	// Get the current member query's args
-	$query_vars = wp_parse_args( bp_ajax_querystring( 'members' ) );
+	// Enrolled
+	if ( paco2017_bp_members_is_enrolled_scope() ) {
+		esc_html_e( 'The following people have enrolled for the event.', 'paco2017-content' );
+	}
 
-	// Bail when not viewing with a scope
-	if ( ! isset( $query_vars['scope'] ) )
-		return;
-
-	// Check the scope
-	switch ( $query_vars['scope'] ) {
-
-		// Enrolled
-		case 'paco2017_enrollment' :
-
-			esc_html_e( 'The following people have enrolled for the event.', 'paco2017-content' );
-
-			break;
-
-		// My Association
-		case 'paco2017_association' :
-
-			esc_html_e( 'The following people from your own association have received an invitation.', 'paco2017-content' );
-
-			break;
+	// My Association
+	if ( paco2017_bp_members_is_association_scope() ) {
+		esc_html_e( 'The following people from your own association have received an invitation.', 'paco2017-content' );
 	}
 }
 
