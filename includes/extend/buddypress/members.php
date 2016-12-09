@@ -216,43 +216,7 @@ function paco2017_bp_get_members_by_profile_field_value( $field, $user_id, $valu
 	return $users;
 }
 
-/**
- * Modify the BuddyPress user query
- *
- * @since 1.0.0
- *
- * @param BP_User_Query $user_query
- */
-function paco2017_bp_pre_user_query( $user_query ) {
-
-	// Get the query's vars
-	$qv = $user_query->query_vars;
-
-	// Plugin members query defined
-	if ( bp_is_active( 'xprofile' ) && isset( $qv['paco2017-xprofile'] ) ) {
-		$args = wp_parse_args( $qv['paco2017-xprofile'], array(
-			'value'   => null,
-			'compare' => null
-		) );
-
-		// Get raw db field value
-		if ( null === $args['value'] ) {
-			$args['value']   = BP_XProfile_ProfileData::get_value_byid( $args['field_id'], $args['user_id'] );
-			$args['compare'] = '=';
-		}
-
-		// Setup XProfile query
-		$xprofile_query   = $qv['xprofile_query'] ? (array) $qv['xprofile_query'] : array();
-		$xprofile_query[] = array(
-			'field'   => $args['field_id'],
-			'value'   => $args['value'],
-			'compare' => $args['compare'],
-		);
-
-		// Define XProfile query
-		$user_query->query_vars['xprofile_query'] = $xprofile_query;
-	}
-}
+/** Query ***************************************************************/
 
 /**
  * Modify the AJAX query string
@@ -350,4 +314,42 @@ function paco2017_bp_parse_core_get_users_args( $args = array() ) {
 	}
 
 	return $args;
+}
+
+/**
+ * Modify the BuddyPress user query
+ *
+ * @since 1.0.0
+ *
+ * @param BP_User_Query $user_query
+ */
+function paco2017_bp_pre_user_query( $user_query ) {
+
+	// Get the query's vars
+	$qv = $user_query->query_vars;
+
+	// Query by profile field
+	if ( bp_is_active( 'xprofile' ) && isset( $qv['paco2017-xprofile'] ) ) {
+		$args = wp_parse_args( $qv['paco2017-xprofile'], array(
+			'value'   => null,
+			'compare' => null
+		) );
+
+		// Get raw db field value
+		if ( null === $args['value'] ) {
+			$args['value']   = BP_XProfile_ProfileData::get_value_byid( $args['field_id'], $args['user_id'] );
+			$args['compare'] = '=';
+		}
+
+		// Setup XProfile query
+		$xprofile_query   = $qv['xprofile_query'] ? (array) $qv['xprofile_query'] : array();
+		$xprofile_query[] = array(
+			'field'   => $args['field_id'],
+			'value'   => $args['value'],
+			'compare' => $args['compare'],
+		);
+
+		// Define XProfile query
+		$user_query->query_vars['xprofile_query'] = $xprofile_query;
+	}
 }
