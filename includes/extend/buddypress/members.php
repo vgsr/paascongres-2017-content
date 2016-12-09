@@ -19,15 +19,15 @@ defined( 'ABSPATH' ) || exit;
  */
 function paco2017_bp_members_directory_tabs() {
 
-	// Enrolled members
+	// Enrolled
 	if ( paco2017_bp_xprofile_get_enrollment_field() ) {
 		printf( '<li class="selected" id="members-all"><a href="#">%s <span>%s</span></a></li>',
-			esc_html__( 'Enrolled', 'paco2017-content' ),
+			esc_html__( 'All Enrolled', 'paco2017-content' ),
 			paco2017_bp_get_members_count( 'enrollment' )
 		);
 	}
 
-	// Associated members
+	// My Association
 	if ( paco2017_bp_xprofile_get_association_field() ) {
 		printf( '<li id="members-%s"><a href="#">%s <span>%s</span></a></li>',
 			'paco2017_association',
@@ -427,7 +427,7 @@ function paco2017_bp_pre_user_query( $user_query ) {
 		) );
 
 		// Get raw db field value
-		if ( null === $args['value'] ) {
+		if ( null === $args['value'] && isset( $args['user_id'] ) ) {
 			$args['value']   = BP_XProfile_ProfileData::get_value_byid( $args['field_id'], $args['user_id'] );
 			$args['compare'] = '=';
 		}
