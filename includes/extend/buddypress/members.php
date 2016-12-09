@@ -74,7 +74,7 @@ function paco2017_bp_members_block_member() {
  *
  * @param string $scope Optional. Count scope. Defaults to total member count
  * @param int $user_id Optional. User ID. Defaults to the current user.
- * @return int Member count
+ * @return int Member count within the scope
  */
 function paco2017_bp_get_members_count( $scope = '', $user_id = 0 ) {
 
@@ -92,7 +92,7 @@ function paco2017_bp_get_members_count( $scope = '', $user_id = 0 ) {
  *
  * @param string $scope Optional. Count scope. Defaults to total member count
  * @param int $user_id Optional. User ID. Defaults to the current user.
- * @return int Member count
+ * @return array Members within the scope
  */
 function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
 
