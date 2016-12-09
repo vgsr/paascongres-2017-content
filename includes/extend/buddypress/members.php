@@ -130,6 +130,48 @@ function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
 }
 
 /**
+ * Return the member count in a specified subset of the enrolled members
+ *
+ * @since 1.0.0
+ *
+ * @param string $scope Optional. Count scope. Defaults to total member count
+ * @param int $user_id Optional. User ID. Defaults to the current user.
+ * @return int Member count of enrolled members within the scope
+ */
+function paco2017_bp_get_enrolled_members_count( $scope, $user_id = 0 ) {
+
+	// Get enrolled members within the scope
+	$members = paco2017_bp_get_enrolled_members( $scope, $user_id );
+	$count   = count( $members );
+
+	return (int) $count;
+}
+
+/**
+ * Return the member count in a specified subset of the enrolled members
+ *
+ * @todo This could someday be integrated in a single query, but that's too much
+ *       trouble for now.
+ *
+ * @since 1.0.0
+ *
+ * @param string $scope Optional. Count scope. Defaults to total member count
+ * @param int $user_id Optional. User ID. Defaults to the current user.
+ * @return array Enrolled members within the scope
+ */
+function paco2017_bp_get_enrolled_members( $scope, $user_id = 0 ) {
+
+	// Get the enrolled and scoped members
+	$enrolled = paco2017_bp_get_members( 'enrollment', $user_id );
+	$scoped   = paco2017_bp_get_members( $scope, $user_id );
+
+	// Find intersection of enrolled members within the scope
+	$users = array_intersect_key( $scoped, $enrolled );
+
+	return (array) $users;
+}
+
+/**
  * Return the members that have the same profile field's value
  *
  * @since 1.0.0
