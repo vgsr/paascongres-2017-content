@@ -39,6 +39,19 @@ function paco2017_bp_members_directory_tabs() {
 }
 
 /**
+ * Add order options for the Members directory
+ *
+ * @since 1.0.0
+ */
+function paco2017_bp_members_directory_order_options() {
+
+	// Newest Enrolled
+	if ( paco2017_bp_xprofile_get_enrollment_field() ) : ?>
+		<option value="paco2017_enrollment"><?php esc_html_e( 'Newest Enrolled', 'paco2017-content' ); ?></option>
+	<?php endif;
+}
+
+/**
  * Display directory details before the start of the members list
  *
  * @since 1.0.0
@@ -383,4 +396,45 @@ function paco2017_bp_pre_user_query( $user_query ) {
 		// Define XProfile query
 		$user_query->query_vars['xprofile_query'] = $xprofile_query;
 	}
+}
+
+/**
+ * Modify the SQL clauses of the user query
+ *
+ * @since 1.0.0
+ *
+ * @global WPDB $wpdb
+ *
+ * @param array $sql SQL clauses
+ * @param BP_User_Query $user_query
+ * @return array SQL clauses
+ */
+function paco2017_bp_user_query_uid_clauses( $sql, $user_query ) {
+	global $wpdb;
+
+	// Get BuddyPress
+	$bp = buddypress();
+
+	// Get the query's vars
+	$qv = $user_query->query_vars;
+
+	// Ordering by Newest Enrolled
+	if ( 'paco2017_enrollment' === $qv['type'] && $field = paco2017_bp_xprofile_get_enrollment_field() ) {
+
+		// Join with profile data
+		$sql['select'] .= $wpdb->prepare( " LEFT JOIN {$bp->profile->table_name_data} enrolled ON u.{$user_query->uid_name} = enrolled.user_id AND enrolled.field_id = %d", $field->id );
+
+		/**
+		 * Order by enrolled date.
+		 *
+		 * When enrollment is cancelled, the field's value is registered in the db as
+		 * an empty serialized array. This has also an actual 'last_updated' recording.
+		 * To circumvent this, first separate empty values from valid ones - then sort
+		 * by date.
+		 */
+		$sql['orderby'] = $wpdb->prepare( "ORDER BY ( CASE WHEN enrolled.value = %s THEN 0 ELSE 1 END ) DESC, enrolled.last_updated", serialize( array() ) );
+		$sql['order']   = "DESC";
+	}
+
+	return $sql;
 }

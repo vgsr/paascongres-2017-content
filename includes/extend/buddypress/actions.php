@@ -15,10 +15,12 @@ add_filter( 'paco2017_admin_get_settings_sections', 'paco2017_bp_add_settings_se
 add_filter( 'paco2017_admin_get_settings_fields',   'paco2017_bp_add_settings_fields'   );
 
 // Members
-add_action( 'bp_pre_user_query',                   'paco2017_bp_pre_user_query',                  5    );
 add_action( 'bp_members_directory_member_types',   'paco2017_bp_members_directory_tabs'                );
+add_action( 'bp_members_directory_order_options',  'paco2017_bp_members_directory_order_options'       );
 add_action( 'bp_before_members_loop',              'paco2017_bp_members_directory_details'             );
 add_action( 'bp_template_redirect',                'paco2017_bp_members_block_member',            1    ); // Before bp_actions and bp_screens
 add_filter( 'bp_ajax_querystring',                 'paco2017_bp_ajax_query_string',              99, 2 );
 add_filter( 'bp_after_has_members_parse_args',     'paco2017_bp_parse_has_members_args',         99    );
 add_filter( 'bp_before_core_get_users_parse_args', 'paco2017_bp_parse_core_get_users_args',       1    );
+add_action( 'bp_pre_user_query',                   'paco2017_bp_pre_user_query',                  5    );
+add_action( 'bp_user_query_uid_clauses',           'paco2017_bp_user_query_uid_clauses',         10, 2 );
