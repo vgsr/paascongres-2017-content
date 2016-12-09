@@ -39,6 +39,39 @@ function paco2017_bp_members_directory_tabs() {
 }
 
 /**
+ * Display directory details before the start of the members list
+ *
+ * @since 1.0.0
+ */
+function paco2017_bp_members_directory_details() {
+
+	// Get the current member query's args
+	$query_vars = wp_parse_args( bp_ajax_querystring( 'members' ) );
+
+	// Bail when not viewing with a scope
+	if ( ! isset( $query_vars['scope'] ) )
+		return;
+
+	// Check the scope
+	switch ( $query_vars['scope'] ) {
+
+		// Enrolled
+		case 'paco2017_enrollment' :
+
+			esc_html_e( 'The following people have enrolled for the event.', 'paco2017-content' );
+
+			break;
+
+		// My Association
+		case 'paco2017_association' :
+
+			esc_html_e( 'The following people from your own association have received an invitation.', 'paco2017-content' );
+
+			break;
+	}
+}
+
+/**
  * 404 and bail template loading for restricted profile views
  *
  * @since 1.0.0
@@ -66,8 +99,6 @@ function paco2017_bp_members_block_member() {
 	remove_all_actions( 'bp_template_redirect' );
 	bp_do_404();
 }
-
-/** Query ***************************************************************/
 
 /**
  * Return the member count of the specified subset of the registered members
