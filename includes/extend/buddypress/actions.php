@@ -10,6 +10,9 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+// Activity: Template
+add_filter( 'bp_get_activity_show_filters_options', 'paco2017_bp_activity_filters_options', 10, 2 );
+
 // Members: Template
 add_action( 'bp_members_directory_member_types',   'paco2017_bp_members_directory_tabs'                );
 add_action( 'bp_members_directory_order_options',  'paco2017_bp_members_directory_order_options'       );
