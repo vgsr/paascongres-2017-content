@@ -59,7 +59,7 @@ class Paco2017_Admin {
 	public function admin_menu() {
 
 		// Define local variable
-		$hooks = array( 'post-new.php' );
+		$hooks = array( 'post-new.php', 'post.php' );
 
 		// Main admin page
 		add_menu_page(
@@ -81,7 +81,7 @@ class Paco2017_Admin {
 
 			$menu_file = "edit.php?post_type={$post_type}";
 
-			// Remove the default admin menu and its submenu's, to prevent
+			// Remove the default admin menu and its submenus, to prevent
 			// the `$parent_file` override in `get_admin_page_parent()`
 			remove_menu_page( $menu_file );
 			unset( $GLOBALS['submenu'][ $menu_file ] );
