@@ -47,7 +47,7 @@ function paco2017_admin_get_settings_fields() {
 
 		'paco2017_settings_main' => array(
 
-			// Houskeeping page
+			// Housekeeping page
 			'_paco2017_housekeeping_page' => array(
 				'title'             => esc_html__( 'Housekeeping Page', 'paco2017-content' ),
 				'callback'          => 'paco2017_admin_setting_callback_housekeeping_page',
@@ -116,7 +116,7 @@ function paco2017_admin_page_has_settings( $page = '' ) {
 function paco2017_admin_setting_callback_main_section() { /* Nothing to display */ }
 
 /**
- * Display the content of the Houskeeping Page settings field
+ * Display the content of the Housekeeping Page settings field
  *
  * @since 1.0.0
  */
@@ -140,7 +140,7 @@ function paco2017_admin_setting_callback_housekeeping_page() {
 		);
 	} ?>
 
-	<p class="description"><?php esc_html_e( 'Select the page that contains the Houskeeping information', 'paco2017-content' ); ?></p>
+	<p class="description"><?php esc_html_e( 'Select the page that contains the Housekeeping information', 'paco2017-content' ); ?></p>
 
 	<?php
 }
