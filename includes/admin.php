@@ -43,8 +43,9 @@ class Paco2017_Admin {
 	 * @since 1.0.0
 	 */
 	private function setup_actions() {
-		add_action( 'admin_menu',   array( $this, 'admin_menu'        )        );
-		add_action( 'admin_init',   array( $this, 'register_settings' )        );
+		add_action( 'admin_menu',          array( $this, 'admin_menu'        )        );
+		add_action( 'admin_init',          array( $this, 'register_settings' )        );
+		add_filter( 'display_post_states', array( $this, 'post_states'       ), 10, 2 );
 	}
 
 	/** Public methods **************************************************/
@@ -182,6 +183,26 @@ class Paco2017_Admin {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Modify the list of post states
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $states Post states
+	 * @param WP_Post $post Post object
+	 * @return array Post states
+	 */
+	public function post_states( $states, $post ) {
+
+
+		// Mark the Houskeeping page
+		if ( paco2017_get_housekeeping_page_id() === $post->ID ) {
+			$states['housekeeping_page'] = __( 'Housekeeping', 'paco2017-content' );
+		}
+
+		return $states;
 	}
 }
 
