@@ -116,6 +116,53 @@ function paco2017_bp_xprofile_association_matches( $user1_id = 0, $user2_id = 0 
 	return (bool) $match;
 }
 
+/**
+ * Modify the queried profile groups' fields
+ *
+ * @since 1.0.0
+ *
+ * @param array $groups Profile groups
+ * @param array $args Query arguments
+ * @return array Profile groups
+ */
+function paco2017_bp_xprofile_no_edit_association_field( $groups, $args ) {
+
+	// Bail when no fields were fetched
+	if ( ! isset( $args['fetch_fields'] ) || ! $args['fetch_fields'] )
+		return $groups;
+
+	// Get association field
+	$association_field = paco2017_bp_xprofile_get_association_field();
+
+	// Are we editing fields? Front or in admin
+	$editing = bp_is_user_profile_edit() || ( is_admin() && isset( $_GET['page'] ) && 'bp-profile-edit' === $_GET['page'] );
+	$no_edit = ! current_user_can( 'bp_moderate' );
+
+	// Walk profile groups
+	foreach ( $groups as $gk => $group ) {
+
+		// No fields were queried
+		if ( ! isset( $group->fields ) )
+			continue;
+
+		// Walk group fields
+		foreach ( $group->fields as $fk => $field ) {
+
+			// Remove association field
+			if ( $editing && $no_edit && $field->id === $association_field->id ) {
+				unset( $groups[ $gk ]->fields[ $fk ] );
+
+				// Reset numeric keys
+				$groups[ $gk ]->fields = array_values( $groups[ $gk ]->fields );
+
+				break 2;
+			}
+		}
+	}
+
+	return $groups;
+}
+
 /** Options ***************************************************************/
 
 /**

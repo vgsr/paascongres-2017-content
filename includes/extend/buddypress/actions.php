@@ -27,6 +27,9 @@ add_filter( 'bp_before_core_get_users_parse_args', 'paco2017_bp_parse_core_get_u
 add_action( 'bp_pre_user_query',                   'paco2017_bp_pre_user_query',                  5    );
 add_action( 'bp_user_query_uid_clauses',           'paco2017_bp_user_query_uid_clauses',         10, 2 );
 
+// XProfile
+add_filter( 'bp_xprofile_get_groups', 'paco2017_bp_xprofile_no_edit_association_field', 10, 2 );
+
 // Admin
 if ( is_admin() ) {
 	add_action( 'init', 'paco2017_buddypress_admin' );
