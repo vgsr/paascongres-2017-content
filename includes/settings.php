@@ -191,7 +191,7 @@ function paco2017_admin_page_get_pages() {
 
 	// Setup return value
 	$pages = array(
-		'paco2017' => esc_html__( 'Main', 'paco2017-content' )
+		'paco2017' => esc_html__( 'Overview', 'paco2017-content' )
 	);
 
 	// Add the settings page
