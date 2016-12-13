@@ -35,3 +35,17 @@ function paco2017_get_lector_slug() {
 function paco2017_get_workshop_slug() {
 	return apply_filters( 'paco2017_get_workshop_slug', get_option( '_paco2017_workshop_slug', 'workshops' ) );
 }
+
+/** Options *******************************************************************/
+
+/**
+ * Return the page ID of the Housekeeping page setting
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_housekeeping_page_id'
+ * @return int Page ID
+ */
+function paco2017_get_housekeeping_page_id() {
+	return (int) apply_filters( 'paco2017_get_housekeeping_page_id', get_option( '_paco2017_housekeeping_page', 0 ) );
+}

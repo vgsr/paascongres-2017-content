@@ -46,6 +46,14 @@ function paco2017_admin_get_settings_fields() {
 		/** Main Section **************************************************/
 
 		'paco2017_settings_main' => array(
+
+			// Houskeeping page
+			'_paco2017_housekeeping_page' => array(
+				'title'             => esc_html__( 'Housekeeping Page', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_housekeeping_page',
+				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
 		),
 	) );
 }
@@ -106,6 +114,36 @@ function paco2017_admin_page_has_settings( $page = '' ) {
  * @since 1.0.0
  */
 function paco2017_admin_setting_callback_main_section() { /* Nothing to display */ }
+
+/**
+ * Display the content of the Houskeeping Page settings field
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_setting_callback_housekeeping_page() {
+
+	// Get settings field
+	$page_id = get_option( '_paco2017_housekeeping_page', false );
+
+	// Pages dropdown
+	wp_dropdown_pages( array(
+		'name'             => '_paco2017_housekeeping_page',
+		'selected'         => $page_id,
+		'show_option_none' => __( '&mdash; No Page &mdash;', 'paco2017-content' ),
+	) );
+
+	// Display View link
+	if ( $page_id ) {
+		printf( ' <a class="button button-secondary" href="%s" target="_blank">%s</a>',
+			esc_url( get_permalink( $page_id ) ),
+			esc_html__( 'View', 'paco2017-content' )
+		);
+	} ?>
+
+	<p class="description"><?php esc_html_e( 'Select the page that contains the Houskeeping information', 'paco2017-content' ); ?></p>
+
+	<?php
+}
 
 /** Pages ***************************************************************/
 
