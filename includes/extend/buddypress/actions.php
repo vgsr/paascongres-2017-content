@@ -18,6 +18,7 @@ add_action( 'bp_members_directory_member_types',   'paco2017_bp_members_director
 add_action( 'bp_members_directory_order_options',  'paco2017_bp_members_directory_order_options'       );
 add_action( 'bp_before_members_loop',              'paco2017_bp_members_directory_details'             );
 add_filter( 'bp_get_member_class',                 'paco2017_bp_get_member_class'                      );
+add_filter( 'bp_member_name',                      'paco2017_bp_member_name',                    99    );
 add_action( 'bp_template_redirect',                'paco2017_bp_members_block_member',            1    ); // Before bp_actions and bp_screens
 
 // Members: Query

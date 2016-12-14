@@ -114,6 +114,43 @@ function paco2017_bp_members_directory_details() {
 }
 
 /**
+ * Modify the member's directory name
+ *
+ * @since 1.0.0
+ *
+ * @param string $name Member name
+ * @return string Member name
+ */
+function paco2017_bp_member_name( $name ) {
+
+	// Append enrollment mark
+	if ( paco2017_bp_xprofile_get_enrollment_status( bp_get_member_user_id() ) ) {
+		$name .= '<i class="dashicons dashicons-yes" title="' . __( 'This member is enrolled for the event.', 'paco2017-content' ) . '"></i>';
+	}
+
+	return $name;
+}
+
+/**
+ * Output the member's item association badge
+ *
+ * @since 1.0.0
+ */
+function paco2017_bp_members_item_association_badge() {
+
+	$user_id = bp_get_member_user_id();
+
+	// Append association label
+	if ( $association = paco2017_bp_xprofile_get_association_value( $user_id ) ) : ?>
+
+		<i class="paco2017-association paco2017-association-<?php echo $association; ?>">
+			<?php paco2017_bp_xprofile_association_title( $user_id ); ?>
+		</i>
+
+	<?php endif;
+}
+
+/**
  * Modify the list of member classes
  *
  * @since 1.0.0
@@ -126,6 +163,11 @@ function paco2017_bp_get_member_class( $classes ) {
 	// Member is Enrolled
 	if ( paco2017_bp_members_is_enrolled_scope() || paco2017_bp_xprofile_get_enrollment_status( bp_get_member_user_id() ) ) {
 		$classes[] = 'paco2017-enrolled';
+	}
+
+	// Member association
+	if ( $association = paco2017_bp_xprofile_get_association_value( bp_get_member_user_id() ) ) {
+		$classes[] = 'paco2017-association-' . $association;
 	}
 
 	return $classes;

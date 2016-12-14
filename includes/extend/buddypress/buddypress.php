@@ -45,6 +45,10 @@ class Paco2017_BuddyPress {
 		$this->base_dir   = trailingslashit( $paco->includes_dir . 'extend/buddypress' );
 		$this->base_url   = trailingslashit( $paco->includes_url . 'extend/buddypress' );
 
+		// Assets
+		$this->assets_dir = trailingslashit( $this->base_dir . 'assets' );
+		$this->assets_url = trailingslashit( $this->base_url . 'assets' );
+
 		// Themes
 		$this->themes_dir = trailingslashit( $this->base_dir . 'templates' );
 		$this->themes_url = trailingslashit( $this->base_url . 'templates' );
@@ -83,8 +87,6 @@ class Paco2017_BuddyPress {
 
 		/**
 		 * Ideas
-		 * - Toon vereniging badge
-		 * - Toon aangemeld ja/nee badge
 		 * - Front page met customizable content
 		 */
 
@@ -95,7 +97,7 @@ class Paco2017_BuddyPress {
 
 		// General limitations
 		add_action( 'bp_init',            array( $this, 'hide_components_parts' ),  5    );
-		add_action( 'bp_enqueue_scripts', array( $this, 'enqueue_scripts'       )        );
+		add_action( 'bp_enqueue_scripts', array( $this, 'enqueue_scripts'       ), 90    );
 		add_filter( 'bp_map_meta_caps',   array( $this, 'map_meta_cap'          ), 20, 4 );
 
 		// Unhide BuddyPress from VGSR
@@ -228,22 +230,41 @@ class Paco2017_BuddyPress {
 	 */
 	public function enqueue_scripts() {
 
-		// Define additional custom styles
-		$css = array();
+		wp_enqueue_style( 'dashicons' );
+		wp_enqueue_style( 'paco2017-buddypress', $this->assets_url . 'css/paco2017-buddypress.css' );
 
-		// Members directory
-		if ( bp_is_current_component( 'members' ) ) {
+		/** Companion Styles ********************************************/
 
-			// Use Dashicons
-			wp_enqueue_style( 'dashicons' );
+		$companion   = array();
 
-			// Append mark for Enrolled members
-			$css[] = "li.paco2017-enrolled .item-title a:after { content: '\\f147'; font-family: dashicons; vertical-align: bottom; }";
-		}
+		// Force avatar size
+		$companion[] = "#buddypress ul.item-list li .item-avatar { float: left; width: 50px; height: 50px; margin: 0 10px 10px 0; }";
+
+		$companion[] = "@media screen and (min-width: 320px) {";
+		$companion[] = "\t#buddypress li div.item { margin-left: 70px; }";
+		$companion[] = "}";
+
+		// Members: Left align directory contents on small screens
+		$companion[] = "@media screen and (max-width: 30em) {";
+		$companion[] = "\t#buddypress ul.item-list li .item-avatar { text-align: left; }";
+		$companion[] = "\t#buddypress ul.item-list li .item .item-title { text-align: left; }";
+		$companion[] = "}";
+
+		$companion[] = "@media screen and (max-width: 38.75em) {";
+		$companion[] = "\t#buddypress ul.item-list li .item-avatar { margin-bottom: 0; }";
+		$companion[] = "}";
+
+		// Activity: Left align directory contents on small screens
+		$companion[] = "@media screen and (max-width: 48em) {";
+		$companion[] = "\t#buddypress #activity-stream li .activity-avatar { float: left; margin-right: 10px; text-align: left; }";
+		$companion[] = "\t#buddypress #activity-stream li .activity-content { margin: 0; overflow: hidden; }";
+		$companion[] = "}";
+
+		$template = get_template();
 
 		// Append styles
-		if ( ! empty( $css ) ) {
-			wp_add_inline_style( 'dashicons', implode( "\n", $css ) );
+		if ( ! empty( $companion ) && wp_style_is( "bp-{$template}" ) ) {
+			wp_add_inline_style( "bp-{$template}", implode( "\n", $companion ) );
 		}
 	}
 

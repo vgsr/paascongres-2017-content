@@ -1,9 +1,9 @@
 <?php
 /**
- * BuddyPress - Members
+ * Paco2017 Content - BuddyPress - Members
  *
- * @package BuddyPress
- * @subpackage bp-legacy
+ * @package Paco2017 Content
+ * @subpackage BuddyPress
  */
 
 /**

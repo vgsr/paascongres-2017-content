@@ -63,6 +63,17 @@ function paco2017_bp_xprofile_get_enrolled_status_data() {
 }
 
 /**
+ * Output the title of the member's association
+ *
+ * @since 1.0.0
+ *
+ * @param int $user_id Optional. User ID. Defaults to the current user.
+ */
+function paco2017_bp_xprofile_association_title( $user_id = 0 ) {
+	echo paco2017_bp_xprofile_get_association_title( $user_id );
+}
+
+/**
  * Return the title of the member's association
  *
  * @since 1.0.0

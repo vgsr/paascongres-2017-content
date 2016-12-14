@@ -102,11 +102,11 @@ class Paco2017_BuddyPress_Admin {
 
 		// Association
 		if ( 'paco2017_association' === $column ) {
-			$assoc = paco2017_bp_xprofile_get_association_value( $user_id );
+			$association = paco2017_bp_xprofile_get_association_value( $user_id );
 
-			if ( ! empty( $assoc ) ) {
-				$url = add_query_arg( array( 'paco2017-association' => urlencode( $assoc ) ) );
-				$content .= '<a href="' . esc_url( $url ) . '">' . esc_html( $assoc ) . '</a>';
+			if ( ! empty( $association ) ) {
+				$url = add_query_arg( array( 'paco2017-association' => urlencode( $association ) ) );
+				$content .= '<a href="' . esc_url( $url ) . '">' . paco2017_bp_xprofile_get_association_title( $user_id ) . '</a>';
 			}
 		}
 
