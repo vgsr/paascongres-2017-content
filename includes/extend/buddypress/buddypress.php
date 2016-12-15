@@ -235,36 +235,11 @@ class Paco2017_BuddyPress {
 
 		/** Companion Styles ********************************************/
 
-		$companion   = array();
+		$template  = get_template();
+		$companion = $this->assets_url . "css/paco2017-bp-{$template}.css";
 
-		// Force avatar size
-		$companion[] = "#buddypress ul.item-list li .item-avatar { float: left; width: 50px; height: 50px; margin: 0 10px 10px 0; }";
-
-		$companion[] = "@media screen and (min-width: 320px) {";
-		$companion[] = "\t#buddypress li div.item { margin-left: 70px; }";
-		$companion[] = "}";
-
-		// Members: Left align directory contents on small screens
-		$companion[] = "@media screen and (max-width: 30em) {";
-		$companion[] = "\t#buddypress ul.item-list li .item-avatar { text-align: left; }";
-		$companion[] = "\t#buddypress ul.item-list li .item .item-title { text-align: left; }";
-		$companion[] = "}";
-
-		$companion[] = "@media screen and (max-width: 38.75em) {";
-		$companion[] = "\t#buddypress ul.item-list li .item-avatar { margin-bottom: 0; }";
-		$companion[] = "}";
-
-		// Activity: Left align directory contents on small screens
-		$companion[] = "@media screen and (max-width: 48em) {";
-		$companion[] = "\t#buddypress #activity-stream li .activity-avatar { float: left; margin-right: 10px; text-align: left; }";
-		$companion[] = "\t#buddypress #activity-stream li .activity-content { margin: 0; overflow: hidden; }";
-		$companion[] = "}";
-
-		$template = get_template();
-
-		// Append styles
-		if ( ! empty( $companion ) && wp_style_is( "bp-{$template}" ) ) {
-			wp_add_inline_style( "bp-{$template}", implode( "\n", $companion ) );
+		if ( wp_style_is( "bp-{$template}" ) && file_exists( $companion ) ) {
+			wp_enqueue_style( "paco2017-bp-{$template}", $companion, array( "bp-{$template}" ) );
 		}
 	}
 
