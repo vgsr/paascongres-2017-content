@@ -143,7 +143,7 @@ function paco2017_bp_members_item_association_badge() {
 	// Append association label
 	if ( $association = paco2017_bp_xprofile_get_association_value( $user_id ) ) : ?>
 
-		<i class="paco2017-association paco2017-association-<?php echo $association; ?>">
+		<i class="paco2017-association-badge">
 			<?php paco2017_bp_xprofile_association_title( $user_id ); ?>
 		</i>
 
