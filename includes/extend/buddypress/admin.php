@@ -38,6 +38,9 @@ class Paco2017_BuddyPress_Admin {
 		add_action( 'pre_user_query',             array( $this, 'pre_user_query'      )        );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+		// XProfile
+		add_action( 'xprofile_admin_field_name_legend', array( $this, 'xprofile_field_admin_label' ), 99 );
 	}
 
 	/** Public methods **************************************************/
@@ -58,6 +61,10 @@ class Paco2017_BuddyPress_Admin {
 		// users.php
 		if ( 'users' === $screen->id ) {
 			$css[] = ".fixed .column-paco2017_association { width: 10%; }";
+
+		// XProfile fields
+		} elseif ( 'users_page_bp-profile-setup' === $screen->id ) {
+			$css[] = ".post-state { color: #555; font-weight: 600; }";
 		}
 
 		// Appens styles
@@ -146,6 +153,30 @@ class Paco2017_BuddyPress_Admin {
 			// Append clauses
 			$user_query->query_from  .= $profile_clauses['join'];
 			$user_query->query_where .= $profile_clauses['where'];
+		}
+	}
+
+	/** XProfile ********************************************************/
+
+	/**
+	 * Add content to the profile field admin label
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param BP_XProfile_Field $field
+	 */
+	public function xprofile_field_admin_label( $field ) {
+
+		// Define label wrap
+		$wrap = '<span class="post-state">&mdash; %s</span>';
+
+		// Enrollment field
+		if ( paco2017_bp_xprofile_is_enrollment_field( $field ) ) {
+			printf( $wrap, esc_html_x( 'Enrollment Field', 'admin field label', 'paco2017-content' ) );
+
+		// Association field
+		} elseif ( paco2017_bp_xprofile_is_association_field( $field ) ) {
+			printf( $wrap, esc_html_x( 'Association Field', 'admin field label', 'paco2017-content' ) );
 		}
 	}
 }

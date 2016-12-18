@@ -217,6 +217,35 @@ function paco2017_bp_xprofile_get_enrollment_field() {
 }
 
 /**
+ * Return whether this is the Enrollment XProfile field
+ *
+ * @since 1.0.0
+ *
+ * @param int|BP_XProfile_Field $field_id Field ID or object. Optional. Defaults to current field.
+ * @return bool Is this the Enrollment field?
+ */
+function paco2017_bp_xprofile_is_enrollment_field( $field_id = 0 ) {
+
+	// Get the field's ID
+	if ( is_a( $field_id, 'BP_XProfile_Field' ) ) {
+		$field_id = $field_id->id;
+
+	// Default to the current fieid
+	} elseif ( empty( $field_id ) && isset( $GLOBALS['field'] ) ) {
+		$field_id = bp_get_the_profile_field_id();
+	}
+
+	$match = false;
+
+	if ( ! empty( $field_id ) ) {
+		$field = paco2017_bp_xprofile_get_enrollment_field();
+		$match = ( $field->id === $field_id );
+	}
+
+	return $match;
+}
+
+/**
  * Return the selected Association XProfile field
  *
  * @since 1.0.0
@@ -225,4 +254,33 @@ function paco2017_bp_xprofile_get_enrollment_field() {
  */
 function paco2017_bp_xprofile_get_association_field() {
 	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_association_field' );
+}
+
+/**
+ * Return whether this is the Association XProfile field
+ *
+ * @since 1.0.0
+ *
+ * @param int|BP_XProfile_Field $field_id Field ID or object. Optional. Defaults to current field.
+ * @return bool Is this the Association field?
+ */
+function paco2017_bp_xprofile_is_association_field( $field_id = 0 ) {
+
+	// Get the field's ID
+	if ( is_a( $field_id, 'BP_XProfile_Field' ) ) {
+		$field_id = $field_id->id;
+
+	// Default to the current fieid
+	} elseif ( empty( $field_id ) && isset( $GLOBALS['field'] ) ) {
+		$field_id = bp_get_the_profile_field_id();
+	}
+
+	$match = false;
+
+	if ( ! empty( $field_id ) ) {
+		$field = paco2017_bp_xprofile_get_association_field();
+		$match = ( $field->id === $field_id );
+	}
+
+	return $match;
 }
