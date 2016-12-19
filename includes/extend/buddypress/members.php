@@ -332,6 +332,51 @@ function paco2017_bp_get_enrolled_members( $scope = '', $user_id = 0 ) {
 }
 
 /**
+ * Return or modify the enrolled members for the given association
+ *
+ * @since 1.0.0
+ *
+ * @param array $members Enrolled association members
+ * @param WP_Term|int|string $association Term object or id or name or slug
+ * @return array Enrolled association members
+ */
+function paco2017_bp_get_enrolled_members_for_association( $members, $association ) {
+
+	// Get profile fields
+	$enrollment_field  = paco2017_bp_xprofile_get_enrollment_field();
+	$association_field = paco2017_bp_xprofile_get_association_field();
+
+	// Bail when the fields do not exist
+	if ( ! $association_field || ! $enrollment_field )
+		return $members;
+
+	// Setup members query
+	$query = new BP_User_Query( array(
+		'type'           => false, // Consider all registered users
+		'xprofile_query' => array(
+			array(
+				'field_id' => $enrollment_field->id,
+				'value'    => paco2017_bp_xprofile_get_enrolled_status_data(),
+				'compare'  => '=',
+			),
+
+			// Query based on profile field association (so no user tax_query)
+			array(
+				'field_id' => $association_field->id,
+				'value'    => is_a( $association, 'WP_Term' ) ? $association->term_id : $association,
+				'compare'  => '=',
+			)
+		)
+	) );
+
+	if ( $query ) {
+		$members = $query->results;
+	}
+
+	return $members;
+}
+
+/**
  * Return the members that have the same profile field's value
  *
  * @since 1.0.0

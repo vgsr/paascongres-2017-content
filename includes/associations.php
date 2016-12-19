@@ -164,3 +164,32 @@ function paco2017_get_association_title( $user_id = 0 ) {
 
 	return apply_filters( 'paco2017_get_association_title', $title, $user_id, $association );
 }
+
+/**
+ * Return the user count of the enrolled users for the given association
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|string $association Term object or id or name or slug
+ * @return int Enrolled association user count
+ */
+function paco2017_get_enrolled_users_for_association_count( $association ) {
+
+	// Count the queried users
+	$users = paco2017_get_enrolled_users_for_association( $association );
+	$count = count( $users );
+
+	return $count;
+}
+
+/**
+ * Return the enrolled users for the given association
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|string $association Term object or id or name or slug
+ * @return array Enrolled association users
+ */
+function paco2017_get_enrolled_users_for_association( $association ) {
+	return (array) apply_filters( 'paco2017_get_enrolled_users_for_association', array(), $association );
+}
