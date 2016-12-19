@@ -171,6 +171,45 @@ function paco2017_admin_page() { ?>
 }
 
 /**
+ * Act when the Overview admin page is being loaded
+ *
+ * @link wp-admin/index.php
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_load_dashboard_page() {
+
+	/** Load WordPress dashboard API */
+	require_once( ABSPATH . 'wp-admin/includes/dashboard.php' );
+
+	do_action( 'paco2017_dashboard_setup' );
+
+	wp_enqueue_script( 'dashboard' );
+
+	if ( wp_is_mobile() ) {
+		wp_enqueue_script( 'jquery-touch-punch' );
+	}
+}
+
+/**
+ * Output the contents of the Overview admin page
+ *
+ * @link wp-admin/index.php
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_dashboard_page() { ?>
+
+	<div id="dashboard-widgets-wrap">
+
+		<?php wp_dashboard(); ?>
+
+	</div><!-- dashboard-widgets-wrap -->
+
+	<?php
+}
+
+/**
  * Output the contents of the Settings admin page
  *
  * @since 1.0.0
@@ -229,7 +268,7 @@ function paco2017_admin_page_get_pages() {
 
 	// Setup return value
 	$pages = array(
-		'paco2017' => esc_html__( 'Overview', 'paco2017-content' )
+		'paco2017' => esc_html__( 'Dashboard', 'paco2017-content' )
 	);
 
 	// Add the settings page

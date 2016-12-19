@@ -24,17 +24,7 @@ class Paco2017_Admin {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		$this->setup_globals();
 		$this->setup_actions();
-	}
-
-	/**
-	 * Define default class globals
-	 *
-	 * @since 1.0.0
-	 */
-	private function setup_globals() {
-
 	}
 
 	/**
@@ -46,6 +36,9 @@ class Paco2017_Admin {
 		add_action( 'admin_menu',          array( $this, 'admin_menu'        )        );
 		add_action( 'admin_init',          array( $this, 'register_settings' )        );
 		add_filter( 'display_post_states', array( $this, 'post_states'       ), 10, 2 );
+
+		// Dashboard
+		add_action( 'paco2017_dashboard_setup', array( $this, 'add_dashboard_widgets' ) );
 	}
 
 	/** Public methods **************************************************/
@@ -62,9 +55,9 @@ class Paco2017_Admin {
 		// Define local variable
 		$hooks = array( 'post-new.php', 'post.php' );
 
-		// Main admin page
-		add_menu_page(
-			__( 'Paascongres 2017 Administration', 'paco2017-content' ),
+		// Dashboard admin page
+		$dashboard = add_menu_page(
+			__( 'Paascongres 2017 Dashboard', 'paco2017-content' ),
 			__( 'Paascongres', 'paco2017-content' ),
 			'paco2017_admin_page',
 			'paco2017',
@@ -124,9 +117,12 @@ class Paco2017_Admin {
 				'paco2017-settings',
 				'paco2017_admin_page'
 			);
-
-			add_action( 'paco2017_admin_page-paco2017-settings', 'paco2017_admin_settings_page' );
 		}
+
+		// Register admin page hooks
+		add_action( "load-{$dashboard}",                     'paco2017_admin_load_dashboard_page' );
+		add_action( 'paco2017_admin_page-paco2017',          'paco2017_admin_dashboard_page'      );
+		add_action( 'paco2017_admin_page-paco2017-settings', 'paco2017_admin_settings_page'       );
 
 		foreach ( $hooks as $hook ) {
 			add_action( "admin_head-{$hook}", array( $this, 'admin_menu_highlight' ) );
@@ -158,6 +154,15 @@ class Paco2017_Admin {
 			$parent_file  = 'paco2017';
 			$submenu_file = "edit-tags.php?taxonomy={$screen->taxonomy}&post_type=user";
 		}
+	}
+
+	/**
+	 * Add plugin admin dashboard widgets
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_dashboard_widgets() {
+		wp_add_dashboard_widget( 'paco2107_status', __( 'Status In a Glance', 'paco2017-content' ), 'paco2017_dashboard_status' );
 	}
 
 	/**
