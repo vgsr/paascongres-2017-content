@@ -271,7 +271,7 @@ function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
  * @param int $user_id Optional. User ID. Defaults to the current user.
  * @return int Member count of enrolled members within the scope
  */
-function paco2017_bp_get_enrolled_members_count( $scope, $user_id = 0 ) {
+function paco2017_bp_get_enrolled_members_count( $scope = '', $user_id = 0 ) {
 
 	// Get enrolled members within the scope
 	$members = paco2017_bp_get_enrolled_members( $scope, $user_id );
@@ -292,7 +292,7 @@ function paco2017_bp_get_enrolled_members_count( $scope, $user_id = 0 ) {
  * @param int $user_id Optional. User ID. Defaults to the current user.
  * @return array Enrolled members within the scope
  */
-function paco2017_bp_get_enrolled_members( $scope, $user_id = 0 ) {
+function paco2017_bp_get_enrolled_members( $scope = '', $user_id = 0 ) {
 
 	// Get the enrolled and scoped members
 	$enrolled = paco2017_bp_get_members( 'enrollment', $user_id );
