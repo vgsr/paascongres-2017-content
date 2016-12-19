@@ -21,6 +21,15 @@ add_filter( 'map_meta_cap',      'paco2017_map_meta_caps',     10, 4 );
 
 add_filter( 'term_link', 'paco2017_get_association_term_link', 10, 3 );
 
+/** Template ******************************************************************/
+
+add_action( 'wp_enqueue_scripts',    'paco2017_enqueue_styles' );
+add_action( 'admin_enqueue_scripts', 'paco2017_enqueue_styles' );
+
+/** Widgets *******************************************************************/
+
+add_action( 'paco2017_widgets_init', array( 'Paco2017_Enrollments_Widget', 'register' ) );
+
 /** Admin *********************************************************************/
 
 if ( is_admin() ) {

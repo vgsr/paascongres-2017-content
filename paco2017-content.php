@@ -84,6 +84,10 @@ final class Paco2017_Content {
 		$this->includes_dir = trailingslashit( $this->plugin_dir . 'includes' );
 		$this->includes_url = trailingslashit( $this->plugin_url . 'includes' );
 
+		// Assets
+		$this->assets_dir   = trailingslashit( $this->plugin_dir . 'assets' );
+		$this->assets_url   = trailingslashit( $this->plugin_url . 'assets' );
+
 		// Languages
 		$this->lang_dir     = trailingslashit( $this->plugin_dir . 'languages' );
 
@@ -114,6 +118,10 @@ final class Paco2017_Content {
 
 		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php' );
 		require( $this->includes_dir . 'classes/class-wp-term-colors.php'  );
+
+		/** Widgets *****************************************************/
+
+		require( $this->includes_dir . 'classes/class-paco2017-enrollments-widget.php'  );
 
 		/** Admin *******************************************************/
 

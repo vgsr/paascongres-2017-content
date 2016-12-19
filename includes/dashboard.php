@@ -62,3 +62,14 @@ function paco2017_dashboard_status() { ?>
 
 	<?php
 }
+
+/**
+ * Output the current Enrollments status per association
+ *
+ * @since 1.0.0
+ *
+ * @uses Paco2017_Enrollments_Widget
+ */
+function paco2017_dashboard_enrollments() {
+	the_widget( 'Paco2017_Enrollments_Widget', array( 'per_total' => true ) );
+}

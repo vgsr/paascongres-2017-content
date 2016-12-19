@@ -1,0 +1,36 @@
+/**
+ * Paco2017 Content Styles
+ *
+ * @package Paco2017 Content
+ * @subpackage Main
+ */
+
+.wp-admin .paco2017_enrollments_widget {
+	margin: 0;
+}
+
+.paco2017_enrollments_widget dl {
+	margin: 0;
+}
+
+.paco2017_enrollments_widget dt,
+.paco2017_enrollments_widget dd {
+	display: inline-block;
+	margin: 0;
+	padding: 5px 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.paco2017_enrollments_widget dt {
+	width: 75%;
+	padding-left: 10px;
+	font-weight: 600;
+}
+
+.paco2017_enrollments_widget dd {
+	width: 25%;
+	padding-right: 15px;
+	text-align: right;
+}
