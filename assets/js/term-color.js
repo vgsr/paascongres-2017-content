@@ -1,9 +1,3 @@
-/**
- * Paco2017 Content Admin scripts
- *
- * @package Paco2017 Content
- * @subpackage Administration
- */
 jQuery( document ).ready( function( $ ) {
     'use strict';
 
