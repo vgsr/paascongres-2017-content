@@ -257,6 +257,11 @@ function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
 		// Query members by profile field value
 		$field = call_user_func( "paco2017_bp_xprofile_get_{$scope}_field" );
 		$users = paco2017_bp_get_members_by_profile_field_value( $field, $user_id, $value, $compare );
+
+	// Default to all site members
+	} elseif ( empty( $scope ) ) {
+		$users = get_users();
+		$users = array_combine( wp_list_pluck( $users, 'ID' ), $users );
 	}
 
 	return (array) $users;
