@@ -12,6 +12,8 @@ defined( 'ABSPATH' ) || exit;
 
 // Activity: Template
 add_filter( 'bp_get_activity_show_filters_options', 'paco2017_bp_activity_filters_options', 10, 2 );
+add_filter( 'bp_activity_can_comment',              '__return_false'                              );
+add_filter( 'bp_activity_can_favorite',             '__return_false'                              );
 
 // Members: Template
 add_action( 'bp_members_directory_member_types',   'paco2017_bp_members_directory_tabs'                );
