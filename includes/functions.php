@@ -53,6 +53,22 @@ function paco2017_get_housekeeping_page_id() {
 /** Template ******************************************************************/
 
 /**
+ * Return whether the given background color requires a light text color
+ *
+ * @link Calculation of perceptive luminance. http://stackoverflow.com/a/1855903/3601434
+ *
+ * @since 1.0.0
+ *
+ * @param array $rgb Array of RGB color values
+ * @return bool Whether a lighter textcolor is required
+ */
+function paco2017_light_textcolor_for_background( $rgb ) {
+	$luminance = 1 - ( 0.299 * $rgb[0] + 0.587 * $rgb[1] + 0.114 * $rgb[2] ) / 255;
+
+	return $luminance > .5;
+}
+
+/**
  * Enqueue plugin styles
  *
  * @since 1.0.0
@@ -79,7 +95,7 @@ function paco2017_enqueue_styles() {
 			$rgb       = array( hexdec( substr( $_color, 0, 2 ) ), hexdec( substr( $_color, 2, 2 ) ), hexdec( substr( $_color, 4, 2 ) ) );
 
 			// Dark text on light backgrounds
-			$textcolor = ( $rgb[0] > 200 || $rgb[1] > 200 || $rgb[2] > 200 ) ? 'color: inherit;' : 'color: #fff;';
+			$textcolor = paco2017_light_textcolor_for_background( $rgb ) ? 'color: #fff;' : 'color: inherit;';
 
 			$css[] = ".paco2017_enrollments_widget .paco2017-association-{$term->term_id}, .paco2017_enrollments_widget .paco2017-association-{$term->term_id} + dd { background: rgba({$rgb[0]},{$rgb[1]},{$rgb[2]},.6); {$textcolor} }";
 		}

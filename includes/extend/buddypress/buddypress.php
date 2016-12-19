@@ -246,7 +246,7 @@ class Paco2017_BuddyPress {
 				$rgb       = array( hexdec( substr( $_color, 0, 2 ) ), hexdec( substr( $_color, 2, 2 ) ), hexdec( substr( $_color, 4, 2 ) ) );
 
 				// Dark text on light backgrounds
-				$textcolor = ( $rgb[0] > 200 || $rgb[1] > 200 || $rgb[2] > 200 ) ? 'color: inherit' : '';
+				$textcolor = ! paco2017_light_textcolor_for_background( $rgb ) ? 'color: inherit;' : '';
 
 				// Define badge label and color
 				$css[] = ".paco2017-association-{$term->term_id} .paco2017-association-badge:before { content: '{$term->name}'; }";
