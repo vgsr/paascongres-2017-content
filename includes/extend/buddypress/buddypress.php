@@ -96,9 +96,10 @@ class Paco2017_BuddyPress {
 		}, 8 );
 
 		// General limitations
-		add_action( 'bp_init',            array( $this, 'hide_components_parts' ),  5    );
-		add_action( 'bp_enqueue_scripts', array( $this, 'enqueue_scripts'       ), 90    );
-		add_filter( 'bp_map_meta_caps',   array( $this, 'map_meta_cap'          ), 20, 4 );
+		add_action( 'bp_init',               array( $this, 'hide_components_parts' ),  5    );
+		add_action( 'bp_enqueue_scripts',    array( $this, 'enqueue_scripts'       ), 90    );
+		add_filter( 'bp_map_meta_caps',      array( $this, 'map_meta_cap'          ), 20, 4 );
+		add_filter( 'bp_get_the_body_class', array( $this, 'body_class'            ), 10, 4 );
 
 		// Unhide BuddyPress from VGSR
 		if ( function_exists( 'vgsr' ) ) {
@@ -297,6 +298,31 @@ class Paco2017_BuddyPress {
 		}
 
 		return $caps;
+	}
+
+	/**
+	 * Modify BP's body classes
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $classes Array of body classes
+	 * @param array $bp_classes Array of BP classes
+	 * @param array $wp_classes Array of WP classes
+	 * @param array $custom_classes Array of custom classes
+	 * @return array Body classes
+	 */
+	public function body_class( $classes, $bp_classes, $wp_classes, $custom_classes ) {
+
+		// Single member
+		if ( bp_is_user() ) {
+
+			// Add displayed user's association class
+			if ( $association = paco2017_bp_xprofile_get_association_value( bp_displayed_user_id() ) ) {
+				$classes[] = 'paco2017-association-' . $association;
+			}
+		}
+
+		return $classes;
 	}
 }
 
