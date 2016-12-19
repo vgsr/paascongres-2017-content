@@ -11,6 +11,45 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Act when the Dashboard admin page is being loaded
+ *
+ * @see wp-admin/index.php
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_load_dashboard_page() {
+
+	/** Load WordPress dashboard API */
+	require_once( ABSPATH . 'wp-admin/includes/dashboard.php' );
+
+	do_action( 'paco2017_dashboard_setup' );
+
+	wp_enqueue_script( 'dashboard' );
+
+	if ( wp_is_mobile() ) {
+		wp_enqueue_script( 'jquery-touch-punch' );
+	}
+}
+
+/**
+ * Output the contents of the Dashboard admin page
+ *
+ * @see wp-admin/index.php
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_dashboard_page() { ?>
+
+	<div id="dashboard-widgets-wrap">
+
+		<?php wp_dashboard(); ?>
+
+	</div><!-- dashboard-widgets-wrap -->
+
+	<?php
+}
+
+/**
  * Output the contents of the Enrollment Status dashboard widget
  *
  * @since 1.0.0
