@@ -17,6 +17,10 @@ add_action( 'widgets_init',      'paco2017_widgets_init'             );
 add_action( 'after_setup_theme', 'paco2017_after_setup_theme'        );
 add_filter( 'map_meta_cap',      'paco2017_map_meta_caps',     10, 4 );
 
+/** Association ***************************************************************/
+
+add_filter( 'term_link', 'paco2017_get_association_term_link', 10, 3 );
+
 /** Admin *********************************************************************/
 
 if ( is_admin() ) {

@@ -55,3 +55,22 @@ function paco2017_get_workshop_post_type_caps() {
 		'delete_others_posts' => 'delete_others_paco2017_workshops'
 	) );
 }
+
+/** Association ***************************************************************/
+
+/**
+ * Return the capability mappings for the Association taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_association_tax_caps'
+ * @return array Association taxonomy caps
+ */
+function paco2017_get_association_tax_caps() {
+	return apply_filters( 'paco2017_get_association_tax_caps', array(
+		'manage_terms' => 'manage_paco2017_associations',
+		'edit_terms'   => 'edit_paco2017_associations',
+		'delete_terms' => 'delete_paco2017_associations',
+		'assign_terms' => 'assign_paco2017_associations'
+	) );
+}

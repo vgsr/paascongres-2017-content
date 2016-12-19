@@ -233,6 +233,34 @@ class Paco2017_BuddyPress {
 		wp_enqueue_style( 'dashicons' );
 		wp_enqueue_style( 'paco2017-buddypress', $this->assets_url . 'css/paco2017-buddypress.css' );
 
+		// Define customs styles
+		$css = array();
+
+		// Association styles
+		foreach ( get_terms( array(
+			'taxonomy' => paco2017_get_association_tax_id(),
+		) ) as $term ) {
+
+			// Colors
+			if ( $color = get_term_meta( $term->term_id, 'color', true ) ) {
+
+				// Turn hex to rgb
+				$_color    = sanitize_hex_color_no_hash( $color );
+				$rgb       = array( hexdec( substr( $_color, 0, 2 ) ), hexdec( substr( $_color, 2, 2 ) ), hexdec( substr( $_color, 4, 2 ) ) );
+
+				// Dark text on light backgrounds
+				$textcolor = ( $rgb[0] > 200 || $rgb[1] > 200 || $rgb[2] > 200 ) ? 'color: inherit' : '';
+
+				// Define badge color
+				$css[]  = ".paco2017-association-{$term->term_id} .paco2017-association-badge { border-color: {$color}; background-color: rgba({$rgb[0]},{$rgb[1]},{$rgb[2]},.6); {$textcolor} }";
+			}
+		}
+
+		// Append styles
+		if ( ! empty( $css ) ) {
+			wp_add_inline_style( 'paco2017-buddypress', implode( "\n", $css ) );
+		}
+
 		/** Companion Styles ********************************************/
 
 		$template  = get_template();

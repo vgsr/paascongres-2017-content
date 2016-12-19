@@ -103,11 +103,17 @@ final class Paco2017_Content {
 		/** Core ********************************************************/
 
 		require( $this->includes_dir . 'actions.php'      );
+		require( $this->includes_dir . 'associations.php' );
 		require( $this->includes_dir . 'capabilities.php' );
 		require( $this->includes_dir . 'functions.php'    );
 		require( $this->includes_dir . 'lectors.php'      );
 		require( $this->includes_dir . 'workshops.php'    );
 		require( $this->includes_dir . 'sub-actions.php'  );
+
+		/** Classes *****************************************************/
+
+		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php' );
+		require( $this->includes_dir . 'classes/class-wp-term-colors.php'  );
 
 		/** Admin *******************************************************/
 
@@ -137,6 +143,7 @@ final class Paco2017_Content {
 
 		// Register content
 		add_action( 'paco2017_init', array( $this, 'register_post_types' ) );
+		add_action( 'paco2017_init', array( $this, 'register_taxonomies' ) );
 	}
 
 	/** Plugin **********************************************************/
@@ -234,6 +241,49 @@ final class Paco2017_Content {
 				// 'menu_icon'           => 'dashicons-format-aside'
 			)
 		);
+	}
+
+	/**
+	 * Register initial plugin taxonomies
+	 *
+	 * @since 1.0.0
+	 */
+	public function register_taxonomies() {
+
+		/** Association *************************************************/
+
+		register_taxonomy(
+			paco2017_get_association_tax_id(),
+			'user',
+			array(
+				'labels'                => paco2017_get_association_tax_labels(),
+				'capabilities'          => paco2017_get_association_tax_caps(),
+				'update_count_callback' => '_update_generic_term_count',
+				'hierarchical'          => false,
+				'public'                => true,
+				'rewrite'               => false, // No rewriting necessary
+				'query_var'             => false, // No query vars necessary
+				'show_tagcloud'         => false,
+				'show_in_quick_edit'    => true,
+				'show_admin_column'     => true,
+				'show_in_nav_menus'     => false,
+				'show_ui'               => current_user_can( 'paco2017_association_admin' ),
+				'meta_box_cb'           => false, // No metaboxing
+
+				// Term meta
+				'term_meta_color'       => true,
+			)
+		);
+
+		/** Meta ********************************************************/
+
+		// Color
+		add_filter( 'wp_term_color_get_taxonomies', function( $args ) {
+			$args['term_meta_color'] = true;
+			return $args;
+		});
+
+		new WP_Term_Colors( $this->file );
 	}
 }
 

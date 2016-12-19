@@ -97,6 +97,23 @@ class Paco2017_Admin {
 			);
 		}
 
+		// Manage Associations
+		if ( $taxonomy = get_taxonomy( paco2017_get_association_tax_id() ) ) {
+
+			// Add taxonomy page as submenu
+			add_submenu_page(
+				'paco2017',
+				$taxonomy->labels->name,
+				$taxonomy->labels->menu_name,
+				$taxonomy->cap->manage_terms,
+				"edit-tags.php?taxonomy={$taxonomy->name}&post_type=user"
+			);
+
+			// List menu pagesuffixes to highlight
+			$hooks[] = 'edit-tags.php';
+			$hooks[] = 'term.php';
+		}
+
 		// Settings page
 		if ( paco2017_admin_page_has_settings( 'paco2017' ) ) {
 			add_submenu_page(
@@ -123,15 +140,23 @@ class Paco2017_Admin {
 	 *
 	 * @global string $parent_file
 	 * @global string $submenu_file
-	 * @global string $post_type
 	 */
 	public function admin_menu_highlight() {
-		global $parent_file, $submenu_file, $post_type;
+		global $parent_file, $submenu_file;
+
+		// Get the screen
+		$screen = get_current_screen();
 
 		// This tweaks the post type subnav menus to show the right top menu and submenu item.
-		if ( in_array( $post_type, array( paco2017_get_lector_post_type(), paco2017_get_workshop_post_type() ) ) ) {
+		if ( in_array( $screen->post_type, array( paco2017_get_lector_post_type(), paco2017_get_workshop_post_type() ) ) ) {
 			$parent_file  = 'paco2017';
-			$submenu_file = "edit.php?post_type={$post_type}";
+			$submenu_file = "edit.php?post_type={$screen->post_type}";
+		}
+
+		// This tweaks the taxonomy subnav menus to show the right top menu and submenu item.
+		if ( in_array( $screen->taxonomy, array( paco2017_get_association_tax_id() ) ) ) {
+			$parent_file  = 'paco2017';
+			$submenu_file = "edit-tags.php?taxonomy={$screen->taxonomy}&post_type=user";
 		}
 	}
 

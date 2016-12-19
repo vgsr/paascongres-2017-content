@@ -29,7 +29,8 @@ add_action( 'bp_pre_user_query',                   'paco2017_bp_pre_user_query',
 add_action( 'bp_user_query_uid_clauses',           'paco2017_bp_user_query_uid_clauses',         10, 2 );
 
 // XProfile
-add_filter( 'bp_xprofile_get_groups', 'paco2017_bp_xprofile_no_edit_association_field', 10, 2 );
+add_filter( 'bp_xprofile_get_groups',   'paco2017_bp_xprofile_no_edit_association_field', 10, 2 );
+add_action( 'xprofile_data_after_save', 'paco2017_bp_xprofile_sync_association_term'            );
 
 // Admin
 if ( is_admin() ) {

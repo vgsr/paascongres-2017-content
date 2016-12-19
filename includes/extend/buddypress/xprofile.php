@@ -82,7 +82,18 @@ function paco2017_bp_xprofile_association_title( $user_id = 0 ) {
  * @return string The member's association title
  */
 function paco2017_bp_xprofile_get_association_title( $user_id = 0 ) {
-	return paco2017_bp_xprofile_get_association_value( $user_id );
+
+	// Get the profile field
+	$field = paco2017_bp_xprofile_get_association_field();
+
+	// Relationship field, get term title
+	if ( $field && 'relationship' === $field->type ) {
+		$title = paco2017_get_association_title( $user_id );
+	} else {
+		$title = paco2017_bp_xprofile_get_association_value( $user_id );
+	}
+
+	return $title;
 }
 
 /**
@@ -105,7 +116,13 @@ function paco2017_bp_xprofile_get_association_value( $user_id = 0 ) {
 
 	// Read the user's profile field value
 	if ( $field = paco2017_bp_xprofile_get_association_field() ) {
-		$association = xprofile_get_field_data( $field->id, $user_id );
+
+		// Relationship field, get unfiltered value
+		if ( 'relationship' === $field->type ) {
+			$association = BP_XProfile_ProfileData::get_value_byid( $field->id, $user_id );
+		} else {
+			$association = xprofile_get_field_data( $field->id, $user_id );
+		}
 	}
 
 	return $association;
@@ -184,6 +201,47 @@ function paco2017_bp_xprofile_no_edit_association_field( $groups, $args ) {
 	}
 
 	return $groups;
+}
+
+/**
+ * Sync the associaiton profile field with term assignment
+ *
+ * @since 1.0.0
+ *
+ * @param BP_XProfile_ProfileData $field_data
+ */
+function paco2017_bp_xprofile_sync_association_term( $field_data ) {
+
+	// Get the association profile field
+	$field = paco2017_bp_xprofile_get_association_field();
+
+	// Bail when this is not the association profile field
+	if ( ! $field || $field->id !== $field_data->field_id )
+		return;
+
+	// Get the taxonomy
+	$taxonomy = paco2017_get_association_tax_id();
+
+	// Bail when this is not an association's relationship field
+	if ( 'relationship' !== $field->type || 'taxonomy-' . $taxonomy !== bp_xprofile_get_meta( $field->id, 'field', 'related_to' ) )
+		return;
+
+	// Get the term's ID from the saved value
+	$term_id = $field_data->value;
+
+	// Force integers when dealing with IDs
+	if ( is_numeric( $term_id ) ) {
+		$term_id = (int) $term_id;
+	}
+
+	// Data was updated, so set new term relationship
+	if ( ! empty( $term_id ) ) {
+		wp_set_object_terms( $field_data->user_id, $term_id, $taxonomy );
+
+	// Data was removed, so remove all term relationships
+	} elseif ( $terms = wp_get_object_terms( $field_data->user_id, $taxonomy ) ) {
+		wp_remove_object_terms( $field_data->user_id, $terms, $taxonomy );
+	}
 }
 
 /** Options ***************************************************************/
