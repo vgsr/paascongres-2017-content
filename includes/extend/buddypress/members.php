@@ -30,7 +30,7 @@ function paco2017_bp_members_directory_tabs() {
 	// My Association
 	if ( paco2017_bp_xprofile_get_association_field() ) {
 		printf( '<li id="members-%s"><a href="#">%s <span>%s</span></a></li>',
-			'paco2017_association',
+			paco2017_bp_members_get_association_scope(),
 			paco2017_bp_xprofile_get_association_title(),
 			// __( 'My Association', 'paco2017-content' ),
 			sprintf( '%s/%s', paco2017_bp_get_enrolled_members_count( 'association' ), paco2017_bp_get_members_count( 'association' ) )
@@ -47,7 +47,7 @@ function paco2017_bp_members_directory_order_options() {
 
 	// Newest Enrolled
 	if ( paco2017_bp_xprofile_get_enrollment_field() ) : ?>
-		<option value="paco2017_enrollment"><?php esc_html_e( 'Newest Enrolled', 'paco2017-content' ); ?></option>
+		<option value="<?php echo paco2017_bp_members_get_enrolled_scope(); ?>"><?php esc_html_e( 'Newest Enrolled', 'paco2017-content' ); ?></option>
 	<?php endif;
 }
 
@@ -74,6 +74,28 @@ function paco2017_bp_members_get_query_scope() {
 }
 
 /**
+ * Return the Enrolled scope key
+ *
+ * @since 1.0.0
+ *
+ * @return string Enrolled scope key
+ */
+function paco2017_bp_members_get_enrolled_scope() {
+	return 'paco2017_enrollment';
+}
+
+/**
+ * Return the Association scope key
+ *
+ * @since 1.0.0
+ *
+ * @return string Association scope key
+ */
+function paco2017_bp_members_get_association_scope() {
+	return 'paco2017_association';
+}
+
+/**
  * Return whether we're viewing the Enrolled members scope
  *
  * @since 1.0.0
@@ -81,7 +103,7 @@ function paco2017_bp_members_get_query_scope() {
  * @return bool Is this the Enrolled members scope?
  */
 function paco2017_bp_members_is_enrolled_scope() {
-	return ( 'paco2017_enrollment' === paco2017_bp_members_get_query_scope() );
+	return ( paco2017_bp_members_get_enrolled_scope() === paco2017_bp_members_get_query_scope() );
 }
 
 /**
@@ -92,7 +114,7 @@ function paco2017_bp_members_is_enrolled_scope() {
  * @return bool Is this the Association members scope?
  */
 function paco2017_bp_members_is_association_scope() {
-	return ( 'paco2017_association' === paco2017_bp_members_get_query_scope() );
+	return ( paco2017_bp_members_get_association_scope() === paco2017_bp_members_get_query_scope() );
 }
 
 /**
@@ -367,7 +389,7 @@ function paco2017_bp_ajax_query_string( $query_string, $context = '' ) {
 
 	// Default the primary member query to list Enrolled members only
 	if ( 'members' === $context && ! in_array( 'scope', array_keys( wp_parse_args( $query_string ) ) ) ) {
-		$query_string .= '&scope=paco2017_enrollment';
+		$query_string .= '&scope=' . paco2017_bp_members_get_enrolled_scope();
 	}
 
 	return $query_string;
@@ -511,7 +533,7 @@ function paco2017_bp_user_query_uid_clauses( $sql, $user_query ) {
 	$qv = $user_query->query_vars;
 
 	// Ordering by Newest Enrolled
-	if ( 'paco2017_enrollment' === $qv['type'] && $field = paco2017_bp_xprofile_get_enrollment_field() ) {
+	if ( paco2017_bp_members_get_enrolled_scope() === $qv['type'] && $field = paco2017_bp_xprofile_get_enrollment_field() ) {
 
 		// Join with profile data
 		$sql['select'] .= $wpdb->prepare( " LEFT JOIN {$bp->profile->table_name_data} enrolled ON u.{$user_query->uid_name} = enrolled.user_id AND enrolled.field_id = %d", $field->id );
