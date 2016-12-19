@@ -125,6 +125,7 @@ final class Paco2017_Content {
 		/** Extend ******************************************************/
 
 		require( $this->includes_dir . 'extend/buddypress/buddypress.php' );
+		require( $this->includes_dir . 'extend/wordpress-seo.php'         );
 	}
 
 	/**
