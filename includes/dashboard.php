@@ -59,6 +59,7 @@ function paco2017_dashboard_status() {
 	$blog_id = get_current_blog_id();
 
 	// Get counts
+	$enrolled_count = paco2017_get_enrolled_users_count();
 	$user_count = wp_cache_get( $blog_id . '_user_count', 'blog-details' );
 	if ( ! $user_count ) {
 		$blog_users = get_users( array( 'blog_id' => $blog_id, 'fields' => 'ID' ) );
@@ -77,16 +78,22 @@ function paco2017_dashboard_status() {
 	// Collect statuses to display
 	$statuses = apply_filters( 'paco2017_dashboard_statuses', array(
 
+		// Enrolled
+		'enrolled-count' => sprintf( '<a href="%s">%s</a>',
+			esc_url( add_query_arg( array( 'enrolled' => 1 ), admin_url( 'users.php' ) ) ),
+			sprintf( _n( '%s Enrolled', '%s Enrolled', $enrolled_count, 'paco2017-content' ), $enrolled_count )
+		),
+
 		// Users
 		'user-count'     => sprintf( '<a href="%s">%s</a>',
 			esc_url( admin_url( 'users.php' ) ),
-			sprintf( _n( '%s Account',  '%s Accounts',  $user_count,     'paco2017-content' ), $user_count     )
+			sprintf( _n( '%s Account', '%s Accounts', $user_count, 'paco2017-content' ), $user_count )
 		),
 
 		// Lectors
 		'lector-count'   => sprintf( '<a href="%s">%s</a>',
-			esc_url( add_query_arg( array( 'post_type' => $lector_post_type   ), admin_url( 'edit.php' ) ) ),
-			sprintf( _n( '%s Lector',   '%s Lectors',   $lector_count,   'paco2017-content' ), $lector_count   )
+			esc_url( add_query_arg( array( 'post_type' => $lector_post_type ), admin_url( 'edit.php' ) ) ),
+			sprintf( _n( '%s Lector', '%s Lectors', $lector_count, 'paco2017-content' ), $lector_count )
 		),
 
 		// Workshops
@@ -111,7 +118,7 @@ function paco2017_dashboard_status() {
 
 		<?php else : ?>
 
-		<p><?php esc_html_e( 'There is currently nothing to display here.', 'paco2017-content' ); ?></p>
+		<p class="description"><?php esc_html_e( 'There is currently nothing to display here.', 'paco2017-content' ); ?></p>
 
 		<?php endif; ?>
 	</div>
@@ -120,12 +127,20 @@ function paco2017_dashboard_status() {
 }
 
 /**
- * Output the current Enrollments status per association
+ * Output the current Enrollments status overall and per association
  *
  * @since 1.0.0
  *
  * @uses Paco2017_Enrollments_Widget
  */
-function paco2017_dashboard_enrollments() {
+function paco2017_dashboard_enrollments() { ?>
+
+	<div class="main">
+		<span><?php paco2017_enrolled_users_count(); ?></span>
+	</div>
+
+	<?php
+
+	// Display per-association enrollments
 	the_widget( 'Paco2017_Enrollments_Widget', array( 'per_total' => true ) );
 }

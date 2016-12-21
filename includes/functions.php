@@ -39,6 +39,27 @@ function paco2017_get_workshop_slug() {
 /** Options *******************************************************************/
 
 /**
+ * Output the enrolled users count
+ *
+ * @since 1.0.0
+ */
+function paco2017_enrolled_users_count() {
+	echo paco2017_get_enrolled_users_count();
+}
+
+/**
+ * Return the enrolled users count
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_enrolled_users_count'
+ * @return int Enrolled user count
+ */
+function paco2017_get_enrolled_users_count() {
+	return apply_filters( 'paco2017_get_enrolled_users_count', 0 );
+}
+
+/**
  * Return the page ID of the Housekeeping page setting
  *
  * @since 1.0.0

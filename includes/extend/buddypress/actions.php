@@ -30,6 +30,7 @@ add_filter( 'bp_before_core_get_users_parse_args', 'paco2017_bp_parse_core_get_u
 add_action( 'bp_pre_user_query',                   'paco2017_bp_pre_user_query',                  5    );
 add_action( 'bp_user_query_uid_clauses',           'paco2017_bp_user_query_uid_clauses',         10, 2 );
 
+add_filter( 'paco2017_get_enrolled_users_count',           'paco2017_bp_get_enrolled_members_count'                  );
 add_filter( 'paco2017_get_enrolled_users_for_association', 'paco2017_bp_get_enrolled_members_for_association', 10, 2 );
 
 // XProfile

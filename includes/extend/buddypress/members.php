@@ -431,14 +431,10 @@ function paco2017_bp_get_members_by_profile_field_value( $field, $user_id, $valu
  */
 function paco2017_bp_members_dashboard_statuses( $statuses ) {
 
-	// Get counts
-	$enrolled = paco2017_bp_get_enrolled_members_count();
-
-	// Prepend Enrolled members
-	$statuses = array( 'enrolled-count' => sprintf( '<a href="%s">%s</a>',
-		bp_get_members_directory_permalink(),
-		sprintf( _n( '%s Enrollment', '%s Enrollments', $enrolled, 'paco2017-content' ), $enrolled )
-	) ) + $statuses;
+	// Enrolled members link to Pofiles
+	if ( isset( $statuses['enrolled-count'] ) ) {
+		$statuses['enrolled-count'] = preg_replace( "/href=\"(.*)\"/", 'href="'. esc_url( bp_get_members_directory_permalink() ) . '"', $statuses['enrolled-count'] );
+	}
 
 	return $statuses;
 }

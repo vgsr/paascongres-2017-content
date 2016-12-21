@@ -39,6 +39,10 @@
 	padding: 0 5px 0 0;
 }
 
+#paco2017_dashboard_status .enrolled-count a:before {
+	content: '\f147'; /* dashicons-yes */
+}
+
 #paco2017_dashboard_status .user-count a:before {
 	content: '\f110'; /* dashicons-admin-users */
 }
@@ -49,6 +53,45 @@
 
 #paco2017_dashboard_status .workshop-count a:before {
 	content: '\f107'; /* dashicons-admin-tools */
+}
+
+#paco2017_dashboard_enrollments .main {
+	text-align: center;
+	margin-bottom: 1.5rem;
+}
+
+#paco2017_dashboard_enrollments .main span {
+	font-size: 6rem;
+	line-height: 6rem;
+}
+
+#paco2017_dashboard_enrollments .paco2017_enrollments_widget {
+	margin: 0;
+}
+
+#paco2017_dashboard_enrollments .paco2017_enrollments_widget dl {
+	margin: 0;
+	column-count: 2;
+}
+
+.paco2017_enrollments_widget dt,
+.paco2017_enrollments_widget dd {
+	display: inline-block;
+	margin: 0 0 5px 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.paco2017_enrollments_widget dt {
+	width: 60%;
+	font-weight: 600;
+}
+
+.paco2017_enrollments_widget dd {
+	width: 40%;
+	padding-right: 15px;
+	text-align: right;
 }
 
 /* Users.php */

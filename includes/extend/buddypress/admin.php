@@ -33,7 +33,6 @@ class Paco2017_BuddyPress_Admin {
 	 * @since 1.0.0
 	 */
 	private function setup_actions() {
-
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// XProfile
@@ -58,10 +57,6 @@ class Paco2017_BuddyPress_Admin {
 		// XProfile fields
 		if ( 'users_page_bp-profile-setup' === $screen->id ) {
 			$css[] = ".post-state { color: #555; font-weight: 600; }";
-
-		// Plugin dashboard
-		} elseif ( 'toplevel_page_paco2017' === $screen->id ) {
-			$css[] = "#paco2017_dashboard_status .enrolled-count a:before { content: '\\f147'; }"; /* dashicons-yes */
 		}
 
 		// Appens styles

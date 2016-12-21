@@ -23,8 +23,7 @@ add_filter( 'term_link', 'paco2017_get_association_term_link', 10, 3 );
 
 /** Template ******************************************************************/
 
-add_action( 'wp_enqueue_scripts',    'paco2017_enqueue_styles' );
-add_action( 'admin_enqueue_scripts', 'paco2017_enqueue_styles' );
+add_action( 'wp_enqueue_scripts', 'paco2017_enqueue_styles' );
 
 /** Widgets *******************************************************************/
 
