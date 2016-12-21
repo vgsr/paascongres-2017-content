@@ -37,6 +37,8 @@ class Paco2017_Admin {
 		add_action( 'admin_init',          array( $this, 'register_settings' )        );
 		add_filter( 'display_post_states', array( $this, 'post_states'       ), 10, 2 );
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' )        );
+
 		// Dashboard
 		add_action( 'paco2017_dashboard_setup', array( $this, 'add_dashboard_widgets' ) );
 
@@ -159,6 +161,15 @@ class Paco2017_Admin {
 			$parent_file  = 'paco2017';
 			$submenu_file = "edit-tags.php?taxonomy={$screen->taxonomy}&post_type=user";
 		}
+	}
+
+	/**
+	 * Enqueue admin scripts and styles
+	 *
+	 * @since 1.0.0
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_style( 'paco2017-admin', paco2017_content()->assets_url . 'css/admin.css', array( 'common' ) );
 	}
 
 	/**

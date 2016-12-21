@@ -1,0 +1,45 @@
+/**
+ * Paco2017 Content Administration Styles
+ *
+ * @package Paco2017 Content
+ * @subpackage Administration
+ */
+
+/* Plugin Dashboard */
+
+#paco2017_dashboard_status ul {
+	margin: 0;
+	display: inline-block;
+	width: 100%;
+}
+
+#paco2017_dashboard_status li {
+	width: 50%;
+	float: left;
+	margin-bottom: 10px;
+}
+
+#paco2017_dashboard_status li a:before,
+#paco2017_dashboard_status li span:before {
+	color: #82878c;
+	font: normal 20px/1 dashicons;
+	speak: none;
+	display: inline-block;
+	padding: 0 10px 0 0;
+	position: relative;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-decoration: none !important;
+	vertical-align: top;
+}
+
+#paco2017_dashboard_status li a:before,
+#paco2017_dashboard_status li span:before {
+	content: '\f159';
+	padding: 0 5px 0 0;
+}
+
+/* Users.php */
+.fixed .column-paco2017_association {
+	width: 10%;
+}
