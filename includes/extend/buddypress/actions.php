@@ -40,6 +40,9 @@ add_action( 'xprofile_data_after_save', 'paco2017_bp_xprofile_sync_association_t
 if ( is_admin() ) {
 	add_action( 'init', 'paco2017_buddypress_admin' );
 
+	// Dashboard
+	add_filter( 'paco2017_dashboard_statuses', 'paco2017_bp_members_dashboard_statuses' );
+
 	// Settings
 	add_filter( 'paco2017_admin_get_settings_sections', 'paco2017_bp_add_settings_sections' );
 	add_filter( 'paco2017_admin_get_settings_fields',   'paco2017_bp_add_settings_fields'   );

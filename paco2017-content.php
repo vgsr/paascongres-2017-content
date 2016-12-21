@@ -223,7 +223,7 @@ final class Paco2017_Content {
 				'can_export'          => true,
 				'show_in_rest'        => true,
 				// 'taxonomies'          => array( 'paco2017_lector_category' ),
-				// 'menu_icon'           => 'dashicons-format-aside'
+				'menu_icon'           => 'dashicons-businessman'
 			)
 		);
 
@@ -248,7 +248,7 @@ final class Paco2017_Content {
 				'can_export'          => true,
 				'show_in_rest'        => true,
 				// 'taxonomies'          => array( 'paco2017_workshop_category' ),
-				// 'menu_icon'           => 'dashicons-format-aside'
+				'menu_icon'           => 'dashicons-admin-tools'
 			)
 		);
 	}

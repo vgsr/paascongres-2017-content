@@ -419,6 +419,30 @@ function paco2017_bp_get_members_by_profile_field_value( $field, $user_id, $valu
 	return $users;
 }
 
+/** Dashboard ***********************************************************/
+
+/**
+ * Modify the list of dashboard statuses in the Status widget
+ *
+ * @since 1.0.0
+ *
+ * @param array $statuses Statuses
+ * @return array Statuses
+ */
+function paco2017_bp_members_dashboard_statuses( $statuses ) {
+
+	// Get counts
+	$enrolled = paco2017_bp_get_enrolled_members_count();
+
+	// Prepend Enrolled members
+	$statuses = array( 'enrolled-count' => sprintf( '<a href="%s">%s</a>',
+		bp_get_members_directory_permalink(),
+		sprintf( _n( '%s Enrollment', '%s Enrollments', $enrolled, 'paco2017-content' ), $enrolled )
+	) ) + $statuses;
+
+	return $statuses;
+}
+
 /** Query ***************************************************************/
 
 /**

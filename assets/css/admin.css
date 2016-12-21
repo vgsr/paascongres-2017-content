@@ -39,6 +39,18 @@
 	padding: 0 5px 0 0;
 }
 
+#paco2017_dashboard_status .user-count a:before {
+	content: '\f110'; /* dashicons-admin-users */
+}
+
+#paco2017_dashboard_status .lector-count a:before {
+	content: '\f338'; /* dashicons-businessman */
+}
+
+#paco2017_dashboard_status .workshop-count a:before {
+	content: '\f107'; /* dashicons-admin-tools */
+}
+
 /* Users.php */
 .fixed .column-paco2017_association {
 	width: 10%;

@@ -55,13 +55,13 @@ class Paco2017_BuddyPress_Admin {
 		// Define additional custom styles
 		$css = array();
 
-		// users.php
-		if ( 'users' === $screen->id ) {
-			$css[] = ".fixed .column-paco2017_association { width: 10%; }";
-
 		// XProfile fields
-		} elseif ( 'users_page_bp-profile-setup' === $screen->id ) {
+		if ( 'users_page_bp-profile-setup' === $screen->id ) {
 			$css[] = ".post-state { color: #555; font-weight: 600; }";
+
+		// Plugin dashboard
+		} elseif ( 'toplevel_page_paco2017' === $screen->id ) {
+			$css[] = "#paco2017_dashboard_status .enrolled-count a:before { content: '\\f147'; }"; /* dashicons-yes */
 		}
 
 		// Appens styles
