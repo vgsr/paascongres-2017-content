@@ -275,7 +275,7 @@ final class Paco2017_Content {
 				'query_var'             => false, // No query vars necessary
 				'show_tagcloud'         => false,
 				'show_in_quick_edit'    => true,
-				'show_admin_column'     => true,
+				'show_admin_column'     => false, // User taxonomies are not supported in WP
 				'show_in_nav_menus'     => false,
 				'show_ui'               => current_user_can( 'paco2017_association_admin' ),
 				'meta_box_cb'           => false, // No metaboxing

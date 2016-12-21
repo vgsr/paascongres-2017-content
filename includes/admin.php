@@ -39,6 +39,11 @@ class Paco2017_Admin {
 
 		// Dashboard
 		add_action( 'paco2017_dashboard_setup', array( $this, 'add_dashboard_widgets' ) );
+
+		// Users.php
+		add_filter( 'manage_users_columns',       array( $this, 'users_add_columns'   )        );
+		add_filter( 'manage_users_custom_column', array( $this, 'users_custom_column' ), 10, 3 );
+		add_action( 'pre_user_query',             array( $this, 'pre_user_query'      )        );
 	}
 
 	/** Public methods **************************************************/
@@ -234,6 +239,84 @@ class Paco2017_Admin {
 		}
 
 		return $states;
+	}
+
+	/**
+	 * Modify the list of columns in the users list table
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $columns Columns
+	 * @return array Columns
+	 */
+	public function users_add_columns( $columns ) {
+
+		// Put user Association before the Role column
+		$pos = array_search( 'role', array_keys( $columns ) );
+
+		// Insert before the 'Role' column
+		$columns = array_slice( $columns, 0, $pos ) + array(
+			'paco2017_association' => esc_html__( 'Association', 'paco2017-content' )
+		) + array_slice( $columns, $pos );
+
+		return $columns;
+	}
+
+	/**
+	 * Output content of the users list table columns
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $column Column name
+	 * @param int $user_id User ID
+	 * @return string Column content
+	 */
+	public function users_custom_column( $content, $column, $user_id ) {
+
+		// Association
+		if ( 'paco2017_association' === $column ) {
+			$association = wp_get_object_terms( $user_id, paco2017_get_association_tax_id() );
+
+			if ( ! empty( $association ) ) {
+				$url = add_query_arg( array( 'paco2017-association' => urlencode( $association[0]->term_id ) ) );
+				$content .= '<a href="' . esc_url( $url ) . '">' . $association[0]->name . '</a>';
+			} else {
+				$content = '&mdash;';
+			}
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Modify the admin's user query
+	 *
+	 * @since 1.0.0
+	 *
+	 * @global WPDB   $wpdb
+	 * @global string $pagenow
+	 *
+	 * @param WP_User_Query $user_query
+	 */
+	public function pre_user_query( $user_query ) {
+		global $wpdb, $pagenow;
+
+		// Filter by Association
+		if ( is_admin() && 'users.php' === $pagenow && ! empty( $_REQUEST['paco2017-association'] ) ) {
+
+			// Setup profile query
+			$tax_query = new WP_Tax_Query( array(
+				array(
+					'taxonomy' => paco2017_get_association_tax_id(),
+					'terms'    => array( urldecode( $_REQUEST['paco2017-association'] ) ),
+				)
+			) );
+			$tax_clauses = $tax_query->get_sql( $wpdb->users, 'ID' );
+
+			// Append clauses
+			$user_query->query_from  .= $tax_clauses['join'];
+			$user_query->query_where .= $tax_clauses['where'];
+		}
 	}
 }
 
