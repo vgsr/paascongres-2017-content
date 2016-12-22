@@ -245,6 +245,24 @@ function paco2017_parse_agenda_query( $posts_query ) {
 	if ( is_admin() )
 		return;
 
+	// Bail when this is not an Agenda query
+	if ( ! in_array( paco2017_get_agenda_post_type(), (array) $posts_query->get( 'post_type', array() ) ) )
+		return;
+
+	// Always require items with a start time
+	$meta_query   = (array) $posts_query->get( 'meta_query', array() );
+	$meta_query['time_start'] = array(
+		'key'     => 'time_start',
+		'compare' => 'EXISTS'
+	);
+	$posts_query->set( 'meta_query', $meta_query );
+
+	// Default to ordering by start time
+	if ( ! $posts_query->get( 'orderby' ) ) {
+		$posts_query->set( 'orderby', 'time_start' );
+		$posts_query->set( 'order',   'ASC'        );
+	}
+
 	// By Conference Day
 	if ( $day = $posts_query->get( 'paco2017_conference_day' ) ) {
 		$tax_query   = (array) $posts_query->get( 'tax_query', array() );
