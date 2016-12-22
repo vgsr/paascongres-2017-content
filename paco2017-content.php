@@ -107,6 +107,7 @@ final class Paco2017_Content {
 		/** Core ********************************************************/
 
 		require( $this->includes_dir . 'actions.php'      );
+		require( $this->includes_dir . 'agenda.php'       );
 		require( $this->includes_dir . 'associations.php' );
 		require( $this->includes_dir . 'capabilities.php' );
 		require( $this->includes_dir . 'functions.php'    );
@@ -251,6 +252,30 @@ final class Paco2017_Content {
 				'menu_icon'           => 'dashicons-admin-tools'
 			)
 		);
+
+		/** Agenda ******************************************************/
+
+		register_post_type(
+			paco2017_get_agenda_post_type(),
+			array(
+				'labels'              => paco2017_get_agenda_post_type_labels(),
+				'supports'            => paco2017_get_agenda_post_type_supports(),
+				'description'         => __( 'Paascongres agenda items', 'paco2017-content' ),
+				'capabilities'        => paco2017_get_agenda_post_type_caps(),
+				'capability_type'     => array( 'paco2017_agenda', 'paco2017_agendas' ),
+				'hierarchical'        => false,
+				'public'              => true,
+				'has_archive'         => false,
+				'rewrite'             => false, // No rewriting necessary
+				'query_var'           => false, // No query vars necessary
+				'exclude_from_search' => true,
+				'show_ui'             => current_user_can( 'paco2017_agenda_admin' ),
+				'show_in_nav_menus'   => false,
+				'can_export'          => true,
+				'show_in_rest'        => true,
+				'menu_icon'           => 'dashicons-calendar'
+			)
+		);
 	}
 
 	/**
@@ -278,6 +303,59 @@ final class Paco2017_Content {
 				'show_admin_column'     => false, // User taxonomies are not supported in WP
 				'show_in_nav_menus'     => false,
 				'show_ui'               => current_user_can( 'paco2017_association_admin' ),
+				'meta_box_cb'           => false, // No metaboxing
+
+				// Term meta
+				'term_meta_color'       => true,
+			)
+		);
+
+		/** Conference Day **********************************************/
+
+		register_taxonomy(
+			paco2017_get_conf_day_tax_id(),
+			paco2017_get_agenda_post_type(),
+			array(
+				'labels'                => paco2017_get_conf_day_tax_labels(),
+				'capabilities'          => paco2017_get_conf_day_tax_caps(),
+				'update_count_callback' => '_update_post_term_count',
+				'hierarchical'          => false,
+				'public'                => true,
+				'rewrite'               => false, // No rewriting necessary
+				'query_var'             => false, // No query vars necessary
+				'show_tagcloud'         => false,
+				'show_in_quick_edit'    => true,
+				'show_admin_column'     => true,
+				'show_in_nav_menus'     => false,
+				'show_ui'               => current_user_can( 'paco2017_conf_day_admin' ),
+				'meta_box_cb'           => false, // No metaboxing
+
+				// Term meta
+				'term_meta_color'       => true,
+			)
+		);
+
+		/** Conference Location *****************************************/
+
+		register_taxonomy(
+			paco2017_get_conf_location_tax_id(),
+			array(
+				paco2017_get_agenda_post_type(),
+				paco2017_get_workshop_post_type(),
+			),
+			array(
+				'labels'                => paco2017_get_conf_location_tax_labels(),
+				'capabilities'          => paco2017_get_conf_location_tax_caps(),
+				'update_count_callback' => '_update_post_term_count',
+				'hierarchical'          => false,
+				'public'                => true,
+				'rewrite'               => false, // No rewriting necessary
+				'query_var'             => false, // No query vars necessary
+				'show_tagcloud'         => false,
+				'show_in_quick_edit'    => true,
+				'show_admin_column'     => true,
+				'show_in_nav_menus'     => false,
+				'show_ui'               => current_user_can( 'paco2017_conf_location_admin' ),
 				'meta_box_cb'           => false, // No metaboxing
 
 				// Term meta

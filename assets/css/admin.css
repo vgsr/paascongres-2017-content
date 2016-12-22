@@ -94,7 +94,37 @@
 	text-align: right;
 }
 
-/* Users.php */
-.fixed .column-paco2017_association {
-	width: 10%;
+/* List Table */
+
+.tablenav .paco2017-conf-day-link {
+	overflow: initial;
+}
+
+.tablenav .alignleft a,
+.tablenav .alignleft a:active {
+	position: inherit;
+	float: left;
+	display: inline-block;
+	margin: 1px 8px 0 0;
+}
+
+/* Agenda */
+
+#paco2017_agenda_details label {
+	width: 30%;
+	display: inline-block;
+	font-weight: 600;
+}
+
+#paco2017_agenda_details label + * {
+	max-width: 69%;
+	display: inline-block;
+}
+
+#paco2017_agenda_details label + select {
+	width: 69%;
+}
+
+#paco2017_agenda_details .time-part {
+	width: 45%;
 }

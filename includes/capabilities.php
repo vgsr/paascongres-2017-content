@@ -56,6 +56,63 @@ function paco2017_get_workshop_post_type_caps() {
 	) );
 }
 
+/** Agenda ********************************************************************/
+
+/**
+ * Return the capability mappings for the Agenda post type
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_agenda_post_type_caps'
+ * @return array Agenda post type caps
+ */
+function paco2017_get_agenda_post_type_caps() {
+	return apply_filters( 'paco2017_get_agenda_post_type_caps', array(
+		'edit_post'           => 'edit_paco2017_agenda',
+		'edit_posts'          => 'edit_paco2017_agendas',
+		'edit_others_posts'   => 'edit_others_paco2017_agendas',
+		'publish_posts'       => 'publish_paco2017_agendas',
+		'read_private_posts'  => 'read_private_paco2017_agendas',
+		'delete_post'         => 'delete_paco2017_agenda',
+		'delete_posts'        => 'delete_paco2017_agendas',
+		'delete_others_posts' => 'delete_others_paco2017_agendas'
+	) );
+}
+
+/**
+ * Return the capability mappings for the Conference Day taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_conf_day_tax_caps'
+ * @return array Conference Day taxonomy caps
+ */
+function paco2017_get_conf_day_tax_caps() {
+	return apply_filters( 'paco2017_get_conf_day_tax_caps', array(
+		'manage_terms' => 'manage_paco2017_conf_days',
+		'edit_terms'   => 'edit_paco2017_conf_days',
+		'delete_terms' => 'delete_paco2017_conf_days',
+		'assign_terms' => 'assign_paco2017_conf_days'
+	) );
+}
+
+/**
+ * Return the capability mappings for the Conference Location taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_conf_location_tax_caps'
+ * @return array Conference Location taxonomy caps
+ */
+function paco2017_get_conf_location_tax_caps() {
+	return apply_filters( 'paco2017_get_conf_location_tax_caps', array(
+		'manage_terms' => 'manage_paco2017_conf_locations',
+		'edit_terms'   => 'edit_paco2017_conf_locations',
+		'delete_terms' => 'delete_paco2017_conf_locations',
+		'assign_terms' => 'assign_paco2017_conf_locations'
+	) );
+}
+
 /** Association ***************************************************************/
 
 /**
