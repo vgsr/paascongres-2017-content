@@ -210,7 +210,7 @@ final class Paco2017_Content {
 			array(
 				'labels'              => paco2017_get_lector_post_type_labels(),
 				'supports'            => paco2017_get_lector_post_type_supports(),
-				'description'         => __( 'Paascongres 2017 lectors', 'paco2017-content' ),
+				'description'         => __( 'Paascongres lectors', 'paco2017-content' ),
 				'capabilities'        => paco2017_get_lector_post_type_caps(),
 				'capability_type'     => array( 'paco2017_lector', 'paco2017_lectors' ),
 				'hierarchical'        => false,
@@ -223,7 +223,6 @@ final class Paco2017_Content {
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,
 				'show_in_rest'        => true,
-				// 'taxonomies'          => array( 'paco2017_lector_category' ),
 				'menu_icon'           => 'dashicons-businessman'
 			)
 		);
@@ -235,7 +234,7 @@ final class Paco2017_Content {
 			array(
 				'labels'              => paco2017_get_workshop_post_type_labels(),
 				'supports'            => paco2017_get_workshop_post_type_supports(),
-				'description'         => __( 'Paascongres 2017 workshops', 'paco2017-content' ),
+				'description'         => __( 'Paascongres workshops', 'paco2017-content' ),
 				'capabilities'        => paco2017_get_workshop_post_type_caps(),
 				'capability_type'     => array( 'paco2017_workshop', 'paco2017_workshops' ),
 				'hierarchical'        => false,
@@ -248,7 +247,6 @@ final class Paco2017_Content {
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,
 				'show_in_rest'        => true,
-				// 'taxonomies'          => array( 'paco2017_workshop_category' ),
 				'menu_icon'           => 'dashicons-admin-tools'
 			)
 		);
