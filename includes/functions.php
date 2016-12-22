@@ -60,6 +60,18 @@ function paco2017_get_enrolled_users_count() {
 }
 
 /**
+ * Return the page ID of the Agenda page setting
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_agenda_page_id'
+ * @return int Page ID
+ */
+function paco2017_get_agenda_page_id() {
+	return (int) apply_filters( 'paco2017_get_agenda_page_id', get_option( '_paco2017_agenda_page', 0 ) );
+}
+
+/**
  * Return the page ID of the Housekeeping page setting
  *
  * @since 1.0.0

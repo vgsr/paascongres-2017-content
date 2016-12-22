@@ -91,6 +91,10 @@ final class Paco2017_Content {
 		// Languages
 		$this->lang_dir     = trailingslashit( $this->plugin_dir . 'languages' );
 
+		/** Queries ***********************************************************/
+
+		$this->agenda_query = new WP_Query();  // Main Agenda query
+
 		/** Misc ********************************************************/
 
 		$this->extend       = new stdClass();

@@ -30,3 +30,22 @@
 	padding-right: 15px;
 	text-align: right;
 }
+
+/* Agenda */
+
+.paco2017_agenda ul {
+	list-style: none;
+}
+
+.paco2017_agenda li ul {
+	margin: 0 0 1.5em 0;
+}
+
+.paco2017_agenda .item-title {
+	font-weight: 600;
+}
+
+.paco2017_agenda .item-timeslot {
+	font-size: 80%;
+	opacity: .7;
+}

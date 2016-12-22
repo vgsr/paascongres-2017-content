@@ -147,3 +147,349 @@ function paco2017_get_conf_location_tax_labels() {
 		'view_item'     => __( 'View Conference Location',         'paco2017-content' )
 	) );
 }
+
+/** Query *********************************************************************/
+
+/**
+ * Setup and run the Agenda Items query
+ *
+ * @since 1.0.0
+ *
+ * @param array $args Query arguments.
+ * @return bool Has the query returned any results?
+ */
+function paco2017_query_agenda_items( $args = array() ) {
+
+	// Get query object
+	$query = paco2017_content()->agenda_query;
+
+	// Reset query defaults
+	$query->in_the_loop  = false;
+	$query->current_post = -1;
+	$query->post_count   = 0;
+	$query->post         = null;
+	$query->posts        = array();
+
+	// Define query args
+	$query_args = wp_parse_args( $args, array(
+		'conference_day'   => false,
+		'post_type'        => paco2017_get_agenda_post_type(),
+		'posts_per_page'   => -1,
+		'paged'            => 1,
+		'fields'           => 'all'
+	) );
+
+	// Run query to get the posts
+	$query->query( $query_args );
+
+	// Return whether the query has returned results
+	return $query->have_posts();
+}
+
+/**
+ * Return whether the query has Agenda Items to loop over
+ *
+ * @since 1.0.0
+ *
+ * @return bool Query has Agenda Items
+ */
+function paco2017_have_agenda_items() {
+
+	// Has query a next post?
+	$has_next = paco2017_content()->agenda_query->have_posts();
+
+	// Clean up after ourselves
+	if ( ! $has_next ) {
+		wp_reset_postdata();
+	}
+
+	return $has_next;
+}
+
+/**
+ * Setup next Agenda Item in the current loop
+ *
+ * @since 1.0.0
+ *
+ * @return bool Are we still in the loop?
+ */
+function paco2017_the_agenda_item() {
+	return paco2017_content()->agenda_query->the_post();
+}
+
+/**
+ * Return whether we're in the Agenda loop
+ *
+ * @since 1.0.0
+ *
+ * @return bool Are we in the Agenda loop?
+ */
+function paco2017_in_the_agenda_item_loop() {
+	return paco2017_content()->agenda_query->in_the_loop;
+}
+
+/**
+ * For the posts query parse the Agenda item options
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Query $posts_query
+ */
+function paco2017_parse_agenda_query( $posts_query ) {
+
+	// Bail when filters are suppressed on this query
+	if ( true === $posts_query->get( 'suppress_filters' ) )
+		return;
+
+	// Bail when in admin
+	if ( is_admin() )
+		return;
+
+	// By Conference Day
+	if ( $day = $posts_query->get( 'paco2017_conference_day' ) ) {
+		$tax_query   = (array) $posts_query->get( 'tax_query', array() );
+		$tax_query[] = array(
+			'taxonomy' => paco2017_get_conf_day_tax_id(),
+			'terms'    => array( $day )
+		);
+		$posts_query->set( 'tax_query', $tax_query );
+	}
+}
+
+/** Template ******************************************************************/
+
+/**
+ * Modify the content of the Agenda page
+ *
+ * @since 1.0.0
+ *
+ * @param string $content Post content
+ * @return string Post content
+ */
+function paco2017_agenda_page_content( $content ) {
+
+	// The Agenda page
+	if ( is_page() && paco2017_get_agenda_page_id() === get_the_ID() ) {
+		$content .= paco2017_get_agenda_content();
+	}
+
+	return $content;
+}
+
+/**
+ * Return the Agenda's HTML content
+ *
+ * @since 1.0.0
+ *
+ * @return string Agenda HTML content
+ */
+function paco2017_get_agenda_content() {
+
+	// Agenda post type
+	$post_type = paco2017_get_agenda_post_type();
+
+	// Bail when there are no agenda items
+	if ( empty( wp_count_posts( $post_type )->publish ) )
+		return $content;
+
+	// Get conference days
+	$conf_days = get_terms( array(
+		'taxonomy'   => paco2017_get_conf_day_tax_id(),
+		'hide_empty' => false
+	) );
+	$conf_day_item_count = array_sum( wp_list_pluck( $conf_days, 'count' ) );
+
+	ob_start(); ?>
+
+	<div class="paco2017_agenda">
+
+		<?php if ( ! empty( $conf_days ) && ! empty( $conf_day_item_count ) ) : ?>
+
+		<ul class="paco2017_conference_days">
+
+			<?php foreach ( $conf_days as $conf_day ) : ?>
+
+			<li class="conference-day">
+
+				<h3><?php echo $conf_day->name; ?></h3>
+
+				<?php if ( paco2017_query_agenda_items( array( 'paco2017_conference_day' => $conf_day->term_id ) ) ) : ?>
+
+				<?php paco2017_the_agenda_items_list(); ?>
+
+				<?php else : ?>
+
+				<p><?php esc_html_e( 'There are no agenda items scheduled for this day.', 'paco2017-content' ); ?></p>
+
+				<?php endif; ?>
+
+			</li>
+
+			<?php endforeach; ?>
+
+		</ul>
+
+		<?php elseif ( paco2017_query_agenda_items() ) : ?>
+
+		<?php paco2017_the_agenda_items_list(); ?>
+
+		<?php else : ?>
+
+		<p><?php esc_html_e( 'There are no agenda items scheduled.', 'paco2017-content' ); ?></p>
+
+		<?php endif; ?>
+
+	</div>
+
+	<?php
+
+	$agenda = ob_get_clean();
+
+	return apply_filters( 'paco2017_get_agenda_content', $agenda );
+}
+
+/**
+ * Output the HTML markup for the Agenda Items list
+ *
+ * Make sure `paco2017_query_agenda_items()` is called before calling this.
+ *
+ * @since 1.0.0
+ */
+function paco2017_the_agenda_items_list() { ?>
+
+	<ul class="paco2017_agenda_items">
+
+		<?php while ( paco2017_have_agenda_items() ) : paco2017_the_agenda_item(); ?>
+
+		<li class="agenda-item">
+			<span class="item-title"><?php the_title(); ?></span>
+			<span class="item-timeslot"><?php paco2017_the_agenda_timeslot(); ?></span>
+
+			<?php the_content(); ?>
+		</li>
+
+		<?php endwhile;  ?>
+
+	</ul>
+
+	<?php
+}
+
+/**
+ * Return the Agenda Item
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return WP_Post Agenda Item post object
+ */
+function paco2017_get_agenda_item( $item = 0 ) {
+
+	// Get the post
+	$item = get_post( $item );
+
+	// Return false when this is not an Agenda Item
+	if ( ! $item || paco2017_get_agenda_post_type() !== $item->post_type ) {
+		$item = false;
+	}
+
+	return $item;
+}
+
+/**
+ * Output the Agenda Item's start time
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return string Agenda Item start time
+ */
+function paco2017_the_agenda_item_start_time( $item = 0 ) {
+	echo paco2017_get_agenda_item_start_time( $item );
+}
+
+/**
+ * Return the Agenda Item's start time
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_agenda_item_start_time'
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return string Agenda Item start time
+ */
+function paco2017_get_agenda_item_start_time( $item = 0 ) {
+	$item = paco2017_get_agenda_item( $item );
+	$time = '';
+
+	if ( $item ) {
+		$time = get_post_meta( $item->ID, 'time_start', true );
+	}
+
+	return apply_filters( 'paco2017_get_agenda_item_start_time', $time, $item );
+}
+
+/**
+ * Output the Agenda Item's end time
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return string Agenda Item end time
+ */
+function paco2017_the_agenda_item_end_time( $item = 0 ) {
+	echo paco2017_get_agenda_item_end_time( $item );
+}
+
+/**
+ * Return the Agenda Item's end time
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_agenda_item_end_time'
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return string Agenda Item end time
+ */
+function paco2017_get_agenda_item_end_time( $item = 0 ) {
+	$item = paco2017_get_agenda_item( $item );
+	$time = '';
+
+	if ( $item ) {
+		$time = get_post_meta( $item->ID, 'time_end', true );
+	}
+
+	return apply_filters( 'paco2017_get_agenda_item_end_time', $time, $item );
+}
+
+/**
+ * Output the Agenda Item's timeslot
+ * 
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ */
+function paco2017_the_agenda_timeslot( $item = 0 ) {
+	echo paco2017_get_agenda_timeslot( $item );
+}
+
+/**
+ * Output the Agenda Item's timeslot
+ * 
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return string Agenda Item's timeslot
+ */
+function paco2017_get_agenda_timeslot( $item = 0 ) {
+	$item = paco2017_get_agenda_item( $item );
+	$timeslot = '';
+
+	if ( $item ) {
+		$timeslot  = paco2017_get_agenda_item_start_time( $item );
+		$timeslot .= '&ndash;';
+		$timeslot .= paco2017_get_agenda_item_end_time( $item );
+	}
+
+	return $timeslot;
+}
