@@ -363,12 +363,6 @@ final class Paco2017_Content {
 
 		/** Meta ********************************************************/
 
-		// Color
-		add_filter( 'wp_term_color_get_taxonomies', function( $args ) {
-			$args['term_meta_color'] = true;
-			return $args;
-		});
-
 		new WP_Term_Colors( $this->file );
 	}
 }

@@ -382,7 +382,8 @@ class WP_Term_Meta_UI {
 		 * @since 0.1.3
 		 */
 		$defaults = apply_filters( $tag, array(
-			'show_ui' => true
+			'show_ui' => true,
+			"term_meta_{$this->meta_key}" => true
 		) );
 
 		// Parse arguments
