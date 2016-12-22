@@ -12,10 +12,12 @@ defined( 'ABSPATH' ) || exit;
 
 /** Sub-actions ***************************************************************/
 
-add_action( 'init',              'paco2017_init'                     );
-add_action( 'widgets_init',      'paco2017_widgets_init'             );
-add_action( 'after_setup_theme', 'paco2017_after_setup_theme'        );
-add_filter( 'map_meta_cap',      'paco2017_map_meta_caps',     10, 4 );
+add_action( 'init',                 'paco2017_init'                        );
+add_action( 'widgets_init',         'paco2017_widgets_init'                );
+add_action( 'registered_post_type', 'paco2017_registered_post_type'        );
+add_action( 'registered_taxonomy',  'paco2017_registered_taxonomy'         );
+add_action( 'after_setup_theme',    'paco2017_after_setup_theme'           );
+add_filter( 'map_meta_cap',         'paco2017_map_meta_caps',        10, 4 );
 
 /** Association ***************************************************************/
 

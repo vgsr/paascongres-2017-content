@@ -44,6 +44,68 @@ function paco2017_init() {
 }
 
 /**
+ * Run dedicated after post type registration for this plugin
+ *
+ * @since 1.0.0
+ *
+ * @uses do_action() Calls 'paco2017_registered_{$type}_post_type'
+ * @param string $post_type
+ */
+function paco2017_registered_post_type( $post_type ) {
+
+	// Define plugin post types
+	$types = array( 'lector', 'workshop', 'agenda' );
+
+	foreach ( $types as $type ) {
+
+		// Skip when this is not the current post type
+		if ( call_user_func( "paco2017_get_{$type}_post_type" ) !== $post_type )
+			continue;
+
+		$hook = "paco2017_registered_{$type}_post_type";
+
+		if ( is_callable( $hook ) ) {
+			call_user_func( $hook );
+		}
+
+		do_action( $hook );
+
+		break;
+	}
+}
+
+/**
+ * Run dedicated after taxonomy registration for this plugin
+ *
+ * @since 1.0.0
+ *
+ * @uses do_action() Calls 'paco2017_registered_{$tax}_taxonomy'
+ * @param string $taxonomy
+ */
+function paco2017_registered_taxonomy( $taxonomy ) {
+
+	// Define plugin taxonomies
+	$taxes = array( 'conf_day', 'conf_location', 'association' );
+
+	foreach ( $taxes as $tax ) {
+
+		// Skip when this is not the current taxonomy
+		if ( call_user_func( "paco2017_get_{$tax}_tax_id" ) !== $taxonomy )
+			continue;
+
+		$hook = "paco2017_registered_{$tax}_taxonomy";
+
+		if ( is_callable( $hook ) ) {
+			call_user_func( $hook );
+		}
+
+		do_action( $hook );
+
+		break;
+	}
+}
+
+/**
  * Run dedicated widgets hook for this plugin
  *
  * @since 1.0.0

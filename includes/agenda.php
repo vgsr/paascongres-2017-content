@@ -72,6 +72,50 @@ function paco2017_get_agenda_post_type_supports() {
 	) );
 }
 
+/**
+ * Act when the Agenda post type has been registered
+ *
+ * This is used for explicitly registering REST API fields.
+ *
+ * @since 1.0.0
+ */
+function paco2017_registered_agenda_post_type() {
+
+	$post_type = paco2017_get_agenda_post_type();
+
+	// Start Time
+	register_rest_field(
+		$post_type,
+		'time_start',
+		array(
+			'get_callback' => 'paco2017_get_agenda_rest_meta'
+		)
+	);
+
+	// End Time
+	register_rest_field(
+		$post_type,
+		'time_end',
+		array(
+			'get_callback' => 'paco2017_get_agenda_rest_meta'
+		)
+	);
+}
+
+/**
+ * Return the value for an agenda meta REST API field
+ *
+ * @since 1.0.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return array Day term(s)
+ */
+function paco2017_get_agenda_rest_meta( $object, $meta, $request ) {
+	return get_post_meta( $object['id'], $meta, true );
+}
+
 /** Taxonomy: Conference Day **************************************************/
 
 /**
@@ -110,6 +154,42 @@ function paco2017_get_conf_day_tax_labels() {
 	) );
 }
 
+/**
+ * Act when the Conference Day taxonomy has been registered
+ *
+ * This is used for explicitly registering REST API fields.
+ *
+ * @since 1.0.0
+ */
+function paco2017_registered_conf_day_taxonomy() {
+
+	$taxonomy  = paco2017_get_conf_day_tax_id();
+	$post_type = paco2017_get_agenda_post_type();
+
+	// Add day to Agenda Item
+	register_rest_field(
+		$post_type,
+		'conf_day',
+		array(
+			'get_callback' => 'paco2017_get_agenda_conf_day'
+		)
+	);
+}
+
+/**
+ * Return the value for the 'conf_day' agenda REST API field
+ *
+ * @since 1.0.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return array Day term(s)
+ */
+function paco2017_get_agenda_conf_day( $object, $field_name, $request ) {
+	return wp_get_object_terms( $object['id'], paco2017_get_conf_day_tax_id() );
+}
+
 /** Taxonomy: Conference Location *********************************************/
 
 /**
@@ -146,6 +226,42 @@ function paco2017_get_conf_location_tax_labels() {
 		'new_item_name' => __( 'New Conference Location Name',     'paco2017-content' ),
 		'view_item'     => __( 'View Conference Location',         'paco2017-content' )
 	) );
+}
+
+/**
+ * Act when the Conference Location taxonomy has been registered
+ *
+ * This is used for explicitly registering REST API fields.
+ *
+ * @since 1.0.0
+ */
+function paco2017_registered_conf_location_taxonomy() {
+
+	$taxonomy  = paco2017_get_conf_location_tax_id();
+	$post_type = paco2017_get_agenda_post_type();
+
+	// Add location to Agenda Item
+	register_rest_field(
+		$post_type,
+		'conf_location',
+		array(
+			'get_callback' => 'paco2017_get_agenda_conf_location'
+		)
+	);
+}
+
+/**
+ * Return the value for the 'conf_location' agenda REST API field
+ *
+ * @since 1.0.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return array Location term(s)
+ */
+function paco2017_get_agenda_conf_location( $object, $field_name, $request ) {
+	return wp_get_object_terms( $object['id'], paco2017_get_conf_location_tax_id() );
 }
 
 /** Query *********************************************************************/
