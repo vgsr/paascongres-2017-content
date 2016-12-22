@@ -380,13 +380,17 @@ function paco2017_the_agenda_items_list() { ?>
 		<?php while ( paco2017_have_agenda_items() ) : paco2017_the_agenda_item(); ?>
 
 		<li class="agenda-item">
-			<span class="item-title"><?php the_title(); ?></span>
-			<span class="item-timeslot"><?php paco2017_the_agenda_timeslot(); ?></span>
+			<div class="item-header">
+				<span class="item-title"><?php the_title(); ?></span>
+				<span class="item-timeslot"><?php paco2017_the_agenda_timeslot(); ?></span>
+			</div>
 
-			<?php the_content(); ?>
+			<div class="item-content">
+				<?php the_content(); ?>
+			</div>
 		</li>
 
-		<?php endwhile;  ?>
+		<?php endwhile; ?>
 
 	</ul>
 
