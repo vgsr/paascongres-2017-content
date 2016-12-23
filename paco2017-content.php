@@ -123,6 +123,7 @@ final class Paco2017_Content {
 
 		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php' );
 		require( $this->includes_dir . 'classes/class-wp-term-colors.php'  );
+		require( $this->includes_dir . 'classes/class-wp-term-dates.php'   );
 
 		/** Widgets *****************************************************/
 
@@ -337,6 +338,7 @@ final class Paco2017_Content {
 
 				// Term meta
 				'term_meta_color'       => true,
+				'term_meta_date'        => true,
 			)
 		);
 
@@ -371,6 +373,7 @@ final class Paco2017_Content {
 		/** Meta ********************************************************/
 
 		new WP_Term_Colors( $this->file );
+		new WP_Term_Dates(  $this->file );
 	}
 }
 
