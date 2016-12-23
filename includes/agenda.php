@@ -81,11 +81,12 @@ function paco2017_get_agenda_post_type_supports() {
  */
 function paco2017_registered_agenda_post_type() {
 
-	$post_type = paco2017_get_agenda_post_type();
+	// Get assets
+	$agenda = paco2017_get_agenda_post_type();
 
 	// Start Time
 	register_rest_field(
-		$post_type,
+		$agenda,
 		'time_start',
 		array(
 			'get_callback' => 'paco2017_get_agenda_rest_meta'
@@ -94,7 +95,7 @@ function paco2017_registered_agenda_post_type() {
 
 	// End Time
 	register_rest_field(
-		$post_type,
+		$agenda,
 		'time_end',
 		array(
 			'get_callback' => 'paco2017_get_agenda_rest_meta'
@@ -163,12 +164,12 @@ function paco2017_get_conf_day_tax_labels() {
  */
 function paco2017_registered_conf_day_taxonomy() {
 
-	$taxonomy  = paco2017_get_conf_day_tax_id();
-	$post_type = paco2017_get_agenda_post_type();
+	// Get assets
+	$agenda = paco2017_get_agenda_post_type();
 
 	// Add day to Agenda Item
 	register_rest_field(
-		$post_type,
+		$agenda,
 		'conf_day',
 		array(
 			'get_callback' => 'paco2017_get_agenda_rest_conf_days'
@@ -238,7 +239,6 @@ function paco2017_get_conf_location_tax_labels() {
 function paco2017_registered_conf_location_taxonomy() {
 
 	// Get assets
-	$taxonomy = paco2017_get_conf_location_tax_id();
 	$workshop = paco2017_get_workshop_post_type();
 	$agenda   = paco2017_get_agenda_post_type();
 
