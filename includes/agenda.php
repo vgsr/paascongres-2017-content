@@ -237,12 +237,23 @@ function paco2017_get_conf_location_tax_labels() {
  */
 function paco2017_registered_conf_location_taxonomy() {
 
-	$taxonomy  = paco2017_get_conf_location_tax_id();
-	$post_type = paco2017_get_agenda_post_type();
+	// Get assets
+	$taxonomy = paco2017_get_conf_location_tax_id();
+	$workshop = paco2017_get_workshop_post_type();
+	$agenda   = paco2017_get_agenda_post_type();
+
+	// Add location to Workshop
+	register_rest_field(
+		$workshop,
+		'conf_location',
+		array(
+			'get_callback' => 'paco2017_get_agenda_conf_locations'
+		)
+	);
 
 	// Add location to Agenda Item
 	register_rest_field(
-		$post_type,
+		$agenda,
 		'conf_location',
 		array(
 			'get_callback' => 'paco2017_get_agenda_conf_locations'
