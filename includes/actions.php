@@ -22,7 +22,7 @@ add_filter( 'map_meta_cap',         'paco2017_map_meta_caps',        10, 4 );
 
 /** Taxonomy ******************************************************************/
 
-add_filter( 'get_terms', 'paco2017_conf_day_get_terms',        10, 4 );
+add_filter( 'get_terms', 'paco2017_get_terms',                 10, 4 );
 add_filter( 'term_link', 'paco2017_get_association_term_link', 10, 3 );
 
 /** Template ******************************************************************/

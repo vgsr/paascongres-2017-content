@@ -172,41 +172,6 @@ function paco2017_registered_conf_day_taxonomy() {
 }
 
 /**
- * Modify the list of queried Conference Day terms
- *
- * @since 1.0.0
- *
- * @param array $terms Queried terms
- * @param array $taxonomies Taxonomy names
- * @param array $query_vars Query variables
- * @param WP_Term_Query $term_query Term query object
- * @return array Terms
- */
-function paco2017_conf_day_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
-
-	// Get taxonomy name
-	$day_tax = paco2017_get_conf_day_tax_id();
-
-	// Queried conference days
-	if ( in_array( $day_tax, (array) $taxonomies ) ) {
-		foreach ( $terms as $k => $term ) {
-
-			// Skip when this is not a day
-			if ( $day_tax !== $term->taxonomy )
-				continue;
-
-			// Add date term meta
-			$term->date = get_term_meta( $term->term_id, 'date', true );
-
-			// Store modified term
-			$terms[ $k ] = $term;
-		}
-	}
-
-	return $terms;
-}
-
-/**
  * Register REST fields for the Conference Day taxonomy
  *
  * @since 1.0.0

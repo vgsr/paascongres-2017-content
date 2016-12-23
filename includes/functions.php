@@ -83,6 +83,54 @@ function paco2017_get_housekeeping_page_id() {
 	return (int) apply_filters( 'paco2017_get_housekeeping_page_id', get_option( '_paco2017_housekeeping_page', 0 ) );
 }
 
+/** Taxonomy ******************************************************************/
+
+/**
+ * Modify the list of queried Conference Day terms
+ *
+ * @since 1.0.0
+ *
+ * @param array $terms Queried terms
+ * @param array $taxonomies Taxonomy names
+ * @param array $query_vars Query variables
+ * @param WP_Term_Query $term_query Term query object
+ * @return array Terms
+ */
+function paco2017_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
+
+	// Get taxonomies
+	$taxes = array(
+		paco2017_get_conf_day_tax_id(),
+		paco2017_get_conf_location_tax_id(),
+		paco2017_get_association_tax_id()
+	);
+	$taxes = array_filter( array_map( 'get_taxonomy', $taxes ) );
+	$taxes = array_combine( wp_list_pluck( $taxes, 'name' ), $taxes );
+	$metas = array( 'color', 'date' );
+
+	// Queried conference days
+	foreach ( $terms as $k => $term ) {
+
+		// Skip when this is not a day
+		if ( ! in_array( $term->taxonomy, array_keys( $taxes ) ) )
+			continue;
+
+		// Add term meta when supported
+		foreach ( $metas as $meta ) {
+			$meta_key = "term_meta_{$meta}";
+
+			if ( isset( $taxes[ $term->taxonomy ]->{$meta_key} ) && true === $taxes[ $term->taxonomy ]->{$meta_key} ) {
+				$term->{$meta} = get_term_meta( $term->term_id, $meta, true );
+			}
+		}
+
+		// Store modified term
+		$terms[ $k ] = $term;
+	}
+
+	return $terms;
+}
+
 /** Template ******************************************************************/
 
 /**
