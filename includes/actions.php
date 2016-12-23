@@ -20,8 +20,9 @@ add_action( 'registered_taxonomy',  'paco2017_registered_taxonomy'         );
 add_action( 'after_setup_theme',    'paco2017_after_setup_theme'           );
 add_filter( 'map_meta_cap',         'paco2017_map_meta_caps',        10, 4 );
 
-/** Association ***************************************************************/
+/** Taxonomy ******************************************************************/
 
+add_filter( 'get_terms', 'paco2017_conf_day_get_terms',        10, 4 );
 add_filter( 'term_link', 'paco2017_get_association_term_link', 10, 3 );
 
 /** Template ******************************************************************/
