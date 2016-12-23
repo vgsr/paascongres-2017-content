@@ -98,12 +98,22 @@ function paco2017_get_housekeeping_page_id() {
  */
 function paco2017_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
 
+	// Bail when not querying terms whole
+	if ( 'all' !== $query_vars['fields'] && 'all_with_object_id' !== $query_vars['fields'] )
+		return $terms;
+
 	// Get taxonomies
 	$taxes = array(
 		paco2017_get_conf_day_tax_id(),
 		paco2017_get_conf_location_tax_id(),
 		paco2017_get_association_tax_id()
 	);
+
+	// Bail when not querying one of the defined taxonomies
+	if ( ! array_intersect( $taxes, (array) $taxonomies ) )
+		return $terms;
+
+	// Get taxonomy data
 	$taxes = array_filter( array_map( 'get_taxonomy', $taxes ) );
 	$taxes = array_combine( wp_list_pluck( $taxes, 'name' ), $taxes );
 	$metas = array( 'color', 'date' );
