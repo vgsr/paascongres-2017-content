@@ -170,7 +170,7 @@ function paco2017_registered_conf_day_taxonomy() {
 	// Add day to Agenda Item
 	register_rest_field(
 		$agenda,
-		'conf_day',
+		'conference_days',
 		array(
 			'get_callback' => 'paco2017_get_agenda_rest_conf_days'
 		)
@@ -178,7 +178,7 @@ function paco2017_registered_conf_day_taxonomy() {
 }
 
 /**
- * Return the value for the 'conf_day' agenda REST API field
+ * Return the value for the 'conference_days' agenda REST API field
  *
  * @since 1.0.0
  *
@@ -245,7 +245,7 @@ function paco2017_registered_conf_location_taxonomy() {
 	// Add location to Workshop
 	register_rest_field(
 		$workshop,
-		'conf_location',
+		'conference_locations',
 		array(
 			'get_callback' => 'paco2017_get_agenda_rest_conf_locations'
 		)
@@ -254,7 +254,7 @@ function paco2017_registered_conf_location_taxonomy() {
 	// Add location to Agenda Item
 	register_rest_field(
 		$agenda,
-		'conf_location',
+		'conference_locations',
 		array(
 			'get_callback' => 'paco2017_get_agenda_rest_conf_locations'
 		)
@@ -262,7 +262,7 @@ function paco2017_registered_conf_location_taxonomy() {
 }
 
 /**
- * Return the value for the 'conf_location' agenda REST API field
+ * Return the value for the 'conference_locations' agenda REST API field
  *
  * @since 1.0.0
  *
