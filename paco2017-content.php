@@ -279,7 +279,7 @@ final class Paco2017_Content {
 				'can_export'          => true,
 				'show_in_rest'        => true,
 				'rest_base'           => 'paascongres-agenda',
-				'menu_icon'           => 'dashicons-calendar'
+				'menu_icon'           => 'dashicons-schedule'
 			)
 		);
 	}

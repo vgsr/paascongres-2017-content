@@ -68,12 +68,21 @@ function paco2017_dashboard_status() {
 		wp_cache_set( $blog_id . '_user_count', $user_count, 'blog-details', 12 * HOUR_IN_SECONDS );
 	};
 
-	$lector_post_type   = paco2017_get_lector_post_type();
-	$workshop_post_type = paco2017_get_workshop_post_type();
-	$lector_count       = wp_count_posts( $lector_post_type   );
-	$workshop_count     = wp_count_posts( $workshop_post_type );
-	$lector_count       = $lector_count->publish;
-	$workshop_count     = $workshop_count->publish;
+	// Assets
+	$lector      = paco2017_get_lector_post_type();
+	$workshop    = paco2017_get_workshop_post_type();
+	$agenda      = paco2017_get_agenda_post_type();
+	$conf_day    = paco2017_get_conf_day_tax_id();
+	$conf_loc    = paco2017_get_conf_location_tax_id();
+	$association = paco2017_get_association_tax_id();
+
+	// Counts
+	$lector_count      = wp_count_posts( $lector      );
+	$workshop_count    = wp_count_posts( $workshop    );
+	$agenda_count      = wp_count_posts( $agenda      );
+	$conf_day_count    = wp_count_terms( $conf_day    );
+	$conf_loc_count    = wp_count_terms( $conf_loc    );
+	$association_count = wp_count_terms( $association );
 
 	// Collect statuses to display
 	$statuses = apply_filters( 'paco2017_dashboard_statuses', array(
@@ -85,21 +94,45 @@ function paco2017_dashboard_status() {
 		),
 
 		// Users
-		'user-count'     => sprintf( '<a href="%s">%s</a>',
+		'user-count' => sprintf( '<a href="%s">%s</a>',
 			esc_url( admin_url( 'users.php' ) ),
 			sprintf( _n( '%s Account', '%s Accounts', $user_count, 'paco2017-content' ), $user_count )
 		),
 
+		// Association
+		'association-count' => sprintf( '<a href="%s">%s</a>',
+			esc_url( add_query_arg( array( 'taxonomy' => $association, 'post_type' => 'user' ), admin_url( 'edit-tags.php' ) ) ),
+			sprintf( _n( '%s Association', '%s Associations', $association_count, 'paco2017-content' ), $association_count )
+		),
+
 		// Lectors
-		'lector-count'   => sprintf( '<a href="%s">%s</a>',
-			esc_url( add_query_arg( array( 'post_type' => $lector_post_type ), admin_url( 'edit.php' ) ) ),
-			sprintf( _n( '%s Lector', '%s Lectors', $lector_count, 'paco2017-content' ), $lector_count )
+		'lector-count' => sprintf( '<a href="%s">%s</a>',
+			esc_url( add_query_arg( array( 'post_type' => $lector ), admin_url( 'edit.php' ) ) ),
+			sprintf( _n( '%s Lector', '%s Lectors', $lector_count->publish, 'paco2017-content' ), $lector_count->publish )
 		),
 
 		// Workshops
 		'workshop-count' => sprintf( '<a href="%s">%s</a>',
-			esc_url( add_query_arg( array( 'post_type' => $workshop_post_type ), admin_url( 'edit.php' ) ) ),
-			sprintf( _n( '%s Workshop', '%s Workshops', $workshop_count, 'paco2017-content' ), $workshop_count )
+			esc_url( add_query_arg( array( 'post_type' => $workshop ), admin_url( 'edit.php' ) ) ),
+			sprintf( _n( '%s Workshop', '%s Workshops', $workshop_count->publish, 'paco2017-content' ), $workshop_count->publish )
+		),
+
+		// Conference Days
+		'conf_day-count' => sprintf( '<a href="%s">%s</a>',
+			esc_url( add_query_arg( array( 'taxonomy' => $conf_day ), admin_url( 'edit-tags.php' ) ) ),
+			sprintf( _n( '%s Day', '%s Days', $conf_day_count, 'paco2017-content' ), $conf_day_count )
+		),
+
+		// Agenda Items
+		'agenda-count' => sprintf( '<a href="%s">%s</a>',
+			esc_url( add_query_arg( array( 'post_type' => $agenda ), admin_url( 'edit.php' ) ) ),
+			sprintf( _n( '%s Agenda Item', '%s Agenda Items', $agenda_count->publish, 'paco2017-content' ), $agenda_count->publish )
+		),
+
+		// Conference Locations
+		'conf_location-count' => sprintf( '<a href="%s">%s</a>',
+			esc_url( add_query_arg( array( 'taxonomy' => $conf_loc ), admin_url( 'edit-tags.php' ) ) ),
+			sprintf( _n( '%s Location', '%s Locations', $conf_loc_count, 'paco2017-content' ), $conf_loc_count )
 		),
 	) );
 

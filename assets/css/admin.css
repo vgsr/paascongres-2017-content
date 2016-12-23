@@ -47,12 +47,28 @@
 	content: '\f110'; /* dashicons-admin-users */
 }
 
+#paco2017_dashboard_status .association-count a:before {
+	content: '\f307'; /* dashicons-groups */
+}
+
 #paco2017_dashboard_status .lector-count a:before {
 	content: '\f338'; /* dashicons-businessman */
 }
 
 #paco2017_dashboard_status .workshop-count a:before {
 	content: '\f107'; /* dashicons-admin-tools */
+}
+
+#paco2017_dashboard_status .conf_day-count a:before {
+	content: '\f508'; /* dashicons-calendar-alt */
+}
+
+#paco2017_dashboard_status .agenda-count a:before {
+	content: '\f489'; /* dashicons-schedule */
+}
+
+#paco2017_dashboard_status .conf_location-count a:before {
+	content: '\f231'; /* dashicons-location-alt */
 }
 
 #paco2017_dashboard_enrollments .main {
