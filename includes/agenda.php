@@ -171,7 +171,7 @@ function paco2017_registered_conf_day_taxonomy() {
 		$post_type,
 		'conf_day',
 		array(
-			'get_callback' => 'paco2017_get_agenda_conf_day'
+			'get_callback' => 'paco2017_get_agenda_conf_days'
 		)
 	);
 }
@@ -186,7 +186,7 @@ function paco2017_registered_conf_day_taxonomy() {
  * @param WP_REST_Request $request Current REST request
  * @return array Day term(s)
  */
-function paco2017_get_agenda_conf_day( $object, $field_name, $request ) {
+function paco2017_get_agenda_conf_days( $object, $field_name, $request ) {
 	return wp_get_object_terms( $object['id'], paco2017_get_conf_day_tax_id() );
 }
 
@@ -245,7 +245,7 @@ function paco2017_registered_conf_location_taxonomy() {
 		$post_type,
 		'conf_location',
 		array(
-			'get_callback' => 'paco2017_get_agenda_conf_location'
+			'get_callback' => 'paco2017_get_agenda_conf_locations'
 		)
 	);
 }
@@ -260,7 +260,7 @@ function paco2017_registered_conf_location_taxonomy() {
  * @param WP_REST_Request $request Current REST request
  * @return array Location term(s)
  */
-function paco2017_get_agenda_conf_location( $object, $field_name, $request ) {
+function paco2017_get_agenda_conf_locations( $object, $field_name, $request ) {
 	return wp_get_object_terms( $object['id'], paco2017_get_conf_location_tax_id() );
 }
 
