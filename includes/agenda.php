@@ -299,11 +299,11 @@ function paco2017_query_agenda_items( $args = array() ) {
 
 	// Define query args
 	$query_args = wp_parse_args( $args, array(
-		'conference_day'   => false,
-		'post_type'        => paco2017_get_agenda_post_type(),
-		'posts_per_page'   => -1,
-		'paged'            => 1,
-		'fields'           => 'all'
+		'paco2017_conf_day' => false,
+		'post_type'         => paco2017_get_agenda_post_type(),
+		'posts_per_page'    => -1,
+		'paged'             => 1,
+		'fields'            => 'all'
 	) );
 
 	// Run query to get the posts
@@ -391,7 +391,7 @@ function paco2017_parse_agenda_query( $posts_query ) {
 	}
 
 	// By Conference Day
-	if ( $day = $posts_query->get( 'paco2017_conference_day' ) ) {
+	if ( $day = $posts_query->get( 'paco2017_conf_day' ) ) {
 		$tax_query   = (array) $posts_query->get( 'tax_query', array() );
 		$tax_query[] = array(
 			'taxonomy' => paco2017_get_conf_day_tax_id(),
@@ -458,7 +458,7 @@ function paco2017_get_agenda_content() {
 
 				<h3><?php echo $conf_day->name; ?></h3>
 
-				<?php if ( paco2017_query_agenda_items( array( 'paco2017_conference_day' => $conf_day->term_id ) ) ) : ?>
+				<?php if ( paco2017_query_agenda_items( array( 'paco2017_conf_day' => $conf_day->term_id ) ) ) : ?>
 
 				<?php paco2017_the_agenda_items_list(); ?>
 
