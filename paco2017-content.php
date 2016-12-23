@@ -227,6 +227,7 @@ final class Paco2017_Content {
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,
 				'show_in_rest'        => true,
+				'rest_base'           => 'paascongres-lectors',
 				'menu_icon'           => 'dashicons-businessman'
 			)
 		);

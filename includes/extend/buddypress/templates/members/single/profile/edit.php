@@ -2,6 +2,9 @@
 /**
  * BuddyPress - Members Single Profile Edit
  *
+ * Difference with bp-legacy:
+ * - Removed field visibility settings
+ *
  * @package BuddyPress
  * @subpackage bp-legacy
  */
