@@ -44,6 +44,17 @@ function paco2017_init() {
 }
 
 /**
+ * Run dedicated REST API init hook for this plugin
+ *
+ * @since 1.0.0
+ *
+ * @uses do_action() Calls 'paco2017_rest_api_init'
+ */
+function paco2017_rest_api_init() {
+	do_action( 'paco2017_rest_api_init' );
+}
+
+/**
  * Run dedicated after post type registration for this plugin
  *
  * @since 1.0.0

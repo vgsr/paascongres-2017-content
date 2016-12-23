@@ -75,11 +75,18 @@ function paco2017_get_agenda_post_type_supports() {
 /**
  * Act when the Agenda post type has been registered
  *
- * This is used for explicitly registering REST API fields.
- *
  * @since 1.0.0
  */
 function paco2017_registered_agenda_post_type() {
+	add_action( 'paco2017_rest_api_init', 'paco2017_register_agenda_rest_fields' );
+}
+
+/**
+ * Register REST fields for the Agenda post type
+ *
+ * @since 1.0.0
+ */
+function paco2017_register_agenda_rest_fields() {
 
 	// Get assets
 	$agenda = paco2017_get_agenda_post_type();
@@ -158,11 +165,18 @@ function paco2017_get_conf_day_tax_labels() {
 /**
  * Act when the Conference Day taxonomy has been registered
  *
- * This is used for explicitly registering REST API fields.
- *
  * @since 1.0.0
  */
 function paco2017_registered_conf_day_taxonomy() {
+	add_action( 'paco2017_rest_api_init', 'paco2017_register_conf_day_rest_fields' );
+}
+
+/**
+ * Register REST fields for the Conference Day taxonomy
+ *
+ * @since 1.0.0
+ */
+function paco2017_register_conf_day_rest_fields() {
 
 	// Get assets
 	$agenda = paco2017_get_agenda_post_type();
@@ -232,11 +246,18 @@ function paco2017_get_conf_location_tax_labels() {
 /**
  * Act when the Conference Location taxonomy has been registered
  *
- * This is used for explicitly registering REST API fields.
- *
  * @since 1.0.0
  */
 function paco2017_registered_conf_location_taxonomy() {
+	add_action( 'paco2017_rest_api_init', 'paco2017_register_conf_location_rest_fields' );
+}
+
+/**
+ * Register REST fields for the Conference Location taxonomy
+ *
+ * @since 1.0.0
+ */
+function paco2017_register_conf_location_rest_fields() {
 
 	// Get assets
 	$workshop = paco2017_get_workshop_post_type();

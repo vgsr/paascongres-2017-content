@@ -14,6 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 add_action( 'init',                 'paco2017_init'                        );
 add_action( 'widgets_init',         'paco2017_widgets_init'                );
+add_action( 'rest_api_init',        'paco2017_rest_api_init'               );
 add_action( 'registered_post_type', 'paco2017_registered_post_type'        );
 add_action( 'registered_taxonomy',  'paco2017_registered_taxonomy'         );
 add_action( 'after_setup_theme',    'paco2017_after_setup_theme'           );
