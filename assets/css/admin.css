@@ -7,6 +7,10 @@
 
 /* Plugin Dashboard */
 
+.toplevel_page_paco2017 h2.nav-tab-wrapper {
+	margin-bottom: 6px;
+}
+
 #paco2017_dashboard_status ul {
 	margin: 0;
 	display: inline-block;
