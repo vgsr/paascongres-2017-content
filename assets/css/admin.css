@@ -128,23 +128,23 @@
 	margin: 1px 8px 0 0;
 }
 
-/* Agenda */
+/* Single Post */
 
-#paco2017_agenda_details label {
+.paco2017_object_details label {
 	width: 30%;
 	display: inline-block;
 	font-weight: 600;
 }
 
-#paco2017_agenda_details label + * {
+.paco2017_object_details label + * {
 	max-width: 69%;
 	display: inline-block;
 }
 
-#paco2017_agenda_details label + select {
+.paco2017_object_details label + select {
 	width: 69%;
 }
 
-#paco2017_agenda_details .time-part {
+.paco2017_object_details .time-part {
 	width: 45%;
 }

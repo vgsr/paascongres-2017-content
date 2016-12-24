@@ -469,6 +469,8 @@ class Paco2017_Admin {
 
 		?>
 
+		<div class="paco2017_object_details">
+
 		<p>
 			<label for="taxonomy-<?php echo $conf_day_tax; ?>"><?php esc_html_e( 'Day:', 'paco2017-content' ); ?></label><?php
 				$day_terms = wp_get_object_terms( $post->ID, $conf_day_tax, array( 'fields' => 'ids' ) );
@@ -514,6 +516,8 @@ class Paco2017_Admin {
 				) );
 			?>
 		</p>
+
+		</div>
 
 		<?php wp_nonce_field( 'agenda_details_metabox', 'agenda_details_metabox_nonce' ); ?>
 
