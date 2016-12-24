@@ -86,7 +86,7 @@ class Paco2017_Admin {
 			'paco2017',
 			'paco2017_admin_page',
 			'dashicons-megaphone',
-			5
+			4
 		);
 
 		// Post type submenus
