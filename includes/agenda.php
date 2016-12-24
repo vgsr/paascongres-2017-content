@@ -540,6 +540,16 @@ function paco2017_the_agenda_items_list() { ?>
 			<div class="item-content">
 				<?php the_content(); ?>
 			</div>
+
+			<?php edit_post_link(
+				sprintf(
+					/* translators: %s: Name of current post */
+					__( 'Edit<span class="screen-reader-text"> "%s"</span>', 'paco2017-content' ),
+					get_the_title()
+				),
+				'<p class="item-footer"><span class="edit-link">',
+				'</span></p>'
+			); ?>
 		</li>
 
 		<?php endwhile; ?>
