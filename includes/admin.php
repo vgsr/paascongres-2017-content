@@ -509,10 +509,11 @@ class Paco2017_Admin {
 				$loc_terms = wp_get_object_terms( $post->ID, $conf_loc_tax, array( 'fields' => 'ids' ) );
 
 				wp_dropdown_categories( array(
-					'name'       => "taxonomy-{$conf_loc_tax}",
-					'taxonomy'   => $conf_loc_tax,
-					'hide_empty' => false,
-					'selected'   => $loc_terms ? $loc_terms[0] : 0,
+					'name'             => "taxonomy-{$conf_loc_tax}",
+					'taxonomy'         => $conf_loc_tax,
+					'hide_empty'       => false,
+					'selected'         => $loc_terms ? $loc_terms[0] : 0,
+					'show_option_none' => esc_html__( '&mdash; No Location &mdash;', 'paco2017-content' ),
 				) );
 			?>
 		</p>
