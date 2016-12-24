@@ -144,6 +144,24 @@ function paco2017_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
 /** Template ******************************************************************/
 
 /**
+ * Modify the archive title
+ *
+ * @since 1.0.0
+ *
+ * @param string $title Archive title
+ * @return string Archive title
+ */
+function paco2017_get_the_archive_title( $title ) {
+
+	// Reset archive title, without the 'Archives: ' prefix
+	if ( is_post_type_archive( array( paco2017_get_lector_post_type(), paco2017_get_workshop_post_type() ) ) ) {
+		$title = post_type_archive_title( '', false );
+	}
+
+	return $title;
+}
+
+/**
  * Return whether the given background color requires a light text color
  *
  * @link Calculation of perceptive luminance. http://stackoverflow.com/a/1855903/3601434
