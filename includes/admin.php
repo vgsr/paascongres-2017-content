@@ -241,6 +241,7 @@ class Paco2017_Admin {
 	public function add_dashboard_widgets() {
 		wp_add_dashboard_widget( 'paco2017_dashboard_status', __( 'At a Glance' ), 'paco2017_dashboard_status' );
 		wp_add_dashboard_widget( 'paco2017_dashboard_enrollments', __( 'Enrollments', 'paco2017-content' ), 'paco2017_dashboard_enrollments' );
+		wp_add_dashboard_widget( 'dashboard_activity', __( 'Activity' ), 'wp_dashboard_site_activity' );
 	}
 
 	/**
