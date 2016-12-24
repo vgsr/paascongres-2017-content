@@ -33,6 +33,14 @@
 
 /* Agenda */
 
+.paco2017_agenda .day-title {
+	margin-bottom: 0;
+}
+
+.paco2017_agenda .day-date {
+	opacity: .7;
+}
+
 .paco2017_agenda ul {
 	list-style: none;
 }

@@ -477,7 +477,11 @@ function paco2017_get_agenda_content() {
 
 			<li class="conference-day">
 
-				<h3><?php echo $conf_day->name; ?></h3>
+				<h3 class="day-title"><?php echo $conf_day->name; ?></h3>
+
+				<?php if ( ! empty( $conf_day->date ) ) : ?>
+					<p class="day-date"><?php echo mysql2date( get_option( 'date_format' ), $conf_day->date ); ?></p>
+				<?php endif; ?>
 
 				<?php if ( paco2017_query_agenda_items( array( 'paco2017_conf_day' => $conf_day->term_id ) ) ) : ?>
 
