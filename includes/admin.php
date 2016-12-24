@@ -42,7 +42,7 @@ class Paco2017_Admin {
 
 		// Posts
 		add_filter( 'display_post_states',         array( $this, 'post_states'           ), 10, 2 );
-		add_action( 'manage_posts_extra_tablenav', array( $this, 'manage_posts_tablenav' ), 10, 2 );
+		add_action( 'manage_posts_extra_tablenav', array( $this, 'manage_posts_tablenav' )        );
 		add_filter( 'manage_posts_columns',        array( $this, 'posts_add_columns'     ), 10, 2 );
 		add_filter( 'manage_posts_custom_column',  array( $this, 'posts_custom_column'   ), 10, 2 );
 		add_action( 'add_meta_boxes',              array( $this, 'add_meta_boxes'        ), 10, 2 );
@@ -189,6 +189,15 @@ class Paco2017_Admin {
 			$submenu_file = "edit.php?post_type={$screen->post_type}";
 		}
 
+		// Workshop Category
+		if ( in_array( $screen->taxonomy, array(
+			paco2017_get_workshop_cat_tax_id(),
+		) ) ) {
+			$parent_file  = 'paco2017';
+			$submenu_file = "edit.php?post_type=" . paco2017_get_workshop_post_type();
+		}
+
+		// Conference Day
 		if ( in_array( $screen->taxonomy, array(
 			paco2017_get_conf_day_tax_id(),
 		) ) ) {
@@ -196,6 +205,7 @@ class Paco2017_Admin {
 			$submenu_file = "edit.php?post_type=" . paco2017_get_agenda_post_type();
 		}
 
+		// Conference Location
 		if ( in_array( $screen->taxonomy, array(
 			paco2017_get_conf_location_tax_id(),
 		) ) ) {
@@ -203,6 +213,7 @@ class Paco2017_Admin {
 			$submenu_file = "edit-tags.php?taxonomy={$screen->taxonomy}";
 		}
 
+		// Association
 		if ( in_array( $screen->taxonomy, array(
 			paco2017_get_association_tax_id(),
 		) ) ) {
@@ -224,8 +235,9 @@ class Paco2017_Admin {
 
 		// List columns
 		$css[] = ".fixed .column-" . paco2017_get_association_tax_id() .
+		       ", .fixed .column-taxonomy-" . paco2017_get_workshop_cat_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_conf_day_tax_id() .
-		       ", .fixed .column-taxonomy-" . paco2017_get_conf_location_tax_id() ." { width: 15%; }";
+		       ", .fixed .column-taxonomy-" . paco2017_get_conf_location_tax_id() . " { width: 15%; }";
 		$css[] = ".fixed .column-time_start, .fixed .column-time_end { width: 50px; }";
 
 		if ( ! empty( $css ) ) {
@@ -352,11 +364,27 @@ class Paco2017_Admin {
 	 */
 	public function manage_posts_tablenav( $which ) {
 
-		// Agenda Items
-		if ( 'top' === $which && paco2017_get_agenda_post_type() === get_current_screen()->post_type ) {
+		// Bail when this is not the top tablenav
+		if ( 'top' !== $which )
+			return;
 
-			// Display link to manage days
-			printf( '<div class="alignleft actions paco2017-conf-day-link"><a href="%s" class="page-title-action">%s</a></div>', 'edit-tags.php?taxonomy=' . paco2017_get_conf_day_tax_id(), esc_html__( 'Manage Conference Days', 'paco2017-content' ) );
+		switch ( get_current_screen()->post_type ) {
+
+			// Workshop
+			case paco2017_get_workshop_post_type() :
+
+				// Display link to manage days
+				printf( '<div class="alignleft actions paco2017-workshop-cat-link"><a href="%s" class="page-title-action">%s</a></div>', 'edit-tags.php?taxonomy=' . paco2017_get_workshop_cat_tax_id(), esc_html__( 'Manage Workshop Categories', 'paco2017-content' ) );
+
+				break;
+
+			// Agenda
+			case paco2017_get_agenda_post_type() :
+
+				// Display link to manage days
+				printf( '<div class="alignleft actions paco2017-conf-day-link"><a href="%s" class="page-title-action">%s</a></div>', 'edit-tags.php?taxonomy=' . paco2017_get_conf_day_tax_id(), esc_html__( 'Manage Conference Days', 'paco2017-content' ) );
+
+				break;
 		}
 	}
 
@@ -370,6 +398,12 @@ class Paco2017_Admin {
 	 * @return array Columns
 	 */
 	public function posts_add_columns( $columns, $post_type ) {
+
+		// Rename Wokshop Category column
+		$cat_key = 'taxonomy-' . paco2017_get_workshop_cat_tax_id();
+		if ( isset( $columns[ $cat_key ] ) ) {
+			$columns[ $cat_key ] = esc_html__( 'Category', 'paco2017-content' );
+		}
 
 		// Rename Conference Day column
 		$day_key = 'taxonomy-' . paco2017_get_conf_day_tax_id();
@@ -438,6 +472,18 @@ class Paco2017_Admin {
 	 */
 	public function add_meta_boxes( $post_type, $post ) {
 
+		// Workshop
+		if ( paco2017_get_workshop_post_type() === $post_type ) {
+			add_meta_box(
+				'paco2017_workshop_details',
+				esc_html__( 'Workshop Details', 'paco2017-content' ),
+				array( $this, 'workshop_details_metabox' ),
+				null,
+				'side',
+				'high'
+			);
+		}
+
 		// Agenda Item
 		if ( paco2017_get_agenda_post_type() === $post_type ) {
 			add_meta_box(
@@ -448,6 +494,112 @@ class Paco2017_Admin {
 				'side',
 				'high'
 			);
+		}
+	}
+
+	/**
+	 * Output the contents of the Workshop Details metabox
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param WP_Post $post Current post object
+	 */
+	public function workshop_details_metabox( $post ) {
+
+		// Get taxonomies
+		$workshop_cat_tax = paco2017_get_workshop_cat_tax_id();
+		$conf_loc_tax     = paco2017_get_conf_location_tax_id();
+
+		?>
+
+		<div class="paco2017_object_details">
+
+		<p>
+			<label for="taxonomy-<?php echo $workshop_cat_tax; ?>"><?php esc_html_e( 'Category:', 'paco2017-content' ); ?></label><?php
+				$cat_terms = wp_get_object_terms( $post->ID, $workshop_cat_tax, array( 'fields' => 'ids' ) );
+
+				wp_dropdown_categories( array(
+					'name'       => "taxonomy-{$workshop_cat_tax}",
+					'taxonomy'   => $workshop_cat_tax,
+					'hide_empty' => false,
+					'selected'   => $cat_terms ? $cat_terms[0] : 0,
+				) );
+			?>
+		</p>
+
+		<p>
+			<label for="taxonomy-<?php echo $conf_loc_tax; ?>"><?php esc_html_e( 'Location:', 'paco2017-content' ); ?></label><?php
+				$loc_terms = wp_get_object_terms( $post->ID, $conf_loc_tax, array( 'fields' => 'ids' ) );
+
+				wp_dropdown_categories( array(
+					'name'             => "taxonomy-{$conf_loc_tax}",
+					'taxonomy'         => $conf_loc_tax,
+					'hide_empty'       => false,
+					'selected'         => $loc_terms ? $loc_terms[0] : 0,
+					'show_option_none' => esc_html__( '&mdash; No Location &mdash;', 'paco2017-content' ),
+				) );
+			?>
+		</p>
+
+		</div>
+
+		<?php wp_nonce_field( 'workshop_details_metabox', 'workshop_details_metabox_nonce' ); ?>
+
+		<?php
+	}
+
+	/**
+	 * Save when the Workshop's metabox is submitted
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $post_id Post ID
+	 * @param WP_Post $post Post object
+	 */
+	public function workshop_save_metabox( $post_id, $post = 0 ) {
+
+		// Bail when doing an autosave
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			return;
+
+		// Bail when not a post request
+		if ( 'POST' != strtoupper( $_SERVER['REQUEST_METHOD'] ) )
+			return;
+
+		// Bail when nonce does not verify
+		if ( empty( $_POST['workshop_details_metabox_nonce'] ) || ! wp_verify_nonce( $_POST['workshop_details_metabox_nonce'], 'workshop_details_metabox' ) )
+			return;
+
+		// Get post type object
+		$post_type_object = get_post_type_object( $post->post_type );
+
+		// Bail when current user is not capable
+		if ( ! current_user_can( $post_type_object->cap->edit_post, $post_id ) )
+			return;
+
+		/**
+		 * Save posted inputs:
+		 * - Workshop Category taxonomy
+		 * - Conference Location taxonomy
+		 */
+		
+		$cat_tax  = paco2017_get_workshop_cat_tax_id();
+		$loc_tax  = paco2017_get_conf_location_tax_id();
+
+		foreach ( array( $cat_tax, $loc_tax ) as $taxonomy ) {
+			$_taxonomy = get_taxonomy( $taxonomy );
+
+			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )
+				continue;
+
+			// Set Article Edition
+			if ( isset( $_POST["taxonomy-{$taxonomy}"] ) ) {
+				wp_set_object_terms( $post_id, (int) $_POST["taxonomy-{$taxonomy}"], $taxonomy, false );
+
+			// Remove Article Edition
+			} elseif ( $terms = wp_get_object_terms( $post_id ) ) {
+				wp_remove_object_terms( $post_id, $terms, $taxonomy );
+			}
 		}
 	}
 

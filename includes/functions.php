@@ -36,6 +36,18 @@ function paco2017_get_workshop_slug() {
 	return apply_filters( 'paco2017_get_workshop_slug', get_option( '_paco2017_workshop_slug', 'workshops' ) );
 }
 
+/**
+ * Return the slug for the Workshop Category taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_cat_slug'
+ * @return string Slug
+ */
+function paco2017_get_workshop_cat_slug() {
+	return apply_filters( 'paco2017_get_workshop_cat_slug', get_option( '_paco2017_workshop_cat_slug', 'category' ) );
+}
+
 /** Options *******************************************************************/
 
 /**
@@ -104,6 +116,7 @@ function paco2017_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
 
 	// Get taxonomies
 	$taxes = array(
+		paco2017_get_workshop_cat_tax_id(),
 		paco2017_get_conf_day_tax_id(),
 		paco2017_get_conf_location_tax_id(),
 		paco2017_get_association_tax_id()

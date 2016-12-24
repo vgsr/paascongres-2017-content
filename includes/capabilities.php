@@ -56,6 +56,23 @@ function paco2017_get_workshop_post_type_caps() {
 	) );
 }
 
+/**
+ * Return the capability mappings for the Workshop Category taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_cat_tax_caps'
+ * @return array Workshop Category taxonomy caps
+ */
+function paco2017_get_workshop_cat_tax_caps() {
+	return apply_filters( 'paco2017_get_workshop_cat_tax_caps', array(
+		'manage_terms' => 'manage_paco2017_workshop_cats',
+		'edit_terms'   => 'edit_paco2017_workshop_cats',
+		'delete_terms' => 'delete_paco2017_workshop_cats',
+		'assign_terms' => 'assign_paco2017_workshop_cats'
+	) );
+}
+
 /** Agenda ********************************************************************/
 
 /**
