@@ -91,7 +91,7 @@ class Paco2017_Admin {
 
 		// Post type submenus
 		foreach ( array(
-			paco2017_get_lector_post_type(),
+			paco2017_get_lecture_post_type(),
 			paco2017_get_workshop_post_type(),
 			paco2017_get_agenda_post_type(),
 		) as $post_type ) {
@@ -181,7 +181,7 @@ class Paco2017_Admin {
 		 */
 
 		if ( in_array( $screen->post_type, array(
-			paco2017_get_lector_post_type(),
+			paco2017_get_lecture_post_type(),
 			paco2017_get_workshop_post_type(),
 			paco2017_get_agenda_post_type(),
 		) ) ) {

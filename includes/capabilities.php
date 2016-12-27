@@ -10,26 +10,26 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-/** Lectors *******************************************************************/
+/** Lectures *******************************************************************/
 
 /**
- * Return the capability mappings for the Lector post type
+ * Return the capability mappings for the Lecture post type
  *
  * @since 1.0.0
  *
- * @uses apply_filters() Calls 'paco2017_get_lector_post_type_caps'
- * @return array Lector post type caps
+ * @uses apply_filters() Calls 'paco2017_get_lecture_post_type_caps'
+ * @return array Lecture post type caps
  */
-function paco2017_get_lector_post_type_caps() {
-	return apply_filters( 'paco2017_get_lector_post_type_caps', array(
-		'edit_post'           => 'edit_paco2017_lector',
-		'edit_posts'          => 'edit_paco2017_lectors',
-		'edit_others_posts'   => 'edit_others_paco2017_lectors',
-		'publish_posts'       => 'publish_paco2017_lectors',
-		'read_private_posts'  => 'read_private_paco2017_lectors',
-		'delete_post'         => 'delete_paco2017_lector',
-		'delete_posts'        => 'delete_paco2017_lectors',
-		'delete_others_posts' => 'delete_others_paco2017_lectors'
+function paco2017_get_lecture_post_type_caps() {
+	return apply_filters( 'paco2017_get_lecture_post_type_caps', array(
+		'edit_post'           => 'edit_paco2017_lecture',
+		'edit_posts'          => 'edit_paco2017_lectures',
+		'edit_others_posts'   => 'edit_others_paco2017_lectures',
+		'publish_posts'       => 'publish_paco2017_lectures',
+		'read_private_posts'  => 'read_private_paco2017_lectures',
+		'delete_post'         => 'delete_paco2017_lecture',
+		'delete_posts'        => 'delete_paco2017_lectures',
+		'delete_others_posts' => 'delete_others_paco2017_lectures'
 	) );
 }
 

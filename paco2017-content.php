@@ -115,7 +115,7 @@ final class Paco2017_Content {
 		require( $this->includes_dir . 'associations.php' );
 		require( $this->includes_dir . 'capabilities.php' );
 		require( $this->includes_dir . 'functions.php'    );
-		require( $this->includes_dir . 'lectors.php'      );
+		require( $this->includes_dir . 'lectures.php'     );
 		require( $this->includes_dir . 'workshops.php'    );
 		require( $this->includes_dir . 'sub-actions.php'  );
 
@@ -208,27 +208,27 @@ final class Paco2017_Content {
 	 */
 	public function register_post_types() {
 
-		/** Lectors *****************************************************/
+		/** Lectures *****************************************************/
 
 		register_post_type(
-			paco2017_get_lector_post_type(),
+			paco2017_get_lecture_post_type(),
 			array(
-				'labels'              => paco2017_get_lector_post_type_labels(),
-				'supports'            => paco2017_get_lector_post_type_supports(),
-				'description'         => __( 'Paascongres lectors', 'paco2017-content' ),
-				'capabilities'        => paco2017_get_lector_post_type_caps(),
-				'capability_type'     => array( 'paco2017_lector', 'paco2017_lectors' ),
+				'labels'              => paco2017_get_lecture_post_type_labels(),
+				'supports'            => paco2017_get_lecture_post_type_supports(),
+				'description'         => __( 'Paascongres lectures', 'paco2017-content' ),
+				'capabilities'        => paco2017_get_lecture_post_type_caps(),
+				'capability_type'     => array( 'paco2017_lecture', 'paco2017_lectures' ),
 				'hierarchical'        => false,
 				'public'              => true,
 				'has_archive'         => true,
-				'rewrite'             => paco2017_get_lector_post_type_rewrite(),
+				'rewrite'             => paco2017_get_lecture_post_type_rewrite(),
 				'query_var'           => true,
 				'exclude_from_search' => false,
-				'show_ui'             => current_user_can( 'paco2017_lector_admin' ),
+				'show_ui'             => current_user_can( 'paco2017_lecture_admin' ),
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,
 				'show_in_rest'        => true,
-				'rest_base'           => 'paascongres-lectors',
+				'rest_base'           => 'paascongres-lectures',
 				'menu_icon'           => 'dashicons-businessman'
 			)
 		);

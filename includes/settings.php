@@ -75,10 +75,10 @@ function paco2017_admin_get_settings_fields() {
 
 		'paco2017_settings_slugs' => array(
 
-			// Lectors
-			'_paco2017_lector_slug' => array(
-				'title'             => esc_html__( 'Lector', 'paco2017-content' ),
-				'callback'          => 'paco2017_admin_setting_callback_lector_slug',
+			// Lectures
+			'_paco2017_lecture_slug' => array(
+				'title'             => esc_html__( 'Lecture', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_lecture_slug',
 				'sanitize_callback' => 'paco2017_sanitize_slug',
 				'args'              => array()
 			),
@@ -238,13 +238,13 @@ function paco2017_admin_setting_callback_slugs_section() {
 }
 
 /**
- * Lector slug setting field
+ * Lecture slug setting field
  *
  * @since 1.0.0
  */
-function paco2017_admin_setting_callback_lector_slug() { ?>
+function paco2017_admin_setting_callback_lecture_slug() { ?>
 
-	<input name="_paco2017_lector_slug" id="_paco2017_lector_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_lector_slug', 'lectors' ); ?>" />
+	<input name="_paco2017_lecture_slug" id="_paco2017_lecture_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_lecture_slug', 'lectures' ); ?>" />
 
 	<?php
 }

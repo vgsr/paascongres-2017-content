@@ -13,15 +13,15 @@ defined( 'ABSPATH' ) || exit;
 /** Rewrite *******************************************************************/
 
 /**
- * Return the slug for the Lector post type
+ * Return the slug for the Lecture post type
  *
  * @since 1.0.0
  *
- * @uses apply_filters() Calls 'paco2017_get_lector_slug'
+ * @uses apply_filters() Calls 'paco2017_get_lecture_slug'
  * @return string Slug
  */
-function paco2017_get_lector_slug() {
-	return apply_filters( 'paco2017_get_lector_slug', get_option( '_paco2017_lector_slug', 'lectors' ) );
+function paco2017_get_lecture_slug() {
+	return apply_filters( 'paco2017_get_lecture_slug', get_option( '_paco2017_lecture_slug', 'lectures' ) );
 }
 
 /**
@@ -197,7 +197,7 @@ function paco2017_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
 function paco2017_get_the_archive_title( $title ) {
 
 	// Reset archive title, without the 'Archives: ' prefix
-	if ( is_post_type_archive( array( paco2017_get_lector_post_type(), paco2017_get_workshop_post_type() ) ) ) {
+	if ( is_post_type_archive( array( paco2017_get_lecture_post_type(), paco2017_get_workshop_post_type() ) ) ) {
 		$title = post_type_archive_title( '', false );
 	}
 

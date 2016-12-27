@@ -69,7 +69,7 @@ function paco2017_dashboard_status() {
 	};
 
 	// Assets
-	$lector      = paco2017_get_lector_post_type();
+	$lecture     = paco2017_get_lecture_post_type();
 	$workshop    = paco2017_get_workshop_post_type();
 	$agenda      = paco2017_get_agenda_post_type();
 	$conf_day    = paco2017_get_conf_day_tax_id();
@@ -77,7 +77,7 @@ function paco2017_dashboard_status() {
 	$association = paco2017_get_association_tax_id();
 
 	// Counts
-	$lector_count      = wp_count_posts( $lector      );
+	$lecture_count     = wp_count_posts( $lecture     );
 	$workshop_count    = wp_count_posts( $workshop    );
 	$agenda_count      = wp_count_posts( $agenda      );
 	$conf_day_count    = wp_count_terms( $conf_day    );
@@ -105,10 +105,10 @@ function paco2017_dashboard_status() {
 			sprintf( _n( '%s Association', '%s Associations', $association_count, 'paco2017-content' ), $association_count )
 		),
 
-		// Lectors
-		'lector-count' => sprintf( '<a href="%s">%s</a>',
-			esc_url( add_query_arg( array( 'post_type' => $lector ), admin_url( 'edit.php' ) ) ),
-			sprintf( _n( '%s Lector', '%s Lectors', $lector_count->publish, 'paco2017-content' ), $lector_count->publish )
+		// Lectures
+		'lecture-count' => sprintf( '<a href="%s">%s</a>',
+			esc_url( add_query_arg( array( 'post_type' => $lecture ), admin_url( 'edit.php' ) ) ),
+			sprintf( _n( '%s Lecture', '%s Lectures', $lecture_count->publish, 'paco2017-content' ), $lecture_count->publish )
 		),
 
 		// Workshops
