@@ -131,11 +131,11 @@ function paco2017_get_workshop_cat_tax_labels() {
  *
  * @since 1.0.0
  *
- * @uses apply_filters() Calls 'paco2017_get_workshop_cat_rewrite'
+ * @uses apply_filters() Calls 'paco2017_get_workshop_cat_tax_rewrite'
  * @return array Workshop Category taxonomy rewrite
  */
 function paco2017_get_workshop_cat_tax_rewrite() {
-	return apply_filters( 'paco2017_get_workshop_cat_rewrite', array(
+	return apply_filters( 'paco2017_get_workshop_cat_tax_rewrite', array(
 		'slug'       => paco2017_get_workshop_slug() . '/' . paco2017_get_workshop_cat_slug(),
 		'with_front' => false
 	) );
