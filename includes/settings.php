@@ -91,6 +91,14 @@ function paco2017_admin_get_settings_fields() {
 				'args'              => array()
 			),
 
+			// Speakers
+			'_paco2017_speaker_slug' => array(
+				'title'             => esc_html__( 'Speaker', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_speaker_slug',
+				'sanitize_callback' => 'paco2017_sanitize_slug',
+				'args'              => array()
+			),
+
 			// Workshop Categories
 			'_paco2017_workshop_cat_slug' => array(
 				'title'             => esc_html__( 'Workshop Category', 'paco2017-content' ),
@@ -257,6 +265,18 @@ function paco2017_admin_setting_callback_lecture_slug() { ?>
 function paco2017_admin_setting_callback_workshop_slug() { ?>
 
 	<input name="_paco2017_workshop_slug" id="_paco2017_workshop_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_workshop_slug', 'workshops' ); ?>" />
+
+	<?php
+}
+
+/**
+ * Speaker slug setting field
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_setting_callback_speaker_slug() { ?>
+
+	<input name="_paco2017_speaker_slug" id="_paco2017_speaker_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_speaker_slug', 'workshops' ); ?>" />
 
 	<?php
 }

@@ -117,6 +117,17 @@ class Paco2017_Admin {
 			);
 		}
 
+		// Manage Speakers
+		if ( $taxonomy = get_taxonomy( paco2017_get_speaker_tax_id() ) ) {
+			add_submenu_page(
+				'paco2017',
+				$taxonomy->labels->name,
+				$taxonomy->labels->menu_name,
+				$taxonomy->cap->manage_terms,
+				"edit-tags.php?taxonomy={$taxonomy->name}"
+			);
+		}
+
 		// Manage Locations
 		if ( $taxonomy = get_taxonomy( paco2017_get_conf_location_tax_id() ) ) {
 			add_submenu_page(
@@ -205,8 +216,9 @@ class Paco2017_Admin {
 			$submenu_file = "edit.php?post_type=" . paco2017_get_agenda_post_type();
 		}
 
-		// Conference Location
+		// Speaker or Conference Location
 		if ( in_array( $screen->taxonomy, array(
+			paco2017_get_speaker_tax_id(),
 			paco2017_get_conf_location_tax_id(),
 		) ) ) {
 			$parent_file  = 'paco2017';
@@ -235,9 +247,10 @@ class Paco2017_Admin {
 
 		// List columns
 		$css[] = ".fixed .column-" . paco2017_get_association_tax_id() .
+		       ", .fixed .column-taxonomy-" . paco2017_get_speaker_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_workshop_cat_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_conf_day_tax_id() .
-		       ", .fixed .column-taxonomy-" . paco2017_get_conf_location_tax_id() . " { width: 15%; }";
+		       ", .fixed .column-taxonomy-" . paco2017_get_conf_location_tax_id() . " { width: 10%; }";
 		$css[] = ".fixed .column-time_start, .fixed .column-time_end { width: 50px; }";
 
 		if ( ! empty( $css ) ) {
@@ -399,6 +412,12 @@ class Paco2017_Admin {
 	 */
 	public function posts_add_columns( $columns, $post_type ) {
 
+		// Rename Speaker column
+		$spkr_key = 'taxonomy-' . paco2017_get_speaker_tax_id();
+		if ( isset( $columns[ $spkr_key ] ) ) {
+			$columns[ $spkr_key ] = esc_html__( 'Speaker', 'paco2017-content' );
+		}
+
 		// Rename Wokshop Category column
 		$cat_key = 'taxonomy-' . paco2017_get_workshop_cat_tax_id();
 		if ( isset( $columns[ $cat_key ] ) ) {
@@ -507,12 +526,26 @@ class Paco2017_Admin {
 	public function workshop_details_metabox( $post ) {
 
 		// Get taxonomies
+		$speaker_tax      = paco2017_get_speaker_tax_id();
 		$workshop_cat_tax = paco2017_get_workshop_cat_tax_id();
 		$conf_loc_tax     = paco2017_get_conf_location_tax_id();
 
 		?>
 
 		<div class="paco2017_object_details">
+
+		<p>
+			<label for="taxonomy-<?php echo $speaker_tax; ?>"><?php esc_html_e( 'Speaker:', 'paco2017-content' ); ?></label><?php
+				$spkr_terms = wp_get_object_terms( $post->ID, $speaker_tax, array( 'fields' => 'ids' ) );
+
+				wp_dropdown_categories( array(
+					'name'       => "taxonomy-{$speaker_tax}",
+					'taxonomy'   => $speaker_tax,
+					'hide_empty' => false,
+					'selected'   => $spkr_terms ? $spkr_terms[0] : 0,
+				) );
+			?>
+		</p>
 
 		<p>
 			<label for="taxonomy-<?php echo $workshop_cat_tax; ?>"><?php esc_html_e( 'Category:', 'paco2017-content' ); ?></label><?php
@@ -579,14 +612,16 @@ class Paco2017_Admin {
 
 		/**
 		 * Save posted inputs:
+		 * - Speaker taxonomy
 		 * - Workshop Category taxonomy
 		 * - Conference Location taxonomy
 		 */
 		
+		$spkr_tax = paco2017_get_speaker_tax_id();
 		$cat_tax  = paco2017_get_workshop_cat_tax_id();
 		$loc_tax  = paco2017_get_conf_location_tax_id();
 
-		foreach ( array( $cat_tax, $loc_tax ) as $taxonomy ) {
+		foreach ( array( $spkr_tax, $cat_tax, $loc_tax ) as $taxonomy ) {
 			$_taxonomy = get_taxonomy( $taxonomy );
 
 			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )

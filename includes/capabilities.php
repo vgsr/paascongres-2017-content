@@ -148,3 +148,22 @@ function paco2017_get_association_tax_caps() {
 		'assign_terms' => 'assign_paco2017_associations'
 	) );
 }
+
+/** Speaker *******************************************************************/
+
+/**
+ * Return the capability mappings for the Speaker taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speaker_tax_caps'
+ * @return array Speaker taxonomy caps
+ */
+function paco2017_get_speaker_tax_caps() {
+	return apply_filters( 'paco2017_get_speaker_tax_caps', array(
+		'manage_terms' => 'manage_paco2017_speakers',
+		'edit_terms'   => 'edit_paco2017_speakers',
+		'delete_terms' => 'delete_paco2017_speakers',
+		'assign_terms' => 'assign_paco2017_speakers'
+	) );
+}

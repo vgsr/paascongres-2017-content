@@ -37,6 +37,18 @@ function paco2017_get_workshop_slug() {
 }
 
 /**
+ * Return the slug for the Speaker taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speaker_slug'
+ * @return string Slug
+ */
+function paco2017_get_speaker_slug() {
+	return apply_filters( 'paco2017_get_speaker_slug', get_option( '_paco2017_speaker_slug', 'category' ) );
+}
+
+/**
  * Return the slug for the Workshop Category taxonomy
  *
  * @since 1.0.0
