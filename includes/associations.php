@@ -3,7 +3,7 @@
 /**
  * Paco2017 Content Association Functions
  *
- * @package Paco2017
+ * @package Paco2017 Content
  * @subpackage Main
  */
 
