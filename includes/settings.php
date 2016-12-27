@@ -29,6 +29,13 @@ function paco2017_admin_get_settings_sections() {
 			'callback' => 'paco2017_admin_setting_callback_main_section',
 			'page'     => 'paco2017'
 		),
+
+		// Slug settings
+		'paco2017_settings_slugs' => array(
+			'title'    => __( 'Slug Settings', 'paco2017' ),
+			'callback' => 'paco2017_admin_setting_callback_slugs_section',
+			'page'     => 'paco2017'
+		),
 	) );
 }
 
@@ -60,6 +67,35 @@ function paco2017_admin_get_settings_fields() {
 				'title'             => esc_html__( 'Housekeeping Page', 'paco2017-content' ),
 				'callback'          => 'paco2017_admin_setting_callback_housekeeping_page',
 				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
+		),
+
+		/** Slugs Section *************************************************/
+
+		'paco2017_settings_slugs' => array(
+
+			// Lectors
+			'_paco2017_lector_slug' => array(
+				'title'             => esc_html__( 'Lector', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_lector_slug',
+				'sanitize_callback' => 'paco2017_sanitize_slug',
+				'args'              => array()
+			),
+
+			// Workshops
+			'_paco2017_workshop_slug' => array(
+				'title'             => esc_html__( 'Workshop', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_workshop_slug',
+				'sanitize_callback' => 'paco2017_sanitize_slug',
+				'args'              => array()
+			),
+
+			// Workshop Categories
+			'_paco2017_workshop_cat_slug' => array(
+				'title'             => esc_html__( 'Workshop Category', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_workshop_cat_slug',
+				'sanitize_callback' => 'paco2017_sanitize_slug',
 				'args'              => array()
 			),
 		),
@@ -179,6 +215,62 @@ function paco2017_admin_setting_callback_housekeeping_page() {
 	} ?>
 
 	<p class="description"><?php esc_html_e( 'Select the page that contains the housekeeping information', 'paco2017-content' ); ?></p>
+
+	<?php
+}
+
+/** Slugs Section *********************************************************/
+
+/**
+ * Slugs settings section description for the settings page
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_setting_callback_slugs_section() {
+
+	// Flush rewrite rules when this section is saved
+	if ( isset( $_GET['settings-updated'] ) && isset( $_GET['page'] ) )
+		flush_rewrite_rules(); ?>
+
+	<p><?php esc_html_e( "Customize the structure of your conference page urls.", 'paco2017-content' ); ?></p>
+
+	<?php
+}
+
+/**
+ * Lector slug setting field
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_setting_callback_lector_slug() { ?>
+
+	<input name="_paco2017_lector_slug" id="_paco2017_lector_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_lector_slug', 'lectors' ); ?>" />
+
+	<?php
+}
+
+/**
+ * Workshop slug setting field
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_setting_callback_workshop_slug() { ?>
+
+	<input name="_paco2017_workshop_slug" id="_paco2017_workshop_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_workshop_slug', 'workshops' ); ?>" />
+
+	<?php
+}
+
+/**
+ * Workshop Category slug setting field
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_setting_callback_workshop_cat_slug() {
+	$slug = get_option( '_paco2017_workshop_cat_slug', 'category' ); ?>
+
+	<input name="_paco2017_workshop_cat_slug" id="_paco2017_workshop_cat_slug" type="text" class="regular-text code" value="<?php echo $slug; ?>" />
+	<p class="description"><?php printf( esc_html__( 'Will be used after the workshop slug, like: %s', 'paco2017-content' ), sprintf( '<code>%s/<strong>%s</strong></code>', get_option( '_paco2017_workshop_slug', 'workshops' ), $slug ) ); ?></p>
 
 	<?php
 }
