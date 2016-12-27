@@ -515,7 +515,7 @@ function paco2017_get_agenda_content() {
 
 	$agenda = ob_get_clean();
 
-	return apply_filters( 'paco2017_get_agenda_content', $agenda );
+	return apply_filters( 'paco2017_get_agenda_content', $agenda, $conf_days );
 }
 
 /**
