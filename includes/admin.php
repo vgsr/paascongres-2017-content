@@ -46,6 +46,8 @@ class Paco2017_Admin {
 		add_filter( 'manage_posts_columns',        array( $this, 'posts_add_columns'     ), 10, 2 );
 		add_filter( 'manage_posts_custom_column',  array( $this, 'posts_custom_column'   ), 10, 2 );
 		add_action( 'add_meta_boxes',              array( $this, 'add_meta_boxes'        ), 10, 2 );
+		add_action( 'save_post',                   array( $this, 'lecture_save_metabox'  ), 10, 2 );
+		add_action( 'save_post',                   array( $this, 'workshop_save_metabox' ), 10, 2 );
 		add_action( 'save_post',                   array( $this, 'agenda_save_metabox'   ), 10, 2 );
 
 		// Dashboard
@@ -491,6 +493,18 @@ class Paco2017_Admin {
 	 */
 	public function add_meta_boxes( $post_type, $post ) {
 
+		// Lecture
+		if ( paco2017_get_lecture_post_type() === $post_type ) {
+			add_meta_box(
+				'paco2017_lecture_details',
+				esc_html__( 'Lecture Details', 'paco2017-content' ),
+				array( $this, 'lecture_details_metabox' ),
+				null,
+				'side',
+				'high'
+			);
+		}
+
 		// Workshop
 		if ( paco2017_get_workshop_post_type() === $post_type ) {
 			add_meta_box(
@@ -513,6 +527,113 @@ class Paco2017_Admin {
 				'side',
 				'high'
 			);
+		}
+	}
+
+	/**
+	 * Output the contents of the Lecture Details metabox
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param WP_Post $post Current post object
+	 */
+	public function lecture_details_metabox( $post ) {
+
+		// Get taxonomies
+		$speaker_tax  = paco2017_get_speaker_tax_id();
+		$conf_loc_tax = paco2017_get_conf_location_tax_id();
+
+		?>
+
+		<div class="paco2017_object_details">
+
+		<p>
+			<label for="taxonomy-<?php echo $speaker_tax; ?>"><?php esc_html_e( 'Speaker:', 'paco2017-content' ); ?></label><?php
+				$spkr_terms = wp_get_object_terms( $post->ID, $speaker_tax, array( 'fields' => 'ids' ) );
+
+				wp_dropdown_categories( array(
+					'name'             => "taxonomy-{$speaker_tax}",
+					'taxonomy'         => $speaker_tax,
+					'hide_empty'       => false,
+					'selected'         => $spkr_terms ? $spkr_terms[0] : 0,
+					'show_option_none' => esc_html__( '&mdash; No Speaker &mdash;', 'paco2017-content' ),
+				) );
+			?>
+		</p>
+
+		<p>
+			<label for="taxonomy-<?php echo $conf_loc_tax; ?>"><?php esc_html_e( 'Location:', 'paco2017-content' ); ?></label><?php
+				$loc_terms = wp_get_object_terms( $post->ID, $conf_loc_tax, array( 'fields' => 'ids' ) );
+
+				wp_dropdown_categories( array(
+					'name'             => "taxonomy-{$conf_loc_tax}",
+					'taxonomy'         => $conf_loc_tax,
+					'hide_empty'       => false,
+					'selected'         => $loc_terms ? $loc_terms[0] : 0,
+					'show_option_none' => esc_html__( '&mdash; No Location &mdash;', 'paco2017-content' ),
+				) );
+			?>
+		</p>
+
+		</div>
+
+		<?php wp_nonce_field( 'lecture_details_metabox', 'lecture_details_metabox_nonce' ); ?>
+
+		<?php
+	}
+
+	/**
+	 * Save when the Lecture's metabox is submitted
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $post_id Post ID
+	 * @param WP_Post $post Post object
+	 */
+	public function lecture_save_metabox( $post_id, $post = 0 ) {
+
+		// Bail when doing an autosave
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			return;
+
+		// Bail when not a post request
+		if ( 'POST' != strtoupper( $_SERVER['REQUEST_METHOD'] ) )
+			return;
+
+		// Bail when nonce does not verify
+		if ( empty( $_POST['lecture_details_metabox_nonce'] ) || ! wp_verify_nonce( $_POST['lecture_details_metabox_nonce'], 'lecture_details_metabox' ) )
+			return;
+
+		// Get post type object
+		$post_type_object = get_post_type_object( $post->post_type );
+
+		// Bail when current user is not capable
+		if ( ! current_user_can( $post_type_object->cap->edit_post, $post_id ) )
+			return;
+
+		/**
+		 * Save posted inputs:
+		 * - Speaker taxonomy
+		 * - Conference Location taxonomy
+		 */
+
+		$spkr_tax = paco2017_get_speaker_tax_id();
+		$loc_tax  = paco2017_get_conf_location_tax_id();
+
+		foreach ( array( $spkr_tax, $loc_tax ) as $taxonomy ) {
+			$_taxonomy = get_taxonomy( $taxonomy );
+
+			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )
+				continue;
+
+			// Set Article Edition
+			if ( isset( $_POST["taxonomy-{$taxonomy}"] ) ) {
+				wp_set_object_terms( $post_id, (int) $_POST["taxonomy-{$taxonomy}"], $taxonomy, false );
+
+			// Remove Article Edition
+			} elseif ( $terms = wp_get_object_terms( $post_id ) ) {
+				wp_remove_object_terms( $post_id, $terms, $taxonomy );
+			}
 		}
 	}
 
@@ -618,7 +739,7 @@ class Paco2017_Admin {
 		 * - Workshop Category taxonomy
 		 * - Conference Location taxonomy
 		 */
-		
+
 		$spkr_tax = paco2017_get_speaker_tax_id();
 		$cat_tax  = paco2017_get_workshop_cat_tax_id();
 		$loc_tax  = paco2017_get_conf_location_tax_id();
@@ -751,7 +872,7 @@ class Paco2017_Admin {
 		 * - Time Start
 		 * - Time End
 		 */
-		
+
 		$day_tax  = paco2017_get_conf_day_tax_id();
 		$loc_tax  = paco2017_get_conf_location_tax_id();
 
