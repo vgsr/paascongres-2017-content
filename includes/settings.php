@@ -30,6 +30,13 @@ function paco2017_admin_get_settings_sections() {
 			'page'     => 'paco2017'
 		),
 
+		// Archive settings
+		'paco2017_settings_archives' => array(
+			'title'    => __( 'Archive Settings', 'paco2017' ),
+			'callback' => 'paco2017_admin_setting_callback_archives_section',
+			'page'     => 'paco2017'
+		),
+
 		// Slug settings
 		'paco2017_settings_slugs' => array(
 			'title'    => __( 'Slug Settings', 'paco2017' ),
@@ -67,6 +74,27 @@ function paco2017_admin_get_settings_fields() {
 				'title'             => esc_html__( 'Housekeeping Page', 'paco2017-content' ),
 				'callback'          => 'paco2017_admin_setting_callback_housekeeping_page',
 				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
+		),
+
+		/** Archives Section **********************************************/
+
+		'paco2017_settings_archives' => array(
+
+			// Lectures description
+			'_paco2017_lecture_archive_desc' => array(
+				'title'             => esc_html__( 'Lectures Description', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_lecture_archive_desc',
+				'sanitize_callback' => 'strip_tags',
+				'args'              => array()
+			),
+
+			// Workshops description
+			'_paco2017_workshop_archive_desc' => array(
+				'title'             => esc_html__( 'Workshops Description', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_workshop_archive_desc',
+				'sanitize_callback' => 'strip_tags',
 				'args'              => array()
 			),
 		),
@@ -223,6 +251,43 @@ function paco2017_admin_setting_callback_housekeeping_page() {
 	} ?>
 
 	<p class="description"><?php esc_html_e( 'Select the page that contains the housekeeping information', 'paco2017-content' ); ?></p>
+
+	<?php
+}
+
+/** Archives Section ******************************************************/
+
+/**
+ * Archives settings section description for the settings page
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_setting_callback_archives_section() { /* Nothing to display */ }
+
+/**
+ * Display the content of the Lectures archive description setting field
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_setting_callback_lecture_archive_desc() {
+	$post_type_object = get_post_type_object( paco2017_get_lecture_post_type() ); ?>
+
+	<textarea name="_paco2017_lecture_archive_desc" id="_paco2017_lecture_archive_desc" class="large-text" cols="50" rows="4"><?php echo esc_textarea( get_option( '_paco2017_lecture_archive_desc' ) ); ?></textarea>
+	<p class="description"><?php printf( esc_html__( 'This description text appears as an introduction to the list of %s, if there are any.', 'paco2017-content' ), sprintf( '<a href="%s">%s</a>', esc_url( get_post_type_archive_link( $post_type_object->name ) ), $post_type_object->labels->name ) ); ?></p>
+
+	<?php
+}
+
+/**
+ * Display the content of the Workshop archive description setting field
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_setting_callback_workshop_archive_desc() {
+	$post_type_object = get_post_type_object( paco2017_get_workshop_post_type() ); ?>
+
+	<textarea name="_paco2017_workshop_archive_desc" id="_paco2017_workshop_archive_desc" class="large-text" cols="50" rows="4"><?php echo esc_textarea( get_option( '_paco2017_workshop_archive_desc' ) ); ?></textarea>
+	<p class="description"><?php printf( esc_html__( 'This description text appears as an introduction to the list of %s, if there are any.', 'paco2017-content' ), sprintf( '<a href="%s">%s</a>', esc_url( get_post_type_archive_link( $post_type_object->name ) ), $post_type_object->labels->name ) ); ?></p>
 
 	<?php
 }

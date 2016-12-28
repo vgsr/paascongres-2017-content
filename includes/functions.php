@@ -217,6 +217,28 @@ function paco2017_get_the_archive_title( $title ) {
 }
 
 /**
+ * Modify the archive description
+ *
+ * @since 1.0.0
+ *
+ * @param string $description Archive description
+ * @return string Archive description
+ */
+function paco2017_get_the_archive_description( $description ) {
+
+	// Lectures
+	if ( is_post_type_archive( paco2017_get_lecture_post_type() ) ) {
+		$description = get_option( '_paco2017_lecture_archive_desc', '' );
+
+	// Workshops
+	} elseif ( is_post_type_archive( paco2017_get_workshop_post_type() ) ) {
+		$description = get_option( '_paco2017_workshop_archive_desc', '' );
+	}
+
+	return $description;
+}
+
+/**
  * Return whether the given background color requires a light text color
  *
  * @link Calculation of perceptive luminance. http://stackoverflow.com/a/1855903/3601434
