@@ -539,10 +539,11 @@ class Paco2017_Admin {
 				$spkr_terms = wp_get_object_terms( $post->ID, $speaker_tax, array( 'fields' => 'ids' ) );
 
 				wp_dropdown_categories( array(
-					'name'       => "taxonomy-{$speaker_tax}",
-					'taxonomy'   => $speaker_tax,
-					'hide_empty' => false,
-					'selected'   => $spkr_terms ? $spkr_terms[0] : 0,
+					'name'             => "taxonomy-{$speaker_tax}",
+					'taxonomy'         => $speaker_tax,
+					'hide_empty'       => false,
+					'selected'         => $spkr_terms ? $spkr_terms[0] : 0,
+					'show_option_none' => esc_html__( '&mdash; No Speaker &mdash;', 'paco2017-content' ),
 				) );
 			?>
 		</p>
@@ -552,10 +553,11 @@ class Paco2017_Admin {
 				$cat_terms = wp_get_object_terms( $post->ID, $workshop_cat_tax, array( 'fields' => 'ids' ) );
 
 				wp_dropdown_categories( array(
-					'name'       => "taxonomy-{$workshop_cat_tax}",
-					'taxonomy'   => $workshop_cat_tax,
-					'hide_empty' => false,
-					'selected'   => $cat_terms ? $cat_terms[0] : 0,
+					'name'             => "taxonomy-{$workshop_cat_tax}",
+					'taxonomy'         => $workshop_cat_tax,
+					'hide_empty'       => false,
+					'selected'         => $cat_terms ? $cat_terms[0] : 0,
+					'show_option_none' => esc_html__( '&mdash; No Category &mdash;', 'paco2017-content' ),
 				) );
 			?>
 		</p>
@@ -663,10 +665,11 @@ class Paco2017_Admin {
 				$day_terms = wp_get_object_terms( $post->ID, $conf_day_tax, array( 'fields' => 'ids' ) );
 
 				wp_dropdown_categories( array(
-					'name'       => "taxonomy-{$conf_day_tax}",
-					'taxonomy'   => $conf_day_tax,
-					'hide_empty' => false,
-					'selected'   => $day_terms ? $day_terms[0] : 0,
+					'name'             => "taxonomy-{$conf_day_tax}",
+					'taxonomy'         => $conf_day_tax,
+					'hide_empty'       => false,
+					'selected'         => $day_terms ? $day_terms[0] : 0,
+					'show_option_none' => esc_html__( '&mdash; No Day &mdash;', 'paco2017-content' ),
 				) );
 			?>
 		</p>
