@@ -72,6 +72,7 @@ function paco2017_dashboard_status() {
 	$lecture     = paco2017_get_lecture_post_type();
 	$workshop    = paco2017_get_workshop_post_type();
 	$agenda      = paco2017_get_agenda_post_type();
+	$speaker     = paco2017_get_speaker_tax_id();
 	$conf_day    = paco2017_get_conf_day_tax_id();
 	$conf_loc    = paco2017_get_conf_location_tax_id();
 	$association = paco2017_get_association_tax_id();
@@ -80,6 +81,7 @@ function paco2017_dashboard_status() {
 	$lecture_count     = wp_count_posts( $lecture     );
 	$workshop_count    = wp_count_posts( $workshop    );
 	$agenda_count      = wp_count_posts( $agenda      );
+	$speaker_count     = wp_count_terms( $speaker     );
 	$conf_day_count    = wp_count_terms( $conf_day    );
 	$conf_loc_count    = wp_count_terms( $conf_loc    );
 	$association_count = wp_count_terms( $association );
@@ -115,6 +117,12 @@ function paco2017_dashboard_status() {
 		'workshop-count' => sprintf( '<a href="%s">%s</a>',
 			esc_url( add_query_arg( array( 'post_type' => $workshop ), admin_url( 'edit.php' ) ) ),
 			sprintf( _n( '%s Workshop', '%s Workshops', $workshop_count->publish, 'paco2017-content' ), $workshop_count->publish )
+		),
+
+		// Speakers
+		'speaker-count' => sprintf( '<a href="%s">%s</a>',
+			esc_url( add_query_arg( array( 'taxonomy' => $speaker ), admin_url( 'edit-tags.php' ) ) ),
+			sprintf( _n( '%s Speaker', '%s Speakers', $speaker_count, 'paco2017-content' ), $speaker_count )
 		),
 
 		// Conference Days

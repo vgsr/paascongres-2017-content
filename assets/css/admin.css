@@ -56,11 +56,15 @@
 }
 
 #paco2017_dashboard_status .lecture-count a:before {
-	content: '\f338'; /* dashicons-businessman */
+	content: '\f101'; /* dashicons-admin-comments */
 }
 
 #paco2017_dashboard_status .workshop-count a:before {
 	content: '\f107'; /* dashicons-admin-tools */
+}
+
+#paco2017_dashboard_status .speaker-count a:before {
+	content: '\f338'; /* dashicons-businessman */
 }
 
 #paco2017_dashboard_status .conf_day-count a:before {
