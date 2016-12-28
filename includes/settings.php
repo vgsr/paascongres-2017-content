@@ -276,7 +276,7 @@ function paco2017_admin_setting_callback_workshop_slug() { ?>
  */
 function paco2017_admin_setting_callback_speaker_slug() { ?>
 
-	<input name="_paco2017_speaker_slug" id="_paco2017_speaker_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_speaker_slug', 'workshops' ); ?>" />
+	<input name="_paco2017_speaker_slug" id="_paco2017_speaker_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_speaker_slug', 'speakers' ); ?>" />
 
 	<?php
 }
