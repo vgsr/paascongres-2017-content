@@ -549,7 +549,6 @@ class Paco2017_Admin {
 
 		// Get taxonomies
 		$speaker_tax  = paco2017_get_speaker_tax_id();
-		$conf_loc_tax = paco2017_get_conf_location_tax_id();
 
 		?>
 
@@ -565,20 +564,6 @@ class Paco2017_Admin {
 					'hide_empty'       => false,
 					'selected'         => $spkr_terms ? $spkr_terms[0] : 0,
 					'show_option_none' => esc_html__( '&mdash; No Speaker &mdash;', 'paco2017-content' ),
-				) );
-			?>
-		</p>
-
-		<p>
-			<label for="taxonomy-<?php echo $conf_loc_tax; ?>"><?php esc_html_e( 'Location:', 'paco2017-content' ); ?></label><?php
-				$loc_terms = wp_get_object_terms( $post->ID, $conf_loc_tax, array( 'fields' => 'ids' ) );
-
-				wp_dropdown_categories( array(
-					'name'             => "taxonomy-{$conf_loc_tax}",
-					'taxonomy'         => $conf_loc_tax,
-					'hide_empty'       => false,
-					'selected'         => $loc_terms ? $loc_terms[0] : 0,
-					'show_option_none' => esc_html__( '&mdash; No Location &mdash;', 'paco2017-content' ),
 				) );
 			?>
 		</p>
@@ -622,13 +607,11 @@ class Paco2017_Admin {
 		/**
 		 * Save posted inputs:
 		 * - Speaker taxonomy
-		 * - Conference Location taxonomy
 		 */
 
 		$spkr_tax = paco2017_get_speaker_tax_id();
-		$loc_tax  = paco2017_get_conf_location_tax_id();
 
-		foreach ( array( $spkr_tax, $loc_tax ) as $taxonomy ) {
+		foreach ( array( $spkr_tax ) as $taxonomy ) {
 			$_taxonomy = get_taxonomy( $taxonomy );
 
 			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )
