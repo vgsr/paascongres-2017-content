@@ -449,7 +449,7 @@ class Paco2017_Admin {
 		// Agenda
 		if ( paco2017_get_agenda_post_type() === $post_type ) {
 
-			// Append Time Start & End
+			// Append Time Start and Time End
 			$day_pos = array_search( 'taxonomy-' . paco2017_get_conf_day_tax_id(), array_keys( $columns ) );
 			if ( $day_pos ) {
 				$columns = array_slice( $columns, 0, $day_pos + 1 ) + array(
@@ -609,9 +609,9 @@ class Paco2017_Admin {
 		 * - Speaker taxonomy
 		 */
 
-		$spkr_tax = paco2017_get_speaker_tax_id();
-
-		foreach ( array( $spkr_tax ) as $taxonomy ) {
+		foreach ( array(
+			paco2017_get_speaker_tax_id(),
+		) as $taxonomy ) {
 			$_taxonomy = get_taxonomy( $taxonomy );
 
 			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )
@@ -731,11 +731,11 @@ class Paco2017_Admin {
 		 * - Conference Location taxonomy
 		 */
 
-		$spkr_tax = paco2017_get_speaker_tax_id();
-		$cat_tax  = paco2017_get_workshop_cat_tax_id();
-		$loc_tax  = paco2017_get_conf_location_tax_id();
-
-		foreach ( array( $spkr_tax, $cat_tax, $loc_tax ) as $taxonomy ) {
+		foreach ( array(
+			paco2017_get_speaker_tax_id(),
+			paco2017_get_workshop_cat_tax_id(),
+			paco2017_get_conf_location_tax_id(),
+		) as $taxonomy ) {
 			$_taxonomy = get_taxonomy( $taxonomy );
 
 			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )
@@ -860,14 +860,14 @@ class Paco2017_Admin {
 		 * Save posted inputs:
 		 * - Conference Day taxonomy
 		 * - Conference Location taxonomy
-		 * - Time Start
-		 * - Time End
+		 * - Time Start meta
+		 * - Time End meta
 		 */
 
-		$day_tax  = paco2017_get_conf_day_tax_id();
-		$loc_tax  = paco2017_get_conf_location_tax_id();
-
-		foreach ( array( $day_tax, $loc_tax ) as $taxonomy ) {
+		foreach ( array(
+			paco2017_get_conf_day_tax_id(),
+			paco2017_get_conf_location_tax_id(),
+		) as $taxonomy ) {
 			$_taxonomy = get_taxonomy( $taxonomy );
 
 			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )
