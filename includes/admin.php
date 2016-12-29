@@ -91,66 +91,23 @@ class Paco2017_Admin {
 			4
 		);
 
-		// Post type submenus
-		foreach ( array(
-			paco2017_get_lecture_post_type(),
-			paco2017_get_workshop_post_type(),
-			paco2017_get_agenda_post_type(),
-		) as $post_type ) {
+		// Manage Lectures
+		$hooks[] = $this->admin_submenu_post_type( paco2017_get_lecture_post_type() );
 
-			// Skip when post type does not exist
-			if ( ! $post_type_object = get_post_type_object( $post_type ) )
-				continue;
+		// Manage Workshops
+		$hooks[] = $this->admin_submenu_post_type( paco2017_get_workshop_post_type() );
 
-			$menu_file = "edit.php?post_type={$post_type}";
-
-			// Remove the default admin menu and its submenus, to prevent
-			// the `$parent_file` override in `get_admin_page_parent()`
-			remove_menu_page( $menu_file );
-			unset( $GLOBALS['submenu'][ $menu_file ] );
-
-			// Add post type page as submenu
-			$hooks[] = add_submenu_page(
-				'paco2017',
-				$post_type_object->label,
-				$post_type_object->labels->menu_name,
-				$post_type_object->cap->edit_posts,
-				$menu_file
-			);
-		}
+		// Manage Agenda
+		$hooks[] = $this->admin_submenu_post_type( paco2017_get_agenda_post_type() );
 
 		// Manage Speakers
-		if ( $taxonomy = get_taxonomy( paco2017_get_speaker_tax_id() ) ) {
-			add_submenu_page(
-				'paco2017',
-				$taxonomy->labels->name,
-				$taxonomy->labels->menu_name,
-				$taxonomy->cap->manage_terms,
-				"edit-tags.php?taxonomy={$taxonomy->name}"
-			);
-		}
+		$this->admin_submenu_taxonomy( paco2017_get_speaker_tax_id() );
 
 		// Manage Locations
-		if ( $taxonomy = get_taxonomy( paco2017_get_conf_location_tax_id() ) ) {
-			add_submenu_page(
-				'paco2017',
-				$taxonomy->labels->name,
-				$taxonomy->labels->menu_name,
-				$taxonomy->cap->manage_terms,
-				"edit-tags.php?taxonomy={$taxonomy->name}"
-			);
-		}
+		$this->admin_submenu_taxonomy( paco2017_get_conf_location_tax_id() );
 
 		// Manage Associations
-		if ( $taxonomy = get_taxonomy( paco2017_get_association_tax_id() ) ) {
-			add_submenu_page(
-				'paco2017',
-				$taxonomy->labels->name,
-				$taxonomy->labels->menu_name,
-				$taxonomy->cap->manage_terms,
-				"edit-tags.php?taxonomy={$taxonomy->name}&post_type=user"
-			);
-		}
+		$this->admin_submenu_taxonomy( paco2017_get_association_tax_id(), "edit-tags.php?taxonomy={$taxonomy->name}&post_type=user" );
 
 		// Settings page
 		if ( paco2017_admin_page_has_settings( 'paco2017' ) ) {
@@ -234,6 +191,57 @@ class Paco2017_Admin {
 			$parent_file  = 'paco2017';
 			$submenu_file = "edit-tags.php?taxonomy={$screen->taxonomy}&post_type=user";
 		}
+	}
+
+	/**
+	 * Add plugin admin submenu page for the given post type
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $post_type Post type name
+	 * @param string $function Optional. Menu file or function. Defaults to the post type's edit.php
+	 * @return false|string Result from {@see add_submenu_page()}
+	 */
+	public function admin_submenu_post_type( $post_type = '', $function = '' ) {
+		if ( ! $post_type_object = get_post_type_object( $post_type ) )
+			return false;
+
+		$menu_file = "edit.php?post_type={$post_type}";
+
+		// Remove the default admin menu and its submenus, to prevent
+		// the `$parent_file` override in `get_admin_page_parent()`
+		remove_menu_page( $menu_file );
+		unset( $GLOBALS['submenu'][ $menu_file ] );
+
+		return add_submenu_page(
+			'paco2017',
+			$post_type_object->label,
+			$post_type_object->labels->menu_name,
+			$post_type_object->cap->edit_posts,
+			! empty( $function ) ? $function : $menu_file
+		);
+	}
+
+	/**
+	 * Add plugin admin submenu page for the given taxonomy
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $taxonomy Taxonomy name
+	 * @param string $function Optional. Menu file or function. Defaults to the taxonomy's edit-tags.php
+	 * @return false|string Result from {@see add_submenu_page()}
+	 */
+	public function admin_submenu_taxonomy( $taxonomy = '', $function = '' ) {
+		if ( ! $taxonomy = get_taxonomy( $taxonomy ) )
+			return false;
+
+		return add_submenu_page(
+			'paco2017',
+			$taxonomy->labels->name,
+			$taxonomy->labels->menu_name,
+			$taxonomy->cap->manage_terms,
+			! empty( $function ) ? $function : "edit-tags.php?taxonomy={$taxonomy->name}"
+		);
 	}
 
 	/**
