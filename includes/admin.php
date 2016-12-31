@@ -107,7 +107,8 @@ class Paco2017_Admin {
 		$this->admin_submenu_taxonomy( paco2017_get_conf_location_tax_id() );
 
 		// Manage Associations
-		$this->admin_submenu_taxonomy( paco2017_get_association_tax_id(), "edit-tags.php?taxonomy={$taxonomy->name}&post_type=user" );
+		$association = paco2017_get_association_tax_id();
+		$this->admin_submenu_taxonomy( $association, "edit-tags.php?taxonomy={$association}&post_type=user" );
 
 		// Settings page
 		if ( paco2017_admin_page_has_settings( 'paco2017' ) ) {
