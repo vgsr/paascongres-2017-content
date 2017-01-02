@@ -556,7 +556,8 @@ class Paco2017_Admin {
 		<div class="paco2017_object_details">
 
 		<p>
-			<label for="taxonomy-<?php echo $speaker_tax; ?>"><?php esc_html_e( 'Speaker:', 'paco2017-content' ); ?></label><?php
+			<label for="taxonomy-<?php echo $speaker_tax; ?>"><?php esc_html_e( 'Speaker:', 'paco2017-content' ); ?></label>
+			<?php
 				$spkr_terms = wp_get_object_terms( $post->ID, $speaker_tax, array( 'fields' => 'ids' ) );
 
 				wp_dropdown_categories( array(
@@ -648,7 +649,8 @@ class Paco2017_Admin {
 		<div class="paco2017_object_details">
 
 		<p>
-			<label for="taxonomy-<?php echo $speaker_tax; ?>"><?php esc_html_e( 'Speaker:', 'paco2017-content' ); ?></label><?php
+			<label for="taxonomy-<?php echo $speaker_tax; ?>"><?php esc_html_e( 'Speaker:', 'paco2017-content' ); ?></label>
+			<?php
 				$spkr_terms = wp_get_object_terms( $post->ID, $speaker_tax, array( 'fields' => 'ids' ) );
 
 				wp_dropdown_categories( array(
@@ -662,7 +664,8 @@ class Paco2017_Admin {
 		</p>
 
 		<p>
-			<label for="taxonomy-<?php echo $workshop_cat_tax; ?>"><?php esc_html_e( 'Category:', 'paco2017-content' ); ?></label><?php
+			<label for="taxonomy-<?php echo $workshop_cat_tax; ?>"><?php esc_html_e( 'Category:', 'paco2017-content' ); ?></label>
+			<?php
 				$cat_terms = wp_get_object_terms( $post->ID, $workshop_cat_tax, array( 'fields' => 'ids' ) );
 
 				wp_dropdown_categories( array(
@@ -676,7 +679,8 @@ class Paco2017_Admin {
 		</p>
 
 		<p>
-			<label for="taxonomy-<?php echo $conf_loc_tax; ?>"><?php esc_html_e( 'Location:', 'paco2017-content' ); ?></label><?php
+			<label for="taxonomy-<?php echo $conf_loc_tax; ?>"><?php esc_html_e( 'Location:', 'paco2017-content' ); ?></label>
+			<?php
 				$loc_terms = wp_get_object_terms( $post->ID, $conf_loc_tax, array( 'fields' => 'ids' ) );
 
 				wp_dropdown_categories( array(
@@ -774,7 +778,8 @@ class Paco2017_Admin {
 		<div class="paco2017_object_details">
 
 		<p>
-			<label for="taxonomy-<?php echo $conf_day_tax; ?>"><?php esc_html_e( 'Day:', 'paco2017-content' ); ?></label><?php
+			<label for="taxonomy-<?php echo $conf_day_tax; ?>"><?php esc_html_e( 'Day:', 'paco2017-content' ); ?></label>
+			<?php
 				$day_terms = wp_get_object_terms( $post->ID, $conf_day_tax, array( 'fields' => 'ids' ) );
 
 				wp_dropdown_categories( array(
@@ -788,7 +793,8 @@ class Paco2017_Admin {
 		</p>
 
 		<p>
-			<label for="agenda_time_start_hours"><?php esc_html_e( 'Time Start:', 'paco2017-content' ); ?></label><?php
+			<label for="agenda_time_start_hours"><?php esc_html_e( 'Time Start:', 'paco2017-content' ); ?></label>
+			<?php
 				$start = get_post_meta( $post->ID, 'time_start', true );
 				printf( "<span>%s:%s</span>",
 					sprintf( $time_input, 'agenda_time_start_hours', 23, strtok( $start, ':' ) ),
@@ -798,7 +804,8 @@ class Paco2017_Admin {
 		</p>
 
 		<p>
-			<label for="agenda_time_end_hours"><?php esc_html_e( 'Time End:', 'paco2017-content' ); ?></label><?php
+			<label for="agenda_time_end_hours"><?php esc_html_e( 'Time End:', 'paco2017-content' ); ?></label>
+			<?php
 				$end = get_post_meta( $post->ID, 'time_end', true );
 				printf( "<span>%s:%s</span>",
 					sprintf( $time_input, 'agenda_time_end_hours', 23, strtok( $end, ':' ) ),
@@ -808,7 +815,8 @@ class Paco2017_Admin {
 		</p>
 
 		<p>
-			<label for="taxonomy-<?php echo $conf_loc_tax; ?>"><?php esc_html_e( 'Location:', 'paco2017-content' ); ?></label><?php
+			<label for="taxonomy-<?php echo $conf_loc_tax; ?>"><?php esc_html_e( 'Location:', 'paco2017-content' ); ?></label>
+			<?php
 				$loc_terms = wp_get_object_terms( $post->ID, $conf_loc_tax, array( 'fields' => 'ids' ) );
 
 				wp_dropdown_categories( array(
