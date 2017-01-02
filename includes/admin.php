@@ -97,11 +97,11 @@ class Paco2017_Admin {
 		// Manage Workshops
 		$hooks[] = $this->admin_submenu_post_type( paco2017_get_workshop_post_type() );
 
-		// Manage Agenda
-		$hooks[] = $this->admin_submenu_post_type( paco2017_get_agenda_post_type() );
-
 		// Manage Speakers
 		$this->admin_submenu_taxonomy( paco2017_get_speaker_tax_id() );
+
+		// Manage Agenda
+		$hooks[] = $this->admin_submenu_post_type( paco2017_get_agenda_post_type() );
 
 		// Manage Locations
 		$this->admin_submenu_taxonomy( paco2017_get_conf_location_tax_id() );
