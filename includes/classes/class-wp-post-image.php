@@ -21,27 +21,12 @@ class WP_Post_Image {
 	/**
 	 * @var string Plugin version
 	 */
-	protected $version = '0.0.0';
-
-	/**
-	 * @var string Database version
-	 */
-	protected $db_version = 201701010001;
-
-	/**
-	 * @var string Database version
-	 */
-	protected $db_version_key = '';
+	protected $version = '1.0.0';
 
 	/**
 	 * @var string Metadata key
 	 */
 	protected $meta_key = '';
-
-	/**
-	 * @var string No value
-	 */
-	protected $no_value = '&#8212;';
 
 	/**
 	 * @var array Array of labels
@@ -51,7 +36,7 @@ class WP_Post_Image {
 	/**
 	 * @var string Ajax action name
 	 */
-	public $ajax_action = '';
+	protected $ajax_action = '';
 
 	/**
 	 * Setup this class
@@ -316,7 +301,7 @@ jQuery(document).ready( function( $ ) {
 	/**
 	 * Check whether to generate a new sized version of the image
 	 *
-	 * Do this because an appropriate version may not exist for previously
+	 * Do this when an appropriately sized version may not exist for previously
 	 * uploaded images.
 	 *
 	 * @since 1.0.0
@@ -324,44 +309,45 @@ jQuery(document).ready( function( $ ) {
 	 * @param int $attachment_id Post ID
 	 */
 	public function maybe_resize_image( $attachment_id ) {
+
+		// Get requested size. Append crop parameter when missing
 		$requested_size = $this->data['image_size'];
+		if ( is_array( $requested_size ) && 2 == count( $requested_size ) ) {
+			$requested_size[] = false;
+		}
 
 		// Find the requested size of the image
-		$size = image_get_intermediate_size( $attachment_id, $requested_size );
-		if ( $size ) {
-			$size = array( $size['width'], $size['height'], false );
+		$size_found = image_get_intermediate_size( $attachment_id, $requested_size );
+		if ( $size_found ) {
+			// Get the size values only for comparison
+			$size_found = array( $size_found['width'], $size_found['height'], false );
 		}
 
 		// Bail when the requested image size already exists
-		if ( $size && ( ! is_array( $requested_size ) || $size == $requested_size ) )
+		if ( $size_found && ( is_string( $requested_size ) || $size_found == $requested_size ) )
 			return;
 
 		// Get the requested image size dimensions
-		if ( ! is_array( $requested_size ) ) {
+		if ( is_string( $requested_size ) ) {
 			if ( has_image_size( $requested_size ) ) {
 				$sizes = wp_get_additional_image_sizes(); // Since WP 4.7
-				$size  = $sizes[ $requested_size ]; // array( width, height, crop )
+				$new_size = array_values( $sizes[ $requested_size ] ); // array( width, height, crop )
 			} else {
-				$size = false;
+				$new_size = false;
 			}
 		} else {
-			$size = $requested_size;
-
-			// Append 'crop' size parameter
-			if ( count( $size ) == 2 ) {
-				$size[] = true;
-			}
+			$new_size = $requested_size;
 		}
 
 		// Bail when no dimensions are found
-		if ( ! $size )
+		if ( ! $new_size )
 			return;
 
 		$editor = wp_get_image_editor( get_attached_file( $attachment_id ) );
 		if ( is_wp_error( $editor ) )
 			return $editor;
 
-		$resized = $editor->resize( $size[0], $size[1], $size[2] );
+		$resized = $editor->resize( $new_size[0], $new_size[1], $new_size[2] );
 		if ( is_wp_error( $resized ) )
 			return $resized;
 
@@ -370,6 +356,12 @@ jQuery(document).ready( function( $ ) {
 
 		if ( is_wp_error( $saved ) )
 			return $saved;
+
+		// Save new image size in attachment metadata
+		$metadata = wp_get_attachment_metadata( $attachment_id );
+		unset( $saved['path'] );
+		$metadata['sizes'][ is_string( $requested_size ) ? $requested_size : $this->meta_key ] = $saved;
+		wp_update_attachment_metadata( $attachment_id, $metadata );
 
 		return $destination;
 	}
