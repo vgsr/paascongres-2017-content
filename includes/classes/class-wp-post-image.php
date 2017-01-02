@@ -31,12 +31,21 @@ class WP_Post_Image {
 	/**
 	 * @var array Array of labels
 	 */
-	protected $data = array();
+	protected $labels = array(
+		'setPostImage'    => '',
+		'postImageTitle'  => '',
+		'removePostImage' => '',
+	);
+
+	/**
+	 * @var array Array of labels
+	 */
+	public $image_size = '';
 
 	/**
 	 * @var string Ajax action name
 	 */
-	protected $ajax_action = '';
+	public $ajax_action = '';
 
 	/**
 	 * Setup this class
@@ -65,41 +74,29 @@ class WP_Post_Image {
 	private function setup_details( $args = array() ) {
 
 		// Setup object data
-		$data = wp_parse_args( $args, array(
+		$args = wp_parse_args( $args, array(
 			'meta_key'   => 'image',
 			'post_type'  => array(),
 			'labels'     => array(),
-			'element'    => '',
 			'image_size' => array(),
+			'element'    => '',
 		) );
-
-		// Define post image meta key
-		$this->meta_key = $data['meta_key'];
-		unset( $data['meta_key'] );
-
-		// Define image identifiers
-		$data['name'] = 'postImage_'  . esc_attr( $this->meta_key );
-		$data['key']  = 'post-image-' . esc_attr( $this->meta_key );
-
-		// Default to all public post types
-		if ( empty( $data['post_type'] ) ) {
-			$data['post_type'] = get_post_types( array( 'public' => true ) );
-		}
 
 		// Define labels
-		$data['labels'] = (object) wp_parse_args( $data['labels'], array(
+		$this->meta_key   = $args['meta_key'];
+		$this->post_type  = ! empty( $args['post_type'] ) ? (array) $args['post_type'] : get_post_types( array( 'public' => true ) );
+		$this->labels     = wp_parse_args( $args['labels'], array(
 			'setPostImage'    => esc_html__( 'Set %s image', 'wp-post-image' ),
-			'postImageTitle'  => esc_html__( '%s image', 'wp-post-image' ),
+			'postImageTitle'  => esc_html__( 'Post image', 'wp-post-image' ),
 			'removePostImage' => esc_html__( 'Remove %s image', 'wp-post-image' ),
 		) );
+		$this->image_size = $args['image_size'];
+		$this->element    = $args['element'];
 
-		// Set object properties
-		foreach ( $data as $arg => $value ) {
-			$this->data[ $arg ] = $value;
-		}
-
-		// Define ajax action
-		$this->ajax_action = $data['key'];
+		// Define image identifiers
+		$this->name        = 'postImage_'  . esc_attr( $this->meta_key );
+		$this->key         = 'post-image-' . esc_attr( $this->meta_key );
+		$this->ajax_action = $this->key;
 	}
 
 	/**
@@ -134,13 +131,13 @@ class WP_Post_Image {
 	 * @return array Post image details
 	 */
 	public function get_image_data() {
-		$data = array_intersect_key( $this->data, array_flip( array(
+		$data = array_intersect_key( get_object_vars( $this ), array_flip( array(
 			'key', 'name', 'labels'
 		) ) );
 
 		$data = array_merge( $data, array(
 			'metaKey'    => $this->meta_key,
-			'parentEl'   => $this->data['element'],
+			'parentEl'   => $this->element,
 			'ajaxAction' => $this->ajax_action,
 		) );
 
@@ -159,7 +156,7 @@ class WP_Post_Image {
 	public function media_settings( $settings, $post ) {
 
 		// Add post image ID to the post's media settings
-		if ( is_a( $post, 'WP_Post' ) && in_array( $post->post_type, (array) $this->data['post_type'] ) ) {
+		if ( is_a( $post, 'WP_Post' ) && in_array( $post->post_type, $this->post_type ) ) {
 
 			// Define post image collection
 			if ( ! isset( $settings['post']['postImages'] ) || ! is_array( $settings['post']['postImages'] ) ) {
@@ -215,7 +212,7 @@ jQuery(document).ready( function( $ ) {
 		// Define local variables
 		$post             = get_post( $post_id );
 		$post_type_object = get_post_type_object( $post->post_type );
-		$set_action_text  = sprintf( $this->data['labels']->setPostImage, $post_type_object->labels->singular_name );
+		$set_action_text  = sprintf( $this->labels['setPostImage'], $post_type_object->labels->singular_name );
 		$set_image_link   = '<span class="hide-if-no-js"><a title="%s" href="#" class="wp-post-image-set">%s</a></span>';
 
 		$content = sprintf( $set_image_link,
@@ -226,13 +223,13 @@ jQuery(document).ready( function( $ ) {
 		$attachment_id = $this->get_meta( $post->ID );
 
 		// This post has an image
-		if ( $attachment_id && get_post( $attachment_id ) ) {
+		if ( $attachment_id && wp_attachment_is_image( $attachment_id ) ) {
 
-			// Get image in predefined with for admin metabox
+			// Get image in predefined width for admin metabox
 			$image_html = wp_get_attachment_image( $attachment_id, array( 250, 250 ) );
 
 			if ( ! empty( $image_html ) ) {
-				$remove_action_text = sprintf( $this->data['labels']->removePostImage, $post_type_object->labels->singular_name );
+				$remove_action_text = sprintf( $this->labels['removePostImage'], $post_type_object->labels->singular_name );
 				$remove_image_link  = '<span class="hide-if-no-js"><a href="#" class="wp-post-image-remove" title="%s"><span class="screen-reader-text">%s</span></a></span>';
 
 				$content = sprintf( $set_image_link,
@@ -270,7 +267,7 @@ jQuery(document).ready( function( $ ) {
 		if ( $json ) {
 			check_ajax_referer( "update-post_{$post_ID}" );
 		} else {
-			check_ajax_referer( "{$this->data['key']}-{$post_ID}" );
+			check_ajax_referer( "{$this->key}-{$post_ID}" );
 		}
 
 		// Delete post image
@@ -309,7 +306,7 @@ jQuery(document).ready( function( $ ) {
 	public function maybe_resize_image( $attachment_id ) {
 
 		// Get requested size. Append crop parameter when missing
-		$requested_size = $this->data['image_size'];
+		$requested_size = $this->image_size;
 		if ( is_array( $requested_size ) && 2 == count( $requested_size ) ) {
 			$requested_size[] = false;
 		}
