@@ -20,11 +20,10 @@
 .wp-post-image-remove {
 	position: absolute;
 	top: 0;
-	right: 0;
+	left: -999em;
 	background: #fff;
 	text-decoration: none;
 	color: #a00;
-	visibility: hidden;
 }
 
 .wp-post-image-remove:hover,
@@ -34,7 +33,8 @@
 
 .wp-post-image:hover .wp-post-image-remove,
 .wp-post-image-remove:focus {
-	visibility: visible;
+	right: 0;
+	left: auto;
 }
 
 .wp-post-image-remove:after {
@@ -50,7 +50,8 @@
 
 @media screen and (max-width: 782px) {
 	.wp-post-image-remove {
-		visibility: visible;
+		right: 0;
+		left: auto;
 	}
 
 	.wp-post-image-remove:after {
