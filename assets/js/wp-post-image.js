@@ -2,7 +2,7 @@
 ( function( $, _ ) {
 
 	// Bail when method already exists
-	if ( typeof wp.media.wpPostImage !== 'undefined' )
+	if ( typeof wp.media.wpPostImages !== 'undefined' )
 		return;
 
 	/**
@@ -12,14 +12,14 @@
 	 *
 	 * @param {object} image Image details
 	 */
-	wp.media.wpPostImage = function( image ) {
+	wp.media.wpPostImages = function( image ) {
 		var Attachment = wp.media.model.Attachment,
 		    FeaturedImage = wp.media.controller.FeaturedImage;
 
-		// Define collection of postImage controller and media instances
-		if ( typeof wp.media.controller.postImage === 'undefined' ) {
-			wp.media.controller.postImage = {};
-			wp.media.postImage = {};
+		// Define collection of postImages controller and media instances
+		if ( typeof wp.media.controller.postImages === 'undefined' ) {
+			wp.media.controller.postImages = {};
+			wp.media.postImages = {};
 		}
 
 		/**
@@ -28,7 +28,7 @@
 		 *
 		 * @since 1.0.0
 		 */
-		wp.media.controller.postImage[ image.name ] = FeaturedImage.extend({
+		wp.media.controller.postImages[ image.name ] = FeaturedImage.extend({
 			defaults: _.defaults({
 				id:      image.key,
 				title:   image.labels.postImageTitle,
@@ -42,7 +42,7 @@
 			 */
 			updateSelection: function() {
 				var selection = this.get('selection'),
-					id = wp.media.view.settings.post.postImage[ image.metaKey ],
+					id = wp.media.view.settings.post.postImages[ image.metaKey ],
 					attachment;
 
 				if ( '' !== id && -1 !== id ) {
@@ -55,21 +55,21 @@
 		});
 
 		/**
-		 * wp.media.postImage
+		 * wp.media.postImages
 		 * @namespace
 		 *
 		 * @see wp.media.featuredImage wp-includes/js/media-editor.js
 		 */
-		wp.media.postImage[ image.name ] = {
+		wp.media.postImages[ image.name ] = {
 			/**
 			 * Get the post image post ID
 			 *
 			 * @global wp.media.view.settings
 			 *
-			 * @returns {wp.media.view.settings.post.postImage[ image.metaKey ]|number}
+			 * @returns {wp.media.view.settings.post.postImages[ image.metaKey ]|number}
 			 */
 			get: function() {
-				return wp.media.view.settings.post.postImage[ image.metaKey ];
+				return wp.media.view.settings.post.postImages[ image.metaKey ];
 			},
 			/**
 			 * Set the post image id, save the post image data and
@@ -83,12 +83,12 @@
 			set: function( id ) {
 				var settings = wp.media.view.settings;
 
-				settings.post.postImage[ image.metaKey ] = id;
+				settings.post.postImages[ image.metaKey ] = id;
 
 				wp.media.post( image.ajaxAction, {
 					json:          true,
 					post_id:       settings.post.id,
-					post_image_id: settings.post.postImage[ image.metaKey ],
+					post_image_id: settings.post.postImages[ image.metaKey ],
 					_wpnonce:      settings.post.nonce
 				}).done( function( html ) {
 					$( '.wp-post-image', image.parentEl ).html( html );
@@ -100,7 +100,7 @@
 			 * @global wp.media.controller.FeaturedImage
 			 * @global wp.media.view.l10n
 			 *
-			 * @this wp.media.postImage
+			 * @this wp.media.postImages
 			 *
 			 * @returns {wp.media.view.MediaFrame.Select} A media workflow.
 			 */
@@ -112,7 +112,7 @@
 
 				this._frame = wp.media({
 					state:  image.key,
-					states: [ new wp.media.controller.postImage[ image.name ]() , new wp.media.controller.EditImage() ]
+					states: [ new wp.media.controller.postImages[ image.name ]() , new wp.media.controller.EditImage() ]
 				});
 
 				this._frame.on( 'toolbar:create:' + image.key, function( toolbar ) {
@@ -149,11 +149,11 @@
 			select: function() {
 				var selection = this.get('selection').single();
 
-				if ( ! wp.media.view.settings.post.postImage[ image.metaKey ] ) {
+				if ( ! wp.media.view.settings.post.postImages[ image.metaKey ] ) {
 					return;
 				}
 
-				wp.media.postImage[ image.name ].set( selection ? selection.id : -1 );
+				wp.media.postImages[ image.name ].set( selection ? selection.id : -1 );
 			},
 			/**
 			 * Open the content media manager to the 'post image' tab when
@@ -167,14 +167,16 @@
 				$( image.parentEl ).on( 'click', '.wp-post-image-set, label', function( event ) {
 					event.preventDefault();
 
-					wp.media.postImage[ image.name ].frame().open();
+					wp.media.postImages[ image.name ].frame().open();
 				}).on( 'click', '.wp-post-image-remove', function() {
-					wp.media.postImage[ image.name ].set( -1 );
+					event.preventDefault();
+
+					wp.media.postImages[ image.name ].set( -1 );
 				});
 			}
 		};
 
-		$( wp.media.postImage[ image.name ].init );
+		$( wp.media.postImages[ image.name ].init );
 	};
 
 }( jQuery, _ ) );

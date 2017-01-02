@@ -122,7 +122,7 @@ class WP_Post_Image {
 	 * @param int $post_id Post ID
 	 * @return int Post image ID, 0 when not found.
 	 */
-	public function get_image( $post_id ) {
+	public function get_meta( $post_id ) {
 		return (int) get_post_meta( $post_id, $this->meta_key, true );
 	}
 
@@ -162,12 +162,12 @@ class WP_Post_Image {
 		if ( is_a( $post, 'WP_Post' ) && in_array( $post->post_type, (array) $this->data['post_type'] ) ) {
 
 			// Define post image collection
-			if ( ! isset( $settings['post']['postImage'] ) || ! is_array( $settings['post']['postImage'] ) ) {
-				$settings['post']['postImage'] = array();
+			if ( ! isset( $settings['post']['postImages'] ) || ! is_array( $settings['post']['postImages'] ) ) {
+				$settings['post']['postImages'] = array();
 			}
 
-			$attachment_id = $this->get_image( $post->ID );
-			$settings['post']['postImage'][ $this->meta_key ] = $attachment_id ? $attachment_id : -1;
+			$attachment_id = $this->get_meta( $post->ID );
+			$settings['post']['postImages'][ $this->meta_key ] = $attachment_id ? $attachment_id : -1;
 		}
 
 		return $settings;
@@ -188,20 +188,18 @@ class WP_Post_Image {
 		wp_enqueue_style(  'wp-post-image', $this->url . 'assets/css/wp-post-image.css', array(), $this->version );
 
 		// Add script to setup the js instance
-		if ( $image = $this->get_image_data() ) {
-			wp_add_inline_script( 'wp-post-image', "
+		wp_add_inline_script( 'wp-post-image', "
 /* global wp */
 jQuery(document).ready( function( $ ) {
-	if ( typeof wp.media.wpPostImage === 'undefined' )
+	if ( typeof wp.media.wpPostImages === 'undefined' )
 		return;
 
 	// Setup image selector
-	if ( $( '.wp-post-image', '" . $this->data['element'] . "' ).length ) {
-		wp.media.wpPostImage( " . json_encode( $image ) . " );
+	if ( $( '.wp-post-image', '" . $this->element . "' ).length ) {
+		wp.media.wpPostImages( " . json_encode( $this->get_image_data() ) . " );
 	}
 } );
 " );
-		}
 	}
 
 	/**
@@ -225,7 +223,7 @@ jQuery(document).ready( function( $ ) {
 			esc_html( $set_action_text )
 		);
 
-		$attachment_id = $this->get_image( $post->ID );
+		$attachment_id = $this->get_meta( $post->ID );
 
 		// This post has an image
 		if ( $attachment_id && get_post( $attachment_id ) ) {
