@@ -20,17 +20,19 @@
 .wp-post-image-remove {
 	position: absolute;
 	right: 0;
+	background: #fff;
 	text-decoration: none;
-	border-radius: 50%;
 	color: #a00;
 	visibility: hidden;
 }
 
-.wp-post-image-remove:hover {
+.wp-post-image-remove:hover,
+.wp-post-image-remove:focus {
 	color: #f00;
 }
 
-.wp-post-image:hover .wp-post-image-remove {
+.wp-post-image:hover .wp-post-image-remove,
+.wp-post-image-remove:focus {
 	visibility: visible;
 }
 
@@ -42,5 +44,4 @@
 	height: 32px;
 	font-size: 32px;
 	line-height: 33px;
-	text-shadow: 0 0 2px rgba(0, 0, 0, .5);
 }
