@@ -226,7 +226,7 @@ jQuery(document).ready( function( $ ) {
 		if ( $attachment_id && wp_attachment_is_image( $attachment_id ) ) {
 
 			// Get image in predefined width for admin metabox
-			$image_html = wp_get_attachment_image( $attachment_id, array( 250, 250 ) );
+			$image_html = wp_get_attachment_image( $attachment_id, 'medium' );
 
 			if ( ! empty( $image_html ) ) {
 				$remove_action_text = sprintf( $this->labels['removePostImage'], $post_type_object->labels->singular_name );
