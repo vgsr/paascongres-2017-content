@@ -89,6 +89,7 @@ class WP_Post_Image {
 			'setPostImage'    => esc_html__( 'Set %s image', 'wp-post-image' ),
 			'postImageTitle'  => esc_html__( 'Post image', 'wp-post-image' ),
 			'removePostImage' => esc_html__( 'Remove %s image', 'wp-post-image' ),
+			'error'           => esc_html__( 'Could not set that as the post image. Try a different attachment.', 'wp-post-image' ),
 		) );
 		$this->image_size = $args['image_size'];
 		$this->element    = $args['element'];
@@ -132,11 +133,12 @@ class WP_Post_Image {
 	 */
 	public function get_image_data() {
 		$data = array_intersect_key( get_object_vars( $this ), array_flip( array(
-			'key', 'name', 'labels'
+			'key', 'name'
 		) ) );
 
 		$data = array_merge( $data, array(
 			'metaKey'    => $this->meta_key,
+			'l10n'       => $this->labels,
 			'parentEl'   => $this->element,
 			'ajaxAction' => $this->ajax_action,
 		) );

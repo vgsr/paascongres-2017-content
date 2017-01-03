@@ -25,20 +25,18 @@
 		/**
 		 * Construct implementation of the FeaturedImage modal controller
 		 * for the Post Image
-		 *
-		 * @since 1.0.0
 		 */
 		wp.media.controller.postImages[ image.name ] = FeaturedImage.extend({
 			defaults: _.defaults({
 				id:      image.key,
-				title:   image.labels.postImageTitle,
+				title:   image.l10n.postImageTitle,
 				toolbar: image.key
 			}, FeaturedImage.prototype.defaults ),
 
 			/**
 			 * Overload the controller's native selection updater method
 			 *
-			 * @since 1.0.0
+			 * @this wp.media.controller.FeaturedImage (Library)
 			 */
 			updateSelection: function() {
 				var selection = this.get('selection'),
@@ -91,8 +89,19 @@
 					post_image_id: settings.post.postImages[ image.metaKey ],
 					_wpnonce:      settings.post.nonce
 				}).done( function( html ) {
+					if ( html == '0' ) {
+						window.alert( image.l10n.error );
+						return;
+					}
 					$( '.wp-post-image', image.parentEl ).html( html );
 				});
+			},
+			/**
+			 * Remove the post image id, save the post image data and
+			 * set the HTML in the post meta box to no post image.
+			 */
+			remove: function() {
+				wp.media.postImages[ image.name ].set( -1 );
 			},
 			/**
 			 * The Post Image workflow
@@ -112,7 +121,7 @@
 
 				this._frame = wp.media({
 					state:  image.key,
-					states: [ new wp.media.controller.postImages[ image.name ]() , new wp.media.controller.EditImage() ]
+					states: [ new wp.media.controller.postImages[ image.name ](), new wp.media.controller.EditImage() ]
 				});
 
 				this._frame.on( 'toolbar:create:' + image.key, function( toolbar ) {
@@ -120,7 +129,7 @@
 					 * @this wp.media.view.MediaFrame.Select
 					 */
 					this.createSelectToolbar( toolbar, {
-						text: image.labels.setPostImage
+						text: image.l10n.setPostImage
 					});
 				}, this._frame );
 
@@ -166,12 +175,13 @@
 			init: function() {
 				$( image.parentEl ).on( 'click', '.wp-post-image-set, label', function( event ) {
 					event.preventDefault();
+					// Stop propagation to prevent thickbox from activating.
+					event.stopPropagation();
 
 					wp.media.postImages[ image.name ].frame().open();
 				}).on( 'click', '.wp-post-image-remove', function() {
-					event.preventDefault();
-
-					wp.media.postImages[ image.name ].set( -1 );
+					wp.media.postImages[ image.name ].remove();
+					return false;
 				});
 			}
 		};
