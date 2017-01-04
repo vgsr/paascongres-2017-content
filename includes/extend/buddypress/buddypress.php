@@ -99,6 +99,7 @@ class Paco2017_BuddyPress {
 		add_action( 'bp_init',                  array( $this, 'hide_components_parts' ),  5    );
 		add_action( 'bp_setup_canonical_stack', array( $this, 'setup_canonical_stack' ),  5    );
 		add_action( 'bp_setup_nav',             array( $this, 'setup_profile_nav'     ), 90    );
+		add_action( 'bp_xprofile_admin_nav',    array( $this, 'setup_admin_nav'       ), 99    );
 		add_action( 'bp_enqueue_scripts',       array( $this, 'enqueue_scripts'       ), 90    );
 		add_filter( 'bp_map_meta_caps',         array( $this, 'map_meta_cap'          ), 20, 4 );
 		add_filter( 'bp_get_the_body_class',    array( $this, 'body_class'            ), 10, 4 );
@@ -262,6 +263,28 @@ class Paco2017_BuddyPress {
 			// Members: remove Profile Settings tab
 			bp_core_remove_subnav_item( bp_get_settings_slug(), 'profile', 'members' );
 		}
+	}
+
+	/**
+	 * Modify the admin navigation for the My Account admin bar menu
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $wp_admin_nav BuddyPress admin nav items
+	 * @return array Admin nav items
+	 */
+	public function setup_admin_nav( $wp_admin_nav ) {
+
+		// Walk the navs
+		foreach ( $wp_admin_nav as $k => $nav ) {
+
+			// Alter Profile parent name
+			if ( 'my-account-xprofile' === $nav['id'] ) {
+				$wp_admin_nav[ $k ]['title'] = __( 'Enrollment', 'paco2017-content' );
+			}
+		}
+
+		return $wp_admin_nav;
 	}
 
 	/**
