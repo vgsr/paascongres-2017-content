@@ -63,12 +63,12 @@ class Paco2017_BuddyPress {
 		require( $this->base_dir . 'actions.php'  );
 		require( $this->base_dir . 'activity.php' );
 		require( $this->base_dir . 'members.php'  );
-		require( $this->base_dir . 'settings.php' );
 		require( $this->base_dir . 'xprofile.php' );
 
 		// Admin
 		if ( is_admin() ) {
-			require( $this->base_dir . 'admin.php' );
+			require( $this->base_dir . 'admin.php'    );
+			require( $this->base_dir . 'settings.php' );
 		}
 	}
 
@@ -97,6 +97,7 @@ class Paco2017_BuddyPress {
 
 		// General limitations
 		add_action( 'bp_init',               array( $this, 'hide_components_parts' ),  5    );
+		add_action( 'bp_setup_nav',          array( $this, 'setup_profile_nav'     ), 90    );
 		add_action( 'bp_enqueue_scripts',    array( $this, 'enqueue_scripts'       ), 90    );
 		add_filter( 'bp_map_meta_caps',      array( $this, 'map_meta_cap'          ), 20, 4 );
 		add_filter( 'bp_get_the_body_class', array( $this, 'body_class'            ), 10, 4 );
@@ -217,6 +218,32 @@ class Paco2017_BuddyPress {
 			if ( isset( $item->screen_function ) && is_callable( $item->screen_function ) ) {
 				remove_action( 'bp_screens', $item->screen_function, 3 );
 			}
+		}
+	}
+
+	/**
+	 * Modify the navigation elements that are visible for the user.
+	 *
+	 * @since 1.0.0
+	 */
+	public function setup_profile_nav() {
+
+		// Get BuddyPress
+		$bp = buddypress();
+
+		// Collect nav items
+		$items = array();
+
+		if ( bp_is_active( 'xprofile' ) ) {
+
+			// Members: alter Profile tab name
+			$bp->members->nav->edit_nav( array( 'name' => __( 'Enrollment', 'paco2017-content' ) ), bp_get_profile_slug() );
+		}
+
+		if ( bp_is_active( 'settings' ) ) {
+
+			// Members: remove Profile Settings tab
+			bp_core_remove_subnav_item( bp_get_settings_slug(), 'profile', 'members' );
 		}
 	}
 
