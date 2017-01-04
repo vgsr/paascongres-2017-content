@@ -96,11 +96,12 @@ class Paco2017_BuddyPress {
 		}, 8 );
 
 		// General limitations
-		add_action( 'bp_init',               array( $this, 'hide_components_parts' ),  5    );
-		add_action( 'bp_setup_nav',          array( $this, 'setup_profile_nav'     ), 90    );
-		add_action( 'bp_enqueue_scripts',    array( $this, 'enqueue_scripts'       ), 90    );
-		add_filter( 'bp_map_meta_caps',      array( $this, 'map_meta_cap'          ), 20, 4 );
-		add_filter( 'bp_get_the_body_class', array( $this, 'body_class'            ), 10, 4 );
+		add_action( 'bp_init',                  array( $this, 'hide_components_parts' ),  5    );
+		add_action( 'bp_setup_canonical_stack', array( $this, 'setup_canonical_stack' ),  5    );
+		add_action( 'bp_setup_nav',             array( $this, 'setup_profile_nav'     ), 90    );
+		add_action( 'bp_enqueue_scripts',       array( $this, 'enqueue_scripts'       ), 90    );
+		add_filter( 'bp_map_meta_caps',         array( $this, 'map_meta_cap'          ), 20, 4 );
+		add_filter( 'bp_get_the_body_class',    array( $this, 'body_class'            ), 10, 4 );
 
 		// Unhide BuddyPress from VGSR
 		if ( function_exists( 'vgsr' ) ) {
@@ -187,6 +188,22 @@ class Paco2017_BuddyPress {
 				// Remove the hook (filters and actions alike)
 				remove_action( $hook, array( $class, $part ), $priority );
 			}
+		}
+	}
+
+	/**
+	 * Modify the canonical stack on setup
+	 *
+	 * @since 1.0.0
+	 */
+	public function setup_canonical_stack() {
+
+		// Get BuddyPress
+		$bp = buddypress();
+
+		// Define the profile as the default component (tab) for the self
+		if ( bp_is_my_profile() && ! defined( 'BP_DEFAULT_COMPONENT' ) && bp_is_active( 'xprofile' ) ) {
+			define( 'BP_DEFAULT_COMPONENT', ( 'xprofile' === $bp->profile->id ) ? 'profile' : $bp->profile->id );
 		}
 	}
 

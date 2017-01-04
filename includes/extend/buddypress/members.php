@@ -194,6 +194,24 @@ function paco2017_bp_get_member_class( $classes ) {
 }
 
 /**
+ * Modify the member's front page template
+ *
+ * @since 1.0.0
+ *
+ * @param array $templates Front page templates
+ * @return array Front page templates
+ */
+function paco2017_bp_members_front_page_template( $templates ) {
+
+	// Do not display the front page for the self
+	if ( bp_is_my_profile() ) {
+		$templates = array();
+	}
+
+	return $templates;
+}
+
+/**
  * 404 and bail template loading for restricted profile views
  *
  * @since 1.0.0
