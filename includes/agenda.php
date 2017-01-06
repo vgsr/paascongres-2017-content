@@ -537,9 +537,9 @@ function paco2017_the_agenda_items_list() { ?>
 				<span class="item-timeslot"><?php paco2017_the_agenda_timeslot(); ?></span>
 			</div>
 
-			<div class="item-content">
-				<?php the_content(); ?>
-			</div>
+			<div class="item-content"><?php
+				the_content();
+			?></div>
 
 			<?php edit_post_link(
 				sprintf(

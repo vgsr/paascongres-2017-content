@@ -49,6 +49,10 @@
 	margin: 0 0 1.5em 0;
 }
 
+.paco2017_agenda .item-header {
+	margin: 0 0 0.5em;
+}
+
 .paco2017_agenda .item-title {
 	font-weight: 600;
 }
@@ -56,6 +60,10 @@
 .paco2017_agenda .item-timeslot {
 	font-size: 80%;
 	opacity: .7;
+}
+
+.paco2017_agenda .item-content {
+	margin: 0 0 1.5em;
 }
 
 .paco2017_agenda .item-footer {
