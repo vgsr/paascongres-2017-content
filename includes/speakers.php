@@ -49,21 +49,6 @@ function paco2017_get_speaker_tax_labels() {
 }
 
 /**
- * Return the Speaker taxonomy rewrite settings
- *
- * @since 1.0.0
- *
- * @uses apply_filters() Calls 'paco2017_get_speaker_tax_rewrite'
- * @return array Speaker taxonomy rewrite
- */
-function paco2017_get_speaker_tax_rewrite() {
-	return apply_filters( 'paco2017_get_speaker_tax_rewrite', array(
-		'slug'       => paco2017_get_speaker_slug(),
-		'with_front' => false
-	) );
-}
-
-/**
  * Act when the Speaker taxonomy has been registered
  *
  * @since 1.0.0

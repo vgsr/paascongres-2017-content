@@ -69,6 +69,14 @@ function paco2017_admin_get_settings_fields() {
 				'args'              => array()
 			),
 
+			// Speakers page
+			'_paco2017_speakers_page' => array(
+				'title'             => esc_html__( 'Speakers Page', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_speakers_page',
+				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
+
 			// Housekeeping page
 			'_paco2017_housekeeping_page' => array(
 				'title'             => esc_html__( 'Housekeeping Page', 'paco2017-content' ),
@@ -131,17 +139,6 @@ function paco2017_admin_get_settings_fields() {
 				'callback'          => 'paco2017_admin_setting_callback_workshop_cat_slug',
 				'sanitize_callback' => 'paco2017_sanitize_slug',
 				'args'              => array()
-			),
-
-			// Speakers
-			'_paco2017_speaker_slug' => array(
-				'title'             => esc_html__( 'Speaker', 'paco2017-content' ),
-				'callback'          => 'paco2017_admin_setting_callback_slug',
-				'sanitize_callback' => 'paco2017_sanitize_slug',
-				'args'              => array(
-					'setting' => '_paco2017_speaker_slug',
-					'default' => 'speakers'
-				)
 			),
 		),
 	) );
@@ -230,6 +227,36 @@ function paco2017_admin_setting_callback_agenda_page() {
 	} ?>
 
 	<p class="description"><?php esc_html_e( 'Select the page that should contain the agenda information', 'paco2017-content' ); ?></p>
+
+	<?php
+}
+
+/**
+ * Display the content of the Speakers Page settings field
+ *
+ * @since 1.0.0
+ */
+function paco2017_admin_setting_callback_speakers_page() {
+
+	// Get settings field
+	$page_id = get_option( '_paco2017_speakers_page', false );
+
+	// Pages dropdown
+	wp_dropdown_pages( array(
+		'name'             => '_paco2017_speakers_page',
+		'selected'         => $page_id,
+		'show_option_none' => __( '&mdash; No Page &mdash;', 'paco2017-content' ),
+	) );
+
+	// Display View link
+	if ( $page_id ) {
+		printf( ' <a class="button button-secondary" href="%s" target="_blank">%s</a>',
+			esc_url( get_permalink( $page_id ) ),
+			esc_html__( 'View', 'paco2017-content' )
+		);
+	} ?>
+
+	<p class="description"><?php esc_html_e( 'Select the page that should contain the speakers information', 'paco2017-content' ); ?></p>
 
 	<?php
 }

@@ -126,6 +126,18 @@ function paco2017_get_agenda_page_id() {
 }
 
 /**
+ * Return the page ID of the Speakers page setting
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speakers_page_id'
+ * @return int Page ID
+ */
+function paco2017_get_speakers_page_id() {
+	return (int) apply_filters( 'paco2017_get_speakers_page_id', get_option( '_paco2017_speakers_page', 0 ) );
+}
+
+/**
  * Return the page ID of the Housekeeping page setting
  *
  * @since 1.0.0

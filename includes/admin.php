@@ -371,6 +371,10 @@ class Paco2017_Admin {
 		if ( paco2017_get_agenda_page_id() === $post->ID ) {
 			$states['agenda_page'] = __( 'Agenda', 'paco2017-content' );
 
+		// Mark the Speakers page
+		} elseif ( paco2017_get_speakers_page_id() === $post->ID ) {
+			$states['speakers_page'] = __( 'Speakers', 'paco2017-content' );
+
 		// Mark the Housekeeping page
 		} elseif ( paco2017_get_housekeeping_page_id() === $post->ID ) {
 			$states['housekeeping_page'] = __( 'Housekeeping', 'paco2017-content' );
