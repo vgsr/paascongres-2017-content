@@ -56,6 +56,14 @@ function paco2017_bp_add_settings_fields( $fields ) {
 			)
 		),
 
+		// Required fields
+		'_paco2017_bp_xprofile_required_fields' => array(
+			'title'             => __( 'Required Fields', 'paco2017-content' ),
+			'callback'          => 'paco2017_bp_admin_setting_callback_required_fields',
+			'sanitize_callback' => null, // This is not an actual setting
+			'args'              => array()
+		),
+
 		// Association field
 		'_paco2017_bp_xprofile_association_field' => array(
 			'title'             => __( 'Association Field', 'paco2017-content' ),
@@ -147,8 +155,6 @@ function paco2017_bp_admin_setting_callback_xprofile_field( $args = array() ) {
  *
  * @since 1.0.0
  *
- * @uses bp_xprofile_get_groups()
- *
  * @param array $args Dropdown arguments
  * @return string Dropdown HTML markup
  */
@@ -197,5 +203,36 @@ function paco2017_bp_admin_xprofile_fields_dropdown( $args = array() ) {
 		echo $dd;
 	} else {
 		return $dd;
+	}
+}
+
+/**
+ * Output the Required Fields settings field
+ *
+ * @since 1.0.0
+ */
+function paco2017_bp_admin_setting_callback_required_fields() {
+	$groups    = paco2017_bp_xprofile_get_required_fields();
+	$can_edit  = bp_current_user_can( 'bp_moderate' );
+	$name_wrap = $can_edit ? '<a href="%2$s">%1$s</a>' : '%1%s';
+	if ( $can_edit ) {
+		$admin_url = add_query_arg( array( 'page' => 'bp-profile-setup', 'mode' => 'edit_field' ), bp_get_admin_url( 'users.php' ) );
+	}
+
+	// Display description
+	echo '<p>' . esc_html__( 'These are the required profile fields for this site. You can mark fields as required when editing the field.', 'paco2017-content' ) . '</p>';
+
+	// List required fields
+	if ( ! empty( $groups ) ) {
+		foreach ( $groups as $group ) {
+			echo '<h4>' . $group->name . '</h4>';
+			echo '<ul>';
+			foreach ( $group->fields as $field ) {
+				echo '<li>' . sprintf( $name_wrap, $field->name, esc_url( add_query_arg( array( 'field_id' => $field->id, 'group_id' => $field->group_id ), $admin_url ) ) ) . '</li>';
+			}
+			echo '</ul>';
+		}
+	} else {
+		echo '<p class="description">' . esc_html__( 'There are no fields selected yet.', 'paco2017-content' ) . '</p>';
 	}
 }

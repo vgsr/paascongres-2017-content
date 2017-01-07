@@ -304,6 +304,68 @@ function paco2017_bp_xprofile_is_enrollment_field( $field_id = 0 ) {
 }
 
 /**
+ * Return the required XProfile fields
+ *
+ * @since 1.0.0
+ *
+ * @return array Profile groups with the required fields
+ */
+function paco2017_bp_xprofile_get_required_fields() {
+
+	// Get the required field ids
+	$field_ids = paco2017_bp_xprofile_get_required_field_ids();
+	$groups = array();
+
+	if ( ! empty( $field_ids ) ) {
+		/**
+		 * Because BP has no equivalent for `include_fields` when querying
+		 * profile groups, we query all groups by default, and then only
+		 * return the matching fields within.
+		 */
+		$groups = bp_xprofile_get_groups( array( 'hide_emtpy_groups' => true, 'fetch_fields' => true ) );
+		foreach ( $groups as $gk => $group ) {
+			if ( ! empty( $group->fields ) ) {
+				foreach ( $group->fields as $fk => $field ) {
+					if ( ! $field->is_required ) {
+						unset( $groups[ $gk ]->fields[ $fk ] );
+					}
+				}
+			}
+
+			// Remove empty groups
+			if ( empty( $group->fields ) ) {
+				unset( $groups[ $gk ] );
+			}
+		}
+	}
+
+	return $groups;
+}
+
+/**
+ * Return the required XProfile field ids
+ *
+ * @since 1.0.0
+ *
+ * @return array required profile field ids
+ */
+function paco2017_bp_xprofile_get_required_field_ids() {
+	global $wpdb;
+
+	// Get BuddyPress
+	$bp = buddypress();
+
+	/**
+	 * Run a custom query to get fields by meta, since the profile
+	 * query logic in BP_XProfile_Group::get() isn't that advanced.
+	 */
+	$field_ids = $wpdb->get_col( $wpdb->prepare( "SELECT id FROM {$bp->profile->table_name_fields} WHERE is_required = %d", 1 ) );
+	$field_ids = array_map( 'intval', $field_ids );
+
+	return $field_ids;
+}
+
+/**
  * Return the selected Association XProfile field
  *
  * @since 1.0.0
