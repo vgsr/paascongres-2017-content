@@ -106,25 +106,23 @@ function paco2017_admin_get_settings_fields() {
 			// Lectures
 			'_paco2017_lecture_slug' => array(
 				'title'             => esc_html__( 'Lecture', 'paco2017-content' ),
-				'callback'          => 'paco2017_admin_setting_callback_lecture_slug',
+				'callback'          => 'paco2017_admin_setting_callback_slug',
 				'sanitize_callback' => 'paco2017_sanitize_slug',
-				'args'              => array()
+				'args'              => array(
+					'setting' => '_paco2017_lecture_slug',
+					'default' => 'lectures'
+				)
 			),
 
 			// Workshops
 			'_paco2017_workshop_slug' => array(
 				'title'             => esc_html__( 'Workshop', 'paco2017-content' ),
-				'callback'          => 'paco2017_admin_setting_callback_workshop_slug',
+				'callback'          => 'paco2017_admin_setting_callback_slug',
 				'sanitize_callback' => 'paco2017_sanitize_slug',
-				'args'              => array()
-			),
-
-			// Speakers
-			'_paco2017_speaker_slug' => array(
-				'title'             => esc_html__( 'Speaker', 'paco2017-content' ),
-				'callback'          => 'paco2017_admin_setting_callback_speaker_slug',
-				'sanitize_callback' => 'paco2017_sanitize_slug',
-				'args'              => array()
+				'args'              => array(
+					'setting' => '_paco2017_workshop_slug',
+					'default' => 'workshops'
+				)
 			),
 
 			// Workshop Categories
@@ -133,6 +131,17 @@ function paco2017_admin_get_settings_fields() {
 				'callback'          => 'paco2017_admin_setting_callback_workshop_cat_slug',
 				'sanitize_callback' => 'paco2017_sanitize_slug',
 				'args'              => array()
+			),
+
+			// Speakers
+			'_paco2017_speaker_slug' => array(
+				'title'             => esc_html__( 'Speaker', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_slug',
+				'sanitize_callback' => 'paco2017_sanitize_slug',
+				'args'              => array(
+					'setting' => '_paco2017_speaker_slug',
+					'default' => 'speakers'
+				)
 			),
 		),
 	) );
@@ -311,37 +320,22 @@ function paco2017_admin_setting_callback_slugs_section() {
 }
 
 /**
- * Lecture slug setting field
+ * Slug setting field
  *
  * @since 1.0.0
  */
-function paco2017_admin_setting_callback_lecture_slug() { ?>
+function paco2017_admin_setting_callback_slug( $args = array() ) {
 
-	<input name="_paco2017_lecture_slug" id="_paco2017_lecture_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_lecture_slug', 'lectures' ); ?>" />
+	// Bail when there was no setting passed
+	if ( ! isset( $args['setting'] ) )
+		return;
 
-	<?php
-}
+	$setting = esc_attr( $args['setting'] );
+	$default = isset( $args['default'] ) ? $args['default'] : '';
 
-/**
- * Workshop slug setting field
- *
- * @since 1.0.0
- */
-function paco2017_admin_setting_callback_workshop_slug() { ?>
+	?>
 
-	<input name="_paco2017_workshop_slug" id="_paco2017_workshop_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_workshop_slug', 'workshops' ); ?>" />
-
-	<?php
-}
-
-/**
- * Speaker slug setting field
- *
- * @since 1.0.0
- */
-function paco2017_admin_setting_callback_speaker_slug() { ?>
-
-	<input name="_paco2017_speaker_slug" id="_paco2017_speaker_slug" type="text" class="regular-text code" value="<?php echo get_option( '_paco2017_speaker_slug', 'speakers' ); ?>" />
+	<input name="<?php echo $setting; ?>" id="<?php echo $setting; ?>" type="text" class="regular-text code" value="<?php echo get_option( $args['setting'], $default ); ?>" />
 
 	<?php
 }
