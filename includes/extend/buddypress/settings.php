@@ -45,7 +45,7 @@ function paco2017_bp_add_settings_fields( $fields ) {
 	// Members settings
 	$fields['buddypress-members'] = array(
 
-		// Enrollment field
+		// The Enrollment field
 		'_paco2017_bp_xprofile_enrollment_field' => array(
 			'title'             => __( 'Enrollment Field', 'paco2017-content' ),
 			'callback'          => 'paco2017_bp_admin_setting_callback_xprofile_field',
