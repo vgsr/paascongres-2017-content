@@ -152,7 +152,7 @@ function paco2017_get_housekeeping_page_id() {
 /** Taxonomy ******************************************************************/
 
 /**
- * Modify the list of queried Conference Day terms
+ * Modify the list of queried terms to serve them with term meta
  *
  * @since 1.0.0
  *
@@ -206,6 +206,43 @@ function paco2017_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
 	}
 
 	return $terms;
+}
+
+/**
+ * Return the types that have registered this taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @param string $taxonomy Taxonomy name
+ * @return array Taxonomy types
+ */
+function paco2017_get_taxonomy_types( $taxonomy = 'category' ){
+	global $wp_taxonomies;
+
+	return isset( $wp_taxonomies[ $taxonomy ] ) ? $wp_taxonomies[ $taxonomy ]->object_type : array();
+}
+
+/**
+ * Return the total found rows for the term query arguments
+ *
+ * @since 1.0.0
+ *
+ * @param array $query_args Original term query arguments.
+ * @return int Total found rows
+ */
+function paco2017_query_terms_found_rows( $query_args ) {
+
+	// Remove paging arguments
+	unset( $query_args['offset'], $query_args['paged'] );
+
+	// Define count query args
+	$query_args['fields'] = 'count';
+	$query_args['number'] = -1;
+
+	// Run count query
+	$count = get_terms( $query_args['taxonomy'], $query_args );
+
+	return (int) $count;
 }
 
 /** Template ******************************************************************/
@@ -297,6 +334,13 @@ function paco2017_enqueue_styles() {
 
 			$css[] = ".paco2017_enrollments_widget .paco2017-association-{$term->term_id}, .paco2017_enrollments_widget .paco2017-association-{$term->term_id} + dd { background: rgba({$rgb[0]},{$rgb[1]},{$rgb[2]},.6); {$textcolor} }";
 		}
+	}
+
+	/** Speakers **************************************************************/
+
+	foreach ( paco2017_get_taxonomy_types( paco2017_get_speaker_tax_id() ) as $post_type ) {
+		$label = get_post_type_object( $post_type )->labels->singular_name;
+		$css[] = ".paco2017-speakers .type-{$post_type} .item-object-title:before { content: '{$label}: ' }";
 	}
 
 	if ( ! empty( $css ) ) {

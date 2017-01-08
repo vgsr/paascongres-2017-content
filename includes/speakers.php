@@ -101,5 +101,436 @@ function paco2017_get_workshop_rest_speakers( $object, $field_name, $request ) {
 	return wp_get_object_terms( $object['id'], paco2017_get_speaker_tax_id() );
 }
 
+/** Query *********************************************************************/
+
+/**
+ * Setup and run the Speakers query
+ *
+ * @since 1.0.0
+ *
+ * @param array $args Query arguments.
+ * @return bool Has the query returned any results?
+ */
+function paco2017_query_speakers( $args = array() ) {
+
+	// Get query object
+	$query = paco2017_content()->speaker_query;
+
+	// Reset query defaults
+	$query->in_the_loop  = false;
+	$query->current_term = -1;
+	$query->term_count   = 0;
+	$query->term         = null;
+	$query->terms        = array();
+
+	// Define query args
+	$r = wp_parse_args( $args, array(
+		'taxonomy'        => paco2017_get_speaker_tax_id(),
+		'number'          => 0,
+		'fields'          => 'all',
+		'hide_empty'      => true
+	) );
+
+	// Pagination
+	if ( $r['number'] != -1 ) {
+		$r['paged'] = absint( $r['paged'] );
+		if ( $r['paged'] == 0 ) {
+			$r['paged'] = 1;
+		}
+		$r['offset'] = absint( ( $r['paged'] - 1 ) * $r['number'] );
+	}
+
+	// Run query to get the taxonomy terms
+	$query->query( $r );
+
+	// Set query results
+	$query->term_count = count( $query->terms );
+	if ( $query->term_count > 0 ) {
+		$query->term = $query->terms[0];
+	}
+
+	// Determine the total term count
+	if ( isset( $r['offset'] ) && ! $query->term_count < $r['number'] ) {
+		$query->found_terms = paco2017_query_terms_found_rows( $r );
+	} else {
+		$query->found_terms = $query->term_count;
+	}
+	if ( $query->found_terms > $query->term_count ) {
+		$query->max_num_pages = (int) ceil( $query->found_terms / $r['number'] );
+	} else {
+		$query->max_num_pages = 1;
+	}
+
+	// Return whether the query has returned results
+	return paco2017_have_speakers();
+}
+
+/**
+ * Return whether the query has Speakers to loop over
+ *
+ * @since 1.0.0
+ *
+ * @return bool Query has Speakers
+ */
+function paco2017_have_speakers() {
+
+	// Get query object
+	$query = paco2017_content()->speaker_query;
+
+	// Get array keys
+	$term_keys = array_keys( $query->terms );
+
+	// Current element is not the last
+	$has_next = $query->term_count && $query->current_term < end( $term_keys );
+
+	// We're in the loop when there are still elements
+	if ( ! $has_next ) {
+		$query->in_the_loop = false;
+
+		// Clean up after the loop
+		paco2017_rewind_speakers();
+	}
+
+	return $has_next;
+}
+
+/**
+ * Setup next Speaker in the current loop
+ *
+ * @since 1.0.0
+ *
+ * @return bool Are we still in the loop?
+ */
+function paco2017_the_speaker() {
+
+	// Get query object
+	$query = paco2017_content()->speaker_query;
+
+	// We're looping
+	$query->in_the_loop = true;
+
+	// Increase current term index
+	$query->current_term++;
+
+	// Get next term in list
+	$query->term = $query->terms[ $query->current_term ];
+
+	return $query->term;
+}
+
+/**
+ * Rewind the speakers and reset term index
+ *
+ * @since 1.0.0
+ */
+function paco2017_rewind_speakers() {
+
+	// Get query object
+	$query = paco2017_content()->speaker_query;
+
+	// Reset current term index
+	$query->current_term = -1;
+
+	if ( $query->term_count > 0 ) {
+		$query->term = $query->terms[0];
+	}
+}
+
+/**
+ * Return whether we're in the Speaker loop
+ *
+ * @since 1.0.0
+ *
+ * @return bool Are we in the Speaker loop?
+ */
+function paco2017_in_the_speaker_loop() {
+	return isset( paco2017_content()->speaker_query->in_the_loop ) ? paco2017_content()->speaker_query->in_the_loop : false;
+}
+
 /** Template ******************************************************************/
 
+/**
+ * Return whether the given post is the Speakers page
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @return bool Is this the Speakers page?
+ */
+function paco2017_is_speakers_page( $post = 0 ) {
+	$post = get_post( $post );
+	$is   = $post && paco2017_get_speakers_page_id() === $post->ID;
+
+	return $is;
+}
+
+/**
+ * Modify the content of the Speakers page
+ *
+ * @since 1.0.0
+ *
+ * @param string $content Post content
+ * @return string Post content
+ */
+function paco2017_speakers_page_content( $content ) {
+
+	// The Speakers page
+	if ( is_page() && paco2017_is_speakers_page() ) {
+		$content .= paco2017_get_speakers_content();
+	}
+
+	return $content;
+}
+
+/**
+ * Return the Speakers's HTML content
+ *
+ * @since 1.0.0
+ *
+ * @return string Speakers HTML content
+ */
+function paco2017_get_speakers_content() {
+
+	// Speakers count
+	$count = wp_count_terms( paco2017_get_speaker_tax_id() );
+
+	// Bail when there are no speakers
+	if ( empty( $count ) )
+		return $content;
+
+	ob_start(); ?>
+
+	<div class="paco2017-content paco2017-speakers">
+
+		<?php if ( paco2017_query_speakers() ) : ?>
+
+		<?php paco2017_the_speakers(); ?>
+
+		<?php else : ?>
+
+		<p><?php esc_html_e( 'There are no speakers registered.', 'paco2017-content' ); ?></p>
+
+		<?php endif; ?>
+
+	</div>
+
+	<?php
+
+	$speakers = ob_get_clean();
+
+	return apply_filters( 'paco2017_get_speakers_content', $speakers );
+}
+
+/**
+ * Output the HTML markup for the Speakers list
+ *
+ * Make sure `paco2017_query_speakers()` is called before calling this.
+ *
+ * @since 1.0.0
+ */
+function paco2017_the_speakers() { ?>
+
+	<ul class="paco2017-speakers-items">
+
+		<?php while ( paco2017_have_speakers() ) : paco2017_the_speaker(); ?>
+
+		<li class="speaker-item">
+			<div class="item-header">
+				<span class="item-title"><?php paco2017_the_speaker_title(); ?></span>
+			</div>
+
+			<div class="item-content"><?php
+				paco2017_the_speaker_content();
+				paco2017_the_speaker_objects_list();
+			?></div>
+
+			<?php edit_term_link(
+				sprintf(
+					/* translators: %s: Name of current post */
+					__( 'Edit<span class="screen-reader-text"> "%s"</span>', 'paco2017-content' ),
+					paco2017_get_speaker_title()
+				),
+				'<p class="item-footer"><span class="edit-link">',
+				'</span></p>',
+				paco2017_get_speaker()
+			); ?>
+		</li>
+
+		<?php endwhile; ?>
+
+	</ul>
+
+	<?php
+}
+
+/**
+ * Return the Speaker item term
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $item Optional. Term object or ID. Defaults to the current term.
+ * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
+ * @return WP_Term|false Speakers Item post object or False when not found.
+ */
+function paco2017_get_speaker( $item = 0 , $by = 'id' ) {
+
+	// Default empty parameter to the item in the loop
+	if ( empty( $item ) && paco2017_in_the_speaker_loop() ) {
+		$item = paco2017_content()->speaker_query->term;
+
+	// Get the term by id or slug
+	} elseif ( ! $item instanceof WP_Term ) {
+		$item = get_term_by( $by, $item, paco2017_get_speaker_tax_id() );
+	}
+
+	// Reduce error to false
+	if ( ! $item || is_wp_error( $item ) ) {
+		$item = false;
+	}
+
+	return $item;
+}
+
+/**
+ * Output the Speaker title
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ */
+function paco2017_the_speaker_title( $term = 0 ) {
+	echo paco2017_get_speaker_title( $term );
+}
+
+/**
+ * Return the Speaker title
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speaker_title'
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return string Term title
+ */
+function paco2017_get_speaker_title( $term = 0 ) {
+	$term  = paco2017_get_speaker( $term );
+	$title = '';
+
+	if ( $term ) {
+		$title = $term->name;
+	}
+
+	return apply_filters( 'paco2017_get_speaker_title', $title, $term );
+}
+
+/**
+ * Output the Speaker content
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ */
+function paco2017_the_speaker_content( $term = 0 ) {
+	echo paco2017_get_speaker_content( $term );
+}
+
+/**
+ * Return the Speaker content
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speaker_content'
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return string Term content
+ */
+function paco2017_get_speaker_content( $term = 0 ) {
+	$term    = paco2017_get_speaker( $term );
+	$content = '';
+
+	if ( $term ) {
+		$content = $term->description;
+	}
+
+	return apply_filters( 'paco2017_get_speaker_content', $content, $term );
+}
+
+/**
+ * Return the Speaker objects
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speaker_objects'
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return array Term object ids
+ */
+function paco2017_get_speaker_objects( $term = 0 ) {
+	$term    = paco2017_get_speaker( $term );
+	$objects = array();
+
+	if ( $term && $term->count ) {
+		$objects = get_objects_in_term( $term->term_id, $term->taxonomy );
+		$objects = array_map( 'intval', array_values( $objects ) );
+	}
+
+	return (array) apply_filters( 'paco2017_get_speaker_objects', $objects, $term );
+}
+
+/**
+ * Output the Speaker objects list
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ */
+function paco2017_the_speaker_objects_list( $term = 0 ) {
+	echo paco2017_get_speaker_objects_list( $term );
+}
+
+/**
+ * Return the Speaker objects list
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speaker_objects_list'
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return string Term objects list
+ */
+function paco2017_get_speaker_objects_list( $term = 0 ) {
+	$term    = paco2017_get_speaker( $term );
+	$objects = paco2017_get_speaker_objects( $term );
+	$list    = '';
+
+	if ( $term && $objects ) {
+		$query = new WP_Query( array(
+			'post_type'      => paco2017_get_taxonomy_types( paco2017_get_speaker_tax_id() ),
+			'post__in'       => $objects,
+			'posts_per_page' => -1
+		) );
+
+		if ( $query->have_posts() ) : ob_start(); ?>
+
+			<ul class="item-objects">
+
+				<?php while ( $query->have_posts() ) : $query->the_post(); ?>
+
+				<li <?php post_class( 'item-object' ); ?>>
+					<span class="item-object-title"><?php the_title( '<a href="' . get_the_permalink() . '">', '</a>' ); ?></span>
+				</li>
+
+				<?php endwhile; ?>
+
+			</ul>
+
+		<?php
+
+		$list = ob_get_clean();
+
+		wp_reset_postdata();
+		endif;
+	}
+
+	return apply_filters( 'paco2017_get_speaker_objects_list', $list, $term, $objects );
+}

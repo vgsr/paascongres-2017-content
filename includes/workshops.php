@@ -35,7 +35,7 @@ function paco2017_get_workshop_post_type_labels() {
 	return apply_filters( 'paco2017_get_workshop_post_type_labels', array(
 		'name'                  => __( 'Paascongres Workshops',       'paco2017-content' ),
 		'menu_name'             => __( 'Workshops',                   'paco2017-content' ),
-		'singular_name'         => __( 'Paascongres Workshop',        'paco2017-content' ),
+		'singular_name'         => __( 'Workshop',                    'paco2017-content' ),
 		'all_items'             => __( 'All Workshops',               'paco2017-content' ),
 		'add_new'               => __( 'New Workshop',                'paco2017-content' ),
 		'add_new_item'          => __( 'Create New Workshop',         'paco2017-content' ),

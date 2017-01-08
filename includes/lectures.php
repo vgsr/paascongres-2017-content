@@ -35,11 +35,11 @@ function paco2017_get_lecture_post_type_labels() {
 	return apply_filters( 'paco2017_get_lecture_post_type_labels', array(
 		'name'                  => __( 'Paascongres Lectures',       'paco2017-content' ),
 		'menu_name'             => __( 'Lectures',                   'paco2017-content' ),
-		'singular_name'         => __( 'Paascongres Lecture',        'paco2017-content' ),
+		'singular_name'         => __( 'Lecture',                    'paco2017-content' ),
 		'all_items'             => __( 'All Lectures',               'paco2017-content' ),
 		'add_new'               => __( 'New Lecture',                'paco2017-content' ),
 		'add_new_item'          => __( 'Create New Lecture',         'paco2017-content' ),
-		'edit'                  => __( 'Edit',                      'paco2017-content' ),
+		'edit'                  => __( 'Edit',                       'paco2017-content' ),
 		'edit_item'             => __( 'Edit Lecture',               'paco2017-content' ),
 		'new_item'              => __( 'New Lecture',                'paco2017-content' ),
 		'view'                  => __( 'View Lecture',               'paco2017-content' ),

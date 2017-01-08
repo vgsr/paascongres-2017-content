@@ -93,7 +93,8 @@ final class Paco2017_Content {
 
 		/** Queries ***********************************************************/
 
-		$this->agenda_query = new WP_Query();  // Main Agenda query
+		$this->agenda_query  = new WP_Query();      // Main Agenda query
+		$this->speaker_query = new WP_Term_Query(); // Main Speaker query
 
 		/** Misc ********************************************************/
 
