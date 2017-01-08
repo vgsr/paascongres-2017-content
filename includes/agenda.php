@@ -425,6 +425,21 @@ function paco2017_parse_agenda_query( $posts_query ) {
 /** Template ******************************************************************/
 
 /**
+ * Return whether the given post is the Agenda page
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @return bool Is this the Agenda page?
+ */
+function paco2017_is_agenda_page( $post = 0 ) {
+	$post = get_post( $post );
+	$is   = $post && paco2017_get_agenda_page_id() === $post->ID;
+
+	return $is;
+}
+
+/**
  * Modify the content of the Agenda page
  *
  * @since 1.0.0
@@ -435,7 +450,7 @@ function paco2017_parse_agenda_query( $posts_query ) {
 function paco2017_agenda_page_content( $content ) {
 
 	// The Agenda page
-	if ( is_page() && paco2017_get_agenda_page_id() === get_the_ID() ) {
+	if ( is_page() && paco2017_is_agenda_page() ) {
 		$content .= paco2017_get_agenda_content();
 	}
 
@@ -467,11 +482,11 @@ function paco2017_get_agenda_content() {
 
 	ob_start(); ?>
 
-	<div class="paco2017_agenda">
+	<div class="paco2017-content paco2017-agenda">
 
 		<?php if ( ! empty( $conf_days ) && ! empty( $conf_day_item_count ) ) : ?>
 
-		<ul class="paco2017_conference_days">
+		<ul class="paco2017-conference-days">
 
 			<?php foreach ( $conf_days as $conf_day ) : ?>
 
@@ -527,7 +542,7 @@ function paco2017_get_agenda_content() {
  */
 function paco2017_the_agenda_items_list() { ?>
 
-	<ul class="paco2017_agenda_items">
+	<ul class="paco2017-agenda-items">
 
 		<?php while ( paco2017_have_agenda_items() ) : paco2017_the_agenda_item(); ?>
 
@@ -564,8 +579,8 @@ function paco2017_the_agenda_items_list() { ?>
  *
  * @since 1.0.0
  *
- * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
- * @return WP_Post Agenda Item post object
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current post.
+ * @return WP_Post|false Agenda Item post object or False when not found.
  */
 function paco2017_get_agenda_item( $item = 0 ) {
 

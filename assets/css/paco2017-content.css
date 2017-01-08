@@ -31,41 +31,43 @@
 	text-align: right;
 }
 
-/* Agenda */
+/* Content */
 
-.paco2017_agenda .day-title {
-	margin-bottom: 0;
-}
-
-.paco2017_agenda .day-date {
-	opacity: .7;
-}
-
-.paco2017_agenda ul {
+.paco2017-content ul {
 	list-style: none;
 }
 
-.paco2017_agenda li ul {
+.paco2017-content li ul {
 	margin: 0 0 1.5em 0;
 }
 
-.paco2017_agenda .item-header {
+.paco2017-content .item-header {
 	margin: 0 0 0.5em;
 }
 
-.paco2017_agenda .item-title {
+.paco2017-content .item-title {
 	font-weight: 600;
 }
 
-.paco2017_agenda .item-timeslot {
-	font-size: 80%;
-	opacity: .7;
-}
-
-.paco2017_agenda .item-content {
+.paco2017-content .item-content {
 	margin: 0 0 1.5em;
 }
 
-.paco2017_agenda .item-footer {
+.paco2017-content .item-footer {
 	margin-top: -.75em;
+}
+
+/* Agenda */
+
+.paco2017-agenda .day-title {
+	margin-bottom: 0;
+}
+
+.paco2017-agenda .day-date {
+	opacity: .7;
+}
+
+.paco2017-agenda .item-timeslot {
+	font-size: 80%;
+	opacity: .7;
 }
