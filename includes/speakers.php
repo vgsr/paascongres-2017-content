@@ -49,6 +49,28 @@ function paco2017_get_speaker_tax_labels() {
 }
 
 /**
+ * Modify the link returned for the given Speaker term
+ *
+ * @since 1.0.0
+ *
+ * @param string $link Term link
+ * @param WP_Term $term Term object
+ * @param string $taxonomy Taxonomy name
+ * @return string Term link
+ */
+function paco2017_get_speaker_term_link( $link, $term, $taxonomy ) {
+	
+	// When this is a speaker term
+	if ( paco2017_get_speaker_tax_id() === $taxonomy ) {
+
+		// Link to the Speakers page
+		$link = get_permalink( paco2017_get_speakers_page_id() );
+	}
+
+	return $link;
+}
+
+/**
  * Act when the Speaker taxonomy has been registered
  *
  * @since 1.0.0
@@ -517,7 +539,7 @@ function paco2017_get_speaker_objects_list( $term = 0 ) {
 				<?php while ( $query->have_posts() ) : $query->the_post(); ?>
 
 				<li <?php post_class( 'item-object' ); ?>>
-					<span class="item-object-title"><?php the_title( '<a href="' . get_the_permalink() . '">', '</a>' ); ?></span>
+					<span class="item-object-title"><?php the_title( '<a href="' . get_permalink() . '">', '</a>' ); ?></span>
 				</li>
 
 				<?php endwhile; ?>
