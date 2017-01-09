@@ -93,11 +93,6 @@ class WP_Post_Image {
 		) );
 		$this->image_size = $args['image_size'];
 		$this->element    = $args['element'];
-
-		// Define image identifiers
-		$this->name        = 'postImage_'  . esc_attr( $this->meta_key );
-		$this->key         = 'post-image-' . esc_attr( $this->meta_key );
-		$this->ajax_action = $this->key;
 	}
 
 	/**
@@ -106,8 +101,8 @@ class WP_Post_Image {
 	 * @since 1.0.0
 	 */
 	private function setup_actions() {
-		add_action( "wp_ajax_{$this->ajax_action}", array( $this, 'save_image_input' )        );
-		add_filter( 'media_view_settings',          array( $this, 'media_settings'   ), 10, 2 );
+		add_action( "wp_ajax_{$this->meta_key}_posts", array( $this, 'ajax_update'    )        );
+		add_filter( 'media_view_settings',             array( $this, 'media_settings' ), 10, 2 );
 	}
 
 	/** Public methods **************************************************/
@@ -132,16 +127,14 @@ class WP_Post_Image {
 	 * @return array Post image details
 	 */
 	public function get_image_data() {
-		$data = array_intersect_key( get_object_vars( $this ), array_flip( array(
-			'key', 'name'
-		) ) );
-
-		$data = array_merge( $data, array(
+		$data = array(
+			'name'       => 'postImage_'  . esc_attr( $this->meta_key ),
+			'key'        => 'post-image-' . esc_attr( $this->meta_key ),
 			'metaKey'    => $this->meta_key,
 			'l10n'       => $this->labels,
 			'parentEl'   => $this->element,
-			'ajaxAction' => $this->ajax_action,
-		) );
+			'ajaxAction' => $this->meta_key .'_posts',
+		);
 
 		return $data;
 	}
@@ -254,7 +247,7 @@ jQuery(document).ready( function( $ ) {
 	 *
 	 * @see wp_ajax_set_post_thumbnail()
 	 */
-	public function save_image_input() {
+	public function ajax_update() {
 		$json = ! empty( $_REQUEST['json'] ); // New-style request
 
 		$post_ID = intval( $_POST['post_id'] );
@@ -269,7 +262,7 @@ jQuery(document).ready( function( $ ) {
 		if ( $json ) {
 			check_ajax_referer( "update-post_{$post_ID}" );
 		} else {
-			check_ajax_referer( "{$this->key}-{$post_ID}" );
+			check_ajax_referer( "wp-post-image-set_{$this->meta_key}-{$post_ID}" );
 		}
 
 		// Delete post image

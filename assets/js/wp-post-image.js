@@ -60,16 +60,6 @@
 		 */
 		wp.media.postImages[ image.name ] = {
 			/**
-			 * Get the post image post ID
-			 *
-			 * @global wp.media.view.settings
-			 *
-			 * @returns {wp.media.view.settings.post.postImages[ image.metaKey ]|number}
-			 */
-			get: function() {
-				return wp.media.view.settings.post.postImages[ image.metaKey ];
-			},
-			/**
 			 * Set the post image id, save the post image data and
 			 * set the HTML in the post meta box to the new post image.
 			 *
