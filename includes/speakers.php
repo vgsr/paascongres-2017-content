@@ -149,17 +149,20 @@ function paco2017_query_speakers( $args = array() ) {
 	$r = wp_parse_args( $args, array(
 		'taxonomy'        => paco2017_get_speaker_tax_id(),
 		'number'          => 0,
+		'paged'           => 0,
 		'fields'          => 'all',
 		'hide_empty'      => true
 	) );
 
 	// Pagination
-	if ( $r['number'] != -1 ) {
+	if ( (int) $r['number'] > 0 ) {
 		$r['paged'] = absint( $r['paged'] );
 		if ( $r['paged'] == 0 ) {
 			$r['paged'] = 1;
 		}
-		$r['offset'] = absint( ( $r['paged'] - 1 ) * $r['number'] );
+		$r['offset'] = absint( ( $r['paged'] - 1 ) * (int) $r['number'] );
+	} else {
+		$r['number'] = 0;
 	}
 
 	// Run query to get the taxonomy terms
