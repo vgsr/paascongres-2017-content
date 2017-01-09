@@ -96,7 +96,7 @@ function paco2017_register_speaker_rest_fields() {
 		$lecture,
 		'speakers',
 		array(
-			'get_callback' => 'paco2017_get_workshop_rest_speakers'
+			'get_callback' => 'paco2017_get_object_rest_speakers'
 		)
 	);
 
@@ -105,7 +105,7 @@ function paco2017_register_speaker_rest_fields() {
 		$workshop,
 		'speakers',
 		array(
-			'get_callback' => 'paco2017_get_workshop_rest_speakers'
+			'get_callback' => 'paco2017_get_object_rest_speakers'
 		)
 	);
 }
@@ -120,7 +120,7 @@ function paco2017_register_speaker_rest_fields() {
  * @param WP_REST_Request $request Current REST request
  * @return array Location term(s)
  */
-function paco2017_get_workshop_rest_speakers( $object, $field_name, $request ) {
+function paco2017_get_object_rest_speakers( $object, $field_name, $request ) {
 	return wp_get_object_terms( $object['id'], paco2017_get_speaker_tax_id() );
 }
 
