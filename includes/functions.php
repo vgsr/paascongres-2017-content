@@ -251,6 +251,37 @@ function paco2017_query_terms_found_rows( $query_args ) {
 	return (int) $count;
 }
 
+/** Rest **********************************************************************/
+
+/**
+ * Return the rest value for an attachment image
+ *
+ * @since 1.0.0
+ *
+ * @param int $attachment_id Attachment ID
+ * @param string|array $size Optional. Image size name or dimensions. Default to 'thumbnail'.
+ * @return array|bool Image data or False when not found.
+ */
+function paco2017_get_rest_image( $attachment_id, $size = 'thumbnail' ) {
+
+	// Bail when the parameter is not an attachment image
+	if ( ! wp_attachment_is_image( $attachment_id ) )
+		return false;
+
+	$image = wp_get_attachment_image_src( $attachment_id, $size );
+	if ( $image ) {
+		unset( $image[3] ); // Remove is_intermediate
+
+		// Provide array with keys
+		$image = array_combine( array( 'src', 'width', 'height' ), $image );
+		$image['id'] = $attachment_id;
+	} else {
+		$image = false;
+	}
+
+	return $image;
+}
+
 /** Template ******************************************************************/
 
 /**

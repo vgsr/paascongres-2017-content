@@ -76,7 +76,8 @@ function paco2017_get_speaker_term_link( $link, $term, $taxonomy ) {
  * @since 1.0.0
  */
 function paco2017_registered_speaker_taxonomy() {
-	add_action( 'paco2017_rest_api_init', 'paco2017_register_speaker_rest_fields' );
+	add_action( 'paco2017_rest_api_init', 'paco2017_register_speaker_rest_fields'        );
+	add_filter( 'get_terms',              'paco2017_speaker_rest_get_terms',       10, 4 );
 }
 
 /**
@@ -121,6 +122,40 @@ function paco2017_register_speaker_rest_fields() {
  */
 function paco2017_get_workshop_rest_speakers( $object, $field_name, $request ) {
 	return wp_get_object_terms( $object['id'], paco2017_get_speaker_tax_id() );
+}
+
+/**
+ * Modify the list of queried speaker terms in a REST request
+ *
+ * @since 1.0.0
+ *
+ * @param array $terms Queried terms
+ * @param array $taxonomies Taxonomy names
+ * @param array $query_vars Query variables
+ * @param WP_Term_Query $term_query Term query object
+ * @return array Terms
+ */
+function paco2017_speaker_rest_get_terms( $terms, $taxonomy, $query_vars, $term_query ) {
+
+	// Bail when not querying terms whole
+	if ( 'all' !== $query_vars['fields'] && 'all_with_object_id' !== $query_vars['fields'] )
+		return $terms;
+
+	// Queried conference days
+	foreach ( $terms as $k => $term ) {
+
+		// Skip when this is not one of ours
+		if ( paco2017_get_speaker_tax_id() !== $term->taxonomy )
+			continue;
+
+		// Speaker photo
+		$term->photo = paco2017_get_rest_image( paco2017_get_speaker_photo_id( $term ), array( 150, 150 ) );
+
+		// Store modified term
+		$terms[ $k ] = $term;
+	}
+
+	return $terms;
 }
 
 /** Query *********************************************************************/
@@ -590,7 +625,7 @@ function paco2017_get_speaker_photo_id( $term = 0 ) {
 	$photo_id = 0;
 
 	if ( $term ) {
-		$photo_id = (int) get_term_meta( $term->term_id, 'image', true );
+		$photo_id = (int) get_term_meta( $term->term_id, 'photo', true );
 	}
 
 	return (int) apply_filters( 'paco2017_get_speaker_photo_id', $photo_id, $term );
@@ -614,8 +649,8 @@ function paco2017_has_speaker_photo( $term = 0 ) {
  * @since 1.0.0
  *
  * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
- * @param string|array $size Optional. Attachment image size.
- * @param array $args Optional. Attachment image arguments.
+ * @param string|array $size Optional. Attachment image size. Defaults to 'thumbnail'.
+ * @param array $args Optional. Attachment image arguments for {@see wp_get_attachment_image()}.
  */
 function paco2017_the_speaker_photo( $term = 0, $size = 'thumbnail', $args = array() ) {
 	echo paco2017_get_speaker_photo( $term, $size );
@@ -629,8 +664,8 @@ function paco2017_the_speaker_photo( $term = 0, $size = 'thumbnail', $args = arr
  * @uses apply_filters() Calls 'paco2017_get_speaker_photo'
  *
  * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
- * @param string|array $size Optional. Attachment image size.
- * @param array $args Optional. Attachment image arguments.
+ * @param string|array $size Optional. Attachment image size. Defaults to 'thumbnail'.
+ * @param array $args Optional. Attachment image arguments for {@see wp_get_attachment_image()}.
  * @return string Term photo
  */
 function paco2017_get_speaker_photo( $term = 0, $size = 'thumbnail', $args = array() ) {
