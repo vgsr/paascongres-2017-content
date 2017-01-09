@@ -431,8 +431,9 @@ final class Paco2017_Content {
 		new WP_Term_Colors( $this->file );
 		new WP_Term_Dates(  $this->file );
 		new WP_Term_Images( $this->file, array(
-			'meta_key' => 'photo',
-			'labels'   => array(
+			'meta_key'   => 'photo',
+			'image_size' => array( 150, 150 ),
+			'labels'     => array(
 				'singular' => 'Photo',
 				'plural'   => 'Photos',
 				'setTermImage'    => esc_html__( 'Set %s photo', 'wp-term-images' ),
