@@ -442,7 +442,7 @@ function paco2017_get_speaker_title( $term = 0 ) {
 	$title = '';
 
 	if ( $term ) {
-		$title = $term->name;
+		$title = get_term_field( 'name', $term );
 	}
 
 	return apply_filters( 'paco2017_get_speaker_title', $title, $term );
@@ -474,7 +474,7 @@ function paco2017_get_speaker_content( $term = 0 ) {
 	$content = '';
 
 	if ( $term ) {
-		$content = $term->description;
+		$content = get_term_field( 'description', $term );
 	}
 
 	return apply_filters( 'paco2017_get_speaker_content', $content, $term );
