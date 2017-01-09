@@ -126,6 +126,7 @@ final class Paco2017_Content {
 		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php' );
 		require( $this->includes_dir . 'classes/class-wp-term-colors.php'  );
 		require( $this->includes_dir . 'classes/class-wp-term-dates.php'   );
+		require( $this->includes_dir . 'classes/class-wp-term-images.php'  );
 
 		/** Widgets *****************************************************/
 
@@ -332,14 +333,17 @@ final class Paco2017_Content {
 				'update_count_callback' => '_update_post_term_count',
 				'hierarchical'          => false,
 				'public'                => true,
-				'rewrite'               => paco2017_get_speaker_tax_rewrite(),
-				'query_var'             => true,
+				'rewrite'               => false,
+				'query_var'             => false,
 				'show_tagcloud'         => false,
 				'show_in_quick_edit'    => true,
 				'show_admin_column'     => true,
-				'show_in_nav_menus'     => true,
+				'show_in_nav_menus'     => false,
 				'show_ui'               => current_user_can( 'paco2017_speaker_admin' ),
 				'meta_box_cb'           => false, // No metaboxing
+
+				// Term meta
+				'term_meta_photo'       => true,
 			)
 		);
 
@@ -426,6 +430,16 @@ final class Paco2017_Content {
 
 		new WP_Term_Colors( $this->file );
 		new WP_Term_Dates(  $this->file );
+		new WP_Term_Images( $this->file, array(
+			'meta_key' => 'photo',
+			'labels'   => array(
+				'singular' => 'Photo',
+				'plural'   => 'Photos',
+				'setTermImage'    => esc_html__( 'Set %s photo', 'wp-term-images' ),
+				'termImageTitle'  => esc_html__( '%s photo', 'wp-term-images' ),
+				'removeTermImage' => esc_html__( 'Remove %s photo', 'wp-term-images' ),
+			)
+		) );
 	}
 }
 

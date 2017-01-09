@@ -37,8 +37,16 @@
 	list-style: none;
 }
 
+.paco2017-content li {
+	margin: 0 0 2em 0;
+}
+
 .paco2017-content li ul {
 	margin: 0 0 1.5em 0;
+}
+
+.paco2017-content li p:empty {
+	display: none;
 }
 
 .paco2017-content .item-header {
@@ -70,4 +78,16 @@
 .paco2017-agenda .item-timeslot {
 	font-size: 80%;
 	opacity: .7;
+}
+
+/* Speakers */
+
+.paco2017-speakers .item-avatar {
+	float: left;
+	margin: 5px 15px 2px 0;
+}
+
+.paco2017-speakers .item-avatar img {
+	width: 80px;
+	height: 80px;
 }

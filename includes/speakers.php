@@ -361,7 +361,11 @@ function paco2017_the_speakers() { ?>
 
 		<li class="speaker-item">
 			<div class="item-header">
-				<span class="item-title"><?php paco2017_the_speaker_title(); ?></span>
+				<?php if ( paco2017_has_speaker_photo() ) : ?>
+				<div class="item-avatar"><?php paco2017_the_speaker_photo(); ?></div>
+				<?php endif; ?>
+
+				<div class="item-title"><?php paco2017_the_speaker_title(); ?></div>
 			</div>
 
 			<div class="item-content"><?php
@@ -558,4 +562,85 @@ function paco2017_get_speaker_objects_list( $term = 0 ) {
 	}
 
 	return apply_filters( 'paco2017_get_speaker_objects_list', $list, $term, $objects );
+}
+
+/**
+ * Output the Speaker photo attachment ID
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ */
+function paco2017_the_speaker_photo_id( $term = 0 ) {
+	echo paco2017_get_speaker_photo_id( $term );
+}
+
+/**
+ * Return the Speaker photo attachment ID
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speaker_photo_id'
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return int Term photo attachment ID
+ */
+function paco2017_get_speaker_photo_id( $term = 0 ) {
+	$term     = paco2017_get_speaker( $term );
+	$photo_id = 0;
+
+	if ( $term ) {
+		$photo_id = (int) get_term_meta( $term->term_id, 'image', true );
+	}
+
+	return (int) apply_filters( 'paco2017_get_speaker_photo_id', $photo_id, $term );
+}
+
+/**
+ * Return whether the Speaker has a photo
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return bool Has the speaker a term photo?
+ */
+function paco2017_has_speaker_photo( $term = 0 ) {
+	return (bool) paco2017_get_speaker_photo_id( $term );
+}
+
+/**
+ * Output the Speaker photo
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @param string|array $size Optional. Attachment image size.
+ * @param array $args Optional. Attachment image arguments.
+ */
+function paco2017_the_speaker_photo( $term = 0, $size = 'thumbnail', $args = array() ) {
+	echo paco2017_get_speaker_photo( $term, $size );
+}
+
+/**
+ * Return the Speaker photo
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speaker_photo'
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @param string|array $size Optional. Attachment image size.
+ * @param array $args Optional. Attachment image arguments.
+ * @return string Term photo
+ */
+function paco2017_get_speaker_photo( $term = 0, $size = 'thumbnail', $args = array() ) {
+	$term     = paco2017_get_speaker( $term );
+	$image    = '';
+
+	if ( $term ) {
+		$photo_id = paco2017_get_speaker_photo_id( $term );
+		$photo    = wp_get_attachment_image( $photo_id, $size, false, $args );
+	}
+
+	return apply_filters( 'paco2017_get_speaker_photo', $photo, $term );
 }
