@@ -294,6 +294,19 @@ jQuery(document).ready( function( $ ) {
 	 */
 	public function quick_edit_meta( $column_name = '', $screen = '', $name = '' ) { /* Nothing to display */ }
 
+	/**
+	 * Prevent sorting by image.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $columns
+	 *
+	 * @return array
+	 */
+	public function sortable_columns( $columns = array() ) {
+		return $columns;
+	}
+
 	/** Image Handling ********************************************************/
 
 	/**
