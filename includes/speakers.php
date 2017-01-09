@@ -394,7 +394,7 @@ function paco2017_the_speakers() { ?>
 
 		<?php while ( paco2017_have_speakers() ) : paco2017_the_speaker(); ?>
 
-		<li class="speaker-item">
+		<li class="speaker-item <?php if ( paco2017_has_speaker_photo() ) echo 'has-item-avatar'; ?>">
 			<div class="item-header">
 				<?php if ( paco2017_has_speaker_photo() ) : ?>
 				<div class="item-avatar"><?php paco2017_the_speaker_photo(); ?></div>

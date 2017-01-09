@@ -37,8 +37,12 @@
 	list-style: none;
 }
 
-.paco2017-content li {
+.paco2017-content > ul > li {
 	margin: 0 0 2em 0;
+}
+
+.paco2017-content li.has-item-avatar {
+	min-height: 80px;
 }
 
 .paco2017-content li ul {
