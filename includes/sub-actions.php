@@ -65,7 +65,7 @@ function paco2017_rest_api_init() {
 function paco2017_registered_post_type( $post_type ) {
 
 	// Define plugin post types
-	$types = array( 'lecture', 'workshop', 'agenda' );
+	$types = array( 'lecture', 'workshop', 'agenda', 'partner' );
 
 	foreach ( $types as $type ) {
 

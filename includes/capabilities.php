@@ -167,3 +167,26 @@ function paco2017_get_speaker_tax_caps() {
 		'assign_terms' => 'assign_paco2017_speakers'
 	) );
 }
+
+/** Partners *******************************************************************/
+
+/**
+ * Return the capability mappings for the Partner post type
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_partner_post_type_caps'
+ * @return array Partner post type caps
+ */
+function paco2017_get_partner_post_type_caps() {
+	return apply_filters( 'paco2017_get_partner_post_type_caps', array(
+		'edit_post'           => 'edit_paco2017_partner',
+		'edit_posts'          => 'edit_paco2017_partners',
+		'edit_others_posts'   => 'edit_others_paco2017_partners',
+		'publish_posts'       => 'publish_paco2017_partners',
+		'read_private_posts'  => 'read_private_paco2017_partners',
+		'delete_post'         => 'delete_paco2017_partner',
+		'delete_posts'        => 'delete_paco2017_partners',
+		'delete_others_posts' => 'delete_others_paco2017_partners'
+	) );
+}

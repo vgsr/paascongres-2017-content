@@ -72,6 +72,7 @@ function paco2017_dashboard_status() {
 	$lecture     = paco2017_get_lecture_post_type();
 	$workshop    = paco2017_get_workshop_post_type();
 	$agenda      = paco2017_get_agenda_post_type();
+	$partner     = paco2017_get_partner_post_type();
 	$speaker     = paco2017_get_speaker_tax_id();
 	$conf_day    = paco2017_get_conf_day_tax_id();
 	$conf_loc    = paco2017_get_conf_location_tax_id();
@@ -81,6 +82,7 @@ function paco2017_dashboard_status() {
 	$lecture_count     = wp_count_posts( $lecture     );
 	$workshop_count    = wp_count_posts( $workshop    );
 	$agenda_count      = wp_count_posts( $agenda      );
+	$partner_count     = wp_count_posts( $partner     );
 	$speaker_count     = wp_count_terms( $speaker     );
 	$conf_day_count    = wp_count_terms( $conf_day    );
 	$conf_loc_count    = wp_count_terms( $conf_loc    );
@@ -141,6 +143,12 @@ function paco2017_dashboard_status() {
 		'conf_location-count' => sprintf( '<a href="%s">%s</a>',
 			esc_url( add_query_arg( array( 'taxonomy' => $conf_loc ), admin_url( 'edit-tags.php' ) ) ),
 			sprintf( _n( '%s Location', '%s Locations', $conf_loc_count, 'paco2017-content' ), $conf_loc_count )
+		),
+
+		// Partners
+		'partner-count' => sprintf( '<a href="%s">%s</a>',
+			esc_url( add_query_arg( array( 'post_type' => $partner ), admin_url( 'edit.php' ) ) ),
+			sprintf( _n( '%s Partner', '%s Partners', $partner_count->publish, 'paco2017-content' ), $partner_count->publish )
 		),
 	) );
 

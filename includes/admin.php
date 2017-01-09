@@ -49,6 +49,7 @@ class Paco2017_Admin {
 		add_action( 'save_post',                   array( $this, 'lecture_save_metabox'  ), 10, 2 );
 		add_action( 'save_post',                   array( $this, 'workshop_save_metabox' ), 10, 2 );
 		add_action( 'save_post',                   array( $this, 'agenda_save_metabox'   ), 10, 2 );
+		add_action( 'save_post',                   array( $this, 'partner_save_metabox'  ), 10, 2 );
 
 		// Dashboard
 		add_action( 'paco2017_dashboard_setup', array( $this, 'add_dashboard_widgets' ) );
@@ -106,6 +107,9 @@ class Paco2017_Admin {
 		// Manage Locations
 		$this->admin_submenu_taxonomy( paco2017_get_conf_location_tax_id() );
 
+		// Manage Partners
+		$hooks[] = $this->admin_submenu_post_type( paco2017_get_partner_post_type() );
+
 		// Manage Associations
 		$association = paco2017_get_association_tax_id();
 		$this->admin_submenu_taxonomy( $association, "edit-tags.php?taxonomy={$association}&post_type=user" );
@@ -155,6 +159,7 @@ class Paco2017_Admin {
 			paco2017_get_lecture_post_type(),
 			paco2017_get_workshop_post_type(),
 			paco2017_get_agenda_post_type(),
+			paco2017_get_partner_post_type(),
 		) ) ) {
 			$parent_file  = 'paco2017';
 			$submenu_file = "edit.php?post_type={$screen->post_type}";
@@ -236,12 +241,14 @@ class Paco2017_Admin {
 		if ( ! $taxonomy = get_taxonomy( $taxonomy ) )
 			return false;
 
+		$menu_file = "edit-tags.php?taxonomy={$taxonomy->name}";
+
 		return add_submenu_page(
 			'paco2017',
 			$taxonomy->labels->name,
 			$taxonomy->labels->menu_name,
 			$taxonomy->cap->manage_terms,
-			! empty( $function ) ? $function : "edit-tags.php?taxonomy={$taxonomy->name}"
+			! empty( $function ) ? $function : $menu_file
 		);
 	}
 
@@ -262,7 +269,6 @@ class Paco2017_Admin {
 		       ", .fixed .column-taxonomy-" . paco2017_get_workshop_cat_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_conf_day_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_conf_location_tax_id() . " { width: 10%; }";
-		$css[] = ".fixed .column-time_start, .fixed .column-time_end { width: 50px; }";
 
 		if ( ! empty( $css ) ) {
 			wp_add_inline_style( 'paco2017-admin', implode( "\n", $css ) );
@@ -464,6 +470,25 @@ class Paco2017_Admin {
 			}
 		}
 
+		// Partner
+		if ( paco2017_get_partner_post_type() === $post_type ) {
+
+			// Append Partner URL and Logo
+			$title_pos = array_search( 'title', array_keys( $columns ) );
+			if ( $title_pos ) {
+
+				// Insert before 'Title'
+				$columns = array_slice( $columns, 0, $title_pos ) + array(
+					'logo' => esc_html__( 'Logo', 'paco2017-content' ),
+				) + array_slice( $columns, $title_pos );
+
+				// Insert after 'Title'
+				$columns = array_slice( $columns, 0, $title_pos + 2 ) + array(
+					'partner_url' => esc_html__( 'URL', 'paco2017-content' ),
+				) + array_slice( $columns, $title_pos + 2 );
+			}
+		}
+
 		return $columns;
 	}
 
@@ -486,8 +511,26 @@ class Paco2017_Admin {
 				switch ( $column ) {
 					case 'time_start' :
 					case 'time_end' :
-						$time = get_post_meta( $post_id, $column, true );
-						echo ( ! empty( $time ) ) ? $time : '&mdash;';
+						$meta = get_post_meta( $post_id, $column, true );
+						echo ( ! empty( $meta ) ) ? $meta : '&mdash;';
+
+						break;
+				}
+
+				break;
+
+			// Partners
+			case paco2017_get_partner_post_type() :
+				switch ( $column ) {
+					case 'logo' :
+						if ( $logo_id = paco2017_partner_get_logo_id( $post_id ) ) {
+							echo wp_get_attachment_image( $logo_id, array( 38, 38 ) );
+						}
+
+						break;
+					case 'partner_url' :
+						$meta = get_post_meta( $post_id, $column, true );
+						echo ( ! empty( $meta ) ) ? $meta : '&mdash;';
 
 						break;
 				}
@@ -536,6 +579,18 @@ class Paco2017_Admin {
 				'paco2017_agenda_details',
 				esc_html__( 'Agenda Details', 'paco2017-content' ),
 				array( $this, 'agenda_details_metabox' ),
+				null,
+				'side',
+				'high'
+			);
+		}
+
+		// Partner
+		if ( paco2017_get_partner_post_type() === $post_type ) {
+			add_meta_box(
+				'paco2017_partner_details',
+				esc_html__( 'Partner Details', 'paco2017-content' ),
+				array( $this, 'partner_details_metabox' ),
 				null,
 				'side',
 				'high'
@@ -907,6 +962,82 @@ class Paco2017_Admin {
 			$time  = "{$hours}:{$mins}";
 
 			update_post_meta( $post_id, $time_meta, $time );
+		}
+	}
+
+	/**
+	 * Output the contents of the Partner Details metabox
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param WP_Post $post Current post object
+	 */
+	public function partner_details_metabox( $post ) {
+		$url = get_post_meta( $post->ID, 'partner_url', true );
+		$post_type_object = get_post_type_object( $post->post_type );
+
+		?>
+
+		<div class="paco2017_object_details">
+
+		<p id="partner_logo">
+			<label for="partner_logo"><?php esc_html_e( 'Logo:', 'paco2017-content' ); ?></label>
+			<?php if ( function_exists( 'wp_post_image_input' ) ) wp_post_image_input( $post, 'logo' ); ?>
+		</p>
+
+		<p>
+			<label for="partner_url"><?php esc_html_e( 'Partner URL:', 'paco2017-content' ); ?></label>
+			<input type="text" name="partner_url" id="partner_url" value="<?php echo esc_attr( $url ); ?>" />
+		</p>
+
+		</div>
+
+		<?php wp_nonce_field( 'partner_details_metabox', 'partner_details_metabox_nonce' ); ?>
+
+		<?php
+	}
+
+	/**
+	 * Save when the Partner Item's metabox is submitted
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $post_id Post ID
+	 * @param WP_Post $post Post object
+	 */
+	public function partner_save_metabox( $post_id, $post = 0 ) {
+
+		// Bail when doing an autosave
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			return;
+
+		// Bail when not a post request
+		if ( 'POST' != strtoupper( $_SERVER['REQUEST_METHOD'] ) )
+			return;
+
+		// Bail when nonce does not verify
+		if ( empty( $_POST['partner_details_metabox_nonce'] ) || ! wp_verify_nonce( $_POST['partner_details_metabox_nonce'], 'partner_details_metabox' ) )
+			return;
+
+		// Get post type object
+		$post_type_object = get_post_type_object( $post->post_type );
+
+		// Bail when current user is not capable
+		if ( ! current_user_can( $post_type_object->cap->edit_post, $post_id ) )
+			return;
+
+		/**
+		 * Save posted inputs:
+		 * - Partner URL meta
+		 */
+
+		// Meta
+		foreach ( array(
+			'partner_url' => 'partner_url',
+		) as $posted_key => $meta ) {
+			if ( isset( $_POST[ $posted_key ] ) ) {
+				update_post_meta( $post_id, $meta, $_POST[ $posted_key ] );
+			}
 		}
 	}
 

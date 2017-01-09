@@ -117,12 +117,14 @@ final class Paco2017_Content {
 		require( $this->includes_dir . 'capabilities.php' );
 		require( $this->includes_dir . 'functions.php'    );
 		require( $this->includes_dir . 'lectures.php'     );
+		require( $this->includes_dir . 'partners.php'     );
 		require( $this->includes_dir . 'speakers.php'     );
 		require( $this->includes_dir . 'sub-actions.php'  );
 		require( $this->includes_dir . 'workshops.php'    );
 
 		/** Classes *****************************************************/
 
+		require( $this->includes_dir . 'classes/class-wp-post-image.php'   );
 		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php' );
 		require( $this->includes_dir . 'classes/class-wp-term-colors.php'  );
 		require( $this->includes_dir . 'classes/class-wp-term-dates.php'   );
@@ -211,7 +213,7 @@ final class Paco2017_Content {
 	 */
 	public function register_post_types() {
 
-		/** Lectures *****************************************************/
+		/** Lecture ******************************************************/
 
 		register_post_type(
 			paco2017_get_lecture_post_type(),
@@ -285,6 +287,44 @@ final class Paco2017_Content {
 				'menu_icon'           => 'dashicons-schedule'
 			)
 		);
+
+		/** Partner *****************************************************/
+
+		register_post_type(
+			paco2017_get_partner_post_type(),
+			array(
+				'labels'              => paco2017_get_partner_post_type_labels(),
+				'supports'            => paco2017_get_partner_post_type_supports(),
+				'description'         => __( 'Paascongres partners', 'paco2017-content' ),
+				'capabilities'        => paco2017_get_partner_post_type_caps(),
+				'capability_type'     => array( 'paco2017_partner', 'paco2017_partners' ),
+				'hierarchical'        => false,
+				'public'              => true,
+				'has_archive'         => false,
+				'rewrite'             => false, // No rewriting necessary
+				'query_var'           => false, // No query vars necessary
+				'exclude_from_search' => true,
+				'show_ui'             => current_user_can( 'paco2017_partner_admin' ),
+				'show_in_nav_menus'   => false,
+				'can_export'          => true,
+				'show_in_rest'        => true,
+				'rest_base'           => 'paascongres-partners',
+				'menu_icon'           => 'dashicons-marker'
+			)
+		);
+
+		/** Meta ********************************************************/
+
+		wp_post_image( $this->file, 'logo', array(
+			'post_type'  => paco2017_get_partner_post_type(),
+			'element'    => '#partner_logo',
+			'image_size' => 'paco2017-partner-logo',
+			'labels'     => array(
+				'setPostImage'    => __( 'Set Partner Logo',    'paco2017-content' ),
+				'postImageTitle'  => __( 'Partner Logo',        'paco2017-content' ),
+				'removePostImage' => __( 'Remove Partner Logo', 'paco2017-content' ),
+			),
+		) );
 	}
 
 	/**

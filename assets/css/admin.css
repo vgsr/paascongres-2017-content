@@ -132,6 +132,41 @@
 	margin: 1px 8px 0 0;
 }
 
+.fixed .column-time_start,
+.fixed .column-time_end {
+	width: 50px;
+}
+
+.fixed .column-partner_url {
+	width: 10%;
+}
+
+.fixed.posts .column-logo {
+	width: 38px; /* logo image width */
+}
+
+	.fixed.posts th.column-logo {
+		position: relative;
+		text-indent: -100%;
+	}
+
+		.fixed.posts th.column-logo:after {
+			content: '\f128';
+			position: absolute;
+			right: 0;
+			font-family: dashicons;
+			font-size: 20px;
+			color: #555;
+		}
+
+@media screen and (max-width: 782px) {
+	.fixed.posts th.column-logo,
+	.fixed.posts td.column-logo {
+		display: none !important;
+		padding: 0;
+	}
+}
+
 /* Single Post */
 
 .paco2017_object_details label {
