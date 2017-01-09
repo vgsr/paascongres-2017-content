@@ -152,7 +152,7 @@ function paco2017_get_housekeeping_page_id() {
 /** Taxonomy ******************************************************************/
 
 /**
- * Modify the list of queried terms to serve them with term meta
+ * Modify the list of queried terms in a REST request
  *
  * @since 1.0.0
  *
@@ -162,18 +162,23 @@ function paco2017_get_housekeeping_page_id() {
  * @param WP_Term_Query $term_query Term query object
  * @return array Terms
  */
-function paco2017_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
+function paco2017_rest_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
 
 	// Bail when not querying terms whole
 	if ( 'all' !== $query_vars['fields'] && 'all_with_object_id' !== $query_vars['fields'] )
 		return $terms;
 
+	// Bail when not in a REST request
+	if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST )
+		return $terms;
+
 	// Get taxonomies
 	$taxes = array(
 		paco2017_get_workshop_cat_tax_id(),
+		paco2017_get_speaker_tax_id(),
 		paco2017_get_conf_day_tax_id(),
 		paco2017_get_conf_location_tax_id(),
-		paco2017_get_association_tax_id()
+		paco2017_get_association_tax_id(),
 	);
 
 	// Bail when not querying one of the defined taxonomies
@@ -188,7 +193,7 @@ function paco2017_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
 	// Queried conference days
 	foreach ( $terms as $k => $term ) {
 
-		// Skip when this is not a day
+		// Skip when this is not one of ours
 		if ( ! in_array( $term->taxonomy, array_keys( $taxes ) ) )
 			continue;
 
@@ -196,9 +201,10 @@ function paco2017_get_terms( $terms, $taxonomies, $query_vars, $term_query ) {
 		foreach ( $metas as $meta ) {
 			$meta_key = "term_meta_{$meta}";
 
-			if ( isset( $taxes[ $term->taxonomy ]->{$meta_key} ) && true === $taxes[ $term->taxonomy ]->{$meta_key} ) {
-				$term->{$meta} = get_term_meta( $term->term_id, $meta, true );
-			}
+			if ( ! isset( $taxes[ $term->taxonomy ]->{$meta_key} ) || true !== $taxes[ $term->taxonomy ]->{$meta_key} )
+				continue;
+
+			$term->{$meta} = get_term_meta( $term->term_id, $meta, true );
 		}
 
 		// Store modified term
