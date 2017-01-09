@@ -1,0 +1,75 @@
+.wp-term-image {
+	position: relative;
+	max-width: 150px;
+	width: 100%;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.wp-list-table .wp-term-image.has-term-image {
+	max-width: 75px;
+}
+
+.wp-term-image-set {
+	display: inline-block;
+}
+
+.wp-term-image-set img {
+	max-width: 100%;
+	width: auto;
+	height: auto;
+	vertical-align: bottom;
+}
+
+.wp-term-image-remove {
+	position: absolute;
+	top: 0;
+	left: -999em;
+	background: #f1f1f1;
+	text-decoration: none;
+	color: #a00;
+}
+
+.striped > tbody > :nth-child(odd) .wp-term-image-remove {
+	background: #f9f9f9;
+}
+
+.striped > tbody > :nth-child(even) .wp-term-image-remove {
+	background: #fff;
+}
+
+.wp-term-image-remove:hover,
+.wp-term-image-remove:focus {
+	color: #f00;
+}
+
+.wp-term-image:hover .wp-term-image-remove,
+.wp-term-image-remove:focus {
+	right: 0;
+	left: auto;
+}
+
+.wp-term-image-remove:after {
+	content: '\f158'; /* dashicons-no */
+	font-family: dashicons;
+	display: block;
+	width: 32px;
+	height: 32px;
+	text-align: center;
+	font-size: 24px;
+	line-height: 33px;
+}
+
+@media screen and (max-width: 782px) {
+	.wp-term-image-remove {
+		right: 0;
+		left: auto;
+	}
+
+	.wp-term-image-remove:after {
+		width: 42px;
+		height: 42px;
+		font-size: 32px;
+		line-height: 43px;
+	}
+}
