@@ -492,10 +492,10 @@ function paco2017_get_agenda_content() {
 
 			<li class="conference-day">
 
-				<h3 class="day-title"><?php echo $conf_day->name; ?></h3>
+				<h3 class="day-title"><?php paco2017_the_conf_day_title( $conf_day ); ?></h3>
 
-				<?php if ( ! empty( $conf_day->date ) ) : ?>
-					<p class="day-date"><?php echo mysql2date( get_option( 'date_format' ), $conf_day->date ); ?></p>
+				<?php if ( paco2017_has_conf_day_date( $conf_day ) ) : ?>
+					<p class="day-date"><?php paco2017_the_conf_day_date( $conf_day ); ?></p>
 				<?php endif; ?>
 
 				<?php if ( paco2017_query_agenda_items( array( 'paco2017_conf_day' => $conf_day->term_id ) ) ) : ?>
@@ -691,4 +691,183 @@ function paco2017_get_agenda_timeslot( $item = 0 ) {
 	}
 
 	return $timeslot;
+}
+
+/** Template: Conference Day **************************************************/
+
+/**
+ * Return the Conference Day item term
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $item Term object or ID.
+ * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
+ * @return WP_Term|false Conference Day term object or False when not found.
+ */
+function paco2017_get_conf_day( $item, $by = 'id' ) {
+
+	// Default to the post's item
+	if ( empty( $item ) && paco2017_object_has_conf_day() ) {
+		$terms = wp_get_object_terms( get_the_ID(), paco2017_get_conf_day_tax_id() );
+		$item  = $terms[0];
+
+	// Get the term by id or slug
+	} elseif ( ! $item instanceof WP_Term ) {
+		$item = get_term_by( $by, $item, paco2017_get_conf_day_tax_id() );
+	}
+
+	// Reduce error to false
+	if ( ! $item || is_wp_error( $item ) ) {
+		$item = false;
+	}
+
+	return $item;
+}
+
+/**
+ * Output the Conference Day title
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Term object or ID.
+ */
+function paco2017_the_conf_day_title( $term ) {
+	echo paco2017_get_conf_day_title( $term );
+}
+
+/**
+ * Return the Conference Day title
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_conf_day_title'
+ *
+ * @param WP_Term|int $term Term object or ID.
+ * @return string Term title
+ */
+function paco2017_get_conf_day_title( $term ) {
+	$term  = paco2017_get_conf_day( $term );
+	$title = '';
+
+	if ( $term ) {
+		$title = get_term_field( 'name', $term );
+	}
+
+	return apply_filters( 'paco2017_get_conf_day_title', $title, $term );
+}
+
+/**
+ * Output the Conference Day content
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Term object or ID.
+ */
+function paco2017_the_conf_day_content( $term ) {
+	echo paco2017_get_conf_day_content( $term );
+}
+
+/**
+ * Return the Conference Day content
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_conf_day_content'
+ *
+ * @param WP_Term|int $term Term object or ID.
+ * @return string Term content
+ */
+function paco2017_get_conf_day_content( $term ) {
+	$term    = paco2017_get_conf_day( $term );
+	$content = '';
+
+	if ( $term ) {
+		$content = get_term_field( 'description', $term );
+	}
+
+	return apply_filters( 'paco2017_get_conf_day_content', $content, $term );
+}
+
+/**
+ * Output the Conference Day mysql date string
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Term object or ID.
+ */
+function paco2017_the_conf_day_date_string( $term ) {
+	echo paco2017_get_conf_day_date_string( $term );
+}
+
+/**
+ * Return the Conference Day mysql date string
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_conf_day_date_string'
+ *
+ * @param WP_Term|int $term Term object or ID.
+ * @return int Term mysql date string
+ */
+function paco2017_get_conf_day_date_string( $term ) {
+	$term = paco2017_get_speaker( $term );
+	$date = 0;
+
+	if ( $term ) {
+		$date = get_term_meta( $term->term_id, 'date', true );
+	}
+
+	return apply_filters( 'paco2017_get_conf_day_date_string', $date, $term );
+}
+
+/**
+ * Output the Conference Day date
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Term object or ID.
+ * @param string $format Optional. Date format. Defaults to the date format option.
+ */
+function paco2017_the_conf_day_date( $term, $format = null ) {
+	echo paco2017_get_conf_day_date( $term, $format );
+}
+
+/**
+ * Return the Conference Day date
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_conf_day_date'
+ *
+ * @param WP_Term|int $term Term object or ID.
+ * @param string $format Optional. Date format. Defaults to the date format option.
+ * @return int Term date
+ */
+function paco2017_get_conf_day_date( $term, $format = null ) {
+	$term        = paco2017_get_speaker( $term );
+	$date_string = paco2017_get_conf_day_date_string( $term );
+	$date        = '';
+
+	// Default to the date format option
+	if ( null === $format ) {
+		$format = get_option( 'date_format' );
+	}
+
+	if ( $term && $date_string ) {
+		$date = mysql2date( $format, $date_string );
+	}
+
+	return apply_filters( 'paco2017_get_conf_day_date', $date, $term, $format );
+}
+
+/**
+ * Return whether the Conference Day has a date
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Term object or ID.
+ * @return bool Term has a date
+ */
+function paco2017_has_conf_day_date( $term ) {
+	return (bool) paco2017_get_conf_day_date_string( $term );
 }
