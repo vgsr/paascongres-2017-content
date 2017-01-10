@@ -726,15 +726,20 @@ function paco2017_get_agenda_timeslot( $item = 0 ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int $item Term object or ID.
+ * @param WP_Term|int|WP_Post $item Term object or ID or post object.
  * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
  * @return WP_Term|false Conference Day term object or False when not found.
  */
 function paco2017_get_conf_day( $item, $by = 'id' ) {
 
-	// Default to the post's item
+	// Default to the current post's item
 	if ( empty( $item ) && paco2017_object_has_conf_day() ) {
 		$terms = wp_get_object_terms( get_the_ID(), paco2017_get_conf_day_tax_id() );
+		$item  = $terms[0];
+
+	// Default to the provided post's item
+	} elseif ( is_a( $item, 'WP_Post' ) && paco2017_object_has_conf_day( $item ) ) {
+		$terms = wp_get_object_terms( $item->ID, paco2017_get_conf_day_tax_id() );
 		$item  = $terms[0];
 
 	// Get the term by id or slug
@@ -755,7 +760,7 @@ function paco2017_get_conf_day( $item, $by = 'id' ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int $term Term object or ID.
+ * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
  */
 function paco2017_the_conf_day_title( $term ) {
 	echo paco2017_get_conf_day_title( $term );
@@ -768,7 +773,7 @@ function paco2017_the_conf_day_title( $term ) {
  *
  * @uses apply_filters() Calls 'paco2017_get_conf_day_title'
  *
- * @param WP_Term|int $term Term object or ID.
+ * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
  * @return string Term title
  */
 function paco2017_get_conf_day_title( $term ) {
@@ -787,7 +792,7 @@ function paco2017_get_conf_day_title( $term ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int $term Term object or ID.
+ * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
  */
 function paco2017_the_conf_day_content( $term ) {
 	echo paco2017_get_conf_day_content( $term );
@@ -800,7 +805,7 @@ function paco2017_the_conf_day_content( $term ) {
  *
  * @uses apply_filters() Calls 'paco2017_get_conf_day_content'
  *
- * @param WP_Term|int $term Term object or ID.
+ * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
  * @return string Term content
  */
 function paco2017_get_conf_day_content( $term ) {
@@ -819,7 +824,7 @@ function paco2017_get_conf_day_content( $term ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int $term Term object or ID.
+ * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
  */
 function paco2017_the_conf_day_date_string( $term ) {
 	echo paco2017_get_conf_day_date_string( $term );
@@ -832,7 +837,7 @@ function paco2017_the_conf_day_date_string( $term ) {
  *
  * @uses apply_filters() Calls 'paco2017_get_conf_day_date_string'
  *
- * @param WP_Term|int $term Term object or ID.
+ * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
  * @return int Term mysql date string
  */
 function paco2017_get_conf_day_date_string( $term ) {
@@ -851,7 +856,7 @@ function paco2017_get_conf_day_date_string( $term ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int $term Term object or ID.
+ * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
  * @param string $format Optional. Date format. Defaults to the date format option.
  */
 function paco2017_the_conf_day_date( $term, $format = null ) {
@@ -865,7 +870,7 @@ function paco2017_the_conf_day_date( $term, $format = null ) {
  *
  * @uses apply_filters() Calls 'paco2017_get_conf_day_date'
  *
- * @param WP_Term|int $term Term object or ID.
+ * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
  * @param string $format Optional. Date format. Defaults to the date format option.
  * @return int Term date
  */
@@ -891,7 +896,7 @@ function paco2017_get_conf_day_date( $term, $format = null ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int $term Term object or ID.
+ * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
  * @return bool Term has a date
  */
 function paco2017_has_conf_day_date( $term ) {
