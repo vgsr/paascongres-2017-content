@@ -417,7 +417,7 @@ function paco2017_the_speakers() { ?>
 				<div class="item-avatar"><?php paco2017_the_speaker_photo(); ?></div>
 				<?php endif; ?>
 
-				<div class="item-title"><?php paco2017_the_speaker_title(); ?></div>
+				<h4 class="item-title"><?php paco2017_the_speaker_title(); ?></h4>
 			</div>
 
 			<div class="item-content"><?php
@@ -463,7 +463,7 @@ function paco2017_get_speaker_info() {
 			<div class="speaker-avatar"><?php paco2017_the_speaker_photo(); ?></div>
 			<?php endif; ?>
 
-			<div class="speaker-title"><?php printf( __( 'About %s', 'paco2017-content' ), paco2017_get_speaker_title() ); ?></div>
+			<h4 class="speaker-title"><?php printf( __( 'About %s', 'paco2017-content' ), paco2017_get_speaker_title() ); ?></h4>
 		</div>
 
 		<div class="speaker-content">

@@ -384,7 +384,7 @@ function paco2017_enqueue_styles() {
 	/** Theme Specific ********************************************************/
 
 	if ( 'twentyseventeen' === $template ) {
-		$css[] = ".speaker-info { margin-top: 2em; padding-top: 2em; border-top: 1px solid #eee; }";
+		$css[] = ".speaker-info { margin-top: 2em; padding-top: .5em; border-top: 1px solid #eee; }";
 		$css[] = ".colors-dark .speaker-info { border-top-color: #333; }";
 	}
 
