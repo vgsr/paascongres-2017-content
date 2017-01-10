@@ -41,7 +41,8 @@
 	margin: 0 0 2em 0;
 }
 
-.paco2017-content li.has-item-avatar {
+.speaker-info.has-avatar,
+.paco2017-content li.has-avatar {
 	min-height: 80px;
 }
 
@@ -53,10 +54,12 @@
 	display: none;
 }
 
+.speaker-header,
 .paco2017-content .item-header {
 	margin: 0 0 0.5em;
 }
 
+.speaker-title,
 .paco2017-content .item-title {
 	font-weight: 600;
 }
@@ -86,11 +89,13 @@
 
 /* Speakers */
 
+.speaker-avatar,
 .paco2017-speakers .item-avatar {
 	float: left;
 	margin: 5px 15px 2px 0;
 }
 
+.speaker-avatar img,
 .paco2017-speakers .item-avatar img {
 	width: 80px;
 	height: 80px;

@@ -338,18 +338,22 @@ function paco2017_is_speakers_page( $post = 0 ) {
 }
 
 /**
- * Modify the content of the Speakers page
+ * Modify the content of the current post
  *
  * @since 1.0.0
  *
  * @param string $content Post content
  * @return string Post content
  */
-function paco2017_speakers_page_content( $content ) {
+function paco2017_speakers_post_content( $content ) {
 
 	// The Speakers page
 	if ( is_page() && paco2017_is_speakers_page() ) {
 		$content .= paco2017_get_speakers_content();
+
+	// The Speaker info
+	} elseif ( is_single() && paco2017_object_has_speaker() ) {
+		$content .= paco2017_get_speaker_info();
 	}
 
 	return $content;
@@ -407,7 +411,7 @@ function paco2017_the_speakers() { ?>
 
 		<?php while ( paco2017_have_speakers() ) : paco2017_the_speaker(); ?>
 
-		<li class="speaker-item <?php if ( paco2017_has_speaker_photo() ) echo 'has-item-avatar'; ?>">
+		<li class="speaker-item <?php if ( paco2017_has_speaker_photo() ) echo 'has-avatar'; ?>">
 			<div class="item-header">
 				<?php if ( paco2017_has_speaker_photo() ) : ?>
 				<div class="item-avatar"><?php paco2017_the_speaker_photo(); ?></div>
@@ -438,6 +442,43 @@ function paco2017_the_speakers() { ?>
 	</ul>
 
 	<?php
+}
+
+/**
+ * Return the speaker info box for the current post
+ *
+ * @since 1.0.0
+ */
+function paco2017_get_speaker_info() {
+
+	// Bail when there's no description
+	if ( ! $description = paco2017_get_speaker_content() )
+		return;
+
+	ob_start(); ?>
+
+	<div class="speaker-info <?php if ( paco2017_has_speaker_photo() ) echo 'has-avatar'; ?>">
+		<div class="speaker-header">
+			<?php if ( paco2017_has_speaker_photo() ) : ?>
+			<div class="speaker-avatar"><?php paco2017_the_speaker_photo(); ?></div>
+			<?php endif; ?>
+
+			<div class="speaker-title"><?php printf( __( 'About %s', 'paco2017-content' ), paco2017_get_speaker_title() ); ?></div>
+		</div>
+
+		<div class="speaker-content">
+			<?php echo $description; ?>
+			<div class="speaker-link">
+				<a href="<?php echo esc_url( get_term_link( paco2017_get_speaker() ) ); ?>">
+					<?php _e( 'View all speakers at this conference <span class="meta-nav">&rarr;</span>', 'paco2017-content' ); ?>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<?php
+
+	return ob_get_clean();
 }
 
 /**

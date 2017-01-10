@@ -350,6 +350,7 @@ function paco2017_enqueue_styles() {
 	wp_enqueue_style( 'paco2017-content', paco2017_content()->assets_url . 'css/paco2017-content.css' );
 
 	// Define additional custom styles
+	$template = get_template();
 	$css = array();
 
 	/** Associations **********************************************************/
@@ -377,7 +378,14 @@ function paco2017_enqueue_styles() {
 
 	foreach ( paco2017_get_taxonomy_types( paco2017_get_speaker_tax_id() ) as $post_type ) {
 		$label = get_post_type_object( $post_type )->labels->singular_name;
-		$css[] = ".paco2017-speakers .type-{$post_type} .item-object-title:before { content: '{$label}: ' }";
+		$css[] = ".paco2017-speakers .type-{$post_type} .item-object-title:before { content: '{$label}: '; }";
+	}
+
+	/** Theme Specific ********************************************************/
+
+	if ( 'twentyseventeen' === $template ) {
+		$css[] = ".speaker-info { margin-top: 2em; padding-top: 2em; border-top: 1px solid #eee; }";
+		$css[] = ".colors-dark .speaker-info { border-top-color: #333; }";
 	}
 
 	if ( ! empty( $css ) ) {
