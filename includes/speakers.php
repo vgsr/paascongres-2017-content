@@ -158,6 +158,19 @@ function paco2017_speaker_rest_get_terms( $terms, $taxonomy, $query_vars, $term_
 	return $terms;
 }
 
+/**
+ * Return whether the given post has any or the given Speaker
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to any term.
+ * @return bool Object has a/the Speaker
+ */
+function paco2017_object_has_speaker( $post = 0, $term = 0 ) {
+	return has_term( $term, paco2017_get_speaker_tax_id(), $post );
+}
+
 /** Query *********************************************************************/
 
 /**
