@@ -836,7 +836,7 @@ function paco2017_the_conf_day_date_string( $term ) {
  * @return int Term mysql date string
  */
 function paco2017_get_conf_day_date_string( $term ) {
-	$term = paco2017_get_speaker( $term );
+	$term = paco2017_get_conf_day( $term );
 	$date = 0;
 
 	if ( $term ) {
@@ -870,7 +870,7 @@ function paco2017_the_conf_day_date( $term, $format = null ) {
  * @return int Term date
  */
 function paco2017_get_conf_day_date( $term, $format = null ) {
-	$term        = paco2017_get_speaker( $term );
+	$term        = paco2017_get_conf_day( $term );
 	$date_string = paco2017_get_conf_day_date_string( $term );
 	$date        = '';
 
