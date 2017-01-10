@@ -205,6 +205,19 @@ function paco2017_get_agenda_rest_conf_days( $object, $field_name, $request ) {
 	return wp_get_object_terms( $object['id'], paco2017_get_conf_day_tax_id() );
 }
 
+/**
+ * Return whether the given post has any or the given Conference Day
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to any term.
+ * @return bool Object has a/the Conference Day
+ */
+function paco2017_object_has_conf_day( $post = 0, $term = 0 ) {
+	return has_term( $term, paco2017_get_conf_day_tax_id(), $post );
+}
+
 /** Taxonomy: Conference Location *********************************************/
 
 /**
@@ -294,6 +307,19 @@ function paco2017_register_conf_location_rest_fields() {
  */
 function paco2017_get_agenda_rest_conf_locations( $object, $field_name, $request ) {
 	return wp_get_object_terms( $object['id'], paco2017_get_conf_location_tax_id() );
+}
+
+/**
+ * Return whether the given post has any or the given Conference Location
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to any term.
+ * @return bool Object has a/the Conference Location
+ */
+function paco2017_object_has_conf_location( $post = 0, $term = 0 ) {
+	return has_term( $term, paco2017_get_conf_location_tax_id(), $post );
 }
 
 /** Query *********************************************************************/
