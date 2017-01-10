@@ -137,6 +137,7 @@
 	width: 50px;
 }
 
+.fixed .column-related,
 .fixed .column-partner_url {
 	width: 10%;
 }

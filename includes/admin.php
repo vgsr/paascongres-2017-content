@@ -464,9 +464,17 @@ class Paco2017_Admin {
 			$day_pos = array_search( 'taxonomy-' . paco2017_get_conf_day_tax_id(), array_keys( $columns ) );
 			if ( $day_pos ) {
 				$columns = array_slice( $columns, 0, $day_pos + 1 ) + array(
-					'time_start' => esc_html__( 'Start', 'paco2017-content' ),
-					'time_end'   => esc_html__( 'End',   'paco2017-content' ),
+					'time_start' => esc_html_x( 'Start',   'agenda meta column name', 'paco2017-content' ),
+					'time_end'   => esc_html_x( 'End',     'agenda meta column name', 'paco2017-content' ),
 				) + array_slice( $columns, $day_pos + 1 );
+			}
+
+			// Append related
+			$loc_pos = array_search( 'taxonomy-' . paco2017_get_conf_location_tax_id(), array_keys( $columns ) );
+			if ( $loc_pos ) {
+				$columns = array_slice( $columns, 0, $loc_pos + 1 ) + array(
+					'related'    => esc_html_x( 'Related', 'agenda meta column name', 'paco2017-content' ),
+				) + array_slice( $columns, $loc_pos + 1 );
 			}
 		}
 
@@ -513,6 +521,10 @@ class Paco2017_Admin {
 					case 'time_end' :
 						$meta = get_post_meta( $post_id, $column, true );
 						echo ( ! empty( $meta ) ) ? $meta : '&mdash;';
+
+						break;
+					case 'related' :
+						echo paco2017_is_agenda_related( $post_id ) ? paco2017_get_agenda_related_link( $post_id ) : '&mdash;';
 
 						break;
 				}
@@ -888,6 +900,17 @@ class Paco2017_Admin {
 			?>
 		</p>
 
+		<p>
+			<label for="agenda_related"><?php esc_html_e( 'Related:', 'paco2017-content' ); ?></label>
+			<?php
+				paco2017_dropdown_agenda_pages( array(
+					'name'             => 'agenda_related',
+					'selected'         => paco2017_get_agenda_related_id( $post ),
+					'show_option_none' => esc_html__( '&mdash; No Relation &mdash;', 'paco2017-content' ),
+				) );
+			?>
+		</p>
+
 		</div>
 
 		<?php wp_nonce_field( 'agenda_details_metabox', 'agenda_details_metabox_nonce' ); ?>
@@ -930,6 +953,7 @@ class Paco2017_Admin {
 		 * - Conference Location taxonomy
 		 * - Time Start meta
 		 * - Time End meta
+		 * - Related
 		 */
 
 		foreach ( array(
@@ -962,6 +986,15 @@ class Paco2017_Admin {
 			$time  = "{$hours}:{$mins}";
 
 			update_post_meta( $post_id, $time_meta, $time );
+		}
+
+		// Meta
+		foreach ( array(
+			'agenda_related' => 'related',
+		) as $posted_key => $meta ) {
+			if ( isset( $_POST[ $posted_key ] ) ) {
+				update_post_meta( $post_id, $meta, $_POST[ $posted_key ] );
+			}
 		}
 	}
 

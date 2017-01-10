@@ -484,6 +484,28 @@ function paco2017_agenda_page_content( $content ) {
 }
 
 /**
+ * Modify the content of an Agenda item
+ *
+ * @since 1.0.0
+ *
+ * @param string $content Post content
+ * @return string Post content
+ */
+function paco2017_agenda_post_content( $content ) {
+
+	// An Agenda item with related object
+	if ( paco2017_is_agenda_item() && paco2017_is_agenda_related() ) {
+		$content .= ' <a href="' . esc_url( paco2017_get_agenda_related_url() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'paco2017-content' ) . '</a>';
+
+	// An object related with Agenda item
+	} elseif ( paco2017_agenda_is_object_related() ) {
+		$content = paco2017_agenda_get_object_related_item_info() . $content;
+	}
+
+	return $content;
+}
+
+/**
  * Return the Agenda's HTML content
  *
  * @since 1.0.0
@@ -572,9 +594,17 @@ function paco2017_the_agenda_items_list() { ?>
 
 		<?php while ( paco2017_have_agenda_items() ) : paco2017_the_agenda_item(); ?>
 
-		<li class="agenda-item">
+		<li class="agenda-item <?php if ( paco2017_is_agenda_related() ) echo 'is-related'; ?>">
 			<div class="item-header">
-				<span class="item-title"><?php the_title(); ?></span>
+				<h4 class="item-title">
+					<?php
+						if ( paco2017_is_agenda_related() ) :
+							the_title( '<a href="' . esc_url( paco2017_get_agenda_related_url() ) . '">', '</a>' );
+						else :
+							the_title();
+						endif;
+					?>
+				</h4>
 				<span class="item-timeslot"><?php paco2017_the_agenda_timeslot(); ?></span>
 			</div>
 
@@ -601,12 +631,63 @@ function paco2017_the_agenda_items_list() { ?>
 }
 
 /**
+ * Return the HTML markup for the object's related Agenda Item info
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return string Agenda Item info HTML content
+ */
+function paco2017_agenda_get_object_related_item_info( $item = 0 ) {
+
+	// Bail when there's no Agenda item
+	if ( ! $item = paco2017_get_agenda_item( $item ) )
+		return;
+
+	ob_start(); ?>
+
+	<div class="agenda-info"><p><?php
+		if ( paco2017_has_conf_day_date( $item ) ) {
+			printf(
+				__( 'This item is scheduled for %1$s at %2$s.', 'paco2017-content' ),
+				paco2017_get_conf_day_date( $item ),
+				paco2017_get_agenda_item_start_time( $item )
+			);
+		} else {
+			printf(
+				__( 'This item is scheduled at %2$s.', 'paco2017-content' ),
+				paco2017_get_agenda_item_start_time( $item )
+			);
+		}
+	?></p></div>
+
+	<?php
+
+	return ob_get_clean();
+}
+
+/**
+ * Return whether the current page is an Agenda Item
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current post.
+ * @return bool Is this an Agenda Item?
+ */
+function paco2017_is_agenda_item( $post = 0 ) {
+	if ( ! $post = get_post( $post ) )
+		return false;
+
+	return ( paco2017_get_agenda_post_type() === $post->post_type );
+}
+
+/**
  * Return the Agenda Item
  *
  * @since 1.0.0
  *
  * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current post.
- * @return WP_Post|false Agenda Item post object or False when not found.
+ * @return WP_Post|bool Agenda Item post object or False when not found.
  */
 function paco2017_get_agenda_item( $item = 0 ) {
 
@@ -615,7 +696,13 @@ function paco2017_get_agenda_item( $item = 0 ) {
 
 	// Return false when this is not an Agenda Item
 	if ( ! $item || paco2017_get_agenda_post_type() !== $item->post_type ) {
-		$item = false;
+
+		// Try to fetch the item from related object
+		if ( $item && paco2017_agenda_is_object_related( $item ) ) {
+			$item = paco2017_agenda_get_object_related_item( $item );
+		} else {
+			$item = false;
+		}
 	}
 
 	return $item;
@@ -717,6 +804,282 @@ function paco2017_get_agenda_timeslot( $item = 0 ) {
 	}
 
 	return $timeslot;
+}
+
+/**
+ * Output the Agenda Item's related object ID
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ */
+function paco2017_the_agenda_related_id( $item = 0 ) {
+	echo paco2017_get_agenda_related_id( $item );
+}
+
+/**
+ * Return the Agenda Item's related object ID
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters Calls 'paco2017_get_agenda_related_id'
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return int Related object ID
+ */
+function paco2017_get_agenda_related_id( $item = 0 ) {
+	$item    = paco2017_get_agenda_item( $item );
+	$related = 0;
+
+	if ( $item ) {
+		$related = (int) get_post_meta( $item->ID, 'related', true );
+	}
+
+	return (int) apply_filters( 'paco2017_get_agenda_related_id', $related, $item );
+}
+
+/**
+ * Return whether the Agenda Item is related to an object
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ */
+function paco2017_is_agenda_related( $item = 0 ) {
+	return (bool) paco2017_get_agenda_related_id( $item );
+}
+
+/**
+ * Return the Agenda Item's related post object
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters Calls 'paco2017_get_agenda_related'
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return WP_Post Related post object
+ */
+function paco2017_get_agenda_related( $item = 0 ) {
+	$item    = paco2017_get_agenda_item( $item );
+	$related = paco2017_get_agenda_related_id( $item );
+
+	if ( $item && $related ) {
+		$related = get_post( $related );
+	}
+
+	return apply_filters( 'paco2017_get_agenda_related', $related, $item );
+}
+
+/**
+ * Return the Agenda Item ID for the related object
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @return int Related Agenda Item ID. 
+ */
+function paco2017_agenda_get_object_related_item_id( $post = 0 ) {
+	$item    = paco2017_agenda_get_object_related_item( $post );
+	$item_id = 0;
+
+	if ( $item ) {
+		$item_id = $item->ID;
+	}
+
+	return $item_id;
+}
+
+/**
+ * Return the Agenda Item object for the related object
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_agenda_get_object_related_item'
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @return WP_Post Related Agenda Item object.
+ */
+function paco2017_agenda_get_object_related_item( $post = 0 ) {
+	if ( ! $post = get_post( $post ) )
+		return false;
+
+	$item = false;
+
+	if ( $query = new WP_Query( array(
+		'post_type'  => paco2017_get_agenda_post_type(),
+		'meta_query' => array(
+			array(
+				'key'   => 'related',
+				'value' => $post->ID
+			)
+		)
+	) ) ) {
+		if ( $query->posts ) {
+			$item = $query->posts[0];
+		}
+	}
+
+	return apply_filters( 'paco2017_agenda_get_object_related_item', $item, $post );
+}
+
+/**
+ * Return whether the object is related to an/the given Agenda Item
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return bool Is object related to an/the Agenda Item?
+ */
+function paco2017_agenda_is_object_related( $post = 0, $item = null ) {
+	$related = paco2017_agenda_get_object_related_item( $post );
+
+	if ( $related && null !== $item ) {
+		$item = paco2017_get_agenda_item( $item );
+
+		if ( $item ) {
+			$related = ( $related->ID === $item->ID );
+		}
+	}
+
+	return (bool) $related;
+}
+
+/**
+ * Output the Agenda Item's related object url
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ */
+function paco2017_the_agenda_related_url( $item = 0 ) {
+	echo paco2017_get_agenda_related_url( $item );
+}
+
+/**
+ * Return the Agenda Item's related object url
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters Calls 'paco2017_get_agenda_related_url'
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return string Related post object url
+ */
+function paco2017_get_agenda_related_url( $item = 0 ) {
+	$item    = paco2017_get_agenda_item( $item );
+	$related = paco2017_get_agenda_related( $item );
+	$url     = '';
+
+	if ( $item && $related ) {
+		$url = get_permalink( $related );
+	}
+
+	return apply_filters( 'paco2017_get_agenda_related_url', $url, $related, $item );
+}
+
+/**
+ * Output the Agenda Item's related object link
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ */
+function paco2017_the_agenda_related_link( $item = 0 ) {
+	echo paco2017_get_agenda_related_link( $item );
+}
+
+/**
+ * Return the Agenda Item's related object link
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters Calls 'paco2017_get_agenda_related_link'
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
+ * @return string Related post object link
+ */
+function paco2017_get_agenda_related_link( $item = 0 ) {
+	$item    = paco2017_get_agenda_item( $item );
+	$related = paco2017_get_agenda_related( $item );
+	$link     = '';
+
+	if ( $item && $related ) {
+		$link = '<a href="' . esc_url( get_permalink( $related ) ) . '">' . get_the_title( $related ) . '</a>';
+	}
+
+	return apply_filters( 'paco2017_get_agenda_related_link', $link, $related, $item );
+}
+
+/**
+ * Retrieve or display list of Agenda relatable pages as a dropdown (select list).
+ *
+ * @since 1.0.0
+ *
+ * @param array|string $args {@see wp_dropdown_pages()}
+ * @return string HTML content, if not displaying.
+ */
+function paco2017_dropdown_agenda_pages( $args = '' ) {
+	$defaults = array(
+		'depth' => 0,
+		'selected' => 0, 'echo' => 1,
+		'name' => 'page_id', 'id' => '',
+		'class' => '',
+		'show_option_none' => '', 'show_option_no_change' => '',
+		'option_none_value' => '',
+		'value_field' => 'ID',
+		'post_type' => array(),
+	);
+
+	$r = wp_parse_args( $args, $defaults );
+
+	if ( empty( $r['post_type'] ) ) {
+		$r['post_type'] = array( 'page', paco2017_get_lecture_post_type() );
+	}
+
+	// Exclude params before querying
+	$q = array_diff_key( $r, array_flip( array( 'depth', 'selected', 'echo', 'name', 'id' ) ) );
+	$pages = new WP_Query( $q );
+	$pages = $pages->posts;
+
+	$output = '';
+	// Back-compat with old system where both id and name were based on $name argument
+	if ( empty( $r['id'] ) ) {
+		$r['id'] = $r['name'];
+	}
+
+	if ( ! empty( $pages ) ) {
+		$class = '';
+		if ( ! empty( $r['class'] ) ) {
+			$class = " class='" . esc_attr( $r['class'] ) . "'";
+		}
+
+		$output = "<select name='" . esc_attr( $r['name'] ) . "'" . $class . " id='" . esc_attr( $r['id'] ) . "'>\n";
+		if ( $r['show_option_no_change'] ) {
+			$output .= "\t<option value=\"-1\">" . $r['show_option_no_change'] . "</option>\n";
+		}
+		if ( $r['show_option_none'] ) {
+			$output .= "\t<option value=\"" . esc_attr( $r['option_none_value'] ) . '">' . $r['show_option_none'] . "</option>\n";
+		}
+		$output .= walk_page_dropdown_tree( $pages, $r['depth'], $r );
+		$output .= "</select>\n";
+	}
+
+	/**
+	 * Filters the HTML output of a list of pages as a drop down.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $output HTML output for drop down list of pages.
+	 * @param array  $r      The parsed arguments array.
+	 * @param array  $pages  List of WP_Post objects returned by `WP_Query`
+	 */
+	$html = apply_filters( 'wp_dropdown_pages', $output, $r, $pages );
+
+	if ( $r['echo'] ) {
+		echo $html;
+	}
+	return $html;
 }
 
 /** Template: Conference Day **************************************************/

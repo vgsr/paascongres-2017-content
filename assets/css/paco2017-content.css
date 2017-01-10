@@ -82,8 +82,8 @@
 
 /* Agenda */
 
-.paco2017-agenda .day-title {
-	margin-bottom: 0;
+.agenda-info {
+	font-style: italic;
 }
 
 .paco2017-agenda .day-date {
@@ -91,6 +91,7 @@
 }
 
 .paco2017-agenda .item-timeslot {
+	display: block;
 	font-size: 80%;
 	opacity: .7;
 }
