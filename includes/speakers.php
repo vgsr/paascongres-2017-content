@@ -76,8 +76,7 @@ function paco2017_get_speaker_term_link( $link, $term, $taxonomy ) {
  * @since 1.0.0
  */
 function paco2017_registered_speaker_taxonomy() {
-	add_action( 'paco2017_rest_api_init', 'paco2017_register_speaker_rest_fields'        );
-	add_filter( 'get_terms',              'paco2017_speaker_rest_get_terms',       10, 4 );
+	add_action( 'paco2017_rest_api_init', 'paco2017_register_speaker_rest_fields' );
 }
 
 /**
@@ -86,6 +85,9 @@ function paco2017_registered_speaker_taxonomy() {
  * @since 1.0.0
  */
 function paco2017_register_speaker_rest_fields() {
+
+	// Filter Speaker terms
+	add_filter( 'get_terms', 'paco2017_speaker_rest_get_terms', 10, 4 );
 
 	// Get assets
 	$lecture  = paco2017_get_lecture_post_type();
@@ -488,9 +490,9 @@ function paco2017_get_speaker_info() {
  *
  * @param WP_Term|int $item Optional. Term object or ID. Defaults to the current term.
  * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
- * @return WP_Term|false Speakers Item post object or False when not found.
+ * @return WP_Term|false Speakers term object or False when not found.
  */
-function paco2017_get_speaker( $item = 0 , $by = 'id' ) {
+function paco2017_get_speaker( $item = 0, $by = 'id' ) {
 
 	// Default empty parameter to the item in the loop
 	if ( empty( $item ) && paco2017_in_the_speaker_loop() ) {
