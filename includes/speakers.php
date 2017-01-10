@@ -442,6 +442,11 @@ function paco2017_get_speaker( $item = 0 , $by = 'id' ) {
 	if ( empty( $item ) && paco2017_in_the_speaker_loop() ) {
 		$item = paco2017_content()->speaker_query->term;
 
+	// Default to the post's item
+	} elseif ( empty( $item ) && paco2017_object_has_speaker() ) {
+		$terms = wp_get_object_terms( get_the_ID(), paco2017_get_speaker_tax_id() );
+		$item  = $terms[0];
+
 	// Get the term by id or slug
 	} elseif ( ! $item instanceof WP_Term ) {
 		$item = get_term_by( $by, $item, paco2017_get_speaker_tax_id() );
