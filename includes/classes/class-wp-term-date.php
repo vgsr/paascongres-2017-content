@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Term Dates Class
+ * Term Date Class
  *
  * @since 0.1.0
  * @author Laurens Offereins <https://github.com/lmoffereins>
@@ -12,13 +12,13 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WP_Term_Dates' ) ) :
+if ( ! class_exists( 'WP_Term_Date' ) ) :
 /**
- * Main WP Term Dates class
+ * Main WP Term Date class
  *
  * @since 0.1.0
  */
-final class WP_Term_Dates extends WP_Term_Meta_UI {
+final class WP_Term_Date extends WP_Term_Meta_UI {
 
 	/**
 	 * @var string Plugin version
@@ -39,15 +39,29 @@ final class WP_Term_Dates extends WP_Term_Meta_UI {
 	 * Hook into queries, admin screens, and more!
 	 *
 	 * @since 0.1.0
+	 *
+	 * @param string $file Path to the root plugin file
+	 * @param array $args Class construction arguments
 	 */
-	public function __construct( $file = '' ) {
+	public function __construct( $file = '', $args = array() ) {
 
-		// Setup the labels
-		$this->labels = array(
-			'singular'    => esc_html__( 'Date',  'wp-term-dates' ),
-			'plural'      => esc_html__( 'Dates', 'wp-term-dates' ),
-			'description' => esc_html__( 'Assign a custom date to separate each item in time.', 'wp-term-dates' )
-		);
+		// Parse the defaults
+		$args = wp_parse_args( $args, array(
+			'meta_key' => 'date',
+			'labels'   => array(),
+		) );
+
+		// Setup the meta key and labels
+		$this->meta_key = $args['meta_key'];
+		$this->labels   = wp_parse_args( $args['labels'], array(
+			'singular'     => esc_html__( 'Date',  'wp-term-date' ),
+			'plural'       => esc_html__( 'Dates', 'wp-term-date' ),
+			'description'  => esc_html__( 'Assign a custom date to separate each item in time.', 'wp-term-date' ),
+
+			// Help tab
+			'help_title'   => esc_html__( 'Term Date', 'wp-term-date' ),
+			'help_content' => esc_html__( 'Terms can have unique dates to help separate them from each other in time.', 'wp-term-date' ),
+		) );
 
 		// Call the parent and pass the file
 		parent::__construct( $file );
@@ -77,9 +91,9 @@ final class WP_Term_Dates extends WP_Term_Meta_UI {
 	 */
 	public function help_tabs() {
 		get_current_screen()->add_help_tab(array(
-			'id'      => 'wp_term_date_help_tab',
-			'title'   => __( 'Term Date', 'wp-term-dates' ),
-			'content' => '<p>' . __( 'Terms can have unique dates to help separate them from each other.', 'wp-term-dates' ) . '</p>',
+			'id'      => "wp_term_{$this->meta_key}_help_tab",
+			'title'   => $this->labels['help_title'],
+			'content' => '<p>' . $this->labels['help_content'] . '</p>',
 		) );
 	}
 
@@ -126,4 +140,5 @@ final class WP_Term_Dates extends WP_Term_Meta_UI {
 		<?php
 	}
 }
+
 endif;

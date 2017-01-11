@@ -127,7 +127,7 @@ final class Paco2017_Content {
 		require( $this->includes_dir . 'classes/class-wp-post-image.php'   );
 		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php' );
 		require( $this->includes_dir . 'classes/class-wp-term-colors.php'  );
-		require( $this->includes_dir . 'classes/class-wp-term-dates.php'   );
+		require( $this->includes_dir . 'classes/class-wp-term-date.php'    );
 		require( $this->includes_dir . 'classes/class-wp-term-image.php'   );
 
 		/** Widgets *****************************************************/
@@ -469,7 +469,7 @@ final class Paco2017_Content {
 		/** Meta ********************************************************/
 
 		new WP_Term_Colors( $this->file );
-		new WP_Term_Dates(  $this->file );
+		new WP_Term_Date( $this->file );
 		new WP_Term_Image( $this->file, array(
 			'meta_key'   => 'photo',
 			'image_size' => array( 150, 150 ),
