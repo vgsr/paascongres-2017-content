@@ -190,6 +190,14 @@ class Paco2017_Admin {
 			$submenu_file = "edit-tags.php?taxonomy={$screen->taxonomy}";
 		}
 
+		// Partner Level
+		if ( in_array( $screen->taxonomy, array(
+			paco2017_get_partner_level_tax_id(),
+		) ) ) {
+			$parent_file  = 'paco2017';
+			$submenu_file = "edit.php?post_type=" . paco2017_get_partner_post_type();
+		}
+
 		// Association
 		if ( in_array( $screen->taxonomy, array(
 			paco2017_get_association_tax_id(),
@@ -407,7 +415,7 @@ class Paco2017_Admin {
 			// Workshop
 			case paco2017_get_workshop_post_type() :
 
-				// Display link to manage days
+				// Display link to manage categories
 				printf( '<div class="alignleft actions paco2017-workshop-cat-link"><a href="%s" class="page-title-action">%s</a></div>', 'edit-tags.php?taxonomy=' . paco2017_get_workshop_cat_tax_id(), esc_html__( 'Manage Workshop Categories', 'paco2017-content' ) );
 
 				break;
@@ -417,6 +425,14 @@ class Paco2017_Admin {
 
 				// Display link to manage days
 				printf( '<div class="alignleft actions paco2017-conf-day-link"><a href="%s" class="page-title-action">%s</a></div>', 'edit-tags.php?taxonomy=' . paco2017_get_conf_day_tax_id(), esc_html__( 'Manage Conference Days', 'paco2017-content' ) );
+
+				break;
+
+			// Partner
+			case paco2017_get_partner_post_type() :
+
+				// Display link to manage levels
+				printf( '<div class="alignleft actions paco2017-partner-level-link"><a href="%s" class="page-title-action">%s</a></div>', 'edit-tags.php?taxonomy=' . paco2017_get_partner_level_tax_id(), esc_html__( 'Manage Partner Levels', 'paco2017-content' ) );
 
 				break;
 		}
@@ -434,27 +450,33 @@ class Paco2017_Admin {
 	public function posts_add_columns( $columns, $post_type ) {
 
 		// Rename Speaker column
-		$spkr_key = 'taxonomy-' . paco2017_get_speaker_tax_id();
-		if ( isset( $columns[ $spkr_key ] ) ) {
-			$columns[ $spkr_key ] = esc_html__( 'Speaker', 'paco2017-content' );
+		$tax_key = 'taxonomy-' . paco2017_get_speaker_tax_id();
+		if ( isset( $columns[ $tax_key ] ) ) {
+			$columns[ $tax_key ] = esc_html__( 'Speaker', 'paco2017-content' );
 		}
 
 		// Rename Wokshop Category column
-		$cat_key = 'taxonomy-' . paco2017_get_workshop_cat_tax_id();
-		if ( isset( $columns[ $cat_key ] ) ) {
-			$columns[ $cat_key ] = esc_html__( 'Category', 'paco2017-content' );
+		$tax_key = 'taxonomy-' . paco2017_get_workshop_cat_tax_id();
+		if ( isset( $columns[ $tax_key ] ) ) {
+			$columns[ $tax_key ] = esc_html__( 'Category', 'paco2017-content' );
 		}
 
 		// Rename Conference Day column
-		$day_key = 'taxonomy-' . paco2017_get_conf_day_tax_id();
-		if ( isset( $columns[ $day_key ] ) ) {
-			$columns[ $day_key ] = esc_html__( 'Day', 'paco2017-content' );
+		$tax_key = 'taxonomy-' . paco2017_get_conf_day_tax_id();
+		if ( isset( $columns[ $tax_key ] ) ) {
+			$columns[ $tax_key ] = esc_html__( 'Day', 'paco2017-content' );
 		}
 
 		// Rename Conference Location column
-		$loc_key = 'taxonomy-' . paco2017_get_conf_location_tax_id();
-		if ( isset( $columns[ $loc_key ] ) ) {
-			$columns[ $loc_key ] = esc_html__( 'Location', 'paco2017-content' );
+		$tax_key = 'taxonomy-' . paco2017_get_conf_location_tax_id();
+		if ( isset( $columns[ $tax_key ] ) ) {
+			$columns[ $tax_key ] = esc_html__( 'Location', 'paco2017-content' );
+		}
+
+		// Rename Partner Level column
+		$tax_key = 'taxonomy-' . paco2017_get_partner_level_tax_id();
+		if ( isset( $columns[ $tax_key ] ) ) {
+			$columns[ $tax_key ] = esc_html__( 'Level', 'paco2017-content' );
 		}
 
 		// Agenda
@@ -690,11 +712,11 @@ class Paco2017_Admin {
 			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )
 				continue;
 
-			// Set Article Edition
+			// Set taxonomy term
 			if ( isset( $_POST["taxonomy-{$taxonomy}"] ) ) {
 				wp_set_object_terms( $post_id, (int) $_POST["taxonomy-{$taxonomy}"], $taxonomy, false );
 
-			// Remove Article Edition
+			// Remove taxonomy term
 			} elseif ( $terms = wp_get_object_terms( $post_id ) ) {
 				wp_remove_object_terms( $post_id, $terms, $taxonomy );
 			}
@@ -817,11 +839,11 @@ class Paco2017_Admin {
 			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )
 				continue;
 
-			// Set Article Edition
+			// Set taxonomy term
 			if ( isset( $_POST["taxonomy-{$taxonomy}"] ) ) {
 				wp_set_object_terms( $post_id, (int) $_POST["taxonomy-{$taxonomy}"], $taxonomy, false );
 
-			// Remove Article Edition
+			// Remove taxonomy term
 			} elseif ( $terms = wp_get_object_terms( $post_id ) ) {
 				wp_remove_object_terms( $post_id, $terms, $taxonomy );
 			}
@@ -965,11 +987,11 @@ class Paco2017_Admin {
 			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )
 				continue;
 
-			// Set Article Edition
+			// Set taxonomy term
 			if ( isset( $_POST["taxonomy-{$taxonomy}"] ) ) {
 				wp_set_object_terms( $post_id, (int) $_POST["taxonomy-{$taxonomy}"], $taxonomy, false );
 
-			// Remove Article Edition
+			// Remove taxonomy term
 			} elseif ( $terms = wp_get_object_terms( $post_id ) ) {
 				wp_remove_object_terms( $post_id, $terms, $taxonomy );
 			}
@@ -1006,6 +1028,10 @@ class Paco2017_Admin {
 	 * @param WP_Post $post Current post object
 	 */
 	public function partner_details_metabox( $post ) {
+
+		// Get taxonomies
+		$level_tax = paco2017_get_partner_level_tax_id();
+
 		$url = get_post_meta( $post->ID, 'partner_url', true );
 		$post_type_object = get_post_type_object( $post->post_type );
 
@@ -1021,6 +1047,21 @@ class Paco2017_Admin {
 		<p>
 			<label for="partner_url"><?php esc_html_e( 'Partner URL:', 'paco2017-content' ); ?></label>
 			<input type="text" name="partner_url" id="partner_url" value="<?php echo esc_attr( $url ); ?>" />
+		</p>
+
+		<p>
+			<label for="taxonomy-<?php echo $level_tax; ?>"><?php esc_html_e( 'Level:', 'paco2017-content' ); ?></label>
+			<?php
+				$lvl_terms = wp_get_object_terms( $post->ID, $level_tax, array( 'fields' => 'ids' ) );
+
+				wp_dropdown_categories( array(
+					'name'             => "taxonomy-{$level_tax}",
+					'taxonomy'         => $level_tax,
+					'hide_empty'       => false,
+					'selected'         => $lvl_terms ? $lvl_terms[0] : 0,
+					'show_option_none' => esc_html__( '&mdash; No Level &mdash;', 'paco2017-content' ),
+				) );
+			?>
 		</p>
 
 		</div>
@@ -1061,8 +1102,27 @@ class Paco2017_Admin {
 
 		/**
 		 * Save posted inputs:
+		 * - Partner Level taxonomy
 		 * - Partner URL meta
 		 */
+
+		foreach ( array(
+			paco2017_get_partner_level_tax_id(),
+		) as $taxonomy ) {
+			$_taxonomy = get_taxonomy( $taxonomy );
+
+			if ( ! $_taxonomy || ! current_user_can( $_taxonomy->cap->assign_terms ) )
+				continue;
+
+			// Set taxonomy term
+			if ( isset( $_POST["taxonomy-{$taxonomy}"] ) ) {
+				wp_set_object_terms( $post_id, (int) $_POST["taxonomy-{$taxonomy}"], $taxonomy, false );
+
+			// Remove taxonomy term
+			} elseif ( $terms = wp_get_object_terms( $post_id ) ) {
+				wp_remove_object_terms( $post_id, $terms, $taxonomy );
+			}
+		}
 
 		// Meta
 		foreach ( array(

@@ -190,3 +190,20 @@ function paco2017_get_partner_post_type_caps() {
 		'delete_others_posts' => 'delete_others_paco2017_partners'
 	) );
 }
+
+/**
+ * Return the capability mappings for the Partner Level taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_partner_level_tax_caps'
+ * @return array Partner Level taxonomy caps
+ */
+function paco2017_get_partner_level_tax_caps() {
+	return apply_filters( 'paco2017_get_partner_level_tax_caps', array(
+		'manage_terms' => 'manage_paco2017_partner_levels',
+		'edit_terms'   => 'edit_paco2017_partner_levels',
+		'delete_terms' => 'delete_paco2017_partner_levels',
+		'assign_terms' => 'assign_paco2017_partner_levels'
+	) );
+}

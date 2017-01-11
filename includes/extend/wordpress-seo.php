@@ -46,6 +46,7 @@ class Paco2017_WPSEO {
 		$association = paco2017_get_association_tax_id();
 		$conf_day    = paco2017_get_conf_day_tax_id();
 		$conf_loc    = paco2017_get_conf_location_tax_id();
+		$prtnr_lvl   = paco2017_get_partner_level_tax_id();
 
 		// Admin
 		add_filter( "manage_{$agenda}_posts_columns",     array( $this, 'admin_remove_columns'   ), 99    );
@@ -53,6 +54,7 @@ class Paco2017_WPSEO {
 		add_filter( "manage_edit-{$association}_columns", array( $this, 'admin_remove_columns'   ), 99    );
 		add_filter( "manage_edit-{$conf_day}_columns",    array( $this, 'admin_remove_columns'   ), 99    );
 		add_filter( "manage_edit-{$conf_loc}_columns",    array( $this, 'admin_remove_columns'   ), 99    );
+		add_filter( "manage_edit-{$prtnr_lvl}_columns",   array( $this, 'admin_remove_columns'   ), 99    );
 		add_action( 'option_wpseo_titles',                array( $this, 'admin_remove_metaboxes' ), 10, 2 );
 		add_action( 'site_option_wpseo_titles',           array( $this, 'admin_remove_metaboxes' ), 10, 2 );
 	}
@@ -98,6 +100,7 @@ class Paco2017_WPSEO {
 		$association = paco2017_get_association_tax_id();
 		$conf_day    = paco2017_get_conf_day_tax_id();
 		$conf_loc    = paco2017_get_conf_location_tax_id();
+		$prtnr_lvl   = paco2017_get_partner_level_tax_id();
 
 		// Override metabox setting
 		$value["hideeditbox-{$agenda}"]          = true;
@@ -105,6 +108,7 @@ class Paco2017_WPSEO {
 		$value["hideeditbox-tax-{$association}"] = true;
 		$value["hideeditbox-tax-{$conf_day}"]    = true;
 		$value["hideeditbox-tax-{$conf_loc}"]    = true;
+		$value["hideeditbox-tax-{$prtnr_lvl}"]   = true;
 
 		return $value;
 	}

@@ -135,6 +135,100 @@ function paco2017_get_partner_rest_meta( $object, $meta, $request ) {
 	return $value;
 }
 
+/** Taxonomy: Partner Level ***************************************************/
+
+/**
+ * Return the Partner Level taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @return string Taxonomy name
+ */
+function paco2017_get_partner_level_tax_id() {
+	return 'paco2017_partner_level';
+}
+
+/**
+ * Return the labels for the Partner Level taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_partner_level_tax_labels'
+ * @return array Partner Level taxonomy labels
+ */
+function paco2017_get_partner_level_tax_labels() {
+	return apply_filters( 'paco2017_get_partner_level_tax_labels', array(
+		'name'          => __( 'Paascongres Partner Levels', 'paco2017-content' ),
+		'menu_name'     => __( 'Partner Levels',             'paco2017-content' ),
+		'singular_name' => __( 'Partner Level',              'paco2017-content' ),
+		'search_items'  => __( 'Search Partner Levels',      'paco2017-content' ),
+		'popular_items' => null, // Disable tagcloud
+		'all_items'     => __( 'All Partner Levels',         'paco2017-content' ),
+		'no_items'      => __( 'No Partner Level',           'paco2017-content' ),
+		'edit_item'     => __( 'Edit Partner Level',         'paco2017-content' ),
+		'update_item'   => __( 'Update Partner Level',       'paco2017-content' ),
+		'add_new_item'  => __( 'Add New Partner Level',      'paco2017-content' ),
+		'new_item_name' => __( 'New Partner Level Name',     'paco2017-content' ),
+		'view_item'     => __( 'View Partner Level',         'paco2017-content' )
+	) );
+}
+
+/**
+ * Act when the Partner Level taxonomy has been registered
+ *
+ * @since 1.0.0
+ */
+function paco2017_registered_partner_level_taxonomy() {
+	add_action( 'paco2017_rest_api_init', 'paco2017_register_partner_level_rest_fields' );
+}
+
+/**
+ * Register REST fields for the Partner Level taxonomy
+ *
+ * @since 1.0.0
+ */
+function paco2017_register_partner_level_rest_fields() {
+
+	// Get assets
+	$partner = paco2017_get_partner_post_type();
+
+	// Add level to Partner
+	register_rest_field(
+		$partner,
+		'partner_levels',
+		array(
+			'get_callback' => 'paco2017_get_partner_rest_partner_levels'
+		)
+	);
+}
+
+/**
+ * Return the value for the 'partner_levels' partner REST API field
+ *
+ * @since 1.0.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return array Level term(s)
+ */
+function paco2017_get_partner_rest_partner_levels( $object, $field_name, $request ) {
+	return wp_get_object_terms( $object['id'], paco2017_get_partner_level_tax_id() );
+}
+
+/**
+ * Return whether the given post has any or the given Partner Level
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to any term.
+ * @return bool Object has a/the Partner Level
+ */
+function paco2017_object_has_partner_level( $post = 0, $term = 0 ) {
+	return has_term( $term, paco2017_get_partner_level_tax_id(), $post );
+}
+
 /** Template ******************************************************************/
 
 /**

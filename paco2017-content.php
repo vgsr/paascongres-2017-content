@@ -466,6 +466,31 @@ final class Paco2017_Content {
 			)
 		);
 
+		/** Partner Level ***********************************************/
+
+		register_taxonomy(
+			paco2017_get_partner_level_tax_id(),
+			paco2017_get_partner_post_type(),
+			array(
+				'labels'                => paco2017_get_partner_level_tax_labels(),
+				'capabilities'          => paco2017_get_partner_level_tax_caps(),
+				'update_count_callback' => '_update_post_term_count',
+				'hierarchical'          => false,
+				'public'                => true,
+				'rewrite'               => false, // No rewriting necessary
+				'query_var'             => false, // No query vars necessary
+				'show_tagcloud'         => false,
+				'show_in_quick_edit'    => true,
+				'show_admin_column'     => true,
+				'show_in_nav_menus'     => false,
+				'show_ui'               => current_user_can( 'paco2017_partner_level_admin' ),
+				'meta_box_cb'           => false, // No metaboxing
+
+				// Term meta
+				'term_meta_color'       => true,
+			)
+		);
+
 		/** Meta ********************************************************/
 
 		new WP_Term_Colors( $this->file );
