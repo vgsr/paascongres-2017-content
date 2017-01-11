@@ -272,7 +272,7 @@ class Paco2017_Admin {
 		$css = array();
 
 		// List columns
-		$css[] = ".fixed .column-" . paco2017_get_association_tax_id() .
+		$css[] = ".fixed .column-taxonomy-" . paco2017_get_association_tax_id()   .
 		       ", .fixed .column-taxonomy-" . paco2017_get_speaker_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_workshop_cat_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_conf_day_tax_id() .
@@ -1170,7 +1170,7 @@ class Paco2017_Admin {
 
 		// Insert before the 'Role' column
 		$columns = array_slice( $columns, 0, $pos ) + array(
-			'paco2017_association' => esc_html__( 'Association', 'paco2017-content' )
+			'taxonomy-' . paco2017_get_association_tax_id() => esc_html__( 'Association', 'paco2017-content' )
 		) + array_slice( $columns, $pos );
 
 		return $columns;
@@ -1189,7 +1189,7 @@ class Paco2017_Admin {
 	public function users_custom_column( $content, $column, $user_id ) {
 
 		// Association
-		if ( 'paco2017_association' === $column ) {
+		if ( 'taxonomy-' . paco2017_get_association_tax_id() === $column ) {
 			$association = wp_get_object_terms( $user_id, paco2017_get_association_tax_id() );
 
 			if ( ! empty( $association ) ) {
