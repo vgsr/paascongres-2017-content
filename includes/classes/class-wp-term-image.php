@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Term Images Class
+ * Term Image Class
  *
  * @since 0.1.0
  * @author Laurens Offereins <https://github.com/lmoffereins>
@@ -12,13 +12,13 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WP_Term_Images' ) ) :
+if ( ! class_exists( 'WP_Term_Image' ) ) :
 /**
- * Main WP Term Images class
+ * Main WP Term Image class
  *
  * @since 0.1.0
  */
-final class WP_Term_Images extends WP_Term_Meta_UI {
+final class WP_Term_Image extends WP_Term_Meta_UI {
 
 	/**
 	 * @var string Plugin version
@@ -63,18 +63,18 @@ final class WP_Term_Images extends WP_Term_Meta_UI {
 		// Setup the meta key and labels
 		$this->meta_key   = $args['meta_key'];
 		$this->labels     = wp_parse_args( $args['labels'], array(
-			'singular'        => esc_html__( 'Image',  'wp-term-images' ),
-			'plural'          => esc_html__( 'Images', 'wp-term-images' ),
-			'description'     => esc_html__( 'Assign an image to uniquely identify each item.', 'wp-term-images' ),
+			'singular'        => esc_html__( 'Image',  'wp-term-image' ),
+			'plural'          => esc_html__( 'Images', 'wp-term-image' ),
+			'description'     => esc_html__( 'Assign an image to uniquely identify each item.', 'wp-term-image' ),
 
 			// Help tab
-			'help_title'      => esc_html__( 'Term Image', 'wp-term-images' ),
-			'help_content'    => esc_html__( 'Terms can have unique images to visually identify them.', 'wp-term-images' ),
+			'help_title'      => esc_html__( 'Term Image', 'wp-term-image' ),
+			'help_content'    => esc_html__( 'Terms can have unique images to visually identify them.', 'wp-term-image' ),
 
 			// JS interface
-			'setTermImage'    => esc_html__( 'Set %s image', 'wp-term-images' ),
-			'termImageTitle'  => esc_html__( '%s image', 'wp-term-images' ),
-			'removeTermImage' => esc_html__( 'Remove %s image', 'wp-term-images' ),
+			'setTermImage'    => esc_html__( 'Set %s image', 'wp-term-image' ),
+			'termImageTitle'  => esc_html__( '%s image', 'wp-term-image' ),
+			'removeTermImage' => esc_html__( 'Remove %s image', 'wp-term-image' ),
 		) );
 		$this->image_size = $args['image_size'];
 		$this->element    = $args['element'];
@@ -93,31 +93,28 @@ final class WP_Term_Images extends WP_Term_Meta_UI {
 	}
 
 	/**
-	 * Return whether we're editing a single term
+	 * Return whether we're editing (single) term(s) in the admin
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return bool Are we editing a single term?
+	 * @param string $type Optional. Either 'single' or 'multiple'. Defaults to any editing check.
+	 * @return bool Are we editing term?
 	 */
-	public function editing_terms( $type = '' ) {
+	public function is_term_edit( $type = '' ) {
 		$screen  = get_current_screen();
-		$editing = false;
+		$is_edit = false;
 
 		if ( is_admin() && $screen && in_array( $screen->taxonomy, $this->taxonomies ) ) {
-			switch ( $type ) {
-				case 'single' :
-					$editing = ( 'term' === $screen->base );
-					break;
-				case 'multiple' :
-					$editing = ( 'edit-tags' === $screen->base );
-					break;
-				default :
-					$editing = in_array( $screen->base, array( 'term', 'edit-tags' ) );
-					break;
+			if ( 'single' === $type ) {
+				$is_edit = ( 'term' === $screen->base );
+			} elseif ( 'multiple' === $type ) {
+				$is_edit = ( 'edit-tags' === $screen->base );
+			} else {
+				$is_edit = in_array( $screen->base, array( 'term', 'edit-tags' ) );
 			}
 		}
 
-		return $editing;
+		return $is_edit;
 	}
 
 	/**
@@ -129,7 +126,7 @@ final class WP_Term_Images extends WP_Term_Meta_UI {
 
 		// Define default element js selector
 		if ( empty( $this->element ) ) {
-			$this->element = $this->editing_terms( 'single' ) ? ".term-{$this->meta_key}-wrap" : "#the-list";
+			$this->element = $this->is_term_edit( 'single' ) ? ".term-{$this->meta_key}-wrap" : "#the-list";
 		}
 	}
 
@@ -157,7 +154,7 @@ final class WP_Term_Images extends WP_Term_Meta_UI {
 			'metaKey'    => $this->meta_key,
 			'l10n'       => $labels,
 			'parentEl'   => $this->element,
-			'wrapEl'     => $this->editing_terms( 'single' ) ? 'td' : ".column-{$this->meta_key}",
+			'wrapEl'     => $this->is_term_edit( 'single' ) ? 'td' : ".column-{$this->meta_key}",
 			'ajaxAction' => "{$this->meta_key}_terms",
 		);
 
@@ -182,12 +179,12 @@ final class WP_Term_Images extends WP_Term_Meta_UI {
 		wp_add_inline_script( 'term-image', "
 /* global wp */
 jQuery(document).ready( function( $ ) {
-	if ( typeof wp.media.wpTermImages === 'undefined' )
+	if ( typeof wp.media.wpTermImage === 'undefined' )
 		return;
 
 	// Setup image selector
 	if ( $( '.wp-term-image', '" . $this->element . "' ).length ) {
-		wp.media.wpTermImages( " . json_encode( $this->get_image_data() ) . " );
+		wp.media.wpTermImage( " . json_encode( $this->get_image_data() ) . " );
 	}
 } );
 " );
@@ -266,7 +263,7 @@ jQuery(document).ready( function( $ ) {
 
 				<p class="description">
 					<?php echo esc_html( $this->labels['description'] ); ?>
-					<?php esc_html_e( 'You can select an image for the term, once the term has been created and added to the list.', 'wp-term-images' ); ?>
+					<?php esc_html_e( 'You can select an image for the term, once the term has been created and added to the list.', 'wp-term-image' ); ?>
 				</p>
 
 			<?php endif; ?>
@@ -320,7 +317,7 @@ jQuery(document).ready( function( $ ) {
 	public function media_settings( $settings ) {
 
 		// When editing terms
-		if ( $this->editing_terms() ) {
+		if ( $this->is_term_edit() ) {
 
 			// Define post images collection
 			if ( ! isset( $settings['termImages'] ) || ! is_array( $settings['termImages'] ) ) {
@@ -355,11 +352,11 @@ jQuery(document).ready( function( $ ) {
 		$terms = array();
 
 		// Single term
-		if ( $this->editing_terms( 'single' ) ) {
+		if ( $this->is_term_edit( 'single' ) ) {
 			$terms = array( get_term( (int) $_REQUEST['tag_ID'] )->term_id );
 
 		// List table terms
-		} elseif ( $this->editing_terms( 'multiple' ) ) {
+		} elseif ( $this->is_term_edit( 'multiple' ) ) {
 			/**
 			 * Get the queried terms. The terms list table does not query them
 			 * in the `prepare_items()` method, but rather inline when setting
@@ -583,4 +580,5 @@ jQuery(document).ready( function( $ ) {
 		return $destination;
 	}
 }
+
 endif;

@@ -2,7 +2,7 @@
 ( function( $, _ ) {
 
 	// Bail when method already exists
-	if ( typeof wp.media.wpTermImages !== 'undefined' )
+	if ( typeof wp.media.wpTermImage !== 'undefined' )
 		return;
 
 	/**
@@ -12,7 +12,7 @@
 	 *
 	 * @param {object} image Image details
 	 */
-	wp.media.wpTermImages = function( image ) {
+	wp.media.wpTermImage = function( image ) {
 		var Attachment = wp.media.model.Attachment,
 		    FeaturedImage = wp.media.controller.FeaturedImage;
 
