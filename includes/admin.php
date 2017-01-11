@@ -276,7 +276,8 @@ class Paco2017_Admin {
 		       ", .fixed .column-taxonomy-" . paco2017_get_speaker_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_workshop_cat_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_conf_day_tax_id() .
-		       ", .fixed .column-taxonomy-" . paco2017_get_conf_location_tax_id() . " { width: 10%; }";
+		       ", .fixed .column-taxonomy-" . paco2017_get_conf_location_tax_id() .
+		       ", .fixed .column-taxonomy-" . paco2017_get_partner_level_tax_id() . " { width: 10%; }";
 
 		/** Associations **********************************************************/
 
