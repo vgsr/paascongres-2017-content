@@ -278,6 +278,24 @@ class Paco2017_Admin {
 		       ", .fixed .column-taxonomy-" . paco2017_get_conf_day_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_conf_location_tax_id() . " { width: 10%; }";
 
+		/** Associations **********************************************************/
+
+		foreach ( get_terms( array(
+			'taxonomy'   => paco2017_get_association_tax_id(),
+			'hide_empty' => false
+		) ) as $term ) {
+
+			// Colors
+			if ( $color = get_term_meta( $term->term_id, 'color', true ) ) {
+
+				// Turn hex to rgb
+				$_color    = sanitize_hex_color_no_hash( $color );
+				$rgb       = array( hexdec( substr( $_color, 0, 2 ) ), hexdec( substr( $_color, 2, 2 ) ), hexdec( substr( $_color, 4, 2 ) ) );
+
+				$css[] = ".paco2017_enrollments_widget .paco2017-association-{$term->term_id}, .paco2017_enrollments_widget .paco2017-association-{$term->term_id} + dd { border-bottom: 4px solid rgba({$rgb[0]}, {$rgb[1]}, {$rgb[2]}, .6); }";
+			}
+		}
+
 		if ( ! empty( $css ) ) {
 			wp_add_inline_style( 'paco2017-admin', implode( "\n", $css ) );
 		}

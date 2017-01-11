@@ -367,10 +367,7 @@ function paco2017_enqueue_styles() {
 			$_color    = sanitize_hex_color_no_hash( $color );
 			$rgb       = array( hexdec( substr( $_color, 0, 2 ) ), hexdec( substr( $_color, 2, 2 ) ), hexdec( substr( $_color, 4, 2 ) ) );
 
-			// Dark text on light backgrounds
-			$textcolor = paco2017_light_textcolor_for_background( $rgb ) ? 'color: #fff;' : 'color: inherit;';
-
-			$css[] = ".paco2017_enrollments_widget .paco2017-association-{$term->term_id}, .paco2017_enrollments_widget .paco2017-association-{$term->term_id} + dd { background: rgba({$rgb[0]},{$rgb[1]},{$rgb[2]},.6); {$textcolor} }";
+			$css[] = ".paco2017_enrollments_widget .paco2017-association-{$term->term_id}, .paco2017_enrollments_widget .paco2017-association-{$term->term_id} + dd { border-bottom: 4px solid rgba({$rgb[0]}, {$rgb[1]}, {$rgb[2]}, .6); }";
 		}
 	}
 

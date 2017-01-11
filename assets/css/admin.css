@@ -101,6 +101,7 @@
 .paco2017_enrollments_widget dt,
 .paco2017_enrollments_widget dd {
 	display: inline-block;
+	padding: 0 0 5px;
 	margin: 0 0 5px 0;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
