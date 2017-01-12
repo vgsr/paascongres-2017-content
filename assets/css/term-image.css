@@ -2,15 +2,16 @@
 	position: relative;
 	max-width: 150px;
 	width: 100%;
-	display: inline-block;
+	display: inline;
 	vertical-align: middle;
 }
 
-.wp-list-table .wp-term-image.has-term-image {
+.wp-list-table .wp-term-image.has-image {
 	max-width: 75px;
 }
 
-.wp-term-image-set {
+.wp-term-image.has-image,
+.wp-term-image.has-image .wp-term-image-set {
 	display: inline-block;
 }
 
@@ -21,35 +22,47 @@
 	vertical-align: bottom;
 }
 
-.wp-term-image-remove {
-	position: absolute;
-	top: 0;
-	left: -999em;
-	background: #f1f1f1;
-	text-decoration: none;
+.wp-term-image .wp-term-image-remove {
+	position: relative;
+	left: -9999em;
 	color: #a00;
+	text-decoration: none;
 }
 
-.striped > tbody > :nth-child(odd) .wp-term-image-remove {
+.wp-term-image .wp-term-image-remove:hover,
+.wp-term-image .wp-term-image-remove:hover {
+	color: #f00;
+	border: none;
+}
+
+tr:hover .wp-term-image:not(.has-image) .wp-term-image-remove,
+.wp-term-image:not(.has-image) .wp-term-image-remove:focus,
+tr:hover .wp-term-image:not(.has-image) .wp-term-image-remove .screen-reader-text,
+.wp-term-image:not(.has-image) .wp-term-image-remove:focus .screen-reader-text {
+	position: static !important; /* Overrule .screen-reader-text's absolute !important */
+}
+
+.wp-term-image.has-image .wp-term-image-remove {
+	position: absolute;
+	top: 0;
+	background: #f1f1f1;
+}
+
+.striped > tbody > :nth-child(odd) .wp-term-image.has-image .wp-term-image-remove {
 	background: #f9f9f9;
 }
 
-.striped > tbody > :nth-child(even) .wp-term-image-remove {
+.striped > tbody > :nth-child(even) .wp-term-image.has-image .wp-term-image-remove {
 	background: #fff;
 }
 
-.wp-term-image-remove:hover,
-.wp-term-image-remove:focus {
-	color: #f00;
-}
-
-.wp-term-image:hover .wp-term-image-remove,
-.wp-term-image-remove:focus {
+tr:hover .wp-term-image.has-image .wp-term-image-remove,
+.wp-term-image.has-image .wp-term-image-remove:focus {
 	right: 0;
 	left: auto;
 }
 
-.wp-term-image-remove:after {
+.wp-term-image.has-image .wp-term-image-remove:after {
 	content: '\f158'; /* dashicons-no */
 	font-family: dashicons;
 	display: block;
@@ -61,12 +74,12 @@
 }
 
 @media screen and (max-width: 782px) {
-	.wp-term-image-remove {
+	.wp-term-image.has-image .wp-term-image-remove {
 		right: 0;
 		left: auto;
 	}
 
-	.wp-term-image-remove:after {
+	.wp-term-image.has-image .wp-term-image-remove:after {
 		width: 42px;
 		height: 42px;
 		font-size: 32px;

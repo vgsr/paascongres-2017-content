@@ -36,6 +36,11 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 	public $meta_key = 'image';
 
 	/**
+	 * @var string Attachment mime type
+	 */
+	public $mime_type = 'image';
+
+	/**
 	 * @var string Image size to generate
 	 */
 	public $image_size = '';
@@ -55,6 +60,7 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 		// Parse the defaults
 		$args = wp_parse_args( $args, array(
 			'meta_key'   => 'image',
+			'mime_type'  => 'image',
 			'labels'     => array(),
 			'image_size' => '',
 			'element'    => '',
@@ -62,6 +68,7 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 
 		// Setup the meta key and labels
 		$this->meta_key   = $args['meta_key'];
+		$this->mime_type  = $args['mime_type'];
 		$this->labels     = wp_parse_args( $args['labels'], array(
 			'singular'        => esc_html__( 'Image',  'wp-term-image' ),
 			'plural'          => esc_html__( 'Images', 'wp-term-image' ),
@@ -75,6 +82,7 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 			'setTermImage'    => esc_html__( 'Set %s image', 'wp-term-image' ),
 			'termImageTitle'  => esc_html__( '%s image', 'wp-term-image' ),
 			'removeTermImage' => esc_html__( 'Remove %s image', 'wp-term-image' ),
+			'error'           => esc_html__( 'Could not set that as the %s image. Try a different attachment.', 'wp-term-image' ),
 		) );
 		$this->image_size = $args['image_size'];
 		$this->element    = $args['element'];
@@ -128,6 +136,22 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 		if ( empty( $this->element ) ) {
 			$this->element = $this->is_term_edit( 'single' ) ? ".term-{$this->meta_key}-wrap" : "#the-list";
 		}
+
+	}
+
+	/**
+	 * Return whether the term's attachment has an image to display
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param int $term_id Term ID
+	 * @return bool Term meta has image
+	 */
+	public function meta_has_image( $term_id ) {
+		$attachment_id = $this->get_meta( $term_id );
+		$is_image = $attachment_id && wp_attachment_is_image( $attachment_id );
+
+		return $is_image;
 	}
 
 	/** Assets ****************************************************************/
@@ -139,7 +163,7 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 	 *
 	 * @return array Post image details
 	 */
-	public function get_image_data() {
+	public function get_js_data() {
 
 		// Parse the current screen's taxonomy labels
 		$taxonomy = get_taxonomy( get_current_screen()->taxonomy );
@@ -152,6 +176,7 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 			'name'       => "termImage_{$this->meta_key}",
 			'key'        => "term-image-{$this->meta_key}",
 			'metaKey'    => $this->meta_key,
+			'mimeType'   => $this->mime_type,
 			'l10n'       => $labels,
 			'parentEl'   => $this->element,
 			'wrapEl'     => $this->is_term_edit( 'single' ) ? 'td' : ".column-{$this->meta_key}",
@@ -184,7 +209,7 @@ jQuery(document).ready( function( $ ) {
 
 	// Setup image selector
 	if ( $( '.wp-term-image', '" . $this->element . "' ).length ) {
-		wp.media.wpTermImage( " . json_encode( $this->get_image_data() ) . " );
+		wp.media.wpTermImage( " . json_encode( $this->get_js_data() ) . " );
 	}
 } );
 " );
@@ -235,7 +260,7 @@ jQuery(document).ready( function( $ ) {
 	protected function format_output( $term_id = 0 ) {
 
 		// Define element attributes
-		$attr  = ' class="wp-term-image ' . ( $this->get_meta( $term_id ) ? 'has-term-image' : '' ) . '"';
+		$attr  = ' class="wp-term-image' . ( $this->meta_has_image( $term_id ) ? ' has-image' : '' ) . '"';
 		$attr .= ' data-term="' . esc_attr( $term_id ) . '"';
 
 		// When adding a single row through AJAX
@@ -423,21 +448,25 @@ jQuery(document).ready( function( $ ) {
 
 		$attachment_id = $this->get_meta( $term_id );
 
-		// This term has an image
-		if ( $attachment_id && wp_attachment_is_image( $attachment_id ) ) {
+		// This term has an attachment
+		if ( $attachment_id ) {
+			$att_html = '';
 
-			// Get image in predefined width for admin metabox
-			$image_html = wp_get_attachment_image( $attachment_id, array( 150, 150 ) );
+			if ( $this->meta_has_image( $term_id ) ) {
+				// Get image in predefined width for admin metabox
+				$att_html = wp_get_attachment_image( $attachment_id, array( 150, 150 ) );
+			} else {
+				$att_html = get_the_title( $attachment_id );
+			}
 
-			if ( ! empty( $image_html ) ) {
+			if ( ! empty( $att_html ) ) {
 				$remove_action_text = sprintf( $this->labels['removeTermImage'], $taxonomy->labels->singular_name );
-				$remove_image_link  = '<span class="hide-if-no-js"><a href="#" class="wp-term-image-remove" title="%s"><span class="screen-reader-text">%s</span></a></span>';
+				$remove_image_link  = ' <span class="hide-if-no-js delete"><a href="#" class="wp-term-image-remove aria-button-if-js" aria-label="%s"><span class="screen-reader-text">' . __( 'Delete' ) . '</span></a></span>';
 
 				$content = sprintf( $set_image_link,
 					esc_attr( $set_action_text ),
-					$image_html
+					$att_html
 				) . sprintf( $remove_image_link,
-					esc_attr( $remove_action_text ),
 					esc_attr( $remove_action_text )
 				);
 			}
@@ -469,10 +498,8 @@ jQuery(document).ready( function( $ ) {
 		if ( $json ) {
 			check_ajax_referer( "update-term_{$term_ID}" );
 		} else {
-			check_ajax_referer( "wp-term-image-set_{$this->meta_key}_{$term_ID}" );
+			check_ajax_referer( "wp-term-image-set_{$this->meta_key}-{$term_ID}" );
 		}
-
-		$return = array();
 
 		// Delete term image
 		if ( $attachment_id == '-1' ) {
@@ -489,6 +516,7 @@ jQuery(document).ready( function( $ ) {
 
 			// Maybe resize the image
 			$this->maybe_resize_image( $attachment_id );
+
 			$return = $this->ajax_get_return_data( $term_ID );
 			$json ? wp_send_json_success( $return ) : wp_die( $return );
 		}
@@ -507,8 +535,9 @@ jQuery(document).ready( function( $ ) {
 	 */
 	public function ajax_get_return_data( $term_id, $update = true ) {
 		return array(
-			'html'  => $this->_image_input_html( $term_id ),
-			'nonce' => wp_create_nonce( "update-term_{$term_id}" ),
+			'html'          => $this->_image_input_html( $term_id ),
+			'setImageClass' => $this->meta_has_image( $term_id ),
+			'nonce'         => wp_create_nonce( "update-term_{$term_id}" ),
 		);
 	}
 
