@@ -2,7 +2,7 @@
 ( function( $, _ ) {
 
 	// Bail when method already exists
-	if ( typeof wp.media.wpPostImages !== 'undefined' )
+	if ( typeof wp.media.wpPostImage !== 'undefined' )
 		return;
 
 	/**
@@ -12,7 +12,7 @@
 	 *
 	 * @param {object} image Image details
 	 */
-	wp.media.wpPostImages = function( image ) {
+	wp.media.wpPostImage = function( image ) {
 		var Attachment = wp.media.model.Attachment,
 		    FeaturedImage = wp.media.controller.FeaturedImage;
 
@@ -32,6 +32,20 @@
 				title:   image.l10n.postImageTitle,
 				toolbar: image.key
 			}, FeaturedImage.prototype.defaults ),
+
+			/**
+			 * Overload the controller's native initializer method to modify
+			 * the collection's mime type.
+			 */
+			initialize: function() {
+
+				// If we haven't been provided a `library`, create a `Selection`.
+				if ( ! this.get('library') ) {
+					this.set( 'library', wp.media.query({ type: image.mimeType }) );
+				}
+
+				FeaturedImage.prototype.initialize.apply( this, arguments );
+			},
 
 			/**
 			 * Overload the controller's native selection updater method
@@ -78,12 +92,14 @@
 					post_id:       settings.post.id,
 					post_image_id: settings.post.postImages[ image.metaKey ],
 					_wpnonce:      settings.post.nonce
-				}).done( function( html ) {
-					if ( html == '0' ) {
+				}).done( function( resp ) {
+					if ( resp == '0' ) {
 						window.alert( image.l10n.error );
 						return;
 					}
-					$( '.wp-post-image', image.parentEl ).html( html );
+					$( '.wp-post-image', image.parentEl )
+						.toggleClass( 'has-image', resp.setImageClass )
+						.html( resp.html );
 				});
 			},
 			/**

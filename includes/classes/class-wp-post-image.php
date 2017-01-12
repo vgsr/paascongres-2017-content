@@ -26,7 +26,12 @@ class WP_Post_Image {
 	/**
 	 * @var string Metadata key
 	 */
-	protected $meta_key = '';
+	protected $meta_key = 'image';
+
+	/**
+	 * @var string Attachment mime type
+	 */
+	protected $mime_type = 'image';
 
 	/**
 	 * @var array Array of labels
@@ -76,6 +81,7 @@ class WP_Post_Image {
 		// Setup object data
 		$args = wp_parse_args( $args, array(
 			'meta_key'   => 'image',
+			'mime_type'  => 'image',
 			'post_type'  => array(),
 			'labels'     => array(),
 			'image_size' => array(),
@@ -84,12 +90,13 @@ class WP_Post_Image {
 
 		// Define labels
 		$this->meta_key   = $args['meta_key'];
+		$this->mime_type  = $args['mime_type'];
 		$this->post_type  = ! empty( $args['post_type'] ) ? (array) $args['post_type'] : get_post_types( array( 'public' => true ) );
 		$this->labels     = wp_parse_args( $args['labels'], array(
 			'setPostImage'    => esc_html__( 'Set %s image', 'wp-post-image' ),
-			'postImageTitle'  => esc_html__( 'Post image', 'wp-post-image' ),
+			'postImageTitle'  => esc_html__( '%s image', 'wp-post-image' ),
 			'removePostImage' => esc_html__( 'Remove %s image', 'wp-post-image' ),
-			'error'           => esc_html__( 'Could not set that as the post image. Try a different attachment.', 'wp-post-image' ),
+			'error'           => esc_html__( 'Could not set that as the %s image. Try a different attachment.', 'wp-post-image' ),
 		) );
 		$this->image_size = $args['image_size'];
 		$this->element    = $args['element'];
@@ -120,18 +127,46 @@ class WP_Post_Image {
 	}
 
 	/**
+	 * Return whether the post's attachment has an image to display
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param WP_Post|int $post_id Post object or ID
+	 * @return bool Post meta has image
+	 */
+	public function meta_has_image( $post_id ) {
+		if ( is_a( $post_id, 'WP_Post' ) ) {
+			$post_id = $post_id->ID;
+		}
+
+		$attachment_id = $this->get_meta( $post_id );
+		$is_image = $attachment_id && wp_attachment_is_image( $attachment_id );
+
+		return $is_image;
+	}
+
+	/**
 	 * Return the collection of details of the current post image
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return array Post image details
 	 */
-	public function get_image_data() {
+	public function get_js_data() {
+
+		// Parse the current screen's post type labels
+		$post_type = get_post_type_object( get_current_screen()->post_type );
+		$labels   = array_combine(
+			array_keys( $this->labels ),
+			array_map( 'sprintf', $this->labels, array_fill( 0, count( $this->labels ), $post_type->labels->singular_name ) )
+		);
+
 		$data = array(
 			'name'       => 'postImage_'  . esc_attr( $this->meta_key ),
 			'key'        => 'post-image-' . esc_attr( $this->meta_key ),
 			'metaKey'    => $this->meta_key,
-			'l10n'       => $this->labels,
+			'mimeType'   => $this->mime_type,
+			'l10n'       => $labels,
 			'parentEl'   => $this->element,
 			'ajaxAction' => $this->meta_key .'_posts',
 		);
@@ -173,7 +208,7 @@ class WP_Post_Image {
 	 * @param int $post_id Post ID
 	 */
 	public function post_image_input_html( $post_id ) {
-		echo '<span class="wp-post-image">' . $this->_image_input_html( $post_id ) . '</span>';
+		echo '<span class="wp-post-image' . ( $this->meta_has_image( $post_id ) ? ' has-image' : '' ) . '">' . $this->_image_input_html( $post_id ) . '</span>';
 
 		wp_enqueue_media( array( 'post' => $post_id ) );
 		wp_enqueue_script( 'wp-post-image', $this->url . 'assets/js/wp-post-image.js', array( 'media-editor' ), $this->version, true );
@@ -183,12 +218,12 @@ class WP_Post_Image {
 		wp_add_inline_script( 'wp-post-image', "
 /* global wp */
 jQuery(document).ready( function( $ ) {
-	if ( typeof wp.media.wpPostImages === 'undefined' )
+	if ( typeof wp.media.wpPostImage === 'undefined' )
 		return;
 
 	// Setup image selector
 	if ( $( '.wp-post-image', '" . $this->element . "' ).length ) {
-		wp.media.wpPostImages( " . json_encode( $this->get_image_data() ) . " );
+		wp.media.wpPostImage( " . json_encode( $this->get_js_data() ) . " );
 	}
 } );
 " );
@@ -217,22 +252,26 @@ jQuery(document).ready( function( $ ) {
 
 		$attachment_id = $this->get_meta( $post->ID );
 
-		// This post has an image
-		if ( $attachment_id && wp_attachment_is_image( $attachment_id ) ) {
+		// This post has an attachment
+		if ( $attachment_id ) {
+			$att_html = '';
 
-			// Get image in predefined width for admin metabox
-			$image_html = wp_get_attachment_image( $attachment_id, 'medium' );
+			if ( $this->meta_has_image( $post->ID ) ) {
+				// Get image in predefined width for admin metabox
+				$att_html = wp_get_attachment_image( $attachment_id, 'medium' );
+			} else {
+				$att_html = get_the_title( $attachment_id );
+			}
 
-			if ( ! empty( $image_html ) ) {
+			if ( ! empty( $att_html ) ) {
 				$remove_action_text = sprintf( $this->labels['removePostImage'], $post_type_object->labels->singular_name );
-				$remove_image_link  = '<span class="hide-if-no-js"><a href="#" class="wp-post-image-remove" title="%s"><span class="screen-reader-text">%s</span></a></span>';
+				$remove_image_link  = ' <span class="hide-if-no-js delete"><a href="#" class="wp-post-image-remove aria-button-if-js" aria-label="%s"><span class="screen-reader-text">' . __( 'Delete' ) . '</span></a></span>';
 
 				$content = sprintf( $set_image_link,
 					esc_attr( $set_action_text ),
-					$image_html
+					$att_html
 				) . sprintf( $remove_image_link,
-					esc_attr( $remove_action_text ),
-					esc_html( $remove_action_text )
+					esc_attr( $remove_action_text )
 				);
 			}
 		}
@@ -241,7 +280,7 @@ jQuery(document).ready( function( $ ) {
 	}
 
 	/**
-	 * Save a post image input
+	 * Save a post image input on AJAX update
 	 *
 	 * @since 1.0.0
 	 *
@@ -268,7 +307,7 @@ jQuery(document).ready( function( $ ) {
 		// Delete post image
 		if ( $attachment_id == '-1' ) {
 			if ( delete_post_meta( $post_ID, $this->meta_key ) ) {
-				$return = $this->_image_input_html( $post_ID );
+				$return = $this->ajax_get_return_data( $post_ID, false );
 				$json ? wp_send_json_success( $return ) : wp_die( $return );
 			} else {
 				wp_die( 0 );
@@ -281,11 +320,27 @@ jQuery(document).ready( function( $ ) {
 			// Maybe resize the image
 			$this->maybe_resize_image( $attachment_id );
 
-			$return = $this->_image_input_html( $post_ID );
+			$return = $this->ajax_get_return_data( $post_ID );
 			$json ? wp_send_json_success( $return ) : wp_die( $return );
 		}
 
 		wp_die( 0 );
+	}
+
+	/**
+	 * Return the AJAX update return data
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param int $post_id Post ID
+	 * @param bool $update Optional. Whether the term was updated or deleted
+	 * @return array Return data
+	 */
+	public function ajax_get_return_data( $post_id, $update = true ) {
+		return array(
+			'html'          => $this->_image_input_html( $post_id ),
+			'setImageClass' => $this->meta_has_image( $post_id ),
+		);
 	}
 
 	/**
