@@ -124,11 +124,12 @@ final class Paco2017_Content {
 
 		/** Classes *****************************************************/
 
-		require( $this->includes_dir . 'classes/class-wp-post-image.php'   );
-		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php' );
-		require( $this->includes_dir . 'classes/class-wp-term-colors.php'  );
-		require( $this->includes_dir . 'classes/class-wp-term-date.php'    );
-		require( $this->includes_dir . 'classes/class-wp-term-image.php'   );
+		require( $this->includes_dir . 'classes/class-wp-post-image.php'    );
+		require( $this->includes_dir . 'classes/class-wp-setting-image.php' );
+		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php'  );
+		require( $this->includes_dir . 'classes/class-wp-term-colors.php'   );
+		require( $this->includes_dir . 'classes/class-wp-term-date.php'     );
+		require( $this->includes_dir . 'classes/class-wp-term-image.php'    );
 
 		/** Widgets *****************************************************/
 
