@@ -64,25 +64,34 @@ function paco2017_admin_get_settings_fields() {
 			// Agenda page
 			'_paco2017_agenda_page' => array(
 				'title'             => esc_html__( 'Agenda Page', 'paco2017-content' ),
-				'callback'          => 'paco2017_admin_setting_callback_agenda_page',
+				'callback'          => 'paco2017_admin_setting_callback_page',
 				'sanitize_callback' => 'intval',
-				'args'              => array()
+				'args'              => array(
+					'setting'     => '_paco2017_agenda_page',
+					'description' => esc_html__( 'Select the page that should contain the agenda information', 'paco2017-content' ),
+				)
 			),
 
 			// Speakers page
 			'_paco2017_speakers_page' => array(
 				'title'             => esc_html__( 'Speakers Page', 'paco2017-content' ),
-				'callback'          => 'paco2017_admin_setting_callback_speakers_page',
+				'callback'          => 'paco2017_admin_setting_callback_page',
 				'sanitize_callback' => 'intval',
-				'args'              => array()
+				'args'              => array(
+					'setting'     => '_paco2017_speakers_page',
+					'description' => esc_html__( 'Select the page that should contain the speakers information', 'paco2017-content' ),
+				)
 			),
 
 			// Housekeeping page
 			'_paco2017_housekeeping_page' => array(
 				'title'             => esc_html__( 'Housekeeping Page', 'paco2017-content' ),
-				'callback'          => 'paco2017_admin_setting_callback_housekeeping_page',
+				'callback'          => 'paco2017_admin_setting_callback_page',
 				'sanitize_callback' => 'intval',
-				'args'              => array()
+				'args'              => array(
+					'setting'     => '_paco2017_housekeeping_page',
+					'description' => esc_html__( 'Select the page that contains the housekeeping information', 'paco2017-content' ),
+				)
 			),
 		),
 
@@ -202,18 +211,24 @@ function paco2017_admin_page_has_settings( $page = '' ) {
 function paco2017_admin_setting_callback_main_section() { /* Nothing to display */ }
 
 /**
- * Display the content of the Agenda Page settings field
+ * Display the content of a Page Selection type settings field
  *
  * @since 1.0.0
+ *
+ * @param array $args Setting field arguments
  */
-function paco2017_admin_setting_callback_agenda_page() {
+function paco2017_admin_setting_callback_page( $args = array() ) {
+
+	// Bail when there was no setting passed
+	if ( ! isset( $args['setting'] ) )
+		return;
 
 	// Get settings field
-	$page_id = get_option( '_paco2017_agenda_page', false );
+	$page_id = get_option( $args['setting'], false );
 
 	// Pages dropdown
 	wp_dropdown_pages( array(
-		'name'             => '_paco2017_agenda_page',
+		'name'             => $args['setting'],
 		'selected'         => $page_id,
 		'show_option_none' => __( '&mdash; No Page &mdash;', 'paco2017-content' ),
 	) );
@@ -224,71 +239,11 @@ function paco2017_admin_setting_callback_agenda_page() {
 			esc_url( get_permalink( $page_id ) ),
 			esc_html__( 'View', 'paco2017-content' )
 		);
-	} ?>
+	}
 
-	<p class="description"><?php esc_html_e( 'Select the page that should contain the agenda information', 'paco2017-content' ); ?></p>
-
-	<?php
-}
-
-/**
- * Display the content of the Speakers Page settings field
- *
- * @since 1.0.0
- */
-function paco2017_admin_setting_callback_speakers_page() {
-
-	// Get settings field
-	$page_id = get_option( '_paco2017_speakers_page', false );
-
-	// Pages dropdown
-	wp_dropdown_pages( array(
-		'name'             => '_paco2017_speakers_page',
-		'selected'         => $page_id,
-		'show_option_none' => __( '&mdash; No Page &mdash;', 'paco2017-content' ),
-	) );
-
-	// Display View link
-	if ( $page_id ) {
-		printf( ' <a class="button button-secondary" href="%s" target="_blank">%s</a>',
-			esc_url( get_permalink( $page_id ) ),
-			esc_html__( 'View', 'paco2017-content' )
-		);
-	} ?>
-
-	<p class="description"><?php esc_html_e( 'Select the page that should contain the speakers information', 'paco2017-content' ); ?></p>
-
-	<?php
-}
-
-/**
- * Display the content of the Housekeeping Page settings field
- *
- * @since 1.0.0
- */
-function paco2017_admin_setting_callback_housekeeping_page() {
-
-	// Get settings field
-	$page_id = get_option( '_paco2017_housekeeping_page', false );
-
-	// Pages dropdown
-	wp_dropdown_pages( array(
-		'name'             => '_paco2017_housekeeping_page',
-		'selected'         => $page_id,
-		'show_option_none' => __( '&mdash; No Page &mdash;', 'paco2017-content' ),
-	) );
-
-	// Display View link
-	if ( $page_id ) {
-		printf( ' <a class="button button-secondary" href="%s" target="_blank">%s</a>',
-			esc_url( get_permalink( $page_id ) ),
-			esc_html__( 'View', 'paco2017-content' )
-		);
-	} ?>
-
-	<p class="description"><?php esc_html_e( 'Select the page that contains the housekeeping information', 'paco2017-content' ); ?></p>
-
-	<?php
+	if ( isset( $args['description'] ) ) {
+		echo '<p class="description">' . $args['description'] . '</p>';
+	}
 }
 
 /** Archives Section ******************************************************/
@@ -350,6 +305,8 @@ function paco2017_admin_setting_callback_slugs_section() {
  * Slug setting field
  *
  * @since 1.0.0
+ *
+ * @param array $args Setting field arguments
  */
 function paco2017_admin_setting_callback_slug( $args = array() ) {
 
