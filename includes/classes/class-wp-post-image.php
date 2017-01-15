@@ -29,7 +29,7 @@ class WP_Post_Image {
 	protected $meta_key = 'image';
 
 	/**
-	 * @var string Attachment mime type
+	 * @var string|array Attachment mime type
 	 */
 	protected $mime_type = 'image';
 
@@ -211,11 +211,11 @@ class WP_Post_Image {
 		echo '<span class="wp-post-image' . ( $this->meta_has_image( $post_id ) ? ' has-image' : '' ) . '">' . $this->_image_input_html( $post_id ) . '</span>';
 
 		wp_enqueue_media( array( 'post' => $post_id ) );
-		wp_enqueue_script( 'wp-post-image', $this->url . 'assets/js/wp-post-image.js', array( 'media-editor' ), $this->version, true );
-		wp_enqueue_style(  'wp-post-image', $this->url . 'assets/css/wp-post-image.css', array(), $this->version );
+		wp_enqueue_script( 'post-image', $this->url . 'assets/js/post-image.js', array( 'media-editor' ), $this->version, true );
+		wp_enqueue_style(  'post-image', $this->url . 'assets/css/post-image.css', array(), $this->version );
 
 		// Add script to setup the js instance
-		wp_add_inline_script( 'wp-post-image', "
+		wp_add_inline_script( 'post-image', "
 /* global wp */
 jQuery(document).ready( function( $ ) {
 	if ( typeof wp.media.wpPostImage === 'undefined' )
@@ -339,7 +339,7 @@ jQuery(document).ready( function( $ ) {
 	public function ajax_get_return_data( $post_id, $update = true ) {
 		return array(
 			'html'          => $this->_image_input_html( $post_id ),
-			'setImageClass' => $this->meta_has_image( $post_id ),
+			'setImageClass' => $update ? $this->meta_has_image( $post_id ) : false,
 		);
 	}
 

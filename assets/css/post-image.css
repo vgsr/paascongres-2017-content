@@ -42,7 +42,7 @@
 	background: #fff;
 }
 
-.wp-post-image.has-image:hover .wp-post-image-remove,
+*:hover > .wp-post-image.has-image .wp-post-image-remove,
 .wp-post-image.has-image .wp-post-image-remove:focus {
 	right: 0;
 	left: auto;
