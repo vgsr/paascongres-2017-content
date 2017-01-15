@@ -361,6 +361,21 @@ class Paco2017_Admin {
 				}
 			}
 		}
+
+		/**
+		 * Register Magazine Download image field.
+		 *
+		 * This should be registered (somewhat) early/everywhere, since
+		 * its filters should also hit in `admin_init` for admin-ajax.php.
+		 */
+		wp_setting_image( paco2017_content()->file, '_paco2017_magazine_download', array(
+			'mime_type' => 'application/pdf',
+			'labels'    => array(
+				'setSettingImage'    => esc_html__( 'Set magazine download file', 'paco2017-content' ),
+				'settingImageTitle'  => esc_html__( 'Magazine Download File', 'paco2017-content' ),
+				'removeSettingImage' => esc_html__( 'Remove magazine download file', 'paco2017-content' ),
+			)
+		) );
 	}
 
 	/**

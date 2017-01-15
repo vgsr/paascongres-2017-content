@@ -37,6 +37,13 @@ add_filter( 'the_content',                 'paco2017_agenda_page_content',      
 add_filter( 'the_content',                 'paco2017_agenda_post_content',          2 );
 add_filter( 'the_content',                 'paco2017_speakers_post_content',       20 );
 
+/** Magazine ******************************************************************/
+
+add_filter( 'paco2017_check_download_access',    'paco2017_magazine_check_download_access',             10, 3 );
+add_filter( 'customize_nav_menu_searched_items', 'paco2017_magazine_customize_nav_menu_searched_items', 10, 2 );
+add_filter( 'wp_setup_nav_menu_item',            'paco2017_magazine_setup_nav_menu_item'                      );
+add_filter( 'paco2017_get_atf_url',              'paco2017_magazine_get_theme_download_url'                   );
+
 /** Widgets *******************************************************************/
 
 add_action( 'paco2017_widgets_init', array( 'Paco2017_Enrollments_Widget', 'register' ) );

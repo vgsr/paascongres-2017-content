@@ -149,6 +149,172 @@ function paco2017_get_housekeeping_page_id() {
 	return (int) apply_filters( 'paco2017_get_housekeeping_page_id', get_option( '_paco2017_housekeeping_page', 0 ) );
 }
 
+/**
+ * Return the page ID of the Magazine page setting
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_magazine_page_id'
+ * @return int Page ID
+ */
+function paco2017_get_magazine_page_id() {
+	return (int) apply_filters( 'paco2017_get_magazine_page_id', get_option( '_paco2017_magazine_page', 0 ) );
+}
+
+/** Magazine ******************************************************************/
+
+/**
+ * Return whether this is the Magazine page
+ *
+ * @since 1.0.0
+ *
+ * @return bool Is it the Magazine page?
+ */
+function paco2017_is_magazine_page() {
+	return is_page() && get_the_ID() === paco2017_get_magazine_page_id();
+}
+
+/**
+ * Return the attachment ID of the Magazine download file
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_magazine_download'
+ * @return int Attachment ID
+ */
+function paco2017_get_magazine_download() {
+	return (int) apply_filters( 'paco2017_get_magazine_download', get_option( '_paco2017_magazine_download', false ) );
+}
+
+/**
+ * Return the Magazine download url
+ *
+ * @since 1.0.0
+ *
+ * @return string Magazine url
+ */
+function paco2017_get_magazine_download_url() {
+
+	// Require user to be logged in
+	$attachment_id = paco2017_get_magazine_download();
+	$url = '';
+
+	// Download file is defined
+	if ( $attachment_id ) {
+		if ( is_user_logged_in() ) {
+			$url = paco2017_get_download_url( $attachment_id );
+		} else {
+			$url = wp_login_url( paco2017_get_download_url( $attachment_id ) );
+		}
+	}
+
+	return $url;
+}
+
+/**
+ * Modify whether the Magazine file can be downloaded
+ *
+ * @since 1.0.0
+ *
+ * @param bool $access Access granted
+ * @param WP_Post $attachment Attachment object
+ * @param int $user_id User ID
+ * @return bool Can file be downloaded?
+ */
+function paco2017_magazine_check_download_access( $access, $attachment, $user_id ) {
+
+	// This is the magazine attachment. Allow site members only.
+	if ( paco2017_get_magazine_download() === $attachment->ID ) {
+		$access = is_user_member_of_blog( $user_id );
+	}
+
+	return $access;
+}
+
+/**
+ * Modify the theme's Magazine download url
+ *
+ * @since 1.0.0
+ *
+ * @param string $url Optional. Default url when no magazine is available.
+ * @return string Magazine url
+ */
+function paco2017_magazine_get_theme_download_url( $url = '' ) {
+
+	// Provide the download url when on the Magazine page
+	if ( paco2017_is_magazine_page() && paco2017_get_magazine_download() ) {
+		$url = paco2017_get_magazine_download_url();
+	}
+
+	return $url;
+}
+
+/**
+ * Add custom Magazine link to the searched menu items in the Customizer
+ *
+ * @since 1.0.0
+ *
+ * @param array $items The array of menu items.
+ * @param array $args Includes 'pagenum' and 's' (search) arguments.
+ * @return array Menu items
+ */
+function paco2017_magazine_customize_nav_menu_searched_items( $items, $args ) {
+
+	// Define search  context
+	$search = strtolower( $args['s'] );
+	$words  = array( 'paascongres', 'paco', 'magazine', 'download' );
+
+	// Search query matches a part of the provided words
+	if ( array_filter( $words, function( $word ) use ( $search ) {
+		return false !== strpos( $word, $search );
+	}) ) {
+		$item_id = 'magazine_download_link';
+
+		// Append item
+		$items[] = array(
+			'id'          => 'paco2017-' . $item_id,
+			'object'      => $item_id,
+			'title'       => __( 'Download Magazine', 'paco2017-content' ),
+			'type'        => 'paco2017',
+			'type_label'  => esc_html_x( 'Paascongres Magazine Download Link', 'customizer menu type label', 'paco2017-content' ),
+			'url'         => paco2017_get_magazine_download_url(),
+			'is_current'  => false,
+			'is_parent'   => false,
+			'is_ancestor' => false,
+		);
+	}
+
+	return $items;
+}
+
+/**
+ * Setup details of nav menu item for the Magazine link
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post $menu_item Nav menu item object
+ * @return WP_Post Nav menu item object
+ */
+function paco2017_magazine_setup_nav_menu_item( $menu_item ) {
+
+	// Magazine Download link
+	if ( 'paco2017' === $menu_item->type ) {
+
+		// Set item details
+		if ( 'magazine_download_link' === $menu_item->object ) {
+			$menu_item->type_label = esc_html_x( 'Paascongres Magazine Download Link', 'customizer menu type label', 'paco2017-content' );
+			$menu_item->url        = paco2017_get_magazine_download_url();
+		}
+
+		// Prevent rendering when the user has no access
+		if ( empty( $menu_item->url ) ) {
+			$menu_item->_invalid = true;
+		}
+	}
+
+	return $menu_item;
+}
+
 /** Taxonomy ******************************************************************/
 
 /**

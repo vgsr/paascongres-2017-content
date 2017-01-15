@@ -93,6 +93,20 @@ function paco2017_admin_get_settings_fields() {
 					'description' => esc_html__( 'Select the page that contains the housekeeping information', 'paco2017-content' ),
 				)
 			),
+
+			// Magazine Page
+			'_paco2017_magazine_page' => array(
+				'title'             => esc_html__( 'Magazine', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_magazine',
+				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
+
+			// Magazine Download
+			'_paco2017_magazine_download' => array(
+				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
 		),
 
 		/** Archives Section **********************************************/
@@ -244,6 +258,28 @@ function paco2017_admin_setting_callback_page( $args = array() ) {
 	if ( isset( $args['description'] ) ) {
 		echo '<p class="description">' . $args['description'] . '</p>';
 	}
+}
+
+/**
+ * Display the content of the Magazine settings field
+ *
+ * @since 1.0.0
+ *
+ * @param array $args Setting field arguments
+ */
+function paco2017_admin_setting_callback_magazine( $args = array() ) {
+
+	// Page field
+	paco2017_admin_setting_callback_page( array(
+		'setting'     => '_paco2017_magazine_page',
+		'description' => esc_html__( 'Select the magazine landing page', 'paco2017-content' )
+	) );
+
+	// Download field
+	wp_setting_image_field( array(
+		'setting'     => '_paco2017_magazine_download',
+		'description' => esc_html__( 'Select the magazine file that is offered for download', 'paco2017-content' )
+	) );
 }
 
 /** Archives Section ******************************************************/
