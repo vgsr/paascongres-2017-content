@@ -37,9 +37,13 @@
 	list-style: none;
 }
 
+.paco2017-content ul li:not(:last-child) {
+	margin-bottom: 2em;
+}
+
 .speaker-info.has-avatar,
 .paco2017-content li.has-avatar {
-	min-height: 7em;
+	min-height: 5em;
 }
 
 .paco2017-content li ul {
@@ -58,7 +62,7 @@
 .speaker-avatar,
 .paco2017-content .item-avatar {
 	float: left;
-	margin: 2em 1em 0 0;
+	margin: 0 1em 0 0;
 }
 
 .speaker-avatar img,
@@ -70,6 +74,7 @@
 .speaker-title,
 .paco2017-content .item-title {
 	display: inline-block;
+	padding-top: 0;
 }
 
 .paco2017-content .item-content {
