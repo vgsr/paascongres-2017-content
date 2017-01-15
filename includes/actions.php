@@ -28,6 +28,7 @@ add_filter( 'term_link', 'paco2017_get_speaker_term_link',     10, 3 );
 
 /** Template ******************************************************************/
 
+add_action( 'parse_request',               'paco2017_parse_download_request'          );
 add_action( 'parse_query',                 'paco2017_parse_agenda_query',           2 ); // Early for overrides
 add_action( 'wp_enqueue_scripts',          'paco2017_enqueue_styles'                  );
 add_filter( 'get_the_archive_title',       'paco2017_get_the_archive_title'           );

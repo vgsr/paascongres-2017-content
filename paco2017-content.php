@@ -115,6 +115,7 @@ final class Paco2017_Content {
 		require( $this->includes_dir . 'agenda.php'       );
 		require( $this->includes_dir . 'associations.php' );
 		require( $this->includes_dir . 'capabilities.php' );
+		require( $this->includes_dir . 'downloads.php'    );
 		require( $this->includes_dir . 'functions.php'    );
 		require( $this->includes_dir . 'lectures.php'     );
 		require( $this->includes_dir . 'partners.php'     );
@@ -166,6 +167,10 @@ final class Paco2017_Content {
 		// Register content
 		add_action( 'paco2017_init', array( $this, 'register_post_types' ) );
 		add_action( 'paco2017_init', array( $this, 'register_taxonomies' ) );
+
+		// Permalinks
+		add_action( 'paco2017_init', array( $this, 'add_rewrite_tags'  ), 20 );
+		add_action( 'paco2017_init', array( $this, 'add_rewrite_rules' ), 30 );
 	}
 
 	/** Plugin **********************************************************/
@@ -507,6 +512,44 @@ final class Paco2017_Content {
 				'removeTermImage' => esc_html__( 'Remove %s photo', 'wp-term-images' ),
 			)
 		) );
+	}
+
+	/**
+	 * Register plugin rewrite tags
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_rewrite_tags() {
+		add_rewrite_tag( '%' . paco2017_get_download_rewrite_id() . '%', '([^/]+)' ); // Download File tag
+	}
+
+	/**
+	 * Register plugin rewrite rules
+	 *
+	 * Setup rules to create the following structures:
+	 * - /{downloads}/{file}/
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_rewrite_rules() {
+
+		// Priority
+		$priority         = 'top';
+
+		// Slugs
+		$download_slug    = paco2017_get_download_slug();
+
+		// Unique rewrite ID's
+		$download_id      = paco2017_get_download_rewrite_id();
+
+		// Generic rules
+		$root_rule        = '/?$';
+		$download_rule    = $download_slug . '/([^/]+)';
+
+		/** Add *********************************************************/
+
+		// Download rule
+		add_rewrite_rule( $download_rule . $root_rule, 'index.php?' . $download_id . '=$matches[1]', $priority );
 	}
 }
 
