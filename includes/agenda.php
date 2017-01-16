@@ -346,7 +346,7 @@ function paco2017_query_agenda_items( $args = array() ) {
 
 	// Define query args
 	$query_args = wp_parse_args( $args, array(
-		'paco2017_conf_day' => false,
+		'paco2017_conf_day' => paco2017_get_conf_day(),
 		'post_type'         => paco2017_get_agenda_post_type(),
 		'posts_per_page'    => -1,
 		'paged'             => 1,
@@ -442,7 +442,7 @@ function paco2017_parse_agenda_query( $posts_query ) {
 		$tax_query   = (array) $posts_query->get( 'tax_query', array() );
 		$tax_query[] = array(
 			'taxonomy' => paco2017_get_conf_day_tax_id(),
-			'terms'    => array( $day )
+			'terms'    => array( is_a( $day, 'WP_Term' ) ? $day->term_id : $day )
 		);
 		$posts_query->set( 'tax_query', $tax_query );
 	}
@@ -514,45 +514,35 @@ function paco2017_agenda_post_content( $content ) {
  */
 function paco2017_get_agenda_content() {
 
-	// Agenda post type
-	$post_type = paco2017_get_agenda_post_type();
-
 	// Bail when there are no agenda items
-	if ( empty( wp_count_posts( $post_type )->publish ) )
-		return $content;
-
-	// Get conference days
-	$conf_days = get_terms( array(
-		'taxonomy'   => paco2017_get_conf_day_tax_id(),
-		'hide_empty' => false
-	) );
-	$conf_day_item_count = array_sum( wp_list_pluck( $conf_days, 'count' ) );
+	if ( empty( wp_count_posts( paco2017_get_agenda_post_type() )->publish ) )
+		return '';
 
 	ob_start(); ?>
 
 	<div class="paco2017-content paco2017-agenda">
 
-		<?php if ( ! empty( $conf_days ) && ! empty( $conf_day_item_count ) ) : ?>
+		<?php if ( paco2017_query_conf_days() ) : ?>
 
 		<ul class="paco2017-conference-days">
 
-			<?php foreach ( $conf_days as $conf_day ) : ?>
+			<?php while ( paco2017_have_conf_days() ) : paco2017_the_conf_day() ?>
 
 			<li class="conference-day">
 
-				<h3 class="day-title"><?php paco2017_the_conf_day_title( $conf_day ); ?></h3>
+				<h3 class="day-title"><?php paco2017_the_conf_day_title(); ?></h3>
 
-				<?php if ( paco2017_has_conf_day_date( $conf_day ) ) : ?>
-					<p class="day-date"><?php paco2017_the_conf_day_date( $conf_day ); ?></p>
+				<?php if ( paco2017_has_conf_day_date() ) : ?>
+					<p class="day-date"><?php paco2017_the_conf_day_date(); ?></p>
 				<?php endif; ?>
 
-				<?php if ( paco2017_query_agenda_items( array( 'paco2017_conf_day' => $conf_day->term_id ) ) ) : ?>
+				<?php if ( paco2017_query_agenda_items() ) : ?>
 
 				<?php paco2017_the_agenda_items_list(); ?>
 
 				<?php else : ?>
 
-				<p><?php esc_html_e( 'There are no agenda items scheduled for this day.', 'paco2017-content' ); ?></p>
+				<p><?php esc_html_e( 'There are no items scheduled for this day.', 'paco2017-content' ); ?></p>
 
 				<?php endif; ?>
 
@@ -568,7 +558,7 @@ function paco2017_get_agenda_content() {
 
 		<?php else : ?>
 
-		<p><?php esc_html_e( 'There are no agenda items scheduled.', 'paco2017-content' ); ?></p>
+		<p><?php esc_html_e( 'There are no items scheduled.', 'paco2017-content' ); ?></p>
 
 		<?php endif; ?>
 
@@ -1082,6 +1072,155 @@ function paco2017_dropdown_agenda_pages( $args = '' ) {
 	return $html;
 }
 
+/** Query: Conference Day *****************************************************/
+
+/**
+ * Setup and run the Conference Day query
+ *
+ * @since 1.0.0
+ *
+ * @param array $args Query arguments.
+ * @return bool Has the query returned any results?
+ */
+function paco2017_query_conf_days( $args = array() ) {
+
+	// Get query object
+	$query = paco2017_content()->conf_day_query;
+
+	// Reset query defaults
+	$query->in_the_loop  = false;
+	$query->current_term = -1;
+	$query->term_count   = 0;
+	$query->term         = null;
+	$query->terms        = array();
+
+	// Define query args
+	$r = wp_parse_args( $args, array(
+		'taxonomy'        => paco2017_get_conf_day_tax_id(),
+		'number'          => 0,
+		'paged'           => 0,
+		'fields'          => 'all',
+		'hide_empty'      => false
+	) );
+
+	// Pagination
+	if ( (int) $r['number'] > 0 ) {
+		$r['paged'] = absint( $r['paged'] );
+		if ( $r['paged'] == 0 ) {
+			$r['paged'] = 1;
+		}
+		$r['offset'] = absint( ( $r['paged'] - 1 ) * (int) $r['number'] );
+	} else {
+		$r['number'] = 0;
+	}
+
+	// Run query to get the taxonomy terms
+	$query->query( $r );
+
+	// Set query results
+	$query->term_count = count( $query->terms );
+	if ( $query->term_count > 0 ) {
+		$query->term = $query->terms[0];
+	}
+
+	// Determine the total term count
+	if ( isset( $r['offset'] ) && ! $query->term_count < $r['number'] ) {
+		$query->found_terms = paco2017_query_terms_found_rows( $r );
+	} else {
+		$query->found_terms = $query->term_count;
+	}
+	if ( $query->found_terms > $query->term_count ) {
+		$query->max_num_pages = (int) ceil( $query->found_terms / $r['number'] );
+	} else {
+		$query->max_num_pages = 1;
+	}
+
+	// Return whether the query has returned results
+	return paco2017_have_conf_days();
+}
+
+/**
+ * Return whether the query has Conference Days to loop over
+ *
+ * @since 1.0.0
+ *
+ * @return bool Query has Conference Days
+ */
+function paco2017_have_conf_days() {
+
+	// Get query object
+	$query = paco2017_content()->conf_day_query;
+
+	// Get array keys
+	$term_keys = array_keys( $query->terms );
+
+	// Current element is not the last
+	$has_next = $query->term_count && $query->current_term < end( $term_keys );
+
+	// We're in the loop when there are still elements
+	if ( ! $has_next ) {
+		$query->in_the_loop = false;
+
+		// Clean up after the loop
+		paco2017_rewind_conf_days();
+	}
+
+	return $has_next;
+}
+
+/**
+ * Setup next Conference Day in the current loop
+ *
+ * @since 1.0.0
+ *
+ * @return bool Are we still in the loop?
+ */
+function paco2017_the_conf_day() {
+
+	// Get query object
+	$query = paco2017_content()->conf_day_query;
+
+	// We're looping
+	$query->in_the_loop = true;
+
+	// Increase current term index
+	$query->current_term++;
+
+	// Get next term in list
+	$query->term = $query->terms[ $query->current_term ];
+
+	return $query->term;
+}
+
+/**
+ * Rewind the speakers and reset term index
+ *
+ * @since 1.0.0
+ */
+function paco2017_rewind_conf_days() {
+
+	// Get query object
+	$query = paco2017_content()->conf_day_query;
+
+	// Reset current term index
+	$query->current_term = -1;
+
+	if ( $query->term_count > 0 ) {
+		$query->term = $query->terms[0];
+	}
+}
+
+/**
+ * Return whether we're in the Conference Day loop
+ *
+ * @since 1.0.0
+ *
+ * @return bool Are we in the Conference Day loop?
+ */
+function paco2017_in_the_conf_day_loop() {
+	return isset( paco2017_content()->conf_day_query->in_the_loop ) ? paco2017_content()->conf_day_query->in_the_loop : false;
+}
+
 /** Template: Conference Day **************************************************/
 
 /**
@@ -1089,14 +1228,18 @@ function paco2017_dropdown_agenda_pages( $args = '' ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|WP_Post $item Term object or ID or post object.
+ * @param WP_Term|int|WP_Post $item Optional. Term object or ID or post object. Defaults to the current term or post.
  * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
  * @return WP_Term|false Conference Day term object or False when not found.
  */
 function paco2017_get_conf_day( $item, $by = 'id' ) {
 
+	// Default empty parameter to the item in the loop
+	if ( empty( $item ) && paco2017_in_the_conf_day_loop() ) {
+		$item = paco2017_content()->conf_day_query->term;
+
 	// Default to the current post's item
-	if ( empty( $item ) && paco2017_object_has_conf_day() ) {
+	} elseif ( empty( $item ) && paco2017_object_has_conf_day() ) {
 		$terms = wp_get_object_terms( get_the_ID(), paco2017_get_conf_day_tax_id() );
 		$item  = $terms[0];
 

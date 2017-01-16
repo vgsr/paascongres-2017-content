@@ -70,36 +70,37 @@ final class Paco2017_Content {
 
 		/** Versions ****************************************************/
 
-		$this->version      = '1.0.0';
+		$this->version        = '1.0.0';
 
 		/** Paths *******************************************************/
 
 		// Setup some base path and URL information
-		$this->file         = __FILE__;
-		$this->basename     = plugin_basename( $this->file );
-		$this->plugin_dir   = plugin_dir_path( $this->file );
-		$this->plugin_url   = plugin_dir_url ( $this->file );
+		$this->file           = __FILE__;
+		$this->basename       = plugin_basename( $this->file );
+		$this->plugin_dir     = plugin_dir_path( $this->file );
+		$this->plugin_url     = plugin_dir_url ( $this->file );
 
 		// Includes
-		$this->includes_dir = trailingslashit( $this->plugin_dir . 'includes' );
-		$this->includes_url = trailingslashit( $this->plugin_url . 'includes' );
+		$this->includes_dir   = trailingslashit( $this->plugin_dir . 'includes' );
+		$this->includes_url   = trailingslashit( $this->plugin_url . 'includes' );
 
 		// Assets
-		$this->assets_dir   = trailingslashit( $this->plugin_dir . 'assets' );
-		$this->assets_url   = trailingslashit( $this->plugin_url . 'assets' );
+		$this->assets_dir     = trailingslashit( $this->plugin_dir . 'assets' );
+		$this->assets_url     = trailingslashit( $this->plugin_url . 'assets' );
 
 		// Languages
-		$this->lang_dir     = trailingslashit( $this->plugin_dir . 'languages' );
+		$this->lang_dir       = trailingslashit( $this->plugin_dir . 'languages' );
 
 		/** Queries ***********************************************************/
 
-		$this->agenda_query  = new WP_Query();      // Main Agenda query
-		$this->speaker_query = new WP_Term_Query(); // Main Speaker query
+		$this->agenda_query   = new WP_Query();      // Main Agenda query
+		$this->conf_day_query = new WP_Term_Query(); // Main Conference Day query
+		$this->speaker_query  = new WP_Term_Query(); // Main Speaker query
 
 		/** Misc ********************************************************/
 
-		$this->extend       = new stdClass();
-		$this->domain       = 'paco2017-content';
+		$this->extend         = new stdClass();
+		$this->domain         = 'paco2017-content';
 	}
 
 	/**
