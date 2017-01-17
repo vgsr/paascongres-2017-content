@@ -555,3 +555,67 @@ function paco2017_enqueue_styles() {
 		wp_add_inline_style( 'paco2017-content', implode( "\n", $css ) );
 	}
 }
+
+/** Utility *******************************************************************/
+
+/**
+ * Return the current plugin's version
+ *
+ * @since 1.0.0
+ *
+ * @return string Plugin version
+ */
+function paco2017_get_version() {
+	return paco2017_content()->version;
+}
+
+/**
+ * Determine if this plugin is being deactivated
+ *
+ * @since 1.0.0
+ *
+ * @param string $basename Optional. Plugin basename to check for.
+ * @return bool True if deactivating the plugin, false if not
+ */
+function paco2017_is_deactivation( $basename = '' ) {
+	global $pagenow;
+
+	$plugin = paco2017_content();
+	$action = false;
+
+	// Bail if not in admin/plugins
+	if ( ! ( is_admin() && ( 'plugins.php' === $pagenow ) ) ) {
+		return false;
+	}
+
+	if ( ! empty( $_REQUEST['action'] ) && ( '-1' !== $_REQUEST['action'] ) ) {
+		$action = $_REQUEST['action'];
+	} elseif ( ! empty( $_REQUEST['action2'] ) && ( '-1' !== $_REQUEST['action2'] ) ) {
+		$action = $_REQUEST['action2'];
+	}
+
+	// Bail if not deactivating
+	if ( empty( $action ) || ! in_array( $action, array( 'deactivate', 'deactivate-selected' ) ) ) {
+		return false;
+	}
+
+	// The plugin(s) being deactivated
+	if ( $action === 'deactivate' ) {
+		$plugins = isset( $_GET['plugin'] ) ? array( $_GET['plugin'] ) : array();
+	} else {
+		$plugins = isset( $_POST['checked'] ) ? (array) $_POST['checked'] : array();
+	}
+
+	// Set basename if empty
+	if ( empty( $basename ) && ! empty( $plugin->basename ) ) {
+		$basename = $plugin->basename;
+	}
+
+	// Bail if no basename
+	if ( empty( $basename ) ) {
+		return false;
+	}
+
+	// Is bbPress being deactivated?
+	return in_array( $basename, $plugins );
+}
