@@ -881,7 +881,7 @@ function paco2017_agenda_post_content( $content ) {
 		$content .= ' <a href="' . esc_url( paco2017_get_agenda_related_url() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'paco2017-content' ) . '</a>';
 
 	// An object related with Agenda item
-	} elseif ( paco2017_agenda_is_object_related() ) {
+	} elseif ( is_single() && paco2017_agenda_is_object_related() ) {
 		$content = paco2017_buffer_template_part( 'info', 'agenda-related-item' ) . $content;
 	}
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Paco2017 Content Speaker Info Page Template
+ * Paco2017 Content Related Agenda Item Info Template
  *
  * @package Paco2017 Content
  * @subpackage Theme

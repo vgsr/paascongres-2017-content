@@ -49,8 +49,8 @@ add_filter( 'get_the_archive_title',       'paco2017_get_the_archive_title'     
 add_filter( 'get_the_archive_description', 'paco2017_get_the_archive_description'       );
 
 // Content filters
-add_filter( 'the_content', 'paco2017_agenda_post_content',    2 );
-add_filter( 'the_content', 'paco2017_speakers_post_content', 20 );
+add_filter( 'the_content', 'paco2017_agenda_post_content'  );
+add_filter( 'the_content', 'paco2017_speaker_post_content' );
 
 // Theme Compat
 add_filter( 'template_include', 'paco2017_template_include_theme_supports', 10 );

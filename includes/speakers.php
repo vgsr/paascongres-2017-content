@@ -64,7 +64,7 @@ function paco2017_get_speaker_term_link( $link, $term, $taxonomy ) {
 	if ( paco2017_get_speaker_tax_id() === $taxonomy ) {
 
 		// Link to the Speakers page
-		$link = get_permalink( paco2017_get_speakers_page_id() );
+		$link = paco2017_get_speakers_url();
 	}
 
 	return $link;
@@ -590,7 +590,7 @@ function paco2017_get_speaker_photo( $term = 0, $size = 'thumbnail', $args = arr
  * @param string $content Post content
  * @return string Post content
  */
-function paco2017_speakers_post_content( $content ) {
+function paco2017_speaker_post_content( $content ) {
 
 	// The Speaker info
 	if ( is_single() && paco2017_object_has_speaker() ) {
