@@ -11,7 +11,7 @@
  * Plugin Name:       Paascongres 2017 Content
  * Description:       Content logic for the Paascongres 2017 event site
  * Plugin URI:        https://github.com/vgsr/paco2017-content/
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Laurens Offereins
  * Author URI:        https://github.com/vgsr/
  * Text Domain:       paco2017-content
@@ -70,7 +70,7 @@ final class Paco2017_Content {
 
 		/** Versions ****************************************************/
 
-		$this->version      = '1.0.0';
+		$this->version      = '1.0.1';
 
 		/** Paths *******************************************************/
 

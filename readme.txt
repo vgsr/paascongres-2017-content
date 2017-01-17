@@ -3,7 +3,7 @@ Contributors: offereins
 Tags: vgsr, paascongres, paco, conference
 Requires at least: 4.7
 Tested up to: 4.7
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,9 @@ Activate Paco2017 Content in the "Plugins" admin panel using the "Activate" link
 This plugin is not hosted in the official WordPress repository. Instead, updating is supported through use of the [GitHub Updater](https://github.com/afragen/github-updater/) plugin by @afragen and friends.
 
 == Changelog ==
+
+= 1.0.1 =
+* Fix bug where slug settings were not correctly referenced when setting up rewrite rules
 
 = 1.0.0 =
 * Initial release
