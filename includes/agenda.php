@@ -1232,7 +1232,7 @@ function paco2017_in_the_conf_day_loop() {
  * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
  * @return WP_Term|false Conference Day term object or False when not found.
  */
-function paco2017_get_conf_day( $item, $by = 'id' ) {
+function paco2017_get_conf_day( $item = 0, $by = 'id' ) {
 
 	// Default empty parameter to the item in the loop
 	if ( empty( $item ) && paco2017_in_the_conf_day_loop() ) {
@@ -1266,9 +1266,9 @@ function paco2017_get_conf_day( $item, $by = 'id' ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
  */
-function paco2017_the_conf_day_title( $term ) {
+function paco2017_the_conf_day_title( $term = 0 ) {
 	echo paco2017_get_conf_day_title( $term );
 }
 
@@ -1279,10 +1279,10 @@ function paco2017_the_conf_day_title( $term ) {
  *
  * @uses apply_filters() Calls 'paco2017_get_conf_day_title'
  *
- * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
  * @return string Term title
  */
-function paco2017_get_conf_day_title( $term ) {
+function paco2017_get_conf_day_title( $term = 0 ) {
 	$term  = paco2017_get_conf_day( $term );
 	$title = '';
 
@@ -1298,9 +1298,9 @@ function paco2017_get_conf_day_title( $term ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
  */
-function paco2017_the_conf_day_content( $term ) {
+function paco2017_the_conf_day_content( $term = 0 ) {
 	echo paco2017_get_conf_day_content( $term );
 }
 
@@ -1311,10 +1311,10 @@ function paco2017_the_conf_day_content( $term ) {
  *
  * @uses apply_filters() Calls 'paco2017_get_conf_day_content'
  *
- * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
  * @return string Term content
  */
-function paco2017_get_conf_day_content( $term ) {
+function paco2017_get_conf_day_content( $term = 0 ) {
 	$term    = paco2017_get_conf_day( $term );
 	$content = '';
 
@@ -1330,9 +1330,9 @@ function paco2017_get_conf_day_content( $term ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
  */
-function paco2017_the_conf_day_date_string( $term ) {
+function paco2017_the_conf_day_date_string( $term = 0 ) {
 	echo paco2017_get_conf_day_date_string( $term );
 }
 
@@ -1343,10 +1343,10 @@ function paco2017_the_conf_day_date_string( $term ) {
  *
  * @uses apply_filters() Calls 'paco2017_get_conf_day_date_string'
  *
- * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
  * @return int Term mysql date string
  */
-function paco2017_get_conf_day_date_string( $term ) {
+function paco2017_get_conf_day_date_string( $term = 0 ) {
 	$term = paco2017_get_conf_day( $term );
 	$date = 0;
 
@@ -1362,10 +1362,10 @@ function paco2017_get_conf_day_date_string( $term ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
  * @param string $format Optional. Date format. Defaults to the date format option.
  */
-function paco2017_the_conf_day_date( $term, $format = null ) {
+function paco2017_the_conf_day_date( $term = 0, $format = null ) {
 	echo paco2017_get_conf_day_date( $term, $format );
 }
 
@@ -1376,11 +1376,11 @@ function paco2017_the_conf_day_date( $term, $format = null ) {
  *
  * @uses apply_filters() Calls 'paco2017_get_conf_day_date'
  *
- * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
  * @param string $format Optional. Date format. Defaults to the date format option.
  * @return int Term date
  */
-function paco2017_get_conf_day_date( $term, $format = null ) {
+function paco2017_get_conf_day_date( $term = 0, $format = null ) {
 	$term        = paco2017_get_conf_day( $term );
 	$date_string = paco2017_get_conf_day_date_string( $term );
 	$date        = '';
@@ -1402,9 +1402,9 @@ function paco2017_get_conf_day_date( $term, $format = null ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|WP_Post $term Term object or ID or related post object.
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
  * @return bool Term has a date
  */
-function paco2017_has_conf_day_date( $term ) {
+function paco2017_has_conf_day_date( $term = 0 ) {
 	return (bool) paco2017_get_conf_day_date_string( $term );
 }
