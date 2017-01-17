@@ -51,6 +51,9 @@ class Paco2017_Admin {
 		add_action( 'save_post',                   array( $this, 'agenda_save_metabox'   ), 10, 2 );
 		add_action( 'save_post',                   array( $this, 'partner_save_metabox'  ), 10, 2 );
 
+		// Nav Menus
+		add_action( 'load-nav-menus.php', array( $this, 'add_nav_menu_meta_box' ) );
+
 		// Dashboard
 		add_action( 'paco2017_dashboard_setup', array( $this, 'add_dashboard_widgets' ) );
 
@@ -415,16 +418,8 @@ class Paco2017_Admin {
 	 */
 	public function post_states( $states, $post ) {
 
-		// Mark the Agenda page
-		if ( paco2017_get_agenda_page_id() === $post->ID ) {
-			$states['agenda_page'] = __( 'Agenda', 'paco2017-content' );
-
-		// Mark the Speakers page
-		} elseif ( paco2017_get_speakers_page_id() === $post->ID ) {
-			$states['speakers_page'] = __( 'Speakers', 'paco2017-content' );
-
 		// Mark the Housekeeping page
-		} elseif ( paco2017_get_housekeeping_page_id() === $post->ID ) {
+		if ( paco2017_get_housekeeping_page_id() === $post->ID ) {
 			$states['housekeeping_page'] = __( 'Housekeeping', 'paco2017-content' );
 		}
 
@@ -1166,6 +1161,17 @@ class Paco2017_Admin {
 				update_post_meta( $post_id, $meta, $_POST[ $posted_key ] );
 			}
 		}
+	}
+
+	/** Nav Menus *****************************************************/
+
+	/**
+	 * Register the plugin's nav menu metabox
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_nav_menu_meta_box() {
+		add_meta_box( 'add-paco2017-nav-menu', __( 'Paascongres', 'paco2017-content' ), 'paco2017_nav_menu_metabox', 'nav-menus', 'side', 'default' );
 	}
 
 	/** Users ***********************************************************/

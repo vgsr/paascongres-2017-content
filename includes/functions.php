@@ -13,6 +13,52 @@ defined( 'ABSPATH' ) || exit;
 /** Rewrite *******************************************************************/
 
 /**
+ * Return the rewrite ID for the Speaker taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speakers_rewrite_id'
+ * @return string Rewrite ID
+ */
+function paco2017_get_speakers_rewrite_id() {
+	return apply_filters( 'paco2017_get_speakers_rewrite_id', paco2017_get_speaker_tax_id() );
+}
+
+/**
+ * Return the rewrite ID for the Agenda post type
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_agenda_rewrite_id'
+ * @return string Rewrite ID
+ */
+function paco2017_get_agenda_rewrite_id() {
+	return apply_filters( 'paco2017_get_agenda_rewrite_id', paco2017_get_agenda_post_type() );
+}
+
+/**
+ * Return the rewrite ID for the Association taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_associations_rewrite_id'
+ * @return string Rewrite ID
+ */
+function paco2017_get_associations_rewrite_id() {
+	return apply_filters( 'paco2017_get_associations_rewrite_id', paco2017_get_association_tax_id() );
+}
+
+/**
+ * Delete a blogs rewrite rules, so that they are automatically rebuilt on
+ * the subsequent page load.
+ *
+ * @since 1.0.0
+ */
+function paco2017_delete_rewrite_rules() {
+	delete_option( 'rewrite_rules' );
+}
+
+/**
  * Return the slug for the Lecture post type
  *
  * @since 1.0.0
@@ -37,18 +83,6 @@ function paco2017_get_workshop_slug() {
 }
 
 /**
- * Return the slug for the Speaker taxonomy
- *
- * @since 1.0.0
- *
- * @uses apply_filters() Calls 'paco2017_get_speaker_slug'
- * @return string Slug
- */
-function paco2017_get_speaker_slug() {
-	return apply_filters( 'paco2017_get_speaker_slug', get_option( '_paco2017_speaker_slug', 'category' ) );
-}
-
-/**
  * Return the slug for the Workshop Category taxonomy
  *
  * @since 1.0.0
@@ -58,6 +92,42 @@ function paco2017_get_speaker_slug() {
  */
 function paco2017_get_workshop_cat_slug() {
 	return apply_filters( 'paco2017_get_workshop_cat_slug', get_option( '_paco2017_workshop_cat_slug', 'category' ) );
+}
+
+/**
+ * Return the slug for the Speaker taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_speakers_slug'
+ * @return string Slug
+ */
+function paco2017_get_speakers_slug() {
+	return apply_filters( 'paco2017_get_speakers_slug', get_option( '_paco2017_speakers_slug', 'speakers' ) );
+}
+
+/**
+ * Return the slug for the Agenda post type
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_agenda_slug'
+ * @return string Slug
+ */
+function paco2017_get_agenda_slug() {
+	return apply_filters( 'paco2017_get_agenda_slug', get_option( '_paco2017_agenda_slug', 'agenda' ) );
+}
+
+/**
+ * Return the slug for the Association taxonomy
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_associations_slug'
+ * @return string Slug
+ */
+function paco2017_get_associations_slug() {
+	return apply_filters( 'paco2017_get_associations_slug', get_option( '_paco2017_associations_slug', 'associations' ) );
 }
 
 /**
@@ -90,6 +160,335 @@ function paco2017_sanitize_slug( $slug = '' ) {
 	return apply_filters( 'paco2017_sanitize_slug', $value, $slug );
 }
 
+/**
+ * Return the url for the Speakers page
+ *
+ * @since 1.0.0
+ *
+ * @return string Url
+ */
+function paco2017_get_speakers_url() {
+	return home_url( user_trailingslashit( paco2017_get_speakers_slug() ) );
+}
+
+/**
+ * Return the url for the Agenda page
+ *
+ * @since 1.0.0
+ *
+ * @return string Url
+ */
+function paco2017_get_agenda_url() {
+	return home_url( user_trailingslashit( paco2017_get_agenda_slug() ) );
+}
+
+/**
+ * Return the url for the Associations page
+ *
+ * @since 1.0.0
+ *
+ * @return string Url
+ */
+function paco2017_get_associations_url() {
+	return home_url( user_trailingslashit( paco2017_get_associations_slug() ) );
+}
+
+/** Menus *********************************************************************/
+
+/**
+ * Return the available custom plugin nav menu items
+ *
+ * @since 1.0.0
+ *
+ * @return array Custom nav menu item data objects
+ */
+function paco2017_nav_menu_get_items() {
+
+	// Try to return items from cache
+	if ( ! empty( paco2017_content()->wp_nav_menu_items ) ) {
+		return paco2017_content()->wp_nav_menu_items;
+	} else {
+		paco2017_content()->wp_nav_menu_items = new stdClass;
+	}
+
+	// Setup nav menu items
+	$items = (array) apply_filters( 'paco2017_nav_menu_get_items', array(
+
+		// Agenda page
+		'agenda' => array(
+			'title'       => esc_html__( 'Agenda page', 'paco2017-content' ),
+			'type_label'  => esc_html_x( 'Paascongres Agenda page', 'menu type label', 'paco2017-content' ),
+			'url'         => paco2017_get_agenda_url(),
+			'is_current'  => paco2017_is_agenda(),
+		),
+
+		// Association page
+		'association' => array(
+			'title'       => esc_html__( 'Associations page', 'paco2017-content' ),
+			'type_label'  => esc_html_x( 'Paascongres Associations page', 'menu type label', 'paco2017-content' ),
+			'url'         => paco2017_get_associations_url(),
+			'is_current'  => paco2017_is_associations(),
+		),
+
+		// Speaker page
+		'speaker' => array(
+			'title'       => esc_html__( 'Speakers page', 'paco2017-content' ),
+			'type_label'  => esc_html_x( 'Paascongres Speakers page', 'menu type label', 'paco2017-content' ),
+			'url'         => paco2017_get_speakers_url(),
+			'is_current'  => paco2017_is_speakers(),
+		),
+
+		// Speaker page
+		'magazine_download_link' => array(
+			'title'       => esc_html__( 'Magazine download link', 'paco2017-content' ),
+			'type_label'  => esc_html_x( 'Paascongres Magazine Download Link', 'menu type label', 'paco2017-content' ),
+			'url'         => paco2017_get_magazine_download_url(),
+		),
+	) );
+
+	// Set default arguments
+	foreach ( $items as $object => &$item ) {
+		$item = (object) wp_parse_args( $item, array(
+			'id'          => "paco2017-{$object}",
+			'object'      => $object,
+			'title'       => '',
+			'type'        => 'paco2017',
+			'type_label'  => esc_html_x( 'Paascongres Page', 'menu type label', 'paco2017-content' ),
+			'url'         => '',
+			'is_current'  => false,
+			'is_parent'   => false,
+			'is_ancestor' => false,
+		) );
+	}
+
+	// Assign items to global
+	paco2017_content()->wp_nav_menu_items = $items;
+
+	return $items;
+}
+
+/**
+ * Setup details of nav menu item for plugin pages
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Post $menu_item Nav menu item object
+ * @return WP_Post Nav menu item object
+ */
+function paco2017_setup_nav_menu_item( $menu_item ) {
+
+	// Plugin page
+	if ( 'paco2017' === $menu_item->type ) {
+
+		// This is a registered custom menu item
+		if ( $item = wp_list_filter( paco2017_nav_menu_get_items(), array( 'object' => $menu_item->object ) ) ) {
+			$item = reset( $item );
+
+			// Item doesn't come from the DB
+			if ( ! isset( $menu_item->post_type ) ) {
+				$menu_item->ID = -1;
+				$menu_item->db_id = 0;
+				$menu_item->menu_item_parent = 0;
+				$menu_item->object_id = -1;
+				$menu_item->target = '';
+				$menu_item->attr_title = '';
+				$menu_item->description = '';
+				$menu_item->classes = '';
+				$menu_item->xfn = '';
+			}
+
+			// Set item classes
+			if ( ! is_array( $menu_item->classes ) ) {
+				$menu_item->classes = array();
+			}
+
+			// Set item details
+			$menu_item->type_label = $item->type_label;
+			$menu_item->url        = $item->url;
+
+			// This is the current page
+			if ( $item->is_current ) {
+				$menu_item->classes[] = 'current_page_item';
+				$menu_item->classes[] = 'current-menu-item';
+
+			// This is the parent page
+			} elseif ( $item->is_parent ) {
+				$menu_item->classes[] = 'current_page_parent';
+				$menu_item->classes[] = 'current-menu-parent';
+
+			// This is an ancestor page
+			} elseif ( $item->is_ancestor ) {
+				$menu_item->classes[] = 'current_page_ancestor';
+				$menu_item->classes[] = 'current-menu-ancestor';
+			}
+		}
+
+		// Prevent rendering when the user has no access
+		if ( empty( $menu_item->url ) ) {
+			$menu_item->_invalid = true;
+		}
+
+		// Enable plugin filtering
+		$menu_item = apply_filters( 'paco2017_setup_nav_menu_item', $menu_item );
+
+		// Prevent rendering when the user has no access
+		if ( empty( $menu_item->url ) ) {
+			$menu_item->_invalid = true;
+		}
+	}
+
+	return $menu_item;
+}
+
+/**
+ * Add custom plugin pages to the available nav menu items
+ *
+ * @see wp_nav_menu_item_post_type_meta_box()
+ *
+ * @since 1.0.0
+ *
+ * @global int        $_nav_menu_placeholder
+ * @global int|string $nav_menu_selected_id
+ *
+ * @param string $object Not used.
+ * @param array  $box {
+ *     Post type menu item meta box arguments.
+ *
+ *     @type string       $id       Meta box 'id' attribute.
+ *     @type string       $title    Meta box title.
+ *     @type string       $callback Meta box display callback.
+ *     @type WP_Post_Type $args     Extra meta box arguments (the post type object for this meta box).
+ * }
+ */
+function paco2017_nav_menu_metabox( $object, $box ) {
+	global $nav_menu_selected_id;
+
+	$walker = new Walker_Nav_Menu_Checklist();
+	$args   = array( 'walker' => $walker );
+
+	?>
+	<div id="paco2017-menu" class="posttypediv">
+
+		<div id="tabs-panel-paco2017-menu" class="tabs-panel tabs-panel-active">
+			<ul id="paco2017-menu-checklist" class="categorychecklist form-no-clear">
+				<?php echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', paco2017_nav_menu_get_items() ), 0, (object) $args ); ?>
+			</ul>
+		</div><!-- /.tabs-panel -->
+
+		<p class="button-controls wp-clearfix">
+			<span class="list-controls">
+				<a href="<?php
+					echo esc_url( add_query_arg(
+						array(
+							'selectall' => 1,
+						),
+						remove_query_arg( array(
+							'action',
+							'customlink-tab',
+							'edit-menu-item',
+							'menu-item',
+							'page-tab',
+							'_wpnonce',
+						) )
+					));
+				?>#paco2017-menu" class="select-all aria-button-if-js"><?php _e( 'Select All' ); ?></a>
+			</span>
+
+			<span class="add-to-menu">
+				<input type="submit"<?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?> class="button submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu' ); ?>" name="add-paco2017-menu-item" id="submit-paco2017-menu" />
+				<span class="spinner"></span>
+			</span>
+		</p>
+
+	</div><!-- /.posttypediv -->
+	<?php
+}
+
+/**
+ * Set plugin item navs for the Customizer
+ *
+ * @since 1.0.0
+ *
+ * @param array $item_types Nav item types
+ * @return array Nav item types
+ */
+function paco2017_customize_nav_menu_set_item_types( $item_types ) {
+
+	// Plugin pages
+	$item_types['paco2017'] = array(
+		'title'      => esc_html__( 'Paascongres', 'paco2017-content' ),
+		'type_label' => esc_html_x( 'Paascongres Page', 'menu type label', 'paco2017-content' ),
+		'type'       => 'paco2017',
+		'object'     => 'paco2017_nav'
+	);
+
+	return $item_types;
+}
+
+/**
+ * Add custom plugin pages to the available menu items in the Customizer
+ *
+ * @since 1.0.0
+ *
+ * @param array $items The array of menu items.
+ * @param string $type The object type.
+ * @param string $object The object name.
+ * @param int $page The current page number.
+ * @return array Menu items
+ */
+function paco2017_customize_nav_menu_available_items( $items, $type, $object, $page ) {
+
+	// Plugin pages - first query only
+	if ( 'paco2017' === $type && 0 === $page ) {
+
+		// Add plugin items
+		foreach ( paco2017_nav_menu_get_items() as $item ) {
+			$items[] = (array) $item; 
+		}
+	}
+
+	return $items;
+}
+
+/**
+ * Add custom plugin pages to the searched menu items in the Customizer
+ *
+ * @since 1.0.0
+ *
+ * @param array $items The array of menu items.
+ * @param array $args Includes 'pagenum' and 's' (search) arguments.
+ * @return array Menu items
+ */
+function paco2017_customize_nav_menu_searched_items( $items, $args ) {
+
+	// Define search context
+	$search = strtolower( $args['s'] );
+	$_items = paco2017_nav_menu_get_items();
+	$titles = wp_list_pluck( $_items, 'title' );
+	$words  = array( 'paascongres', 'paco' );
+
+	// Search query matches a part of the item titles
+	foreach ( array_keys( array_filter( $titles, function( $title ) use ( $search ) {
+		return false !== strpos( strtolower( $title ), $search );
+	}) ) as $item_key ) {
+		$items[] = (array) $_items[ $item_key ];
+		unset( $_items[ $item_key ] );
+	}
+
+	// Search query matches a part of the provided words
+	if ( array_filter( $words, function( $word ) use ( $search ) {
+		return false !== strpos( $word, $search );
+	}) ) {
+
+		// Append all custom items
+		foreach ( $_items as $item ) {
+			$items[] = (array) $item;
+		}
+	}
+
+	return $items;
+}
+
 /** Options *******************************************************************/
 
 /**
@@ -111,30 +510,6 @@ function paco2017_enrolled_users_count() {
  */
 function paco2017_get_enrolled_users_count() {
 	return apply_filters( 'paco2017_get_enrolled_users_count', 0 );
-}
-
-/**
- * Return the page ID of the Agenda page setting
- *
- * @since 1.0.0
- *
- * @uses apply_filters() Calls 'paco2017_get_agenda_page_id'
- * @return int Page ID
- */
-function paco2017_get_agenda_page_id() {
-	return (int) apply_filters( 'paco2017_get_agenda_page_id', get_option( '_paco2017_agenda_page', 0 ) );
-}
-
-/**
- * Return the page ID of the Speakers page setting
- *
- * @since 1.0.0
- *
- * @uses apply_filters() Calls 'paco2017_get_speakers_page_id'
- * @return int Page ID
- */
-function paco2017_get_speakers_page_id() {
-	return (int) apply_filters( 'paco2017_get_speakers_page_id', get_option( '_paco2017_speakers_page', 0 ) );
 }
 
 /**
@@ -247,72 +622,6 @@ function paco2017_magazine_get_theme_download_url( $url = '' ) {
 	}
 
 	return $url;
-}
-
-/**
- * Add custom Magazine link to the searched menu items in the Customizer
- *
- * @since 1.0.0
- *
- * @param array $items The array of menu items.
- * @param array $args Includes 'pagenum' and 's' (search) arguments.
- * @return array Menu items
- */
-function paco2017_magazine_customize_nav_menu_searched_items( $items, $args ) {
-
-	// Define search  context
-	$search = strtolower( $args['s'] );
-	$words  = array( 'paascongres', 'paco', 'magazine', 'download' );
-
-	// Search query matches a part of the provided words
-	if ( array_filter( $words, function( $word ) use ( $search ) {
-		return false !== strpos( $word, $search );
-	}) ) {
-		$item_id = 'magazine_download_link';
-
-		// Append item
-		$items[] = array(
-			'id'          => 'paco2017-' . $item_id,
-			'object'      => $item_id,
-			'title'       => __( 'Download Magazine', 'paco2017-content' ),
-			'type'        => 'paco2017',
-			'type_label'  => esc_html_x( 'Paascongres Magazine Download Link', 'customizer menu type label', 'paco2017-content' ),
-			'url'         => paco2017_get_magazine_download_url(),
-			'is_current'  => false,
-			'is_parent'   => false,
-			'is_ancestor' => false,
-		);
-	}
-
-	return $items;
-}
-
-/**
- * Setup details of nav menu item for the Magazine link
- *
- * @since 1.0.0
- *
- * @param WP_Post $menu_item Nav menu item object
- * @return WP_Post Nav menu item object
- */
-function paco2017_magazine_setup_nav_menu_item( $menu_item ) {
-
-	// Magazine Download link
-	if ( 'paco2017' === $menu_item->type ) {
-
-		// Set item details
-		if ( 'magazine_download_link' === $menu_item->object ) {
-			$menu_item->type_label = esc_html_x( 'Paascongres Magazine Download Link', 'customizer menu type label', 'paco2017-content' );
-			$menu_item->url        = paco2017_get_magazine_download_url();
-		}
-
-		// Prevent rendering when the user has no access
-		if ( empty( $menu_item->url ) ) {
-			$menu_item->_invalid = true;
-		}
-	}
-
-	return $menu_item;
 }
 
 /** Taxonomy ******************************************************************/
@@ -448,47 +757,7 @@ function paco2017_get_rest_image( $attachment_id, $size = 'thumbnail' ) {
 	return $image;
 }
 
-/** Template ******************************************************************/
-
-/**
- * Modify the archive title
- *
- * @since 1.0.0
- *
- * @param string $title Archive title
- * @return string Archive title
- */
-function paco2017_get_the_archive_title( $title ) {
-
-	// Reset archive title, without the 'Archives: ' prefix
-	if ( is_post_type_archive( array( paco2017_get_lecture_post_type(), paco2017_get_workshop_post_type() ) ) ) {
-		$title = post_type_archive_title( '', false );
-	}
-
-	return $title;
-}
-
-/**
- * Modify the archive description
- *
- * @since 1.0.0
- *
- * @param string $description Archive description
- * @return string Archive description
- */
-function paco2017_get_the_archive_description( $description ) {
-
-	// Lectures
-	if ( is_post_type_archive( paco2017_get_lecture_post_type() ) ) {
-		$description = get_option( '_paco2017_lecture_archive_desc', '' );
-
-	// Workshops
-	} elseif ( is_post_type_archive( paco2017_get_workshop_post_type() ) ) {
-		$description = get_option( '_paco2017_workshop_archive_desc', '' );
-	}
-
-	return $description;
-}
+/** Theme *********************************************************************/
 
 /**
  * Return whether the given background color requires a light text color

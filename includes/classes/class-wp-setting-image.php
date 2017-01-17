@@ -417,7 +417,7 @@ function wp_setting_image( $file, $setting, $args = array() ) {
  *
  * @since 0.1.0
  *
- * @param string $args Field arguments
+ * @param array $args Field arguments
  */
 function wp_setting_image_field( $args = array() ) {
 	$args = wp_parse_args( $args, array(

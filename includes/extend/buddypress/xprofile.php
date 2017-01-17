@@ -83,13 +83,11 @@ function paco2017_bp_xprofile_association_title( $user_id = 0 ) {
  */
 function paco2017_bp_xprofile_get_association_title( $user_id = 0 ) {
 
-	// Get the profile field
-	$field = paco2017_bp_xprofile_get_association_field();
+	// Get term title for user
+	$title = paco2017_get_association_title_for_user( $user_id );
 
-	// Relationship field, get term title
-	if ( $field && 'relationship' === $field->type ) {
-		$title = paco2017_get_association_title( $user_id );
-	} else {
+	// Get title by field value
+	if ( ! $title && paco2017_bp_xprofile_get_association_field() ) {
 		$title = paco2017_bp_xprofile_get_association_value( $user_id );
 	}
 
@@ -129,7 +127,7 @@ function paco2017_bp_xprofile_get_association_value( $user_id = 0 ) {
 }
 
 /**
- * Return whether two members' have a matching associations
+ * Return whether two members have a matching associations
  *
  * @since 1.0.0
  *

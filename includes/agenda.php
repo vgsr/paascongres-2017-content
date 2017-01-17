@@ -451,212 +451,6 @@ function paco2017_parse_agenda_query( $posts_query ) {
 /** Template ******************************************************************/
 
 /**
- * Return whether the given post is the Agenda page
- *
- * @since 1.0.0
- *
- * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
- * @return bool Is this the Agenda page?
- */
-function paco2017_is_agenda_page( $post = 0 ) {
-	$post = get_post( $post );
-	$is   = $post && paco2017_get_agenda_page_id() === $post->ID;
-
-	return $is;
-}
-
-/**
- * Modify the content of the Agenda page
- *
- * @since 1.0.0
- *
- * @param string $content Post content
- * @return string Post content
- */
-function paco2017_agenda_page_content( $content ) {
-
-	// The Agenda page
-	if ( is_page() && paco2017_is_agenda_page() ) {
-		$content .= paco2017_get_agenda_content();
-	}
-
-	return $content;
-}
-
-/**
- * Modify the content of an Agenda item
- *
- * @since 1.0.0
- *
- * @param string $content Post content
- * @return string Post content
- */
-function paco2017_agenda_post_content( $content ) {
-
-	// An Agenda item with related object
-	if ( paco2017_is_agenda_item() && paco2017_is_agenda_related() ) {
-		$content .= ' <a href="' . esc_url( paco2017_get_agenda_related_url() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'paco2017-content' ) . '</a>';
-
-	// An object related with Agenda item
-	} elseif ( paco2017_agenda_is_object_related() ) {
-		$content = paco2017_agenda_get_object_related_item_info() . $content;
-	}
-
-	return $content;
-}
-
-/**
- * Return the Agenda's HTML content
- *
- * @since 1.0.0
- *
- * @return string Agenda HTML content
- */
-function paco2017_get_agenda_content() {
-
-	// Bail when there are no agenda items
-	if ( empty( wp_count_posts( paco2017_get_agenda_post_type() )->publish ) )
-		return '';
-
-	ob_start(); ?>
-
-	<div class="paco2017-content paco2017-agenda">
-
-		<?php if ( paco2017_query_conf_days() ) : ?>
-
-		<ul class="paco2017-conference-days">
-
-			<?php while ( paco2017_have_conf_days() ) : paco2017_the_conf_day() ?>
-
-			<li class="conference-day">
-
-				<h3 class="day-title"><?php paco2017_the_conf_day_title(); ?></h3>
-
-				<?php if ( paco2017_has_conf_day_date() ) : ?>
-					<p class="day-date"><?php paco2017_the_conf_day_date(); ?></p>
-				<?php endif; ?>
-
-				<?php if ( paco2017_query_agenda_items() ) : ?>
-
-				<?php paco2017_the_agenda_items_list(); ?>
-
-				<?php else : ?>
-
-				<p><?php esc_html_e( 'There are no items scheduled for this day.', 'paco2017-content' ); ?></p>
-
-				<?php endif; ?>
-
-			</li>
-
-			<?php endforeach; ?>
-
-		</ul>
-
-		<?php elseif ( paco2017_query_agenda_items() ) : ?>
-
-		<?php paco2017_the_agenda_items_list(); ?>
-
-		<?php else : ?>
-
-		<p><?php esc_html_e( 'There are no items scheduled.', 'paco2017-content' ); ?></p>
-
-		<?php endif; ?>
-
-	</div>
-
-	<?php
-
-	$agenda = ob_get_clean();
-
-	return apply_filters( 'paco2017_get_agenda_content', $agenda, $conf_days );
-}
-
-/**
- * Output the HTML markup for the Agenda Items list
- *
- * Make sure `paco2017_query_agenda_items()` is called before calling this.
- *
- * @since 1.0.0
- */
-function paco2017_the_agenda_items_list() { ?>
-
-	<ul class="paco2017-agenda-items">
-
-		<?php while ( paco2017_have_agenda_items() ) : paco2017_the_agenda_item(); ?>
-
-		<li class="agenda-item <?php if ( paco2017_is_agenda_related() ) echo 'is-related'; ?>">
-			<div class="item-header">
-				<h4 class="item-title">
-					<?php
-						if ( paco2017_is_agenda_related() ) :
-							the_title( '<a href="' . esc_url( paco2017_get_agenda_related_url() ) . '">', '</a>' );
-						else :
-							the_title();
-						endif;
-					?>
-				</h4>
-				<span class="item-timeslot"><?php paco2017_the_agenda_timeslot(); ?></span>
-			</div>
-
-			<div class="item-content"><?php
-				the_content();
-			?></div>
-
-			<?php edit_post_link(
-				sprintf(
-					/* translators: %s: Name of current post */
-					__( 'Edit<span class="screen-reader-text"> "%s"</span>', 'paco2017-content' ),
-					get_the_title()
-				),
-				'<p class="item-footer"><span class="edit-link">',
-				'</span></p>'
-			); ?>
-		</li>
-
-		<?php endwhile; ?>
-
-	</ul>
-
-	<?php
-}
-
-/**
- * Return the HTML markup for the object's related Agenda Item info
- *
- * @since 1.0.0
- *
- * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current item.
- * @return string Agenda Item info HTML content
- */
-function paco2017_agenda_get_object_related_item_info( $item = 0 ) {
-
-	// Bail when there's no Agenda item
-	if ( ! $item = paco2017_get_agenda_item( $item ) )
-		return;
-
-	ob_start(); ?>
-
-	<div class="agenda-info"><p><?php
-		if ( paco2017_has_conf_day_date( $item ) ) {
-			printf(
-				__( 'This item is scheduled for %1$s at %2$s.', 'paco2017-content' ),
-				paco2017_get_conf_day_date( $item ),
-				paco2017_get_agenda_item_start_time( $item )
-			);
-		} else {
-			printf(
-				__( 'This item is scheduled at %2$s.', 'paco2017-content' ),
-				paco2017_get_agenda_item_start_time( $item )
-			);
-		}
-	?></p></div>
-
-	<?php
-
-	return ob_get_clean();
-}
-
-/**
  * Return whether the current page is an Agenda Item
  *
  * @since 1.0.0
@@ -1070,6 +864,28 @@ function paco2017_dropdown_agenda_pages( $args = '' ) {
 		echo $html;
 	}
 	return $html;
+}
+
+/**
+ * Modify the content of an Agenda item
+ *
+ * @since 1.0.0
+ *
+ * @param string $content Post content
+ * @return string Post content
+ */
+function paco2017_agenda_post_content( $content ) {
+
+	// An Agenda item with related object
+	if ( paco2017_in_the_agenda_item_loop() && paco2017_is_agenda_related() ) {
+		$content .= ' <a href="' . esc_url( paco2017_get_agenda_related_url() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'paco2017-content' ) . '</a>';
+
+	// An object related with Agenda item
+	} elseif ( paco2017_agenda_is_object_related() ) {
+		$content = paco2017_buffer_template_part( 'info', 'agenda-related-item' ) . $content;
+	}
+
+	return $content;
 }
 
 /** Query: Conference Day *****************************************************/

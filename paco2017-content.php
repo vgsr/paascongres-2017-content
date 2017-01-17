@@ -70,37 +70,43 @@ final class Paco2017_Content {
 
 		/** Versions ****************************************************/
 
-		$this->version        = '1.0.0';
+		$this->version      = '1.0.0';
 
 		/** Paths *******************************************************/
 
 		// Setup some base path and URL information
-		$this->file           = __FILE__;
-		$this->basename       = plugin_basename( $this->file );
-		$this->plugin_dir     = plugin_dir_path( $this->file );
-		$this->plugin_url     = plugin_dir_url ( $this->file );
+		$this->file         = __FILE__;
+		$this->basename     = plugin_basename( $this->file );
+		$this->plugin_dir   = plugin_dir_path( $this->file );
+		$this->plugin_url   = plugin_dir_url ( $this->file );
 
 		// Includes
-		$this->includes_dir   = trailingslashit( $this->plugin_dir . 'includes' );
-		$this->includes_url   = trailingslashit( $this->plugin_url . 'includes' );
+		$this->includes_dir = trailingslashit( $this->plugin_dir . 'includes' );
+		$this->includes_url = trailingslashit( $this->plugin_url . 'includes' );
 
 		// Assets
-		$this->assets_dir     = trailingslashit( $this->plugin_dir . 'assets' );
-		$this->assets_url     = trailingslashit( $this->plugin_url . 'assets' );
+		$this->assets_dir   = trailingslashit( $this->plugin_dir . 'assets' );
+		$this->assets_url   = trailingslashit( $this->plugin_url . 'assets' );
+
+		// Templates
+		$this->themes_dir   = trailingslashit( $this->plugin_dir . 'templates' );
+		$this->themes_url   = trailingslashit( $this->plugin_url . 'templates' );
 
 		// Languages
-		$this->lang_dir       = trailingslashit( $this->plugin_dir . 'languages' );
+		$this->lang_dir     = trailingslashit( $this->plugin_dir . 'languages' );
 
 		/** Queries ***********************************************************/
 
-		$this->agenda_query   = new WP_Query();      // Main Agenda query
-		$this->conf_day_query = new WP_Term_Query(); // Main Conference Day query
-		$this->speaker_query  = new WP_Term_Query(); // Main Speaker query
+		$this->agenda_query      = new WP_Query();      // Main Agenda query
+		$this->conf_day_query    = new WP_Term_Query(); // Main Conference Day query
+		$this->speaker_query     = new WP_Term_Query(); // Main Speaker query
+		$this->association_query = new WP_Term_Query(); // Main Association query
 
 		/** Misc ********************************************************/
 
-		$this->extend         = new stdClass();
-		$this->domain         = 'paco2017-content';
+		$this->theme_compat = new stdClass();
+		$this->extend       = new stdClass();
+		$this->domain       = 'paco2017-content';
 	}
 
 	/**
@@ -122,6 +128,8 @@ final class Paco2017_Content {
 		require( $this->includes_dir . 'partners.php'     );
 		require( $this->includes_dir . 'speakers.php'     );
 		require( $this->includes_dir . 'sub-actions.php'  );
+		require( $this->includes_dir . 'template.php'     );
+		require( $this->includes_dir . 'theme-compat.php' );
 		require( $this->includes_dir . 'workshops.php'    );
 
 		/** Classes *****************************************************/
@@ -283,8 +291,8 @@ final class Paco2017_Content {
 				'hierarchical'        => false,
 				'public'              => true,
 				'has_archive'         => false,
-				'rewrite'             => false, // No rewriting necessary
-				'query_var'           => false, // No query vars necessary
+				'rewrite'             => false, // We have our own rewrite rules
+				'query_var'           => false, // We have our own query vars
 				'exclude_from_search' => true,
 				'show_ui'             => current_user_can( 'paco2017_agenda_admin' ),
 				'show_in_nav_menus'   => false,
@@ -352,8 +360,8 @@ final class Paco2017_Content {
 				'update_count_callback' => '_update_generic_term_count',
 				'hierarchical'          => false,
 				'public'                => true,
-				'rewrite'               => false, // No rewriting necessary
-				'query_var'             => false, // No query vars necessary
+				'rewrite'               => false, // We have our own rewrite rules
+				'query_var'             => false, // We have our own query vars
 				'show_tagcloud'         => false,
 				'show_in_quick_edit'    => true,
 				'show_admin_column'     => false, // User taxonomies are not supported in WP
@@ -363,6 +371,7 @@ final class Paco2017_Content {
 
 				// Term meta
 				'term_meta_color'       => true,
+				'term_meta_logo'        => true,
 			)
 		);
 
@@ -380,8 +389,8 @@ final class Paco2017_Content {
 				'update_count_callback' => '_update_post_term_count',
 				'hierarchical'          => false,
 				'public'                => true,
-				'rewrite'               => false,
-				'query_var'             => false,
+				'rewrite'               => false, // We have our own rewrite rules
+				'query_var'             => false, // We have our own query vars
 				'show_tagcloud'         => false,
 				'show_in_quick_edit'    => true,
 				'show_admin_column'     => true,
@@ -430,8 +439,8 @@ final class Paco2017_Content {
 				'update_count_callback' => '_update_post_term_count',
 				'hierarchical'          => false,
 				'public'                => true,
-				'rewrite'               => false, // No rewriting necessary
-				'query_var'             => false, // No query vars necessary
+				'rewrite'               => false, // We have our own rewrite rules
+				'query_var'             => false, // We have our own query vars
 				'show_tagcloud'         => false,
 				'show_in_quick_edit'    => true,
 				'show_admin_column'     => true,
@@ -503,14 +512,25 @@ final class Paco2017_Content {
 		new WP_Term_Colors( $this->file );
 		new WP_Term_Date( $this->file );
 		new WP_Term_Image( $this->file, array(
+			'meta_key'   => 'logo',
+			'image_size' => array( 300, 300 ),
+			'labels'     => array(
+				'singular' => esc_html__( 'Logo', 'paco2017-content' ),
+				'plural'   => esc_html__( 'Logos', 'paco2017-content' ),
+				'setTermImage'    => esc_html__( 'Set %s logo', 'paco2017-content' ),
+				'termImageTitle'  => esc_html__( '%s logo', 'paco2017-content' ),
+				'removeTermImage' => esc_html__( 'Remove %s logo', 'paco2017-content' ),
+			)
+		) );
+		new WP_Term_Image( $this->file, array(
 			'meta_key'   => 'photo',
 			'image_size' => array( 150, 150 ),
 			'labels'     => array(
-				'singular' => 'Photo',
-				'plural'   => 'Photos',
-				'setTermImage'    => esc_html__( 'Set %s photo', 'wp-term-images' ),
-				'termImageTitle'  => esc_html__( '%s photo', 'wp-term-images' ),
-				'removeTermImage' => esc_html__( 'Remove %s photo', 'wp-term-images' ),
+				'singular' => esc_html__( 'Photo', 'paco2017-content' ),
+				'plural'   => esc_html__( 'Photos', 'paco2017-content' ),
+				'setTermImage'    => esc_html__( 'Set %s photo', 'paco2017-content' ),
+				'termImageTitle'  => esc_html__( '%s photo', 'paco2017-content' ),
+				'removeTermImage' => esc_html__( 'Remove %s photo', 'paco2017-content' ),
 			)
 		) );
 	}
@@ -521,36 +541,53 @@ final class Paco2017_Content {
 	 * @since 1.0.0
 	 */
 	public function add_rewrite_tags() {
-		add_rewrite_tag( '%' . paco2017_get_download_rewrite_id() . '%', '([^/]+)' ); // Download File tag
+		add_rewrite_tag( '%' . paco2017_get_agenda_rewrite_id()       . '%', '([1]{1,})' ); // Agenda Page tag
+		add_rewrite_tag( '%' . paco2017_get_associations_rewrite_id() . '%', '([1]{1,})' ); // Associations Page tag
+		add_rewrite_tag( '%' . paco2017_get_speakers_rewrite_id()     . '%', '([1]{1,})' ); // Speakers Page tag
+		add_rewrite_tag( '%' . paco2017_get_download_rewrite_id()     . '%', '([^/]+)'   ); // Download File tag
 	}
 
 	/**
 	 * Register plugin rewrite rules
 	 *
 	 * Setup rules to create the following structures:
-	 * - /{downloads}/{file}/
+	 * - /{agenda}/
+	 * - /{associations}/
+	 * - /{speakers}/
+	 * - /[downloads]/{file}/
 	 *
 	 * @since 1.0.0
 	 */
 	public function add_rewrite_rules() {
 
 		// Priority
-		$priority         = 'top';
+		$priority          = 'top';
 
 		// Slugs
-		$download_slug    = paco2017_get_download_slug();
+		$agenda_slug       = paco2017_get_agenda_slug();
+		$associations_slug = paco2017_get_associations_slug();
+		$speakers_slug     = paco2017_get_speakers_slug();
+		$download_slug     = paco2017_get_download_slug();
 
 		// Unique rewrite ID's
-		$download_id      = paco2017_get_download_rewrite_id();
+		$agenda_id         = paco2017_get_agenda_rewrite_id();
+		$associations_id   = paco2017_get_associations_rewrite_id();
+		$speakers_id       = paco2017_get_speakers_rewrite_id();
+		$download_id       = paco2017_get_download_rewrite_id();
 
 		// Generic rules
-		$root_rule        = '/?$';
-		$download_rule    = $download_slug . '/([^/]+)';
+		$root_rule         = '/?$';
+		$download_rule     = $download_slug . '/([^/]+)';
 
 		/** Add *********************************************************/
 
+		// Page rules
+		add_rewrite_rule( $agenda_slug       . $root_rule, 'index.php?' . $agenda_id       . '=1',           $priority );
+		add_rewrite_rule( $associations_slug . $root_rule, 'index.php?' . $associations_id . '=1',           $priority );
+		add_rewrite_rule( $speakers_slug     . $root_rule, 'index.php?' . $speakers_id     . '=1',           $priority );
+
 		// Download rule
-		add_rewrite_rule( $download_rule . $root_rule, 'index.php?' . $download_id . '=$matches[1]', $priority );
+		add_rewrite_rule( $download_rule     . $root_rule, 'index.php?' . $download_id     . '=$matches[1]', $priority );
 	}
 }
 

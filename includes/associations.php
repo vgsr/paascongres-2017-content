@@ -72,7 +72,329 @@ function paco2017_get_association_term_link( $link, $term, $taxonomy ) {
 	return $link;
 }
 
+/** Query *********************************************************************/
+
+/**
+ * Setup and run the Associations query
+ *
+ * @since 1.0.0
+ *
+ * @param array $args Query arguments.
+ * @return bool Has the query returned any results?
+ */
+function paco2017_query_associations( $args = array() ) {
+
+	// Get query object
+	$query = paco2017_content()->association_query;
+
+	// Reset query defaults
+	$query->in_the_loop  = false;
+	$query->current_term = -1;
+	$query->term_count   = 0;
+	$query->term         = null;
+	$query->terms        = array();
+
+	// Define query args
+	$r = wp_parse_args( $args, array(
+		'taxonomy'        => paco2017_get_association_tax_id(),
+		'number'          => 0,
+		'paged'           => 0,
+		'fields'          => 'all',
+		'hide_empty'      => true
+	) );
+
+	// Pagination
+	if ( (int) $r['number'] > 0 ) {
+		$r['paged'] = absint( $r['paged'] );
+		if ( $r['paged'] == 0 ) {
+			$r['paged'] = 1;
+		}
+		$r['offset'] = absint( ( $r['paged'] - 1 ) * (int) $r['number'] );
+	} else {
+		$r['number'] = 0;
+	}
+
+	// Run query to get the taxonomy terms
+	$query->query( $r );
+
+	// Set query results
+	$query->term_count = count( $query->terms );
+	if ( $query->term_count > 0 ) {
+		$query->term = $query->terms[0];
+	}
+
+	// Determine the total term count
+	if ( isset( $r['offset'] ) && ! $query->term_count < $r['number'] ) {
+		$query->found_terms = paco2017_query_terms_found_rows( $r );
+	} else {
+		$query->found_terms = $query->term_count;
+	}
+	if ( $query->found_terms > $query->term_count ) {
+		$query->max_num_pages = (int) ceil( $query->found_terms / $r['number'] );
+	} else {
+		$query->max_num_pages = 1;
+	}
+
+	// Return whether the query has returned results
+	return paco2017_have_associations();
+}
+
+/**
+ * Return whether the query has Associations to loop over
+ *
+ * @since 1.0.0
+ *
+ * @return bool Query has Associations
+ */
+function paco2017_have_associations() {
+
+	// Get query object
+	$query = paco2017_content()->association_query;
+
+	// Get array keys
+	$term_keys = array_keys( $query->terms );
+
+	// Current element is not the last
+	$has_next = $query->term_count && $query->current_term < end( $term_keys );
+
+	// We're in the loop when there are still elements
+	if ( ! $has_next ) {
+		$query->in_the_loop = false;
+
+		// Clean up after the loop
+		paco2017_rewind_associations();
+	}
+
+	return $has_next;
+}
+
+/**
+ * Setup next Association in the current loop
+ *
+ * @since 1.0.0
+ *
+ * @return bool Are we still in the loop?
+ */
+function paco2017_the_association() {
+
+	// Get query object
+	$query = paco2017_content()->association_query;
+
+	// We're looping
+	$query->in_the_loop = true;
+
+	// Increase current term index
+	$query->current_term++;
+
+	// Get next term in list
+	$query->term = $query->terms[ $query->current_term ];
+
+	return $query->term;
+}
+
+/**
+ * Rewind the speakers and reset term index
+ *
+ * @since 1.0.0
+ */
+function paco2017_rewind_associations() {
+
+	// Get query object
+	$query = paco2017_content()->association_query;
+
+	// Reset current term index
+	$query->current_term = -1;
+
+	if ( $query->term_count > 0 ) {
+		$query->term = $query->terms[0];
+	}
+}
+
+/**
+ * Return whether we're in the Association loop
+ *
+ * @since 1.0.0
+ *
+ * @return bool Are we in the Association loop?
+ */
+function paco2017_in_the_association_loop() {
+	return isset( paco2017_content()->association_query->in_the_loop ) ? paco2017_content()->association_query->in_the_loop : false;
+}
+
 /** Template ******************************************************************/
+
+/**
+ * Return the Association item term
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $item Optional. Term object or ID. Defaults to the current term.
+ * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
+ * @return WP_Term|false Associations term object or False when not found.
+ */
+function paco2017_get_association( $item = 0, $by = 'id' ) {
+
+	// Default empty parameter to the item in the loop
+	if ( empty( $item ) && paco2017_in_the_association_loop() ) {
+		$item = paco2017_content()->association_query->term;
+
+	// Get the term by id or slug
+	} elseif ( ! $item instanceof WP_Term ) {
+		$item = get_term_by( $by, $item, paco2017_get_association_tax_id() );
+	}
+
+	// Reduce error to false
+	if ( ! $item || is_wp_error( $item ) ) {
+		$item = false;
+	}
+
+	return $item;
+}
+
+/**
+ * Output the Association title
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ */
+function paco2017_the_association_title( $term = 0 ) {
+	echo paco2017_get_association_title( $term );
+}
+
+/**
+ * Return the Association title
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_association_title'
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return string Term title
+ */
+function paco2017_get_association_title( $term = 0 ) {
+	$term  = paco2017_get_association( $term );
+	$title = '';
+
+	if ( $term ) {
+		$title = get_term_field( 'name', $term );
+	}
+
+	return apply_filters( 'paco2017_get_association_title', $title, $term );
+}
+
+/**
+ * Output the Association content
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ */
+function paco2017_the_association_content( $term = 0 ) {
+	echo paco2017_get_association_content( $term );
+}
+
+/**
+ * Return the Association content
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_association_content'
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return string Term content
+ */
+function paco2017_get_association_content( $term = 0 ) {
+	$term    = paco2017_get_association( $term );
+	$content = '';
+
+	if ( $term ) {
+		$content = get_term_field( 'description', $term );
+	}
+
+	return apply_filters( 'paco2017_get_association_content', $content, $term );
+}
+
+/**
+ * Output the Association logo attachment ID
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ */
+function paco2017_the_association_logo_id( $term = 0 ) {
+	echo paco2017_get_association_logo_id( $term );
+}
+
+/**
+ * Return the Association logo attachment ID
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_association_logo_id'
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return int Term logo attachment ID
+ */
+function paco2017_get_association_logo_id( $term = 0 ) {
+	$term     = paco2017_get_association( $term );
+	$logo_id = 0;
+
+	if ( $term ) {
+		$logo_id = (int) get_term_meta( $term->term_id, 'logo', true );
+	}
+
+	return (int) apply_filters( 'paco2017_get_association_logo_id', $logo_id, $term );
+}
+
+/**
+ * Return whether the Association has a logo
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return bool Has the speaker a term logo?
+ */
+function paco2017_has_association_logo( $term = 0 ) {
+	return (bool) paco2017_get_association_logo_id( $term );
+}
+
+/**
+ * Output the Association logo
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @param string|array $size Optional. Attachment image size. Defaults to 'thumbnail'.
+ * @param array $args Optional. Attachment image arguments for {@see wp_get_attachment_image()}.
+ */
+function paco2017_the_association_logo( $term = 0, $size = 'thumbnail', $args = array() ) {
+	echo paco2017_get_association_logo( $term, $size );
+}
+
+/**
+ * Return the Association logo
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_association_logo'
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @param string|array $size Optional. Attachment image size. Defaults to 'thumbnail'.
+ * @param array $args Optional. Attachment image arguments for {@see wp_get_attachment_image()}.
+ * @return string Term logo
+ */
+function paco2017_get_association_logo( $term = 0, $size = 'thumbnail', $args = array() ) {
+	$term     = paco2017_get_association( $term );
+	$image    = '';
+
+	if ( $term ) {
+		$logo_id = paco2017_get_association_logo_id( $term );
+		$logo    = wp_get_attachment_image( $logo_id, $size, false, $args );
+	}
+
+	return apply_filters( 'paco2017_get_association_logo', $logo, $term );
+}
 
 /**
  * Return the user's association term
@@ -92,16 +414,37 @@ function paco2017_get_user_association( $user_id = 0 ) {
 	}
 
 	// Define return value
-	$association = false;
-
-	// Get the user's terms
 	$terms = wp_get_object_terms( $user_id, paco2017_get_association_tax_id() );
+	$term  = false;
 
 	if ( $terms && ! is_wp_error( $terms ) ) {
-		$association = $terms[0];
+		$term = $terms[0];
 	}
 
-	return apply_filters( 'paco2017_get_user_association', $association, $user_id );
+	return apply_filters( 'paco2017_get_user_association', $term, $user_id );
+}
+
+/**
+ * Return the user's association title
+ *
+ * @since 1.0.0
+ *
+ * @param int $user_id Optional. User ID. Defaults to the current user.
+ * @return string Association title
+ */
+function paco2017_get_association_title_for_user( $user_id = 0 ) {
+
+	// Get the user's association
+	$term  = paco2017_get_user_association( $user_id );
+	$title = '';
+
+	if ( is_a( $term, 'WP_Term' ) ) {
+		$title = get_term_field( 'name', $term );
+	} elseif ( is_string( $term ) ) {
+		$title = $term;
+	}
+
+	return apply_filters( 'paco2017_get_association_title_for_user', $title, $user_id, $term );
 }
 
 /**
@@ -115,54 +458,31 @@ function paco2017_get_user_association( $user_id = 0 ) {
  * @param string $by Value type to get the term with in {@see get_term_by()}. Defaults to 'term_id'.
  * @return array Association users.
  */
-function paco2017_get_association_users( $association, $by = 'term_id' ) {
+function paco2017_get_association_users( $term, $by = 'term_id' ) {
 
 	// Default to the current user
-	if ( empty( $association ) )
+	if ( empty( $term ) )
 		return array();
 
 	$taxonomy = paco2017_get_association_tax_id();
 
 	// Get the term
-	if ( ! is_a( $association, 'WP_Term' ) ) {
-		$association = get_term_by( $by, $association, $taxonomy );
-		if ( ! $association ) {
+	if ( ! is_a( $term, 'WP_Term' ) ) {
+		$term = get_term_by( $by, $term, $taxonomy );
+		if ( ! $term ) {
 			return array();
 		}
 	}
 
 	// Get the term's users
-	$users = get_objects_in_term( $association->term_id, $taxonomy );
+	$users = get_objects_in_term( $term->term_id, $taxonomy );
 
 	// Default to empty error
 	if ( ! $users || is_wp_error( $users ) ) {
 		$users = array();
 	}
 
-	return (array) apply_filters( 'paco2017_get_association_users', $users, $term_id );
-}
-
-/**
- * Return the user's association title
- *
- * @since 1.0.0
- *
- * @param int $user_id Optional. User ID. Defaults to the current user.
- * @return string Association title
- */
-function paco2017_get_association_title( $user_id = 0 ) {
-
-	// Get the user's association
-	$association = paco2017_get_user_association( $user_id );
-	$title = '';
-
-	if ( is_a( $association, 'WP_Term' ) ) {
-		$title = $association->name;
-	} elseif ( is_string( $association ) ) {
-		$title = $association;
-	}
-
-	return apply_filters( 'paco2017_get_association_title', $title, $user_id, $association );
+	return (array) apply_filters( 'paco2017_get_association_users', $users, $term );
 }
 
 /**
@@ -170,13 +490,13 @@ function paco2017_get_association_title( $user_id = 0 ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|string $association Term object or id or name or slug
+ * @param WP_Term|int|string $term Term object or id or name or slug
  * @return int Enrolled association user count
  */
-function paco2017_get_enrolled_users_for_association_count( $association ) {
+function paco2017_get_enrolled_users_for_association_count( $term ) {
 
 	// Count the queried users
-	$users = paco2017_get_enrolled_users_for_association( $association );
+	$users = paco2017_get_enrolled_users_for_association( $term );
 	$count = count( $users );
 
 	return $count;
@@ -187,9 +507,9 @@ function paco2017_get_enrolled_users_for_association_count( $association ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|string $association Term object or id or name or slug
+ * @param WP_Term|int|string $term Term object or id or name or slug
  * @return array Enrolled association users
  */
-function paco2017_get_enrolled_users_for_association( $association ) {
-	return (array) apply_filters( 'paco2017_get_enrolled_users_for_association', array(), $association );
+function paco2017_get_enrolled_users_for_association( $term ) {
+	return (array) apply_filters( 'paco2017_get_enrolled_users_for_association', array(), $term );
 }

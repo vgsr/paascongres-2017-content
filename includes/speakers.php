@@ -325,165 +325,6 @@ function paco2017_in_the_speaker_loop() {
 /** Template ******************************************************************/
 
 /**
- * Return whether the given post is the Speakers page
- *
- * @since 1.0.0
- *
- * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
- * @return bool Is this the Speakers page?
- */
-function paco2017_is_speakers_page( $post = 0 ) {
-	$post = get_post( $post );
-	$is   = $post && paco2017_get_speakers_page_id() === $post->ID;
-
-	return $is;
-}
-
-/**
- * Modify the content of the current post
- *
- * @since 1.0.0
- *
- * @param string $content Post content
- * @return string Post content
- */
-function paco2017_speakers_post_content( $content ) {
-
-	// The Speakers page
-	if ( is_page() && paco2017_is_speakers_page() ) {
-		$content .= paco2017_get_speakers_content();
-
-	// The Speaker info
-	} elseif ( is_single() && paco2017_object_has_speaker() ) {
-		$content .= paco2017_get_speaker_info();
-	}
-
-	return $content;
-}
-
-/**
- * Return the Speakers's HTML content
- *
- * @since 1.0.0
- *
- * @return string Speakers HTML content
- */
-function paco2017_get_speakers_content() {
-
-	// Speakers count
-	$count = wp_count_terms( paco2017_get_speaker_tax_id() );
-
-	// Bail when there are no speakers
-	if ( empty( $count ) )
-		return $content;
-
-	ob_start(); ?>
-
-	<div class="paco2017-content paco2017-speakers">
-
-		<?php if ( paco2017_query_speakers() ) : ?>
-
-		<?php paco2017_the_speakers(); ?>
-
-		<?php else : ?>
-
-		<p><?php esc_html_e( 'There are no speakers registered.', 'paco2017-content' ); ?></p>
-
-		<?php endif; ?>
-
-	</div>
-
-	<?php
-
-	$speakers = ob_get_clean();
-
-	return apply_filters( 'paco2017_get_speakers_content', $speakers );
-}
-
-/**
- * Output the HTML markup for the Speakers list
- *
- * Make sure `paco2017_query_speakers()` is called before calling this.
- *
- * @since 1.0.0
- */
-function paco2017_the_speakers() { ?>
-
-	<ul class="paco2017-speakers-items">
-
-		<?php while ( paco2017_have_speakers() ) : paco2017_the_speaker(); ?>
-
-		<li class="speaker-item <?php if ( paco2017_has_speaker_photo() ) echo 'has-avatar'; ?>">
-			<div class="item-header">
-				<?php if ( paco2017_has_speaker_photo() ) : ?>
-				<div class="item-avatar"><?php paco2017_the_speaker_photo(); ?></div>
-				<?php endif; ?>
-
-				<h4 class="item-title"><?php paco2017_the_speaker_title(); ?></h4>
-			</div>
-
-			<div class="item-content"><?php
-				paco2017_the_speaker_content();
-				paco2017_the_speaker_objects_list();
-			?></div>
-
-			<?php edit_term_link(
-				sprintf(
-					/* translators: %s: Name of current post */
-					__( 'Edit<span class="screen-reader-text"> "%s"</span>', 'paco2017-content' ),
-					paco2017_get_speaker_title()
-				),
-				'<p class="item-footer"><span class="edit-link">',
-				'</span></p>',
-				paco2017_get_speaker()
-			); ?>
-		</li>
-
-		<?php endwhile; ?>
-
-	</ul>
-
-	<?php
-}
-
-/**
- * Return the speaker info box for the current post
- *
- * @since 1.0.0
- */
-function paco2017_get_speaker_info() {
-
-	// Bail when there's no description
-	if ( ! $description = paco2017_get_speaker_content() )
-		return;
-
-	ob_start(); ?>
-
-	<div class="speaker-info <?php if ( paco2017_has_speaker_photo() ) echo 'has-avatar'; ?>">
-		<div class="speaker-header">
-			<?php if ( paco2017_has_speaker_photo() ) : ?>
-			<div class="speaker-avatar"><?php paco2017_the_speaker_photo(); ?></div>
-			<?php endif; ?>
-
-			<h4 class="speaker-title"><?php printf( __( 'About %s', 'paco2017-content' ), paco2017_get_speaker_title() ); ?></h4>
-		</div>
-
-		<div class="speaker-content">
-			<?php echo $description; ?>
-			<div class="speaker-link">
-				<a href="<?php echo esc_url( get_term_link( paco2017_get_speaker() ) ); ?>">
-					<?php _e( 'View all speakers at this conference <span class="meta-nav">&rarr;</span>', 'paco2017-content' ); ?>
-				</a>
-			</div>
-		</div>
-	</div>
-
-	<?php
-
-	return ob_get_clean();
-}
-
-/**
  * Return the Speaker item term
  *
  * @since 1.0.0
@@ -730,8 +571,8 @@ function paco2017_the_speaker_photo( $term = 0, $size = 'thumbnail', $args = arr
  * @return string Term photo
  */
 function paco2017_get_speaker_photo( $term = 0, $size = 'thumbnail', $args = array() ) {
-	$term     = paco2017_get_speaker( $term );
-	$image    = '';
+	$term  = paco2017_get_speaker( $term );
+	$image = '';
 
 	if ( $term ) {
 		$photo_id = paco2017_get_speaker_photo_id( $term );
@@ -739,4 +580,22 @@ function paco2017_get_speaker_photo( $term = 0, $size = 'thumbnail', $args = arr
 	}
 
 	return apply_filters( 'paco2017_get_speaker_photo', $photo, $term );
+}
+
+/**
+ * Modify the content of the current post
+ *
+ * @since 1.0.0
+ *
+ * @param string $content Post content
+ * @return string Post content
+ */
+function paco2017_speakers_post_content( $content ) {
+
+	// The Speaker info
+	if ( is_single() && paco2017_object_has_speaker() ) {
+		$content .= paco2017_buffer_template_part( 'info', 'speaker' );
+	}
+
+	return $content;
 }
