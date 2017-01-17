@@ -254,6 +254,13 @@ jQuery(document).ready( function( $ ) {
 			}
 		}
 
+		// Provide a setting input field
+		$set_image_input = '<input type="hidden" name="%s" value="%s">';
+		$content .= sprintf( $set_image_input,
+			$this->setting_key,
+			(int) $attachment_id
+		);
+
 		return $content;
 	}
 
