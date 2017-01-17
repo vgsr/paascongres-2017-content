@@ -182,12 +182,12 @@ function paco2017_admin_get_settings_fields() {
 			),
 
 			// Speakers
-			'_paco2017_speaker_slug' => array(
+			'_paco2017_speakers_slug' => array(
 				'title'             => esc_html__( 'Speaker', 'paco2017-content' ),
 				'callback'          => 'paco2017_admin_setting_callback_slug',
 				'sanitize_callback' => 'paco2017_sanitize_slug',
 				'args'              => array(
-					'setting' => '_paco2017_speaker_slug',
+					'setting' => '_paco2017_speakers_slug',
 					'default' => 'speakers'
 				)
 			),
@@ -204,12 +204,12 @@ function paco2017_admin_get_settings_fields() {
 			),
 
 			// Associations
-			'_paco2017_association_slug' => array(
+			'_paco2017_associations_slug' => array(
 				'title'             => esc_html__( 'Association', 'paco2017-content' ),
 				'callback'          => 'paco2017_admin_setting_callback_slug',
 				'sanitize_callback' => 'paco2017_sanitize_slug',
 				'args'              => array(
-					'setting' => '_paco2017_association_slug',
+					'setting' => '_paco2017_associations_slug',
 					'default' => 'associations'
 				)
 			),
@@ -376,7 +376,7 @@ function paco2017_admin_setting_callback_slugs_section() {
 
 	// Flush rewrite rules when this section is saved
 	if ( isset( $_GET['settings-updated'] ) && isset( $_GET['page'] ) )
-		flush_rewrite_rules(); ?>
+		paco2017_delete_rewrite_rules(); ?>
 
 	<p><?php esc_html_e( "Customize the structure of your conference page urls.", 'paco2017-content' ); ?></p>
 
