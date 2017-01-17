@@ -76,7 +76,7 @@
 		wp.media.termImages[ image.name ] = {
 			/**
 			 * Set the term image id, save the term image data and
-			 * set the HTML in the post meta box to the new term image.
+			 * set the HTML in the term meta box to the new term image.
 			 *
 			 * @global wp.media.view.settings
 			 * @global wp.media.post
@@ -105,10 +105,10 @@
 				});
 			},
 			/**
-			 * Remove the post image id, save the post image data and
-			 * set the HTML in the post meta box to no post image.
+			 * Remove the term image id, save the term image data and
+			 * set the HTML in the term meta box to no term image.
 			 */
-			remove: function( term ) {
+			remove: function() {
 				wp.media.termImages[ image.name ].set( -1 );
 			},
 			/**

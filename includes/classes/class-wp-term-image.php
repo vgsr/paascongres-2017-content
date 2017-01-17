@@ -36,7 +36,7 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 	public $meta_key = 'image';
 
 	/**
-	 * @var string Attachment mime type
+	 * @var string|array Attachment mime type
 	 */
 	public $mime_type = 'image';
 
@@ -159,7 +159,7 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 	/**
 	 * Return the collection of details of the current post image
 	 *
-	 * @since 1.0.0
+	 * @since 0.1.0
 	 *
 	 * @return array Post image details
 	 */
@@ -536,7 +536,7 @@ jQuery(document).ready( function( $ ) {
 	public function ajax_get_return_data( $term_id, $update = true ) {
 		return array(
 			'html'          => $this->_image_input_html( $term_id ),
-			'setImageClass' => $this->meta_has_image( $term_id ),
+			'setImageClass' => $update ? $this->meta_has_image( $term_id ) : false,
 			'nonce'         => wp_create_nonce( "update-term_{$term_id}" ),
 		);
 	}
