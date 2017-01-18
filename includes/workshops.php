@@ -406,7 +406,7 @@ function paco2017_get_workshop( $post = 0 ) {
 function paco2017_workshop_post_content( $content ) {
 
 	// This is a Workshop
-	if ( paco2017_get_workshop() ) {
+	if ( paco2017_get_workshop() && ( is_single() || is_archive() ) && ! is_admin() ) {
 		$content = paco2017_buffer_template_part( 'info', 'workshop' ) . $content;
 	}
 
