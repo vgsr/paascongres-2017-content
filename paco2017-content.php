@@ -428,6 +428,28 @@ final class Paco2017_Content {
 			)
 		);
 
+		/** Workshop Rounds *********************************************/
+
+		register_taxonomy(
+			paco2017_get_workshop_round_tax_id(),
+			paco2017_get_workshop_post_type(),
+			array(
+				'labels'                => paco2017_get_workshop_round_tax_labels(),
+				'capabilities'          => paco2017_get_workshop_round_tax_caps(),
+				'update_count_callback' => '_update_post_term_count',
+				'hierarchical'          => false,
+				'public'                => true,
+				'rewrite'               => paco2017_get_workshop_round_tax_rewrite(),
+				'query_var'             => true,
+				'show_tagcloud'         => false,
+				'show_in_quick_edit'    => true,
+				'show_admin_column'     => true,
+				'show_in_nav_menus'     => true,
+				'show_ui'               => current_user_can( 'paco2017_workshop_round_admin' ),
+				'meta_box_cb'           => false, // No metaboxing
+			)
+		);
+
 		/** Conference Day **********************************************/
 
 		register_taxonomy(

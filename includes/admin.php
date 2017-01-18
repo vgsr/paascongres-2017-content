@@ -171,6 +171,7 @@ class Paco2017_Admin {
 		// Workshop Category
 		if ( in_array( $screen->taxonomy, array(
 			paco2017_get_workshop_cat_tax_id(),
+			paco2017_get_workshop_round_tax_id(),
 		) ) ) {
 			$parent_file  = 'paco2017';
 			$submenu_file = "edit.php?post_type=" . paco2017_get_workshop_post_type();
@@ -278,6 +279,7 @@ class Paco2017_Admin {
 		$css[] = ".fixed .column-taxonomy-" . paco2017_get_association_tax_id()   .
 		       ", .fixed .column-taxonomy-" . paco2017_get_speaker_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_workshop_cat_tax_id() .
+		       ", .fixed .column-taxonomy-" . paco2017_get_workshop_round_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_conf_day_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_conf_location_tax_id() .
 		       ", .fixed .column-taxonomy-" . paco2017_get_partner_level_tax_id() . " { width: 10%; }";
@@ -447,6 +449,9 @@ class Paco2017_Admin {
 				// Display link to manage categories
 				printf( '<div class="alignleft actions paco2017-workshop-cat-link"><a href="%s" class="page-title-action">%s</a></div>', 'edit-tags.php?taxonomy=' . paco2017_get_workshop_cat_tax_id(), esc_html__( 'Manage Workshop Categories', 'paco2017-content' ) );
 
+				// Display link to manage rounds
+				printf( '<div class="alignleft actions paco2017-workshop-round-link"><a href="%s" class="page-title-action">%s</a></div>', 'edit-tags.php?taxonomy=' . paco2017_get_workshop_round_tax_id(), esc_html__( 'Manage Workshop Rounds', 'paco2017-content' ) );
+
 				break;
 
 			// Agenda
@@ -488,6 +493,12 @@ class Paco2017_Admin {
 		$tax_key = 'taxonomy-' . paco2017_get_workshop_cat_tax_id();
 		if ( isset( $columns[ $tax_key ] ) ) {
 			$columns[ $tax_key ] = esc_html__( 'Category', 'paco2017-content' );
+		}
+
+		// Rename Wokshop Round column
+		$tax_key = 'taxonomy-' . paco2017_get_workshop_round_tax_id();
+		if ( isset( $columns[ $tax_key ] ) ) {
+			$columns[ $tax_key ] = esc_html__( 'Round', 'paco2017-content' );
 		}
 
 		// Rename Conference Day column
@@ -762,9 +773,10 @@ class Paco2017_Admin {
 	public function workshop_details_metabox( $post ) {
 
 		// Get taxonomies
-		$speaker_tax      = paco2017_get_speaker_tax_id();
-		$workshop_cat_tax = paco2017_get_workshop_cat_tax_id();
-		$conf_loc_tax     = paco2017_get_conf_location_tax_id();
+		$speaker_tax        = paco2017_get_speaker_tax_id();
+		$workshop_cat_tax   = paco2017_get_workshop_cat_tax_id();
+		$workshop_round_tax = paco2017_get_workshop_round_tax_id();
+		$conf_loc_tax       = paco2017_get_conf_location_tax_id();
 
 		?>
 
@@ -796,6 +808,21 @@ class Paco2017_Admin {
 					'hide_empty'       => false,
 					'selected'         => $cat_terms ? $cat_terms[0] : 0,
 					'show_option_none' => esc_html__( '&mdash; No Category &mdash;', 'paco2017-content' ),
+				) );
+			?>
+		</p>
+
+		<p>
+			<label for="taxonomy-<?php echo $workshop_round_tax; ?>"><?php esc_html_e( 'Round:', 'paco2017-content' ); ?></label>
+			<?php
+				$round_terms = wp_get_object_terms( $post->ID, $workshop_round_tax, array( 'fields' => 'ids' ) );
+
+				wp_dropdown_categories( array(
+					'name'             => "taxonomy-{$workshop_round_tax}",
+					'taxonomy'         => $workshop_round_tax,
+					'hide_empty'       => false,
+					'selected'         => $round_terms ? $round_terms[0] : 0,
+					'show_option_none' => esc_html__( '&mdash; No Round &mdash;', 'paco2017-content' ),
 				) );
 			?>
 		</p>
@@ -861,6 +888,7 @@ class Paco2017_Admin {
 		foreach ( array(
 			paco2017_get_speaker_tax_id(),
 			paco2017_get_workshop_cat_tax_id(),
+			paco2017_get_workshop_round_tax_id(),
 			paco2017_get_conf_location_tax_id(),
 		) as $taxonomy ) {
 			$_taxonomy = get_taxonomy( $taxonomy );

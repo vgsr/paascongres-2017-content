@@ -181,6 +181,14 @@ function paco2017_admin_get_settings_fields() {
 				'args'              => array()
 			),
 
+			// Workshop Round
+			'_paco2017_workshop_round_slug' => array(
+				'title'             => esc_html__( 'Workshop Round', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_workshop_round_slug',
+				'sanitize_callback' => 'paco2017_sanitize_slug',
+				'args'              => array()
+			),
+
 			// Speakers
 			'_paco2017_speakers_slug' => array(
 				'title'             => esc_html__( 'Speaker', 'paco2017-content' ),
@@ -415,6 +423,20 @@ function paco2017_admin_setting_callback_workshop_cat_slug() {
 	$slug = get_option( '_paco2017_workshop_cat_slug', 'category' ); ?>
 
 	<input name="_paco2017_workshop_cat_slug" id="_paco2017_workshop_cat_slug" type="text" class="regular-text code" value="<?php echo $slug; ?>" />
+	<p class="description"><?php printf( esc_html__( 'Will be used after the workshop slug, like: %s', 'paco2017-content' ), sprintf( '<code>%s/<strong>%s</strong></code>', get_option( '_paco2017_workshop_slug', 'workshops' ), $slug ) ); ?></p>
+
+	<?php
+}
+
+/**
+ * Workshop Round slug setting field
+ *
+ * @since 1.1.0
+ */
+function paco2017_admin_setting_callback_workshop_round_slug() {
+	$slug = get_option( '_paco2017_workshop_round_slug', 'round' ); ?>
+
+	<input name="_paco2017_workshop_round_slug" id="_paco2017_workshop_round_slug" type="text" class="regular-text code" value="<?php echo $slug; ?>" />
 	<p class="description"><?php printf( esc_html__( 'Will be used after the workshop slug, like: %s', 'paco2017-content' ), sprintf( '<code>%s/<strong>%s</strong></code>', get_option( '_paco2017_workshop_slug', 'workshops' ), $slug ) ); ?></p>
 
 	<?php

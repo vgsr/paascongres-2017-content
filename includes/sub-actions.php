@@ -96,7 +96,7 @@ function paco2017_registered_post_type( $post_type ) {
 function paco2017_registered_taxonomy( $taxonomy ) {
 
 	// Define plugin taxonomies
-	$taxes = array( 'association', 'speaker', 'conf_day', 'conf_location', 'workshop_cat', 'partner_level' );
+	$taxes = array( 'association', 'speaker', 'conf_day', 'conf_location', 'workshop_cat', 'workshop_round', 'partner_level' );
 
 	foreach ( $taxes as $tax ) {
 

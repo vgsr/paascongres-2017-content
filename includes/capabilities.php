@@ -73,6 +73,23 @@ function paco2017_get_workshop_cat_tax_caps() {
 	) );
 }
 
+/**
+ * Return the capability mappings for the Workshop Round taxonomy
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_round_tax_caps'
+ * @return array Workshop Round taxonomy caps
+ */
+function paco2017_get_workshop_round_tax_caps() {
+	return apply_filters( 'paco2017_get_workshop_round_tax_caps', array(
+		'manage_terms' => 'manage_paco2017_workshop_rounds',
+		'edit_terms'   => 'edit_paco2017_workshop_rounds',
+		'delete_terms' => 'delete_paco2017_workshop_rounds',
+		'assign_terms' => 'assign_paco2017_workshop_rounds'
+	) );
+}
+
 /** Agenda ********************************************************************/
 
 /**

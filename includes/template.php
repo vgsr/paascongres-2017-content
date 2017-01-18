@@ -289,6 +289,26 @@ function paco2017_is_workshop_category() {
 }
 
 /**
+ * Check if current page is the Workshop Round archive
+ *
+ * @since 1.1.0
+ *
+ * @return bool Is it the Workshop Round archive?
+ */
+function paco2017_is_workshop_round() {
+
+	// Assume false
+	$retval = false;
+
+	// Workshop Round archive
+	if ( is_tax( paco2017_get_workshop_round_tax_id() ) ) {
+		$retval = true;
+	}
+
+	return (bool) $retval;
+}
+
+/**
  * Check if current page is the Agenda page
  *
  * @since 1.0.0
@@ -384,6 +404,9 @@ function paco2017_body_class( $wp_classes, $custom_classes = false ) {
 	} elseif ( paco2017_is_workshop_category() ) {
 		$paco2017_classes[] = 'paco2017-workshop-category';
 
+	} elseif ( paco2017_is_workshop_round() ) {
+		$paco2017_classes[] = 'paco2017-workshop-round';
+
 	/** Pages *****************************************************************/
 
 	} elseif ( paco2017_is_agenda() ) {
@@ -436,6 +459,9 @@ function is_paascongres() {
 		$retval = true;
 
 	} elseif ( paco2017_is_workshop_category() ) {
+		$retval = true;
+
+	} elseif ( paco2017_is_workshop_round() ) {
 		$retval = true;
 
 	/** Pages *****************************************************************/

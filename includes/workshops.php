@@ -216,3 +216,158 @@ function paco2017_prioritize_workshop_cat_rewrite_rules() {
 	remove_permastruct( $name );
 	$wp_rewrite->extra_permastructs[ $name ] = $args;
 }
+
+/**
+ * Return whether the given post has any or the given Workshop Category
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to any term.
+ * @return bool Object has a/the Workshop Category
+ */
+function paco2017_object_has_workshop_cat( $post = 0, $term = 0 ) {
+	return has_term( $term, paco2017_get_workshop_cat_tax_id(), $post );
+}
+
+/** Taxonomy: Workshop Round **************************************************/
+
+/**
+ * Return the Workshop Round taxonomy
+ *
+ * @since 1.1.0
+ *
+ * @return string Taxonomy name
+ */
+function paco2017_get_workshop_round_tax_id() {
+	return 'paco2017_workshop_round';
+}
+
+/**
+ * Return the labels for the Workshop Round taxonomy
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_round_tax_labels'
+ * @return array Workshop Round taxonomy labels
+ */
+function paco2017_get_workshop_round_tax_labels() {
+	return apply_filters( 'paco2017_get_workshop_round_tax_labels', array(
+		'name'          => __( 'Paascongres Workshop Rounds', 'paco2017-content' ),
+		'menu_name'     => __( 'Rounds',                      'paco2017-content' ),
+		'singular_name' => __( 'Workshop Round',              'paco2017-content' ),
+		'search_items'  => __( 'Search Workshop Rounds',      'paco2017-content' ),
+		'popular_items' => null, // Disable tagcloud
+		'all_items'     => __( 'All Workshop Rounds',         'paco2017-content' ),
+		'no_items'      => __( 'No Workshop Round',           'paco2017-content' ),
+		'edit_item'     => __( 'Edit Workshop Round',         'paco2017-content' ),
+		'update_item'   => __( 'Update Workshop Round',       'paco2017-content' ),
+		'add_new_item'  => __( 'Add New Workshop Round',      'paco2017-content' ),
+		'new_item_name' => __( 'New Workshop Round Name',     'paco2017-content' ),
+		'view_item'     => __( 'View Workshop Round',         'paco2017-content' )
+	) );
+}
+
+/**
+ * Return the Workshop Round taxonomy rewrite settings
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_round_tax_rewrite'
+ * @return array Workshop Round taxonomy rewrite
+ */
+function paco2017_get_workshop_round_tax_rewrite() {
+	return apply_filters( 'paco2017_get_workshop_round_tax_rewrite', array(
+		'slug'       => paco2017_get_workshop_slug() . '/' . paco2017_get_workshop_round_slug(),
+		'with_front' => false
+	) );
+}
+
+/**
+ * Act when the Workshop Round taxonomy has been registered
+ *
+ * @since 1.1.0
+ */
+function paco2017_registered_workshop_round_taxonomy() {
+	add_action( 'paco2017_rest_api_init', 'paco2017_register_workshop_round_rest_fields' );
+
+	// Make category rules work
+	paco2017_prioritize_workshop_cat_rewrite_rules();
+}
+
+/**
+ * Register REST fields for the Workshop Round taxonomy
+ *
+ * @since 1.1.0
+ */
+function paco2017_register_workshop_round_rest_fields() {
+
+	// Get assets
+	$workshop = paco2017_get_workshop_post_type();
+
+	// Add location to Agenda Item
+	register_rest_field(
+		$workshop,
+		'workshop_rounds',
+		array(
+			'get_callback' => 'paco2017_get_workshop_rest_workshop_rounds'
+		)
+	);
+}
+
+/**
+ * Return the value for the 'workshop_rounds' workshop REST API field
+ *
+ * @since 1.1.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return array Location term(s)
+ */
+function paco2017_get_workshop_rest_workshop_rounds( $object, $field_name, $request ) {
+	return wp_get_object_terms( $object['id'], paco2017_get_workshop_round_tax_id() );
+}
+
+/**
+ * Prioritize Workshop Round requests over Workshop requests.
+ *
+ * This is done because a request for '/workshops/round/round-name/'
+ * is catched as a query for a non-existent workshop entry. Instead we'd
+ * like it to identify a workshop round before attempting to match a
+ * workshop entry.
+ *
+ * This is caused by the prioritization of workshop object requests
+ * over workshop round requests, based on the order of rewrite rules
+ * registration. To solve this, we move the workshop object rules
+ * (permalink structure or 'permastruct') down in the list of registered
+ * rules to match.
+ *
+ * @since 1.1.0
+ *
+ * @global WP_Rewrite $wp_rewrite
+ */
+function paco2017_prioritize_workshop_round_rewrite_rules() {
+	global $wp_rewrite;
+
+	// Get the current permastruct
+	$name = paco2017_get_workshop_post_type();
+	$args = $wp_rewrite->extra_permastructs[ $name ];
+
+	// Remove and append again at the bottom of the list
+	remove_permastruct( $name );
+	$wp_rewrite->extra_permastructs[ $name ] = $args;
+}
+
+/**
+ * Return whether the given post has any or the given Workshop Round
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to any term.
+ * @return bool Object has a/the Workshop Round
+ */
+function paco2017_object_has_workshop_round( $post = 0, $term = 0 ) {
+	return has_term( $term, paco2017_get_workshop_round_tax_id(), $post );
+}
