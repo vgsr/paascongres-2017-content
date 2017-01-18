@@ -27,7 +27,14 @@ defined( 'ABSPATH' ) || exit;
 					endif;
 				?>
 			</h4>
-			<span class="item-timeslot"><?php paco2017_the_agenda_timeslot(); ?></span>
+
+			<div class="item-details">
+				<span class="item-timeslot"><?php paco2017_the_agenda_timeslot(); ?></span>
+
+				<?php if ( paco2017_object_has_conf_location() ) : ?>
+				<span class="item-location"><?php paco2017_the_conf_location_title(); ?></span>
+				<?php endif; ?>
+			</div>
 		</div>
 
 		<div class="item-content"><?php

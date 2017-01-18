@@ -30,5 +30,14 @@ if ( ! $item = paco2017_get_agenda_item() )
 			__( 'This item is scheduled at %1$s.', 'paco2017-content' ),
 			paco2017_get_agenda_item_start_time( $item )
 		);
-	} ?></p>
+	} ?>
+
+	<?php if ( paco2017_object_has_conf_location( $item ) ) {
+		printf(
+			'<span class="item-detail tax-conf-location">' . _x( 'Location: %s', 'object taxonomy detail', 'paco2017-content' ) . '</span>',
+			'<span class="detail-value">' . paco2017_get_conf_location_title( $item ) . '</span>'
+		);
+	} ?>
+
+	</p>
 </div>
