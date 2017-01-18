@@ -220,16 +220,23 @@ function paco2017_bp_xprofile_sync_association_term( $field_data ) {
 	// Get the taxonomy
 	$taxonomy = paco2017_get_association_tax_id();
 
-	// Bail when this is not an association's relationship field
-	if ( 'relationship' !== $field->type || 'taxonomy-' . $taxonomy !== bp_xprofile_get_meta( $field->id, 'field', 'related_to' ) )
-		return;
-
-	// Get the term's ID from the saved value
-	$term_id = $field_data->value;
+	// Get the term's ID or name from the saved value
+	$term_id_or_name = $field_data->value;
 
 	// Force integers when dealing with IDs
-	if ( is_numeric( $term_id ) ) {
-		$term_id = (int) $term_id;
+	if ( is_numeric( $term_id_or_name ) ) {
+		$term_id = (int) $term_id_or_name;
+
+	// Try to find the term by name
+	} else {
+		$term = get_term_by( 'name', $term_id_or_name, paco2017_get_association_tax_id() );
+
+		// Bail when the term wasn't found
+		if ( $term && ! is_wp_error( $term ) ) {
+			$term_id = $term->term_id;
+		} else {
+			$term_id = false;
+		}
 	}
 
 	// Data was updated, so set new term relationship
