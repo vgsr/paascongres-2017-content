@@ -403,7 +403,7 @@ function paco2017_in_the_agenda_item_loop() {
 }
 
 /**
- * For the posts query parse the Agenda item options
+ * For the posts query parse the Agenda Item options
  *
  * @since 1.0.0
  *
@@ -867,7 +867,25 @@ function paco2017_dropdown_agenda_pages( $args = '' ) {
 }
 
 /**
- * Modify the content of an Agenda item
+ * Modify the content of an Agenda Item before content filters
+ *
+ * @since 1.0.0
+ *
+ * @param string $content Post content
+ * @return string Post content
+ */
+function paco2017_agenda_pre_post_content( $content ) {
+
+	// An Agenda Item with related object
+	if ( paco2017_in_the_agenda_item_loop() && paco2017_is_agenda_related() ) {
+		$content .= ' <a href="' . esc_url( paco2017_get_agenda_related_url() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'paco2017-content' ) . '</a>';
+	}
+
+	return $content;
+}
+
+/**
+ * Modify the content of an Agenda Item
  *
  * @since 1.0.0
  *
@@ -876,12 +894,8 @@ function paco2017_dropdown_agenda_pages( $args = '' ) {
  */
 function paco2017_agenda_post_content( $content ) {
 
-	// An Agenda item with related object
-	if ( paco2017_in_the_agenda_item_loop() && paco2017_is_agenda_related() ) {
-		$content .= ' <a href="' . esc_url( paco2017_get_agenda_related_url() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'paco2017-content' ) . '</a>';
-
-	// An object related with Agenda item
-	} elseif ( is_single() && paco2017_agenda_is_object_related() ) {
+	// An object related with Agenda Item
+	if ( is_single() && paco2017_agenda_is_object_related() ) {
 		$content = paco2017_buffer_template_part( 'info', 'agenda-related-item' ) . $content;
 	}
 
