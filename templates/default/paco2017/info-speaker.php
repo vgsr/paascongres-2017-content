@@ -16,7 +16,7 @@ if ( ! $description = paco2017_get_speaker_content() )
 
 ?>
 
-<div class="speaker-info <?php if ( paco2017_has_speaker_photo() ) echo 'has-avatar'; ?>">
+<div class="paco2017-info speaker-info <?php if ( paco2017_has_speaker_photo() ) echo 'has-avatar'; ?>">
 	<div class="speaker-header">
 		<?php if ( paco2017_has_speaker_photo() ) : ?>
 		<div class="speaker-avatar"><?php paco2017_the_speaker_photo(); ?></div>
