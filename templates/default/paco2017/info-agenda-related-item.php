@@ -19,13 +19,13 @@ if ( ! $item = paco2017_get_agenda_item() )
 <div class="agenda-info">
 	<p><?php if ( paco2017_has_conf_day_date( $item ) ) {
 		printf(
-			__( 'This item is scheduled for %1$s at %2$s.', 'paco2017-content' ),
-			paco2017_get_conf_day_date( $item ),
-			paco2017_get_agenda_item_start_time( $item )
+			__( 'This item is scheduled for %2$s at %1$s.', 'paco2017-content' ),
+			paco2017_get_agenda_item_start_time( $item ),
+			paco2017_get_conf_day_date( $item )
 		);
 	} else {
 		printf(
-			__( 'This item is scheduled at %2$s.', 'paco2017-content' ),
+			__( 'This item is scheduled at %1$s.', 'paco2017-content' ),
 			paco2017_get_agenda_item_start_time( $item )
 		);
 	} ?></p>
