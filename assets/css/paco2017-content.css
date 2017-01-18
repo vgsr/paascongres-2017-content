@@ -85,18 +85,45 @@
 	margin-top: -.75em;
 }
 
-/* Agenda */
+/* Info */
 
-.agenda-info {
+.paco2017-info:not(.speaker-info) {
 	font-style: italic;
+	color: #666;
+	font-size: 13px;
+	font-size: 0.8125rem;
 }
+
+.paco2017-info .item-detail {
+	display: inline-block;
+}
+
+.paco2017-info .item-detail:not(:last-child):after {
+	content: '.';
+}
+
+/* Agenda */
 
 .paco2017-agenda .day-date {
 	opacity: .7;
 }
 
-.paco2017-agenda .item-timeslot {
+.paco2017-agenda .item-details {
 	display: block;
 	font-size: 80%;
 	opacity: .7;
+}
+
+.paco2017-agenda .item-details span:not(:last-child):after {
+	content: ' \2013';
+}
+
+@media screen and (min-width: 30em) {
+
+	/* Info */
+
+	.paco2017-info:not(.speaker-info) {
+		font-size: 14px;
+		font-size: .875rem;
+	}
 }

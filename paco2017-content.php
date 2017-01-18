@@ -428,7 +428,7 @@ final class Paco2017_Content {
 			)
 		);
 
-		/** Workshop Rounds *********************************************/
+		/** Workshop Round **********************************************/
 
 		register_taxonomy(
 			paco2017_get_workshop_round_tax_id(),

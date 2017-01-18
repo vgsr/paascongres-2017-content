@@ -371,3 +371,374 @@ function paco2017_prioritize_workshop_round_rewrite_rules() {
 function paco2017_object_has_workshop_round( $post = 0, $term = 0 ) {
 	return has_term( $term, paco2017_get_workshop_round_tax_id(), $post );
 }
+
+/** Template ******************************************************************/
+
+/**
+ * Return the Workshop
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current post.
+ * @return WP_Post|bool Workshop post object or False when not found.
+ */
+function paco2017_get_workshop( $post = 0 ) {
+
+	// Get the post
+	$post = get_post( $post );
+
+	// Return false when this is not a Workshop
+	if ( ! $post || paco2017_get_workshop_post_type() !== $post->post_type ) {
+		$post = false;
+	}
+
+	return $post;
+}
+
+/**
+ * Modify the content of a Workshop post
+ *
+ * @since 1.1.0
+ *
+ * @param string $content Post content
+ * @return string Post content
+ */
+function paco2017_workshop_post_content( $content ) {
+
+	// This is a Workshop
+	if ( paco2017_get_workshop() ) {
+		$content = paco2017_buffer_template_part( 'info', 'workshop' ) . $content;
+	}
+
+	return $content;
+}
+
+/** Template: Workshop Category **************************************************/
+
+/**
+ * Return the Workshop Category term
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or post object. Defaults to the current term or post.
+ * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
+ * @return WP_Term|false Workshop Category term object or False when not found.
+ */
+function paco2017_get_workshop_cat( $term = 0, $by = 'id' ) {
+
+	// Default to the current post's term
+	if ( empty( $term ) && paco2017_object_has_workshop_cat() ) {
+		$terms = wp_get_object_terms( get_the_ID(), paco2017_get_workshop_cat_tax_id() );
+		$term  = $terms[0];
+
+	// Default to the provided post's term
+	} elseif ( is_a( $term, 'WP_Post' ) && paco2017_object_has_workshop_cat( $term ) ) {
+		$terms = wp_get_object_terms( $term->ID, paco2017_get_workshop_cat_tax_id() );
+		$term  = $terms[0];
+
+	// Get the term by id or slug
+	} elseif ( ! $term instanceof WP_Term ) {
+		$term = get_term_by( $by, $term, paco2017_get_workshop_cat_tax_id() );
+	}
+
+	// Reduce error to false
+	if ( ! $term || is_wp_error( $term ) ) {
+		$term = false;
+	}
+
+	return $term;
+}
+
+/**
+ * Output the Workshop Category title
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ */
+function paco2017_the_workshop_cat_title( $term = 0 ) {
+	echo paco2017_get_workshop_cat_title( $term );
+}
+
+/**
+ * Return the Workshop Category title
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_cat_title'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @return string Term title
+ */
+function paco2017_get_workshop_cat_title( $term = 0 ) {
+	$term  = paco2017_get_workshop_cat( $term );
+	$title = '';
+
+	if ( $term ) {
+		$title = get_term_field( 'name', $term );
+	}
+
+	return apply_filters( 'paco2017_get_workshop_cat_title', $title, $term );
+}
+
+/**
+ * Output the Workshop Category content
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ */
+function paco2017_the_workshop_cat_content( $term = 0 ) {
+	echo paco2017_get_workshop_cat_content( $term );
+}
+
+/**
+ * Return the Workshop Category content
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_cat_content'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @return string Term content
+ */
+function paco2017_get_workshop_cat_content( $term = 0 ) {
+	$term    = paco2017_get_workshop_cat( $term );
+	$content = '';
+
+	if ( $term ) {
+		$content = get_term_field( 'description', $term );
+	}
+
+	return apply_filters( 'paco2017_get_workshop_cat_content', $content, $term );
+}
+
+/**
+ * Output the Workshop Category url
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ */
+function paco2017_the_workshop_cat_url( $term = 0 ) {
+	echo paco2017_get_workshop_cat_url( $term );
+}
+
+/**
+ * Return the Workshop Category url
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_cat_url'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @return string Term url
+ */
+function paco2017_get_workshop_cat_url( $term = 0 ) {
+	$term = paco2017_get_workshop_cat( $term );
+	$url  = '';
+
+	if ( $term ) {
+		$url = get_term_link( $term );
+	}
+
+	return apply_filters( 'paco2017_get_workshop_cat_url', $url, $term );
+}
+
+/**
+ * Output the Workshop Category link
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ */
+function paco2017_the_workshop_cat_link( $term = 0 ) {
+	echo paco2017_get_workshop_cat_link( $term );
+}
+
+/**
+ * Return the Workshop Category link
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_cat_link'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @return string Term link
+ */
+function paco2017_get_workshop_cat_link( $term = 0 ) {
+	$term = paco2017_get_workshop_cat( $term );
+	$url  = paco2017_get_workshop_cat_url( $term );
+	$link = '';
+
+	if ( $term && $url ) {
+		$link = '<a href="' . esc_url( $url ) . '">'. paco2017_get_workshop_cat_title( $term ) . '</a>';
+	}
+
+	return apply_filters( 'paco2017_get_workshop_cat_link', $link, $term );
+}
+
+/** Template: Workshop Round **************************************************/
+
+/**
+ * Return the Workshop Round term
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or post object. Defaults to the current term or post.
+ * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
+ * @return WP_Term|false Workshop Round term object or False when not found.
+ */
+function paco2017_get_workshop_round( $term = 0, $by = 'id' ) {
+
+	// Default to the current post's term
+	if ( empty( $term ) && paco2017_object_has_workshop_round() ) {
+		$terms = wp_get_object_terms( get_the_ID(), paco2017_get_workshop_round_tax_id() );
+		$term  = $terms[0];
+
+	// Default to the provided post's term
+	} elseif ( is_a( $term, 'WP_Post' ) && paco2017_object_has_workshop_round( $term ) ) {
+		$terms = wp_get_object_terms( $term->ID, paco2017_get_workshop_round_tax_id() );
+		$term  = $terms[0];
+
+	// Get the term by id or slug
+	} elseif ( ! $term instanceof WP_Term ) {
+		$term = get_term_by( $by, $term, paco2017_get_workshop_round_tax_id() );
+	}
+
+	// Reduce error to false
+	if ( ! $term || is_wp_error( $term ) ) {
+		$term = false;
+	}
+
+	return $term;
+}
+
+/**
+ * Output the Workshop Round title
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ */
+function paco2017_the_workshop_round_title( $term = 0 ) {
+	echo paco2017_get_workshop_round_title( $term );
+}
+
+/**
+ * Return the Workshop Round title
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_round_title'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @return string Term title
+ */
+function paco2017_get_workshop_round_title( $term = 0 ) {
+	$term  = paco2017_get_workshop_round( $term );
+	$title = '';
+
+	if ( $term ) {
+		$title = get_term_field( 'name', $term );
+	}
+
+	return apply_filters( 'paco2017_get_workshop_round_title', $title, $term );
+}
+
+/**
+ * Output the Workshop Round content
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ */
+function paco2017_the_workshop_round_content( $term = 0 ) {
+	echo paco2017_get_workshop_round_content( $term );
+}
+
+/**
+ * Return the Workshop Round content
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_round_content'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @return string Term content
+ */
+function paco2017_get_workshop_round_content( $term = 0 ) {
+	$term    = paco2017_get_workshop_round( $term );
+	$content = '';
+
+	if ( $term ) {
+		$content = get_term_field( 'description', $term );
+	}
+
+	return apply_filters( 'paco2017_get_workshop_round_content', $content, $term );
+}
+
+/**
+ * Output the Workshop Round url
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ */
+function paco2017_the_workshop_round_url( $term = 0 ) {
+	echo paco2017_get_workshop_round_url( $term );
+}
+
+/**
+ * Return the Workshop Round url
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_round_url'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @return string Term url
+ */
+function paco2017_get_workshop_round_url( $term = 0 ) {
+	$term = paco2017_get_workshop_round( $term );
+	$url  = '';
+
+	if ( $term ) {
+		$url = get_term_link( $term );
+	}
+
+	return apply_filters( 'paco2017_get_workshop_round_url', $url, $term );
+}
+
+/**
+ * Output the Workshop Round link
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ */
+function paco2017_the_workshop_round_link( $term = 0 ) {
+	echo paco2017_get_workshop_round_link( $term );
+}
+
+/**
+ * Return the Workshop Round link
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_round_link'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @return string Term link
+ */
+function paco2017_get_workshop_round_link( $term = 0 ) {
+	$term = paco2017_get_workshop_round( $term );
+	$url  = paco2017_get_workshop_round_url( $term );
+	$link = '';
+
+	if ( $term && $url ) {
+		$link = '<a href="' . esc_url( $url ) . '">'. paco2017_get_workshop_round_title( $term ) . '</a>';
+	}
+
+	return apply_filters( 'paco2017_get_workshop_round_link', $link, $term );
+}
