@@ -773,14 +773,29 @@ class Paco2017_Admin {
 	public function workshop_details_metabox( $post ) {
 
 		// Get taxonomies
+		$workshop_round_tax = paco2017_get_workshop_round_tax_id();
 		$speaker_tax        = paco2017_get_speaker_tax_id();
 		$workshop_cat_tax   = paco2017_get_workshop_cat_tax_id();
-		$workshop_round_tax = paco2017_get_workshop_round_tax_id();
 		$conf_loc_tax       = paco2017_get_conf_location_tax_id();
 
 		?>
 
 		<div class="paco2017_object_details">
+
+		<p>
+			<label for="taxonomy-<?php echo $workshop_round_tax; ?>"><?php esc_html_e( 'Round:', 'paco2017-content' ); ?></label>
+			<?php
+				$round_terms = wp_get_object_terms( $post->ID, $workshop_round_tax, array( 'fields' => 'ids' ) );
+
+				wp_dropdown_categories( array(
+					'name'             => "taxonomy-{$workshop_round_tax}",
+					'taxonomy'         => $workshop_round_tax,
+					'hide_empty'       => false,
+					'selected'         => $round_terms ? $round_terms[0] : 0,
+					'show_option_none' => esc_html__( '&mdash; No Round &mdash;', 'paco2017-content' ),
+				) );
+			?>
+		</p>
 
 		<p>
 			<label for="taxonomy-<?php echo $speaker_tax; ?>"><?php esc_html_e( 'Speaker:', 'paco2017-content' ); ?></label>
@@ -808,21 +823,6 @@ class Paco2017_Admin {
 					'hide_empty'       => false,
 					'selected'         => $cat_terms ? $cat_terms[0] : 0,
 					'show_option_none' => esc_html__( '&mdash; No Category &mdash;', 'paco2017-content' ),
-				) );
-			?>
-		</p>
-
-		<p>
-			<label for="taxonomy-<?php echo $workshop_round_tax; ?>"><?php esc_html_e( 'Round:', 'paco2017-content' ); ?></label>
-			<?php
-				$round_terms = wp_get_object_terms( $post->ID, $workshop_round_tax, array( 'fields' => 'ids' ) );
-
-				wp_dropdown_categories( array(
-					'name'             => "taxonomy-{$workshop_round_tax}",
-					'taxonomy'         => $workshop_round_tax,
-					'hide_empty'       => false,
-					'selected'         => $round_terms ? $round_terms[0] : 0,
-					'show_option_none' => esc_html__( '&mdash; No Round &mdash;', 'paco2017-content' ),
 				) );
 			?>
 		</p>
@@ -880,15 +880,16 @@ class Paco2017_Admin {
 
 		/**
 		 * Save posted inputs:
+		 * - Workshop Round taxonomy
 		 * - Speaker taxonomy
 		 * - Workshop Category taxonomy
 		 * - Conference Location taxonomy
 		 */
 
 		foreach ( array(
+			paco2017_get_workshop_round_tax_id(),
 			paco2017_get_speaker_tax_id(),
 			paco2017_get_workshop_cat_tax_id(),
-			paco2017_get_workshop_round_tax_id(),
 			paco2017_get_conf_location_tax_id(),
 		) as $taxonomy ) {
 			$_taxonomy = get_taxonomy( $taxonomy );
