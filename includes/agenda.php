@@ -1040,41 +1040,41 @@ function paco2017_in_the_conf_day_loop() {
 /** Template: Conference Day **************************************************/
 
 /**
- * Return the Conference Day item term
+ * Return the Conference Day term
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|WP_Post $item Optional. Term object or ID or post object. Defaults to the current term or post.
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or post object. Defaults to the current term or post.
  * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
  * @return WP_Term|false Conference Day term object or False when not found.
  */
-function paco2017_get_conf_day( $item = 0, $by = 'id' ) {
+function paco2017_get_conf_day( $term = 0, $by = 'id' ) {
 
 	// Default empty parameter to the item in the loop
-	if ( empty( $item ) && paco2017_in_the_conf_day_loop() ) {
-		$item = paco2017_content()->conf_day_query->term;
+	if ( empty( $term ) && paco2017_in_the_conf_day_loop() ) {
+		$term = paco2017_content()->conf_day_query->term;
 
 	// Default to the current post's item
-	} elseif ( empty( $item ) && paco2017_object_has_conf_day() ) {
+	} elseif ( empty( $term ) && paco2017_object_has_conf_day() ) {
 		$terms = wp_get_object_terms( get_the_ID(), paco2017_get_conf_day_tax_id() );
-		$item  = $terms[0];
+		$term  = $terms[0];
 
 	// Default to the provided post's item
-	} elseif ( is_a( $item, 'WP_Post' ) && paco2017_object_has_conf_day( $item ) ) {
-		$terms = wp_get_object_terms( $item->ID, paco2017_get_conf_day_tax_id() );
-		$item  = $terms[0];
+	} elseif ( is_a( $term, 'WP_Post' ) && paco2017_object_has_conf_day( $term ) ) {
+		$terms = wp_get_object_terms( $term->ID, paco2017_get_conf_day_tax_id() );
+		$term  = $terms[0];
 
 	// Get the term by id or slug
-	} elseif ( ! $item instanceof WP_Term ) {
-		$item = get_term_by( $by, $item, paco2017_get_conf_day_tax_id() );
+	} elseif ( ! $term instanceof WP_Term ) {
+		$term = get_term_by( $by, $term, paco2017_get_conf_day_tax_id() );
 	}
 
 	// Reduce error to false
-	if ( ! $item || is_wp_error( $item ) ) {
-		$item = false;
+	if ( ! $term || is_wp_error( $term ) ) {
+		$term = false;
 	}
 
-	return $item;
+	return $term;
 }
 
 /**
@@ -1223,4 +1223,104 @@ function paco2017_get_conf_day_date( $term = 0, $format = null ) {
  */
 function paco2017_has_conf_day_date( $term = 0 ) {
 	return (bool) paco2017_get_conf_day_date_string( $term );
+}
+
+/** Template: Conference Location *********************************************/
+
+/**
+ * Return the Conference Location term
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or post object. Defaults to the current term or post.
+ * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
+ * @return WP_Term|false Conference Location term object or False when not found.
+ */
+function paco2017_get_conf_location( $term = 0, $by = 'id' ) {
+
+	// Default to the current post's item
+	if ( empty( $term ) && paco2017_object_has_conf_location() ) {
+		$terms = wp_get_object_terms( get_the_ID(), paco2017_get_conf_location_tax_id() );
+		$term  = $terms[0];
+
+	// Default to the provided post's item
+	} elseif ( is_a( $term, 'WP_Post' ) && paco2017_object_has_conf_location( $term ) ) {
+		$terms = wp_get_object_terms( $term->ID, paco2017_get_conf_location_tax_id() );
+		$term  = $terms[0];
+
+	// Get the term by id or slug
+	} elseif ( ! $term instanceof WP_Term ) {
+		$term = get_term_by( $by, $term, paco2017_get_conf_location_tax_id() );
+	}
+
+	// Reduce error to false
+	if ( ! $term || is_wp_error( $term ) ) {
+		$term = false;
+	}
+
+	return $term;
+}
+
+/**
+ * Output the Conference Location title
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ */
+function paco2017_the_conf_location_title( $term = 0 ) {
+	echo paco2017_get_conf_location_title( $term );
+}
+
+/**
+ * Return the Conference Location title
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_conf_location_title'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @return string Term title
+ */
+function paco2017_get_conf_location_title( $term = 0 ) {
+	$term  = paco2017_get_conf_location( $term );
+	$title = '';
+
+	if ( $term ) {
+		$title = get_term_field( 'name', $term );
+	}
+
+	return apply_filters( 'paco2017_get_conf_location_title', $title, $term );
+}
+
+/**
+ * Output the Conference Location content
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ */
+function paco2017_the_conf_location_content( $term = 0 ) {
+	echo paco2017_get_conf_location_content( $term );
+}
+
+/**
+ * Return the Conference Location content
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_conf_location_content'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @return string Term content
+ */
+function paco2017_get_conf_location_content( $term = 0 ) {
+	$term    = paco2017_get_conf_location( $term );
+	$content = '';
+
+	if ( $term ) {
+		$content = get_term_field( 'description', $term );
+	}
+
+	return apply_filters( 'paco2017_get_conf_location_content', $content, $term );
 }
