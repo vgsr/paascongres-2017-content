@@ -1,0 +1,1261 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-19 17:59+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: paco2017-content.php:238
+msgid "Paascongres lectures"
+msgstr ""
+
+#: paco2017-content.php:263
+msgid "Paascongres workshops"
+msgstr ""
+
+#: paco2017-content.php:288
+msgid "Paascongres agenda items"
+msgstr ""
+
+#: paco2017-content.php:313
+msgid "Paascongres partners"
+msgstr ""
+
+#: paco2017-content.php:338
+msgid "Set Partner Logo"
+msgstr ""
+
+#: paco2017-content.php:339
+msgid "Partner Logo"
+msgstr ""
+
+#: paco2017-content.php:340
+msgid "Remove Partner Logo"
+msgstr ""
+
+#: paco2017-content.php:540 includes/admin.php:552
+msgid "Logo"
+msgstr ""
+
+#: paco2017-content.php:541
+msgid "Logos"
+msgstr ""
+
+#: paco2017-content.php:542
+#, php-format
+msgid "Set %s logo"
+msgstr ""
+
+#: paco2017-content.php:543
+#, php-format
+msgid "%s logo"
+msgstr ""
+
+#: paco2017-content.php:544
+#, php-format
+msgid "Remove %s logo"
+msgstr ""
+
+#: paco2017-content.php:551
+msgid "Photo"
+msgstr ""
+
+#: paco2017-content.php:552
+msgid "Photos"
+msgstr ""
+
+#: paco2017-content.php:553
+#, php-format
+msgid "Set %s photo"
+msgstr ""
+
+#: paco2017-content.php:554
+#, php-format
+msgid "%s photo"
+msgstr ""
+
+#: paco2017-content.php:555
+#, php-format
+msgid "Remove %s photo"
+msgstr ""
+
+#: includes/admin.php:89
+msgid "Paascongres 2017 Dashboard"
+msgstr ""
+
+#: includes/admin.php:90 includes/admin.php:1203 includes/functions.php:431
+msgid "Paascongres"
+msgstr ""
+
+#: includes/admin.php:124
+msgid "Paascongres 2017 Settings"
+msgstr ""
+
+#: includes/admin.php:125 includes/settings.php:534
+msgid "Settings"
+msgstr ""
+
+#: includes/admin.php:317
+msgid "Enrollments"
+msgstr ""
+
+#: includes/admin.php:379
+msgid "Set magazine download file"
+msgstr ""
+
+#: includes/admin.php:380
+msgid "Magazine Download File"
+msgstr ""
+
+#: includes/admin.php:381
+msgid "Remove magazine download file"
+msgstr ""
+
+#: includes/admin.php:425
+msgid "Housekeeping"
+msgstr ""
+
+#: includes/admin.php:450
+msgid "Manage Workshop Categories"
+msgstr ""
+
+#: includes/admin.php:453
+msgid "Manage Workshop Rounds"
+msgstr ""
+
+#: includes/admin.php:461
+msgid "Manage Conference Days"
+msgstr ""
+
+#: includes/admin.php:469
+msgid "Manage Partner Levels"
+msgstr ""
+
+#: includes/admin.php:489 includes/settings.php:194 includes/speakers.php:38
+msgid "Speaker"
+msgstr ""
+
+#: includes/admin.php:495
+msgid "Category"
+msgstr ""
+
+#: includes/admin.php:501
+msgid "Round"
+msgstr ""
+
+#: includes/admin.php:507
+msgid "Day"
+msgstr ""
+
+#: includes/admin.php:513
+msgid "Location"
+msgstr ""
+
+#: includes/admin.php:519
+msgid "Level"
+msgstr ""
+
+#: includes/admin.php:529
+msgctxt "agenda meta column name"
+msgid "Start"
+msgstr ""
+
+#: includes/admin.php:530
+msgctxt "agenda meta column name"
+msgid "End"
+msgstr ""
+
+#: includes/admin.php:538
+msgctxt "agenda meta column name"
+msgid "Related"
+msgstr ""
+
+#: includes/admin.php:557
+msgid "URL"
+msgstr ""
+
+#: includes/admin.php:630
+msgid "Lecture Details"
+msgstr ""
+
+#: includes/admin.php:642
+msgid "Workshop Details"
+msgstr ""
+
+#: includes/admin.php:654
+msgid "Agenda Details"
+msgstr ""
+
+#: includes/admin.php:666
+msgid "Partner Details"
+msgstr ""
+
+#: includes/admin.php:692 includes/admin.php:801
+msgid "Speaker:"
+msgstr ""
+
+#: includes/admin.php:701 includes/admin.php:810
+msgid "&mdash; No Speaker &mdash;"
+msgstr ""
+
+#: includes/admin.php:786
+msgid "Round:"
+msgstr ""
+
+#: includes/admin.php:795
+msgid "&mdash; No Round &mdash;"
+msgstr ""
+
+#: includes/admin.php:816
+msgid "Category:"
+msgstr ""
+
+#: includes/admin.php:825
+msgid "&mdash; No Category &mdash;"
+msgstr ""
+
+#: includes/admin.php:831 includes/admin.php:969
+msgid "Location:"
+msgstr ""
+
+#: includes/admin.php:840 includes/admin.php:978
+msgid "&mdash; No Location &mdash;"
+msgstr ""
+
+#: includes/admin.php:932
+msgid "Day:"
+msgstr ""
+
+#: includes/admin.php:941
+msgid "&mdash; No Day &mdash;"
+msgstr ""
+
+#: includes/admin.php:947
+msgid "Time Start:"
+msgstr ""
+
+#: includes/admin.php:958
+msgid "Time End:"
+msgstr ""
+
+#: includes/admin.php:984
+msgid "Related:"
+msgstr ""
+
+#: includes/admin.php:989
+msgid "&mdash; No Relation &mdash;"
+msgstr ""
+
+#: includes/admin.php:1101
+msgid "Logo:"
+msgstr ""
+
+#: includes/admin.php:1106
+msgid "Partner URL:"
+msgstr ""
+
+#: includes/admin.php:1111
+msgid "Level:"
+msgstr ""
+
+#: includes/admin.php:1120
+msgid "&mdash; No Level &mdash;"
+msgstr ""
+
+#: includes/admin.php:1223 includes/associations.php:38
+#: includes/settings.php:216
+msgid "Association"
+msgstr ""
+
+#: includes/agenda.php:36
+msgid "Paascongres Agenda Items"
+msgstr ""
+
+#: includes/agenda.php:37 includes/settings.php:205
+msgid "Agenda"
+msgstr ""
+
+#: includes/agenda.php:38
+msgid "Agenda Item"
+msgstr ""
+
+#: includes/agenda.php:39
+msgid "All Agenda Items"
+msgstr ""
+
+#: includes/agenda.php:40 includes/agenda.php:44
+msgid "New Agenda Item"
+msgstr ""
+
+#: includes/agenda.php:41
+msgid "Create New Agenda Item"
+msgstr ""
+
+#: includes/agenda.php:42 includes/lectures.php:42 includes/partners.php:42
+#: includes/workshops.php:42
+msgid "Edit"
+msgstr ""
+
+#: includes/agenda.php:43
+msgid "Edit Agenda Item"
+msgstr ""
+
+#: includes/agenda.php:45 includes/agenda.php:46
+msgid "View Agenda Item"
+msgstr ""
+
+#: includes/agenda.php:47
+msgid "View Agenda Items"
+msgstr ""
+
+#: includes/agenda.php:48
+msgid "Search Agenda Items"
+msgstr ""
+
+#: includes/agenda.php:49
+msgid "No agenda items found"
+msgstr ""
+
+#: includes/agenda.php:50
+msgid "No agenda items found in Trash"
+msgstr ""
+
+#: includes/agenda.php:51
+msgid "Insert into agenda item"
+msgstr ""
+
+#: includes/agenda.php:52
+msgid "Uploaded to this agenda item"
+msgstr ""
+
+#: includes/agenda.php:53
+msgid "Filter agenda items list"
+msgstr ""
+
+#: includes/agenda.php:54
+msgid "Agenda Items list navigation"
+msgstr ""
+
+#: includes/agenda.php:55
+msgid "Agenda Items list"
+msgstr ""
+
+#: includes/agenda.php:150
+msgid "Paascongres Conference Days"
+msgstr ""
+
+#: includes/agenda.php:151
+msgid "Conference Days"
+msgstr ""
+
+#: includes/agenda.php:152
+msgid "Conference Day"
+msgstr ""
+
+#: includes/agenda.php:153
+msgid "Search Conference Days"
+msgstr ""
+
+#: includes/agenda.php:155
+msgid "All Conference Days"
+msgstr ""
+
+#: includes/agenda.php:156
+msgid "No Conference Day"
+msgstr ""
+
+#: includes/agenda.php:157
+msgid "Edit Conference Day"
+msgstr ""
+
+#: includes/agenda.php:158
+msgid "Update Conference Day"
+msgstr ""
+
+#: includes/agenda.php:159
+msgid "Add New Conference Day"
+msgstr ""
+
+#: includes/agenda.php:160
+msgid "New Conference Day Name"
+msgstr ""
+
+#: includes/agenda.php:161
+msgid "View Conference Day"
+msgstr ""
+
+#: includes/agenda.php:244
+msgid "Paascongres Conference Locations"
+msgstr ""
+
+#: includes/agenda.php:245
+msgid "Locations"
+msgstr ""
+
+#: includes/agenda.php:246
+msgid "Conference Location"
+msgstr ""
+
+#: includes/agenda.php:247
+msgid "Search Conference Locations"
+msgstr ""
+
+#: includes/agenda.php:249
+msgid "All Conference Locations"
+msgstr ""
+
+#: includes/agenda.php:250
+msgid "No Conference Location"
+msgstr ""
+
+#: includes/agenda.php:251
+msgid "Edit Conference Location"
+msgstr ""
+
+#: includes/agenda.php:252
+msgid "Update Conference Location"
+msgstr ""
+
+#: includes/agenda.php:253
+msgid "Add New Conference Location"
+msgstr ""
+
+#: includes/agenda.php:254
+msgid "New Conference Location Name"
+msgstr ""
+
+#: includes/agenda.php:255
+msgid "View Conference Location"
+msgstr ""
+
+#: includes/agenda.php:881
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: includes/associations.php:36
+msgid "Paascongres Associations"
+msgstr ""
+
+#: includes/associations.php:37
+msgid "Associations"
+msgstr ""
+
+#: includes/associations.php:39
+msgid "Search Associations"
+msgstr ""
+
+#: includes/associations.php:41
+msgid "All Associations"
+msgstr ""
+
+#: includes/associations.php:42
+msgid "No Association"
+msgstr ""
+
+#: includes/associations.php:43
+msgid "Edit Association"
+msgstr ""
+
+#: includes/associations.php:44
+msgid "Update Association"
+msgstr ""
+
+#: includes/associations.php:45
+msgid "Add New Association"
+msgstr ""
+
+#: includes/associations.php:46
+msgid "New Association Name"
+msgstr ""
+
+#: includes/associations.php:47
+msgid "View Association"
+msgstr ""
+
+#: includes/dashboard.php:97
+#, php-format
+msgid "%s Enrolled"
+msgid_plural "%s Enrolled"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:103
+#, php-format
+msgid "%s Account"
+msgid_plural "%s Accounts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:109
+#, php-format
+msgid "%s Association"
+msgid_plural "%s Associations"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:115
+#, php-format
+msgid "%s Lecture"
+msgid_plural "%s Lectures"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:121
+#, php-format
+msgid "%s Workshop"
+msgid_plural "%s Workshops"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:127
+#, php-format
+msgid "%s Speaker"
+msgid_plural "%s Speakers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:133
+#, php-format
+msgid "%s Day"
+msgid_plural "%s Days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:139
+#, php-format
+msgid "%s Agenda Item"
+msgid_plural "%s Agenda Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:145
+#, php-format
+msgid "%s Location"
+msgid_plural "%s Locations"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:151
+#, php-format
+msgid "%s Partner"
+msgid_plural "%s Partners"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/dashboard.php:170
+msgid "There is currently nothing to display here."
+msgstr ""
+
+#: includes/functions.php:231
+msgid "Agenda page"
+msgstr ""
+
+#: includes/functions.php:232
+msgctxt "menu type label"
+msgid "Paascongres Agenda page"
+msgstr ""
+
+#: includes/functions.php:239
+msgid "Associations page"
+msgstr ""
+
+#: includes/functions.php:240
+msgctxt "menu type label"
+msgid "Paascongres Associations page"
+msgstr ""
+
+#: includes/functions.php:247
+msgid "Speakers page"
+msgstr ""
+
+#: includes/functions.php:248
+msgctxt "menu type label"
+msgid "Paascongres Speakers page"
+msgstr ""
+
+#: includes/functions.php:255
+msgid "Magazine download link"
+msgstr ""
+
+#: includes/functions.php:256
+msgctxt "menu type label"
+msgid "Paascongres Magazine Download Link"
+msgstr ""
+
+#: includes/functions.php:268 includes/functions.php:432
+msgctxt "menu type label"
+msgid "Paascongres Page"
+msgstr ""
+
+#: includes/lectures.php:36
+msgid "Paascongres Lectures"
+msgstr ""
+
+#: includes/lectures.php:37
+msgid "Lectures"
+msgstr ""
+
+#: includes/lectures.php:38 includes/settings.php:156
+msgid "Lecture"
+msgstr ""
+
+#: includes/lectures.php:39
+msgid "All Lectures"
+msgstr ""
+
+#: includes/lectures.php:40 includes/lectures.php:44
+msgid "New Lecture"
+msgstr ""
+
+#: includes/lectures.php:41
+msgid "Create New Lecture"
+msgstr ""
+
+#: includes/lectures.php:43
+msgid "Edit Lecture"
+msgstr ""
+
+#: includes/lectures.php:45 includes/lectures.php:46
+msgid "View Lecture"
+msgstr ""
+
+#: includes/lectures.php:47
+msgid "View Lectures"
+msgstr ""
+
+#: includes/lectures.php:48
+msgid "Search Lectures"
+msgstr ""
+
+#: includes/lectures.php:49
+msgid "No lectures found"
+msgstr ""
+
+#: includes/lectures.php:50
+msgid "No lectures found in Trash"
+msgstr ""
+
+#: includes/lectures.php:51
+msgid "Insert into lecture"
+msgstr ""
+
+#: includes/lectures.php:52
+msgid "Uploaded to this lecture"
+msgstr ""
+
+#: includes/lectures.php:53
+msgid "Filter lectures list"
+msgstr ""
+
+#: includes/lectures.php:54
+msgid "Lectures list navigation"
+msgstr ""
+
+#: includes/lectures.php:55
+msgid "Lectures list"
+msgstr ""
+
+#: includes/partners.php:36
+msgid "Paascongres Partners"
+msgstr ""
+
+#: includes/partners.php:37
+msgid "Partners"
+msgstr ""
+
+#: includes/partners.php:38
+msgid "Partner"
+msgstr ""
+
+#: includes/partners.php:39
+msgid "All Partners"
+msgstr ""
+
+#: includes/partners.php:40 includes/partners.php:44
+msgid "New Partner"
+msgstr ""
+
+#: includes/partners.php:41
+msgid "Create New Partner"
+msgstr ""
+
+#: includes/partners.php:43
+msgid "Edit Partner"
+msgstr ""
+
+#: includes/partners.php:45 includes/partners.php:46
+msgid "View Partner"
+msgstr ""
+
+#: includes/partners.php:47
+msgid "View Partners"
+msgstr ""
+
+#: includes/partners.php:48
+msgid "Search Partners"
+msgstr ""
+
+#: includes/partners.php:49
+msgid "No partners found"
+msgstr ""
+
+#: includes/partners.php:50
+msgid "No partners found in Trash"
+msgstr ""
+
+#: includes/partners.php:51
+msgid "Insert into partner"
+msgstr ""
+
+#: includes/partners.php:52
+msgid "Uploaded to this partner"
+msgstr ""
+
+#: includes/partners.php:53
+msgid "Filter partners list"
+msgstr ""
+
+#: includes/partners.php:54
+msgid "Partners list navigation"
+msgstr ""
+
+#: includes/partners.php:55
+msgid "Partners list"
+msgstr ""
+
+#: includes/partners.php:161
+msgid "Paascongres Partner Levels"
+msgstr ""
+
+#: includes/partners.php:162
+msgid "Partner Levels"
+msgstr ""
+
+#: includes/partners.php:163
+msgid "Partner Level"
+msgstr ""
+
+#: includes/partners.php:164
+msgid "Search Partner Levels"
+msgstr ""
+
+#: includes/partners.php:166
+msgid "All Partner Levels"
+msgstr ""
+
+#: includes/partners.php:167
+msgid "No Partner Level"
+msgstr ""
+
+#: includes/partners.php:168
+msgid "Edit Partner Level"
+msgstr ""
+
+#: includes/partners.php:169
+msgid "Update Partner Level"
+msgstr ""
+
+#: includes/partners.php:170
+msgid "Add New Partner Level"
+msgstr ""
+
+#: includes/partners.php:171
+msgid "New Partner Level Name"
+msgstr ""
+
+#: includes/partners.php:172
+msgid "View Partner Level"
+msgstr ""
+
+#: includes/settings.php:66
+msgid "Housekeeping Page"
+msgstr ""
+
+#: includes/settings.php:71
+msgid "Select the page that contains the housekeeping information"
+msgstr ""
+
+#: includes/settings.php:77
+msgid "Magazine"
+msgstr ""
+
+#: includes/settings.php:96
+msgid "Lectures Description"
+msgstr ""
+
+#: includes/settings.php:101
+msgid ""
+"This description text appears as an introduction to the lecture archive page"
+msgstr ""
+
+#: includes/settings.php:107
+msgid "Workshops Description"
+msgstr ""
+
+#: includes/settings.php:112
+msgid ""
+"This description text appears as an introduction to the workshop archive page"
+msgstr ""
+
+#: includes/settings.php:118
+msgid "Agenda Description"
+msgstr ""
+
+#: includes/settings.php:123
+msgid "This description text appears as an introduction to the agenda page"
+msgstr ""
+
+#: includes/settings.php:129
+msgid "Speakers Description"
+msgstr ""
+
+#: includes/settings.php:134
+msgid "This description text appears as an introduction to the speakers page"
+msgstr ""
+
+#: includes/settings.php:140
+msgid "Associations Description"
+msgstr ""
+
+#: includes/settings.php:145
+msgid ""
+"This description text appears as an introduction to the associations page"
+msgstr ""
+
+#: includes/settings.php:167 includes/workshops.php:38
+msgid "Workshop"
+msgstr ""
+
+#: includes/settings.php:178 includes/workshops.php:117
+msgid "Workshop Category"
+msgstr ""
+
+#: includes/settings.php:186 includes/workshops.php:259
+msgid "Workshop Round"
+msgstr ""
+
+#: includes/settings.php:305
+msgid "&mdash; No Page &mdash;"
+msgstr ""
+
+#: includes/settings.php:312 includes/extend/buddypress/settings.php:143
+msgid "View"
+msgstr ""
+
+#: includes/settings.php:333
+msgid "Select the magazine landing page"
+msgstr ""
+
+#: includes/settings.php:339
+msgid "Select the magazine file that is offered for download"
+msgstr ""
+
+#: includes/settings.php:389
+msgid "Customize the structure of your conference page urls."
+msgstr ""
+
+#: includes/settings.php:426 includes/settings.php:440
+#, php-format
+msgid "Will be used after the workshop slug, like: %s"
+msgstr ""
+
+#: includes/settings.php:458
+msgid "Paascongres 2017"
+msgstr ""
+
+#: includes/settings.php:529
+msgid "Dashboard"
+msgstr ""
+
+#: includes/speakers.php:36
+msgid "Paascongres Speakers"
+msgstr ""
+
+#: includes/speakers.php:37
+msgid "Speakers"
+msgstr ""
+
+#: includes/speakers.php:39
+msgid "Search Speakers"
+msgstr ""
+
+#: includes/speakers.php:41
+msgid "All Speakers"
+msgstr ""
+
+#: includes/speakers.php:42
+msgid "No Speaker"
+msgstr ""
+
+#: includes/speakers.php:43
+msgid "Edit Speaker"
+msgstr ""
+
+#: includes/speakers.php:44
+msgid "Update Speaker"
+msgstr ""
+
+#: includes/speakers.php:45
+msgid "Add New Speaker"
+msgstr ""
+
+#: includes/speakers.php:46
+msgid "New Speaker Name"
+msgstr ""
+
+#: includes/speakers.php:47
+msgid "View Speaker"
+msgstr ""
+
+#: includes/template.php:691 includes/theme-compat.php:76
+msgctxt "agenda page title"
+msgid "Agenda"
+msgstr ""
+
+#: includes/template.php:695 includes/theme-compat.php:90
+msgctxt "associations page title"
+msgid "Associations"
+msgstr ""
+
+#: includes/template.php:699 includes/theme-compat.php:104
+msgctxt "speakers page title"
+msgid "Speakers"
+msgstr ""
+
+#: includes/workshops.php:36
+msgid "Paascongres Workshops"
+msgstr ""
+
+#: includes/workshops.php:37
+msgid "Workshops"
+msgstr ""
+
+#: includes/workshops.php:39
+msgid "All Workshops"
+msgstr ""
+
+#: includes/workshops.php:40 includes/workshops.php:44
+msgid "New Workshop"
+msgstr ""
+
+#: includes/workshops.php:41
+msgid "Create New Workshop"
+msgstr ""
+
+#: includes/workshops.php:43
+msgid "Edit Workshop"
+msgstr ""
+
+#: includes/workshops.php:45 includes/workshops.php:46
+msgid "View Workshop"
+msgstr ""
+
+#: includes/workshops.php:47
+msgid "View Workshops"
+msgstr ""
+
+#: includes/workshops.php:48
+msgid "Search Workshops"
+msgstr ""
+
+#: includes/workshops.php:49
+msgid "No workshops found"
+msgstr ""
+
+#: includes/workshops.php:50
+msgid "No workshops found in Trash"
+msgstr ""
+
+#: includes/workshops.php:51
+msgid "Insert into workshop"
+msgstr ""
+
+#: includes/workshops.php:52
+msgid "Uploaded to this workshop"
+msgstr ""
+
+#: includes/workshops.php:53
+msgid "Filter workshops list"
+msgstr ""
+
+#: includes/workshops.php:54
+msgid "Workshops list navigation"
+msgstr ""
+
+#: includes/workshops.php:55
+msgid "Workshops list"
+msgstr ""
+
+#: includes/workshops.php:115
+msgid "Paascongres Workshop Categories"
+msgstr ""
+
+#: includes/workshops.php:116
+msgid "Categories"
+msgstr ""
+
+#: includes/workshops.php:118
+msgid "Search Workshop Categories"
+msgstr ""
+
+#: includes/workshops.php:120
+msgid "All Workshop Categories"
+msgstr ""
+
+#: includes/workshops.php:121
+msgid "No Workshop Category"
+msgstr ""
+
+#: includes/workshops.php:122
+msgid "Edit Workshop Category"
+msgstr ""
+
+#: includes/workshops.php:123
+msgid "Update Workshop Category"
+msgstr ""
+
+#: includes/workshops.php:124
+msgid "Add New Workshop Category"
+msgstr ""
+
+#: includes/workshops.php:125
+msgid "New Workshop Category Name"
+msgstr ""
+
+#: includes/workshops.php:126
+msgid "View Workshop Category"
+msgstr ""
+
+#: includes/workshops.php:257
+msgid "Paascongres Workshop Rounds"
+msgstr ""
+
+#: includes/workshops.php:258
+msgid "Rounds"
+msgstr ""
+
+#: includes/workshops.php:260
+msgid "Search Workshop Rounds"
+msgstr ""
+
+#: includes/workshops.php:262
+msgid "All Workshop Rounds"
+msgstr ""
+
+#: includes/workshops.php:263
+msgid "No Workshop Round"
+msgstr ""
+
+#: includes/workshops.php:264
+msgid "Edit Workshop Round"
+msgstr ""
+
+#: includes/workshops.php:265
+msgid "Update Workshop Round"
+msgstr ""
+
+#: includes/workshops.php:266
+msgid "Add New Workshop Round"
+msgstr ""
+
+#: includes/workshops.php:267
+msgid "New Workshop Round Name"
+msgstr ""
+
+#: includes/workshops.php:268
+msgid "View Workshop Round"
+msgstr ""
+
+#: includes/classes/class-paco2017-enrollments-widget.php:29
+msgctxt "widget title"
+msgid "Paascongres Enrollments"
+msgstr ""
+
+#: includes/classes/class-paco2017-enrollments-widget.php:31
+msgid "List the current enrollment status for all associations"
+msgstr ""
+
+#: includes/extend/buddypress/admin.php:62
+msgid "Paascongres 2017 BuddyPress Settings"
+msgstr ""
+
+#: includes/extend/buddypress/admin.php:63
+msgctxt "buddypress settings admin menu"
+msgid "Profiles"
+msgstr ""
+
+#: includes/extend/buddypress/admin.php:146
+msgctxt "admin field label"
+msgid "Enrollment Field"
+msgstr ""
+
+#: includes/extend/buddypress/admin.php:151
+msgctxt "admin field label"
+msgid "Association Field"
+msgstr ""
+
+#: includes/extend/buddypress/buddypress.php:258
+#: includes/extend/buddypress/buddypress.php:283
+msgid "Enrollment"
+msgstr ""
+
+#: includes/extend/buddypress/members.php:25
+msgid "All Enrolled"
+msgstr ""
+
+#: includes/extend/buddypress/members.php:50
+msgid "Newest Enrolled"
+msgstr ""
+
+#: includes/extend/buddypress/members.php:129
+msgid "The following people have enrolled for the event."
+msgstr ""
+
+#: includes/extend/buddypress/members.php:134
+msgid ""
+"The following people from your own association have received an invitation."
+msgstr ""
+
+#: includes/extend/buddypress/members.php:150
+msgid "This member is enrolled for the event."
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:27
+msgid "Fields"
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:50
+msgid "Enrollment Field"
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:55
+msgid "Select the field that holds the member's enrollment status."
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:61
+msgid "Required Fields"
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:69
+msgid "Association Field"
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:74
+msgid "Select the field that holds the member's association value."
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:111
+#, php-format
+msgid ""
+"This function requires the %s parameter to display the settings field input."
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:117
+msgid "Activate the Extended Profiles component to use this setting."
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:223
+msgid ""
+"These are the required profile fields for this site. You can mark fields as "
+"required when editing the field."
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:236
+msgid "There are no fields selected yet."
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:253
+msgid "Profiles"
+msgstr ""
+
+#. %s: Name of current post
+#. %s: Name of current post
+#. %s: Name of current post
+#: templates/default/paco2017/content-agenda-items.php:47
+#: templates/default/paco2017/content-associations.php:40
+#: templates/default/paco2017/content-speakers.php:41
+#, php-format
+msgid "Edit<span class=\"screen-reader-text\"> \"%s\"</span>"
+msgstr ""
+
+#: templates/default/paco2017/content-agenda.php:42
+msgid "There are no items scheduled for this day."
+msgstr ""
+
+#: templates/default/paco2017/content-agenda.php:58
+msgid "There are no items scheduled."
+msgstr ""
+
+#: templates/default/paco2017/info-agenda-related-item.php:24
+#, php-format
+msgid "This item is scheduled for %2$s at %1$s."
+msgstr ""
+
+#: templates/default/paco2017/info-agenda-related-item.php:30
+#, php-format
+msgid "This item is scheduled at %1$s."
+msgstr ""
+
+#: templates/default/paco2017/info-agenda-related-item.php:37
+#: templates/default/paco2017/info-workshop.php:41
+#, php-format
+msgctxt "object taxonomy detail"
+msgid "Location: %s"
+msgstr ""
+
+#: templates/default/paco2017/info-speaker.php:25
+#, php-format
+msgid "About %s"
+msgstr ""
+
+#: templates/default/paco2017/info-speaker.php:32
+msgid ""
+"View all speakers at this conference <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: templates/default/paco2017/info-workshop.php:20
+#, php-format
+msgctxt "object taxonomy detail"
+msgid "Workshop round: %s"
+msgstr ""
+
+#: templates/default/paco2017/info-workshop.php:27
+#, php-format
+msgctxt "object taxonomy detail"
+msgid "Speaker: %s"
+msgstr ""
+
+#: templates/default/paco2017/info-workshop.php:34
+#, php-format
+msgctxt "object taxonomy detail"
+msgid "Category: %s"
+msgstr ""
+
+#. Name of the plugin
+msgid "Paascongres 2017 Content"
+msgstr ""
+
+#. Description of the plugin
+msgid "Content logic for the Paascongres 2017 event site"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://github.com/vgsr/paco2017-content/"
+msgstr ""
+
+#. Author of the plugin
+msgid "Laurens Offereins"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://github.com/vgsr/"
+msgstr ""
