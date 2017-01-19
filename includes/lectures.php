@@ -84,5 +84,6 @@ function paco2017_get_lecture_post_type_supports() {
 		'title',
 		'editor',
 		'thumbnail',
+		'page-attributes',
 	) );
 }

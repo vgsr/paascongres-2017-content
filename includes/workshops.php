@@ -85,6 +85,7 @@ function paco2017_get_workshop_post_type_supports() {
 		'editor',
 		'excerpt',
 		'thumbnail',
+		'page-attributes',
 	) );
 }
 
