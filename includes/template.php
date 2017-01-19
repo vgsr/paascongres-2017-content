@@ -110,6 +110,34 @@ function paco2017_parse_query( $posts_query ) {
 }
 
 /**
+ * Handle custom query vars at parse_query action
+ *
+ * @since 1.0.0
+ *
+ * @param WP_Query $posts_query
+ */
+function paco2017_parse_query_vars( $posts_query ) {
+
+	// Bail when filters are suppressed on this query
+	if ( true === $posts_query->get( 'suppress_filters' ) )
+		return;
+
+	// Get query details
+	$post_type    = (array) $posts_query->get( 'post_type' );
+	$is_lectures  = paco2017_get_lecture_post_type()  === reset( $post_type );
+	$is_workshpos = paco2017_get_workshop_post_type() === reset( $post_type );
+
+	// Lecture or Workshop query
+	if ( $is_lectures || $is_workshpos ) {
+
+		// Default to ordering by page number in menu_order, then title
+		if ( ! $posts_query->get( 'orderby' ) ) {
+			$posts_query->set( 'orderby', array( 'menu_order' => 'ASC', 'title' => 'ASC' ) );
+		}
+	}
+}
+
+/**
  * Overwrite the main WordPress query
  *
  * @since 1.0.0
