@@ -23,10 +23,10 @@ defined( 'ABSPATH' ) || exit;
 function paco2017_bp_add_settings_sections( $sections ) {
 
 	// Members settings
-	$sections['buddypress-members'] = array(
-		'title'    => __( 'Participants', 'paco2017-content' ),
-		'callback' => 'paco2017_bp_admin_setting_callback_members_section',
-		'page'     => 'paco2017',
+	$sections['buddypress-fields'] = array(
+		'title'    => __( 'Fields', 'paco2017-content' ),
+		'callback' => 'paco2017_bp_admin_setting_callback_fields_section',
+		'page'     => 'paco2017-buddypress',
 	);
 
 	return $sections;
@@ -43,7 +43,7 @@ function paco2017_bp_add_settings_sections( $sections ) {
 function paco2017_bp_add_settings_fields( $fields ) {
 
 	// Members settings
-	$fields['buddypress-members'] = array(
+	$fields['buddypress-fields'] = array(
 
 		// The Enrollment field
 		'_paco2017_bp_xprofile_enrollment_field' => array(
@@ -91,11 +91,11 @@ function paco2017_bp_admin_setting_callback_general_section() { /* Nothing to di
 /** Members Section *******************************************************/
 
 /**
- * BuddyPress members settings section description for the settings page
+ * BuddyPress fields settings section description for the settings page
  *
  * @since 1.0.0
  */
-function paco2017_bp_admin_setting_callback_members_section() { /* Nothing to display */ }
+function paco2017_bp_admin_setting_callback_fields_section() { /* Nothing to display */ }
 
 /**
  * Display a XProfile field selector settings field
@@ -235,4 +235,42 @@ function paco2017_bp_admin_setting_callback_required_fields() {
 	} else {
 		echo '<p class="description">' . esc_html__( 'There are no fields selected yet.', 'paco2017-content' ) . '</p>';
 	}
+}
+
+/** Pages ***************************************************************/
+
+/**
+ * Modify the plugin's admin pages
+ *
+ * @since 1.1.0
+ *
+ * @param array $pages Admin pages
+ * @return array Admin pages
+ */
+function paco2017_bp_add_settings_pages( $pages ) {
+
+	// Add BP settings page
+	$pages['paco2017-buddypress'] = esc_html__( 'Profiles', 'paco2017-content' );
+
+	return $pages;
+}
+
+/**
+ * Output the contents of the BuddyPress Settings admin page
+ *
+ * @since 1.0.0
+ */
+function paco2017_bp_admin_settings_page() { ?>
+
+	<form action="options.php" method="post">
+
+		<?php settings_fields( 'paco2017-buddypress' ); ?>
+
+		<?php do_settings_sections( 'paco2017-buddypress' ); ?>
+
+		<?php submit_button(); ?>
+
+	</form>
+
+	<?php
 }

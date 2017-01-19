@@ -46,6 +46,7 @@ if ( is_admin() ) {
 	add_filter( 'paco2017_dashboard_statuses', 'paco2017_bp_members_dashboard_statuses' );
 
 	// Settings
+	add_filter( 'paco2017_admin_page_get_pages',        'paco2017_bp_add_settings_pages'    );
 	add_filter( 'paco2017_admin_get_settings_sections', 'paco2017_bp_add_settings_sections' );
 	add_filter( 'paco2017_admin_get_settings_fields',   'paco2017_bp_add_settings_fields'   );
 }

@@ -33,6 +33,10 @@ class Paco2017_BuddyPress_Admin {
 	 * @since 1.0.0
 	 */
 	private function setup_actions() {
+
+		// Core
+		add_action( 'admin_menu',            array( $this, 'admin_menu'      ) );
+		add_action( 'admin_head',            array( $this, 'admin_head'      ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// XProfile
@@ -40,6 +44,65 @@ class Paco2017_BuddyPress_Admin {
 	}
 
 	/** Public methods **************************************************/
+
+	/**
+	 * Setup admin menu pages
+	 *
+	 * @since 1.1.0
+	 */
+	public function admin_menu() {
+
+		// Collect highlightable pages
+		$hooks = array();
+
+		// BP Settings page
+		if ( paco2017_admin_page_has_settings( 'paco2017-buddypress' ) ) {
+			$hooks[] = add_submenu_page(
+				'paco2017',
+				__( 'Paascongres 2017 BuddyPress Settings', 'paco2017-content' ),
+				_x( 'Profiles', 'buddypress settings admin menu', 'paco2017-content' ),
+				'paco2017_bp_admin_settings_page',
+				'paco2017-buddypress',
+				'paco2017_admin_page'
+			);
+		}
+
+		// Register admin page hooks
+		add_action( 'paco2017_admin_page-paco2017-buddypress', 'paco2017_bp_admin_settings_page' );
+
+		foreach ( $hooks as $hook ) {
+			add_action( "admin_head-{$hook}", array( $this, 'admin_menu_highlight' ) );
+		}
+	}
+
+	/**
+	 * Modify the highlighed menu for the current admin page
+	 *
+	 * @see Paco2017_Admin::admin_menu_highlight()
+	 *
+	 * @since 1.1.0
+	 *
+	 * @global string $parent_file
+	 * @global string $submenu_file
+	 */
+	public function admin_menu_highlight() {
+		global $parent_file, $submenu_file;
+
+		// Highlight settings menu item
+		if ( 'paco2017' === $parent_file ) {
+			$parent_file  = 'paco2017';
+			$submenu_file = 'paco2017-settings';
+		}
+	}
+
+	/**
+	 * Remove admin menu items
+	 *
+	 * @since 1.1.0
+	 */
+	public function admin_head() {
+		remove_submenu_page( 'paco2017', 'paco2017-buddypress' );
+	}
 
 	/**
 	 * Enqueue additional styles and scripts
