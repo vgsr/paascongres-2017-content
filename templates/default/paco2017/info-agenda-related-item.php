@@ -19,23 +19,35 @@ if ( ! $item = paco2017_get_agenda_item() )
 <div class="paco2017-info agenda-info">
 	<p>
 
-	<?php if ( paco2017_has_conf_day_date( $item ) ) {
-		printf(
-			__( 'This item is scheduled for %2$s at %1$s.', 'paco2017-content' ),
-			paco2017_get_agenda_item_start_time( $item ),
-			paco2017_get_conf_day_date( $item )
-		);
-	} else {
-		printf(
-			__( 'This item is scheduled at %1$s.', 'paco2017-content' ),
-			paco2017_get_agenda_item_start_time( $item )
-		);
-	} ?>
+	<?php
 
-	<?php if ( paco2017_object_has_conf_location( $item ) ) {
+	// Scheduled by day
+	if ( paco2017_has_conf_day_date( $item ) ) {
+		$info_text = paco2017_object_has_conf_location( $item )
+			/* translators: 1. Time 2. Date 3. Location adverbial */
+			? __( 'This item is scheduled for %2$s %3$s at %1$s.', 'paco2017-content' )
+			/* translators: 1. Time 2. Date */
+			: __( 'This item is scheduled for %2$s at %1$s.', 'paco2017-content' );
+
 		printf(
-			'<span class="item-detail tax-conf-location">' . _x( 'Location: %s', 'object taxonomy detail', 'paco2017-content' ) . '</span>',
-			'<span class="detail-value">' . paco2017_get_conf_location_title( $item ) . '</span>'
+			$info_text,
+			paco2017_get_agenda_item_start_time( $item ),
+			paco2017_get_conf_day_date( $item ),
+			paco2017_get_conf_location_adverbial( $item )
+		);
+
+	// Scheduled without day
+	} else {
+		$info_text = paco2017_object_has_conf_location( $item )
+			/* translators: 1. Time 2. Location adverbial */
+			? __( 'This item is scheduled at %1$s %2$s.', 'paco2017-content' )
+			/* translators: 1. Time */
+			: __( 'This item is scheduled at %1$s.', 'paco2017-content' );
+
+		printf(
+			$info_text,
+			paco2017_get_agenda_item_start_time( $item ),
+			paco2017_get_conf_location_adverbial( $item )
 		);
 	} ?>
 

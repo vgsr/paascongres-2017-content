@@ -3,87 +3,87 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-19 17:59+0000\n"
+"POT-Creation-Date: 2017-01-20 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
 "Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/"
+"X-Generator: Loco - https://localise.biz/"
 
-#: paco2017-content.php:238
+#: paco2017-content.php:239
 msgid "Paascongres lectures"
 msgstr ""
 
-#: paco2017-content.php:263
+#: paco2017-content.php:264
 msgid "Paascongres workshops"
 msgstr ""
 
-#: paco2017-content.php:288
+#: paco2017-content.php:289
 msgid "Paascongres agenda items"
 msgstr ""
 
-#: paco2017-content.php:313
+#: paco2017-content.php:314
 msgid "Paascongres partners"
 msgstr ""
 
-#: paco2017-content.php:338
+#: paco2017-content.php:339
 msgid "Set Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:339
+#: paco2017-content.php:340
 msgid "Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:340
+#: paco2017-content.php:341
 msgid "Remove Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:540 includes/admin.php:552
+#: paco2017-content.php:543 includes/admin.php:552
 msgid "Logo"
 msgstr ""
 
-#: paco2017-content.php:541
+#: paco2017-content.php:544
 msgid "Logos"
 msgstr ""
 
-#: paco2017-content.php:542
+#: paco2017-content.php:545
 #, php-format
 msgid "Set %s logo"
 msgstr ""
 
-#: paco2017-content.php:543
+#: paco2017-content.php:546
 #, php-format
 msgid "%s logo"
 msgstr ""
 
-#: paco2017-content.php:544
+#: paco2017-content.php:547
 #, php-format
 msgid "Remove %s logo"
 msgstr ""
 
-#: paco2017-content.php:551
+#: paco2017-content.php:554
 msgid "Photo"
 msgstr ""
 
-#: paco2017-content.php:552
+#: paco2017-content.php:555
 msgid "Photos"
 msgstr ""
 
-#: paco2017-content.php:553
+#: paco2017-content.php:556
 #, php-format
 msgid "Set %s photo"
 msgstr ""
 
-#: paco2017-content.php:554
+#: paco2017-content.php:557
 #, php-format
 msgid "%s photo"
 msgstr ""
 
-#: paco2017-content.php:555
+#: paco2017-content.php:558
 #, php-format
 msgid "Remove %s photo"
 msgstr ""
@@ -1195,21 +1195,26 @@ msgstr ""
 msgid "There are no items scheduled."
 msgstr ""
 
-#: templates/default/paco2017/info-agenda-related-item.php:24
+#. 1. Time 2. Date 3. Location adverbial
+#: templates/default/paco2017/info-agenda-related-item.php:28
 #, php-format
-msgid "This item is scheduled for %2$s at %1$s."
+msgid "This item is scheduled for %2$s %3$s at %1$s."
 msgstr ""
 
 #: templates/default/paco2017/info-agenda-related-item.php:30
 #, php-format
-msgid "This item is scheduled at %1$s."
+msgid "This item is scheduled for %2$s at %1$s."
 msgstr ""
 
-#: templates/default/paco2017/info-agenda-related-item.php:37
-#: templates/default/paco2017/info-workshop.php:41
+#. 1. Time 2. Location adverbial
+#: templates/default/paco2017/info-agenda-related-item.php:43
 #, php-format
-msgctxt "object taxonomy detail"
-msgid "Location: %s"
+msgid "This item is scheduled at %1$s %2$s."
+msgstr ""
+
+#: templates/default/paco2017/info-agenda-related-item.php:45
+#, php-format
+msgid "This item is scheduled at %1$s."
 msgstr ""
 
 #: templates/default/paco2017/info-speaker.php:25
@@ -1238,6 +1243,12 @@ msgstr ""
 #, php-format
 msgctxt "object taxonomy detail"
 msgid "Category: %s"
+msgstr ""
+
+#: templates/default/paco2017/info-workshop.php:41
+#, php-format
+msgctxt "object taxonomy detail"
+msgid "Location: %s"
 msgstr ""
 
 #. Name of the plugin

@@ -1338,3 +1338,31 @@ function paco2017_get_conf_location_content( $term = 0 ) {
 
 	return apply_filters( 'paco2017_get_conf_location_content', $content, $term );
 }
+
+/**
+ * Return the Conference Location adverbial
+ *
+ * @since 0.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_conf_location_adverbial'
+ *
+ * @param WP_Term|int|WP_Post $term Optional. Term object or ID or related post object. Defaults to the current term.
+ * @param string $meta_key Optional. Meta key. Defaults to 'adverbial'.
+ * @return string Term adverbial
+ */
+function paco2017_get_conf_location_adverbial( $term = 0, $meta_key = 'adverbial' ) {
+	$term      = paco2017_get_conf_location( $term );
+	$title     = paco2017_get_conf_location_title( $term );
+	$adverbial = '';
+
+	if ( $term ) {
+		$adverbial = sprintf( get_term_meta( $term->term_id, $meta_key, true ), $title );
+	}
+
+	// Default to the term's title
+	if ( empty( $adverbial ) ) {
+		$adverbial = $title;
+	}
+
+	return apply_filters( 'paco2017_get_conf_location_adverbial', $adverbial, $term, $meta_key );
+}

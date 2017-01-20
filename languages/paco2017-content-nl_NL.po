@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Paascongres 2017 Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-19 17:59+0000\n"
-"PO-Revision-Date: 2017-01-19 19:00+0000\n"
+"POT-Creation-Date: 2017-01-20 14:38+0000\n"
+"PO-Revision-Date: 2017-01-20 14:39+0000\n"
 "Last-Translator: laurens <lmoffereins@gmail.com>\n"
-"Language-Team: Dutch\n"
+"Language-Team: Dutch (Netherlands)\n"
 "Language: nl-NL\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
@@ -13,76 +13,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: paco2017-content.php:238
+#. 1. Time 2. Date 3. Location adverbial
+#: templates/default/paco2017/info-agenda-related-item.php:28
+#, php-format
+msgid "This item is scheduled for %2$s %3$s at %1$s."
+msgstr "Deze activiteit is gepland op %2$s %3$s om %1$s."
+
+#. 1. Time 2. Location adverbial
+#: templates/default/paco2017/info-agenda-related-item.php:43
+#, php-format
+msgid "This item is scheduled at %1$s %2$s."
+msgstr "Deze activiteit is gepland om %1$s %2$s."
+
+#: paco2017-content.php:239
 msgid "Paascongres lectures"
 msgstr "Paascongres lezingen"
 
-#: paco2017-content.php:263
+#: paco2017-content.php:264
 msgid "Paascongres workshops"
 msgstr "Paascongres workshops"
 
-#: paco2017-content.php:288
+#: paco2017-content.php:289
 msgid "Paascongres agenda items"
 msgstr "Paascongres activiteiten"
 
-#: paco2017-content.php:313
+#: paco2017-content.php:314
 msgid "Paascongres partners"
 msgstr "Paascongres partners"
 
-#: paco2017-content.php:338
+#: paco2017-content.php:339
 msgid "Set Partner Logo"
 msgstr "Partnerlogo instellen"
 
-#: paco2017-content.php:339
+#: paco2017-content.php:340
 msgid "Partner Logo"
 msgstr "Partnerlogo"
 
-#: paco2017-content.php:340
+#: paco2017-content.php:341
 msgid "Remove Partner Logo"
 msgstr "Verwijder Partnerlogo"
 
-#: paco2017-content.php:540 includes/admin.php:552
+#: paco2017-content.php:543 includes/admin.php:552
 msgid "Logo"
 msgstr "Logo"
 
-#: paco2017-content.php:541
+#: paco2017-content.php:544
 msgid "Logos"
 msgstr "Logo's"
 
-#: paco2017-content.php:542
+#: paco2017-content.php:545
 #, php-format
 msgid "Set %s logo"
 msgstr "Logo voor %s instellen"
 
-#: paco2017-content.php:543
+#: paco2017-content.php:546
 #, php-format
 msgid "%s logo"
 msgstr "%slogo"
 
-#: paco2017-content.php:544
+#: paco2017-content.php:547
 #, php-format
 msgid "Remove %s logo"
 msgstr "Verwijder %slogo"
 
-#: paco2017-content.php:551
+#: paco2017-content.php:554
 msgid "Photo"
 msgstr "Foto"
 
-#: paco2017-content.php:552
+#: paco2017-content.php:555
 msgid "Photos"
 msgstr "Foto's"
 
-#: paco2017-content.php:553
+#: paco2017-content.php:556
 #, php-format
 msgid "Set %s photo"
 msgstr "Foto voor %s instellen"
 
-#: paco2017-content.php:554
+#: paco2017-content.php:557
 #, php-format
 msgid "%s photo"
 msgstr "%sfoto"
 
-#: paco2017-content.php:555
+#: paco2017-content.php:558
 #, php-format
 msgid "Remove %s photo"
 msgstr "Verwijder %sfoto"
@@ -1206,22 +1218,15 @@ msgstr "Er zijn geen activiteiten gepland voor deze dag."
 msgid "There are no items scheduled."
 msgstr "Er zijn geen activiteiten gepland."
 
-#: templates/default/paco2017/info-agenda-related-item.php:24
-#, php-format
-msgid "This item is scheduled for %2$s at %1$s."
-msgstr "Deze activiteit is gepland op %2$s om %1$s."
-
 #: templates/default/paco2017/info-agenda-related-item.php:30
 #, php-format
-msgid "This item is scheduled at %1$s."
-msgstr "Deze activiteit is gepland om %1$s."
+msgid "This item is scheduled for %2$s at %1$s."
+msgstr "Deze activiteit vindt plaats op %2$s om %1$s."
 
-#: templates/default/paco2017/info-agenda-related-item.php:37
-#: templates/default/paco2017/info-workshop.php:41
+#: templates/default/paco2017/info-agenda-related-item.php:45
 #, php-format
-msgctxt "object taxonomy detail"
-msgid "Location: %s"
-msgstr "Locatie: %s"
+msgid "This item is scheduled at %1$s."
+msgstr "Deze activiteit vindt plaats om %1$s."
 
 #: templates/default/paco2017/info-speaker.php:25
 #, php-format
@@ -1251,6 +1256,12 @@ msgstr "Spreker: %s"
 msgctxt "object taxonomy detail"
 msgid "Category: %s"
 msgstr "Categorie: %s"
+
+#: templates/default/paco2017/info-workshop.php:41
+#, php-format
+msgctxt "object taxonomy detail"
+msgid "Location: %s"
+msgstr "Locatie: %s"
 
 #. Name of the plugin
 msgid "Paascongres 2017 Content"
