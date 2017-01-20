@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Paascongres 2017 Content\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-20 14:38+0000\n"
-"PO-Revision-Date: 2017-01-20 14:39+0000\n"
+"PO-Revision-Date: 2017-01-20 14:47+0000\n"
 "Last-Translator: laurens <lmoffereins@gmail.com>\n"
 "Language-Team: Dutch (Netherlands)\n"
 "Language: nl-NL\n"
@@ -1133,7 +1133,7 @@ msgstr "Alle aanmeldingen"
 
 #: includes/extend/buddypress/members.php:50
 msgid "Newest Enrolled"
-msgstr "Laatst Aangemeld"
+msgstr "Laatst aangemeld"
 
 #: includes/extend/buddypress/members.php:129
 msgid "The following people have enrolled for the event."
@@ -1142,8 +1142,7 @@ msgstr "De volgende personen hebben zich aangemeld voor het congres."
 #: includes/extend/buddypress/members.php:134
 msgid ""
 "The following people from your own association have received an invitation."
-msgstr ""
-"De volgende leden van jouw vereniging zijn uitgenodigd voor het congres."
+msgstr "De volgende leden van uw vereniging zijn uitgenodigd voor het congres."
 
 #: includes/extend/buddypress/members.php:150
 msgid "This member is enrolled for the event."
@@ -1237,7 +1236,7 @@ msgstr "Over %s"
 msgid ""
 "View all speakers at this conference <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
-"Toon alle sprekers op dit congres <span class=\"meta-nav\">&rarr;</span>"
+"Bekijk alle sprekers van dit congres <span class=\"meta-nav\">&rarr;</span>"
 
 #: templates/default/paco2017/info-workshop.php:20
 #, php-format
