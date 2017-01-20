@@ -134,12 +134,13 @@ final class Paco2017_Content {
 
 		/** Classes *****************************************************/
 
-		require( $this->includes_dir . 'classes/class-wp-post-image.php'    );
-		require( $this->includes_dir . 'classes/class-wp-setting-image.php' );
-		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php'  );
-		require( $this->includes_dir . 'classes/class-wp-term-colors.php'   );
-		require( $this->includes_dir . 'classes/class-wp-term-date.php'     );
-		require( $this->includes_dir . 'classes/class-wp-term-image.php'    );
+		require( $this->includes_dir . 'classes/class-wp-post-image.php'     );
+		require( $this->includes_dir . 'classes/class-wp-setting-image.php'  );
+		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php'   );
+		require( $this->includes_dir . 'classes/class-wp-term-adverbial.php' );
+		require( $this->includes_dir . 'classes/class-wp-term-colors.php'    );
+		require( $this->includes_dir . 'classes/class-wp-term-date.php'      );
+		require( $this->includes_dir . 'classes/class-wp-term-image.php'     );
 
 		/** Widgets *****************************************************/
 
@@ -500,6 +501,7 @@ final class Paco2017_Content {
 				'meta_box_cb'           => false, // No metaboxing
 
 				// Term meta
+				'term_meta_adverbial'   => true,
 				'term_meta_color'       => true,
 			)
 		);
@@ -531,6 +533,7 @@ final class Paco2017_Content {
 
 		/** Meta ********************************************************/
 
+		new WP_Term_Adverbial( $this->file );
 		new WP_Term_Colors( $this->file );
 		new WP_Term_Date( $this->file );
 		new WP_Term_Image( $this->file, array(
