@@ -29,17 +29,17 @@ defined( 'ABSPATH' ) || exit;
 		);
 	} ?>
 
-	<?php if ( paco2017_object_has_workshop_cat() && ! paco2017_is_workshop_category() ) {
-		printf(
-			'<span class="item-detail tax-workshop-cat">' . _x( 'Category: %s', 'object taxonomy detail', 'paco2017-content' ) . '</span>',
-			'<span class="detail-value">' . paco2017_get_workshop_cat_link() . '</span>'
-		);
-	} ?>
-
 	<?php if ( paco2017_object_has_conf_location() ) {
 		printf(
 			'<span class="item-detail tax-conf-location">' . _x( 'Location: %s', 'object taxonomy detail', 'paco2017-content' ) . '</span>',
 			'<span class="detail-value">' . paco2017_get_conf_location_title() . '</span>'
+		);
+	} ?>
+
+	<?php if ( paco2017_object_has_workshop_cat() && ! paco2017_is_workshop_category() ) {
+		printf(
+			'<span class="item-detail tax-workshop-cat">' . _x( 'Category: %s', 'object taxonomy detail', 'paco2017-content' ) . '</span>',
+			'<span class="detail-value">' . paco2017_get_workshop_cat_link() . '</span>'
 		);
 	} ?>
 
