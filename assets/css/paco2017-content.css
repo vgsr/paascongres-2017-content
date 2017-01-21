@@ -118,6 +118,12 @@
 	content: ' \2013';
 }
 
+/* Sprekers */
+
+.paco2017-content ul.item-objects li {
+	margin-bottom: 0;
+}
+
 @media screen and (min-width: 30em) {
 
 	/* Info */
