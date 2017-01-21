@@ -214,6 +214,78 @@ function paco2017_has_custom_query() {
 	return $retval;
 }
 
+/**
+ * Modify the adjacent post's WHERE query clause
+ *
+ * Custom menu order is assumed to be set for the Lecture
+ * and Workshop post types.
+ *
+ * @since 1.1.0
+ *
+ * @param string $where          The `WHERE` clause in the SQL.
+ * @param bool   $in_same_term   Whether post should be in a same taxonomy term.
+ * @param array  $excluded_terms Array of excluded term IDs.
+ * @param string $taxonomy       Taxonomy. Used to identify the term used when `$in_same_term` is true.
+ * @param WP_Post $post          WP_Post object. Added in WP 4.4
+ * @return string WHERE clause
+ */
+function paco2017_get_adjacent_post_where( $where, $in_same_term, $excluded_terms, $taxonomy, $post = null ) {
+
+	// Get the post
+	$post = get_post( $post );
+
+	// Menu-ordered post types
+	if ( in_array( $post->post_type, array(
+		paco2017_get_lecture_post_type(),
+		paco2017_get_workshop_post_type()
+	) ) ) {
+		global $wpdb;
+
+		$previous = ( 'get_previous_post_where' === current_filter() );
+		$op = $previous ? '<' : '>';
+
+		/**
+		 * Replace the `p.post_date` WHERE clause with a comparison based
+		 * on the menu order.
+		 */
+		$original = $wpdb->prepare( "WHERE p.post_date $op %s",  $post->post_date  );
+		$improved = $wpdb->prepare( "WHERE p.menu_order $op %s", $post->menu_order );
+		$where    = str_replace( $original, $improved, $where );
+	}
+
+	return $where;
+}
+
+/**
+ * Modify the adjacent post's ORDER BY query clause
+ *
+ * Custom menu order is assumed to be set for the Lecture
+ * and Workshop post types.
+ *
+ * @since 1.1.0
+ *
+ * @param string $order_by The `ORDER BY` clause in the SQL.
+ * @param WP_Post $post    WP_Post object. Added in WP 4.4
+ * @return string ORDER BY clause
+ */
+function paco2017_get_adjacent_post_sort( $order_by, $post = null ) {
+
+	// Get the post
+	$post = get_post( $post );
+
+	// Menu-ordered post types
+	if ( in_array( $post->post_type, array(
+		paco2017_get_lecture_post_type(),
+		paco2017_get_workshop_post_type()
+	) ) ) {
+
+		// Order by the post menu order
+		$order_by = str_replace( 'p.post_date', 'p.menu_order', $order_by );
+	}
+
+	return $order_by;
+}
+
 /** Is_* **********************************************************************/
 
 /**

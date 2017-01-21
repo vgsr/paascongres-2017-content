@@ -39,6 +39,10 @@ add_action( 'parse_query',                 'paco2017_parse_agenda_query',       
 add_filter( 'posts_request',               'paco2017_filter_wp_query',            10, 2 );
 add_filter( 'posts_pre_query',             'paco2017_bypass_wp_query',            10, 2 ); // Since WP 4.6
 add_action( 'parse_request',               'paco2017_parse_download_request'            );
+add_filter( 'get_previous_post_where',     'paco2017_get_adjacent_post_where',    10, 5 );
+add_filter( 'get_next_post_where',         'paco2017_get_adjacent_post_where',    10, 5 );
+add_filter( 'get_previous_post_sort',      'paco2017_get_adjacent_post_sort',     10, 2 );
+add_filter( 'get_next_post_sort',          'paco2017_get_adjacent_post_sort',     10, 2 );
 
 /** Template ******************************************************************/
 
