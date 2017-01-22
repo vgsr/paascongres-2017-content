@@ -1,0 +1,88 @@
+.wp-setting-media {
+	position: relative;
+	max-width: 150px;
+	width: 100%;
+	display: inline;
+	vertical-align: middle;
+}
+
+.wp-list-table .wp-setting-media.has-image {
+	max-width: 75px;
+}
+
+.wp-setting-media.has-image,
+.wp-setting-media.has-image .wp-setting-media-set {
+	display: inline-block;
+}
+
+.wp-setting-media-set img {
+	max-width: 100%;
+	width: auto;
+	height: auto;
+	vertical-align: bottom;
+}
+
+.wp-setting-media .wp-setting-media-remove {
+	position: relative;
+	left: -9999em;
+	color: #a00;
+	text-decoration: none;
+}
+
+.wp-setting-media .wp-setting-media-remove:hover,
+.wp-setting-media .wp-setting-media-remove:hover {
+	color: #f00;
+	border: none;
+}
+
+tr:hover .wp-setting-media:not(.has-image) .wp-setting-media-remove,
+.wp-setting-media:not(.has-image) .wp-setting-media-remove:focus,
+tr:hover .wp-setting-media:not(.has-image) .wp-setting-media-remove .screen-reader-text,
+.wp-setting-media:not(.has-image) .wp-setting-media-remove:focus .screen-reader-text {
+	position: static !important; /* Overrule .screen-reader-text's absolute !important */
+}
+
+.wp-setting-media.has-image .wp-setting-media-remove {
+	position: absolute;
+	top: 0;
+	background: #f1f1f1;
+}
+
+.striped > tbody > :nth-child(odd) .wp-setting-media.has-image .wp-setting-media-remove {
+	background: #f9f9f9;
+}
+
+.striped > tbody > :nth-child(even) .wp-setting-media.has-image .wp-setting-media-remove {
+	background: #fff;
+}
+
+tr:hover .wp-setting-media.has-image .wp-setting-media-remove,
+.wp-setting-media.has-image .wp-setting-media-remove:focus {
+	right: 0;
+	left: auto;
+}
+
+.wp-setting-media.has-image .wp-setting-media-remove:after {
+	content: '\f158'; /* dashicons-no */
+	font-family: dashicons;
+	display: block;
+	width: 32px;
+	height: 32px;
+	text-align: center;
+	font-size: 24px;
+	line-height: 33px;
+}
+
+@media screen and (max-width: 782px) {
+	.wp-setting-media.has-image .wp-setting-media-remove {
+		right: 0;
+		left: auto;
+	}
+
+	.wp-setting-media.has-image .wp-setting-media-remove:after {
+		width: 42px;
+		height: 42px;
+		font-size: 32px;
+		line-height: 43px;
+	}
+}

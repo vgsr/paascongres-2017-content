@@ -1,22 +1,22 @@
 <?php
 
 /**
- * The WP Post Image dropin class
+ * The WP Post Media dropin class
  *
- * @package WP Post Image
+ * @package WP Post Media
  * @subpackage Main
  */
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WP_Post_Image' ) ) :
+if ( ! class_exists( 'WP_Post_Media' ) ) :
 /**
- * The WP Post Image class
+ * The WP Post Media class
  *
  * @since 1.0.0
  */
-class WP_Post_Image {
+class WP_Post_Media {
 
 	/**
 	 * @var string Plugin version
@@ -26,7 +26,7 @@ class WP_Post_Image {
 	/**
 	 * @var string Metadata key
 	 */
-	protected $meta_key = 'image';
+	protected $meta_key = 'media';
 
 	/**
 	 * @var string|array Attachment mime type
@@ -37,9 +37,9 @@ class WP_Post_Image {
 	 * @var array Array of labels
 	 */
 	protected $labels = array(
-		'setPostImage'    => '',
-		'postImageTitle'  => '',
-		'removePostImage' => '',
+		'setPostMedia'    => '',
+		'postMediaTitle'  => '',
+		'removePostMedia' => '',
 	);
 
 	/**
@@ -74,13 +74,13 @@ class WP_Post_Image {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $args Post image arguments
+	 * @param array $args Post media arguments
 	 */
 	private function setup_details( $args = array() ) {
 
 		// Setup object data
 		$args = wp_parse_args( $args, array(
-			'meta_key'   => 'image',
+			'meta_key'   => 'media',
 			'mime_type'  => 'image',
 			'post_type'  => array(),
 			'labels'     => array(),
@@ -93,10 +93,10 @@ class WP_Post_Image {
 		$this->mime_type  = $args['mime_type'];
 		$this->post_type  = ! empty( $args['post_type'] ) ? (array) $args['post_type'] : get_post_types( array( 'public' => true ) );
 		$this->labels     = wp_parse_args( $args['labels'], array(
-			'setPostImage'    => esc_html__( 'Set %s image', 'wp-post-image' ),
-			'postImageTitle'  => esc_html__( '%s image', 'wp-post-image' ),
-			'removePostImage' => esc_html__( 'Remove %s image', 'wp-post-image' ),
-			'error'           => esc_html__( 'Could not set that as the %s image. Try a different attachment.', 'wp-post-image' ),
+			'setPostMedia'    => esc_html__( 'Set %s image', 'wp-post-media' ),
+			'postMediaTitle'  => esc_html__( '%s image', 'wp-post-media' ),
+			'removePostMedia' => esc_html__( 'Remove %s image', 'wp-post-media' ),
+			'error'           => esc_html__( 'Could not set that as the %s image. Try a different attachment.', 'wp-post-media' ),
 		) );
 		$this->image_size = $args['image_size'];
 		$this->element    = $args['element'];
@@ -115,12 +115,12 @@ class WP_Post_Image {
 	/** Public methods **************************************************/
 
 	/**
-	 * Return the post's post image ID
+	 * Return the post's post media ID
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param int $post_id Post ID
-	 * @return int Post image ID, 0 when not found.
+	 * @return int Post media ID, 0 when not found.
 	 */
 	public function get_meta( $post_id ) {
 		return (int) get_post_meta( $post_id, $this->meta_key, true );
@@ -129,12 +129,12 @@ class WP_Post_Image {
 	/**
 	 * Return whether the post's attachment has an image to display
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post|int $post_id Post object or ID
-	 * @return bool Post meta has image
+	 * @return bool Post media has image
 	 */
-	public function meta_has_image( $post_id ) {
+	public function media_has_image( $post_id ) {
 		if ( is_a( $post_id, 'WP_Post' ) ) {
 			$post_id = $post_id->ID;
 		}
@@ -146,11 +146,11 @@ class WP_Post_Image {
 	}
 
 	/**
-	 * Return the collection of details of the current post image
+	 * Return the collection of details of the current post media
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Post image details
+	 * @return array Post media details
 	 */
 	public function get_js_data() {
 
@@ -162,8 +162,8 @@ class WP_Post_Image {
 		);
 
 		$data = array(
-			'name'       => 'postImage_'  . esc_attr( $this->meta_key ),
-			'key'        => 'post-image-' . esc_attr( $this->meta_key ),
+			'name'       => 'postMedia_'  . esc_attr( $this->meta_key ),
+			'key'        => 'post-media-' . esc_attr( $this->meta_key ),
 			'metaKey'    => $this->meta_key,
 			'mimeType'   => $this->mime_type,
 			'l10n'       => $labels,
@@ -175,7 +175,7 @@ class WP_Post_Image {
 	}
 
 	/**
-	 * Modify the post's media settings for the post image
+	 * Modify the post's media settings for the post media
 	 *
 	 * @since 1.0.0
 	 *
@@ -185,52 +185,52 @@ class WP_Post_Image {
 	 */
 	public function media_settings( $settings, $post ) {
 
-		// Add post image ID to the post's media settings
+		// Add post media ID to the post's media settings
 		if ( is_a( $post, 'WP_Post' ) && in_array( $post->post_type, $this->post_type ) ) {
 
-			// Define post image collection
-			if ( ! isset( $settings['post']['postImages'] ) || ! is_array( $settings['post']['postImages'] ) ) {
-				$settings['post']['postImages'] = array();
+			// Define post media collection
+			if ( ! isset( $settings['post']['postMedias'] ) || ! is_array( $settings['post']['postMedias'] ) ) {
+				$settings['post']['postMedias'] = array();
 			}
 
 			$attachment_id = $this->get_meta( $post->ID );
-			$settings['post']['postImages'][ $this->meta_key ] = $attachment_id ? $attachment_id : -1;
+			$settings['post']['postMedias'][ $this->meta_key ] = $attachment_id ? $attachment_id : -1;
 		}
 
 		return $settings;
 	}
 
 	/**
-	 * Output the post image input HTML
+	 * Output the post media input HTML
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param int $post_id Post ID
 	 */
-	public function post_image_input_html( $post_id ) {
-		echo '<span class="wp-post-image' . ( $this->meta_has_image( $post_id ) ? ' has-image' : '' ) . '">' . $this->_image_input_html( $post_id ) . '</span>';
+	public function post_media_input_html( $post_id ) {
+		echo '<span class="wp-post-media' . ( $this->media_has_image( $post_id ) ? ' has-image' : '' ) . '">' . $this->_image_input_html( $post_id ) . '</span>';
 
 		wp_enqueue_media( array( 'post' => $post_id ) );
-		wp_enqueue_script( 'post-image', $this->url . 'assets/js/post-image.js', array( 'media-editor' ), $this->version, true );
-		wp_enqueue_style(  'post-image', $this->url . 'assets/css/post-image.css', array(), $this->version );
+		wp_enqueue_script( 'post-media', $this->url . 'assets/js/post-media.js', array( 'media-editor' ), $this->version, true );
+		wp_enqueue_style(  'post-media', $this->url . 'assets/css/post-media.css', array(), $this->version );
 
 		// Add script to setup the js instance
-		wp_add_inline_script( 'post-image', "
+		wp_add_inline_script( 'post-media', "
 /* global wp */
 jQuery(document).ready( function( $ ) {
-	if ( typeof wp.media.wpPostImage === 'undefined' )
+	if ( typeof wp.media.wpPostMedia === 'undefined' )
 		return;
 
-	// Setup image selector
-	if ( $( '.wp-post-image', '" . $this->element . "' ).length ) {
-		wp.media.wpPostImage( " . json_encode( $this->get_js_data() ) . " );
+	// Setup media selector
+	if ( $( '.wp-post-media', '" . $this->element . "' ).length ) {
+		wp.media.wpPostMedia( " . json_encode( $this->get_js_data() ) . " );
 	}
 } );
 " );
 	}
 
 	/**
-	 * Return the post image input HTML
+	 * Return the post media input HTML
 	 *
 	 * @since 1.0.0
 	 *
@@ -242,10 +242,10 @@ jQuery(document).ready( function( $ ) {
 		// Define local variables
 		$post             = get_post( $post_id );
 		$post_type_object = get_post_type_object( $post->post_type );
-		$set_action_text  = sprintf( $this->labels['setPostImage'], $post_type_object->labels->singular_name );
-		$set_image_link   = '<span class="hide-if-no-js"><a title="%s" href="#" class="wp-post-image-set">%s</a></span>';
+		$set_action_text  = sprintf( $this->labels['setPostMedia'], $post_type_object->labels->singular_name );
+		$set_media_link   = '<span class="hide-if-no-js"><a title="%s" href="#" class="wp-post-media-set">%s</a></span>';
 
-		$content = sprintf( $set_image_link,
+		$content = sprintf( $set_media_link,
 			esc_attr( $set_action_text ),
 			esc_html( $set_action_text )
 		);
@@ -256,7 +256,7 @@ jQuery(document).ready( function( $ ) {
 		if ( $attachment_id ) {
 			$att_html = '';
 
-			if ( $this->meta_has_image( $post->ID ) ) {
+			if ( $this->media_has_image( $post->ID ) ) {
 				// Get image in predefined width for admin metabox
 				$att_html = wp_get_attachment_image( $attachment_id, 'medium' );
 			} else {
@@ -264,13 +264,13 @@ jQuery(document).ready( function( $ ) {
 			}
 
 			if ( ! empty( $att_html ) ) {
-				$remove_action_text = sprintf( $this->labels['removePostImage'], $post_type_object->labels->singular_name );
-				$remove_image_link  = ' <span class="hide-if-no-js delete"><a href="#" class="wp-post-image-remove aria-button-if-js" aria-label="%s"><span class="screen-reader-text">' . __( 'Delete' ) . '</span></a></span>';
+				$remove_action_text = sprintf( $this->labels['removePostMedia'], $post_type_object->labels->singular_name );
+				$remove_media_link  = ' <span class="hide-if-no-js delete"><a href="#" class="wp-post-media-remove aria-button-if-js" aria-label="%s"><span class="screen-reader-text">' . __( 'Delete' ) . '</span></a></span>';
 
-				$content = sprintf( $set_image_link,
+				$content = sprintf( $set_media_link,
 					esc_attr( $set_action_text ),
 					$att_html
-				) . sprintf( $remove_image_link,
+				) . sprintf( $remove_media_link,
 					esc_attr( $remove_action_text )
 				);
 			}
@@ -280,7 +280,7 @@ jQuery(document).ready( function( $ ) {
 	}
 
 	/**
-	 * Save a post image input on AJAX update
+	 * Save a post media input on AJAX update
 	 *
 	 * @since 1.0.0
 	 *
@@ -296,15 +296,15 @@ jQuery(document).ready( function( $ ) {
 		if ( ! current_user_can( 'edit_post', $post_ID ) )
 			wp_die( -1 );
 
-		$attachment_id = intval( $_POST['post_image_id'] );
+		$attachment_id = intval( $_POST['post_media_id'] );
 
 		if ( $json ) {
 			check_ajax_referer( "update-post_{$post_ID}" );
 		} else {
-			check_ajax_referer( "wp-post-image-set_{$this->meta_key}-{$post_ID}" );
+			check_ajax_referer( "wp-post-media-set_{$this->meta_key}-{$post_ID}" );
 		}
 
-		// Delete post image
+		// Delete post media
 		if ( $attachment_id == '-1' ) {
 			if ( delete_post_meta( $post_ID, $this->meta_key ) ) {
 				$return = $this->ajax_get_return_data( $post_ID, false );
@@ -314,11 +314,13 @@ jQuery(document).ready( function( $ ) {
 			}
 		}
 
-		// Update post image
+		// Update post media
 		if ( update_post_meta( $post_ID, $this->meta_key, $attachment_id ) ) {
 
 			// Maybe resize the image
-			$this->maybe_resize_image( $attachment_id );
+			if ( $this->media_has_image( $post_ID ) ) {
+				$this->maybe_resize_image( $attachment_id );
+			}
 
 			$return = $this->ajax_get_return_data( $post_ID );
 			$json ? wp_send_json_success( $return ) : wp_die( $return );
@@ -330,16 +332,16 @@ jQuery(document).ready( function( $ ) {
 	/**
 	 * Return the AJAX update return data
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 *
 	 * @param int $post_id Post ID
-	 * @param bool $update Optional. Whether the term was updated or deleted
+	 * @param bool $update Optional. Whether the post was updated or deleted
 	 * @return array Return data
 	 */
 	public function ajax_get_return_data( $post_id, $update = true ) {
 		return array(
 			'html'          => $this->_image_input_html( $post_id ),
-			'setImageClass' => $update ? $this->meta_has_image( $post_id ) : false,
+			'setImageClass' => $update ? $this->media_has_image( $post_id ) : false,
 		);
 	}
 
@@ -413,43 +415,43 @@ jQuery(document).ready( function( $ ) {
 }
 
 /**
- * Setup a new post image instance
+ * Setup a new post media instance
  *
  * @since 1.0.0
  *
- * @param string $file File path from which the image is constructed
- * @param string $meta_key Name of the image's meta key
- * @param array $args For definition, {@see WP_Post_Image}
+ * @param string $file File path from which the media is constructed
+ * @param string $meta_key Name of the media's meta key
+ * @param array $args For definition, {@see WP_Post_Media}
  */
-function wp_post_image( $file, $meta_key, $args = array() ) {
+function wp_post_media( $file, $meta_key, $args = array() ) {
 
 	// Require defined meta key
 	if ( empty( $meta_key ) )
 		return;
 
-	// Define global collection of post images
-	if ( ! isset( $GLOBALS['wp_post_image'] ) ) {
-		$GLOBALS['wp_post_image'] = array();
+	// Define global collection of post medias
+	if ( ! isset( $GLOBALS['wp_post_media'] ) ) {
+		$GLOBALS['wp_post_media'] = array();
 	}
 
 	// Add meta key to the object arguments
 	$args['meta_key'] = $meta_key;
 
-	// Instantiate new post image
-	$GLOBALS['wp_post_image'][ $meta_key ] = new WP_Post_Image( $file, $args );
+	// Instantiate new post media and store in global for later use
+	$GLOBALS['wp_post_media'][ $meta_key ] = new WP_Post_Media( $file, $args );
 }
 
 /**
- * Output the post image input for the given post's image
+ * Output the post media input field for the given post's media
  *
  * @since 1.0.0
  *
  * @param WP_Post|int $post_id Post object or ID
- * @param string $meta_key Post image's meta key name
+ * @param string $meta_key Post media's meta key name
  */
-function wp_post_image_input( $post_id, $meta_key ) {
-	if ( isset( $GLOBALS['wp_post_image'][ $meta_key ] ) ) {
-		$GLOBALS['wp_post_image'][ $meta_key ]->post_image_input_html( $post_id );
+function wp_post_media_field( $post_id, $meta_key ) {
+	if ( isset( $GLOBALS['wp_post_media'][ $meta_key ] ) ) {
+		$GLOBALS['wp_post_media'][ $meta_key ]->post_media_input_html( $post_id );
 	}
 }
 

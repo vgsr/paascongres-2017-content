@@ -2,35 +2,35 @@
 ( function( $, _ ) {
 
 	// Bail when method already exists
-	if ( typeof wp.media.wpTermImage !== 'undefined' )
+	if ( typeof wp.media.wpTermMedia !== 'undefined' )
 		return;
 
 	/**
-	 * The Term Image constructor which creates instances for the given image
+	 * The Term Media constructor which creates instances for the given media
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param {object} image Image details
+	 * @param {object} media Media details
 	 */
-	wp.media.wpTermImage = function( image ) {
+	wp.media.wpTermMedia = function( media ) {
 		var Attachment = wp.media.model.Attachment,
 		    FeaturedImage = wp.media.controller.FeaturedImage;
 
-		// Define collection of termImages controller and media instances
-		if ( typeof wp.media.controller.termImages === 'undefined' ) {
-			wp.media.controller.termImages = {};
-			wp.media.termImages = {};
+		// Define collection of termMedias controller and media instances
+		if ( typeof wp.media.controller.termMedias === 'undefined' ) {
+			wp.media.controller.termMedias = {};
+			wp.media.termMedias = {};
 		}
 
 		/**
 		 * Construct implementation of the FeaturedImage modal controller
-		 * for the Term Image
+		 * for the Term Media
 		 */
-		wp.media.controller.termImages[ image.name ] = FeaturedImage.extend({
+		wp.media.controller.termMedias[ media.name ] = FeaturedImage.extend({
 			defaults: _.defaults({
-				id:      image.key,
-				title:   image.l10n.termImageTitle,
-				toolbar: image.key
+				id:      media.key,
+				title:   media.l10n.termMediaTitle,
+				toolbar: media.key
 			}, FeaturedImage.prototype.defaults ),
 
 			/**
@@ -41,7 +41,7 @@
 
 				// If we haven't been provided a `library`, create a `Selection`.
 				if ( ! this.get('library') ) {
-					this.set( 'library', wp.media.query({ type: image.mimeType }) );
+					this.set( 'library', wp.media.query({ type: media.mimeType }) );
 				}
 
 				FeaturedImage.prototype.initialize.apply( this, arguments );
@@ -54,8 +54,8 @@
 			 */
 			updateSelection: function() {
 				var selection = this.get('selection'),
-				    term = wp.media.termImages[ image.name ].term(),
-					id = wp.media.view.settings.termImages[ image.metaKey ][ term ].image,
+				    term = wp.media.termMedias[ media.name ].term(),
+					id = wp.media.view.settings.termMedias[ media.metaKey ][ term ].media,
 					attachment;
 
 				if ( '' !== id && -1 !== id ) {
@@ -68,56 +68,56 @@
 		});
 
 		/**
-		 * wp.media.termImages
+		 * wp.media.termMedias
 		 * @namespace
 		 *
-		 * @see wp.media.featuredImage wp-includes/js/media-editor.js
+		 * @see wp.media.featuredMedia wp-includes/js/media-editor.js
 		 */
-		wp.media.termImages[ image.name ] = {
+		wp.media.termMedias[ media.name ] = {
 			/**
-			 * Set the term image id, save the term image data and
-			 * set the HTML in the term meta box to the new term image.
+			 * Set the term media id, save the term media data and
+			 * set the HTML in the term meta box to the new term media.
 			 *
 			 * @global wp.media.view.settings
 			 * @global wp.media.post
 			 *
-			 * @param {number} id The post ID of the term image, or -1 to unset it.
+			 * @param {number} id The post ID of the term media, or -1 to unset it.
 			 */
 			set: function( id ) {
-				var settings = wp.media.view.settings.termImages[ image.metaKey ], term = this.term();
+				var settings = wp.media.view.settings.termMedias[ media.metaKey ], term = this.term();
 
-				settings[ term ].image = id;
+				settings[ term ].media = id;
 
-				wp.media.post( image.ajaxAction, {
+				wp.media.post( media.ajaxAction, {
 					json:          true,
 					term_id:       term,
-					term_image_id: settings[ term ].image,
+					term_media_id: settings[ term ].media,
 					_wpnonce:      settings[ term ].nonce,
 				}).done( function( resp ) {
 					if ( resp == '0' ) {
-						window.alert( image.l10n.error );
+						window.alert( media.l10n.error );
 						return;
 					}
-					$( '.wp-term-image', image.parentEl ).filter( image.wrapEl + ' [data-term="' + term + '"]' )
+					$( '.wp-term-media', media.parentEl ).filter( media.wrapEl + ' [data-term="' + term + '"]' )
 						.toggleClass( 'has-image', resp.setImageClass )
 						.html( resp.html );
 					settings[ term ].nonce = resp.nonce;
 				});
 			},
 			/**
-			 * Remove the term image id, save the term image data and
-			 * set the HTML in the term meta box to no term image.
+			 * Remove the term media id, save the term media data and
+			 * set the HTML in the term meta box to no term media.
 			 */
 			remove: function() {
-				wp.media.termImages[ image.name ].set( -1 );
+				wp.media.termMedias[ media.name ].set( -1 );
 			},
 			/**
-			 * The Term Image workflow
+			 * The Term Media workflow
 			 *
 			 * @global wp.media.controller.FeaturedImage
 			 * @global wp.media.view.l10n
 			 *
-			 * @this wp.media.termImages
+			 * @this wp.media.termMedias
 			 *
 			 * @returns {wp.media.view.MediaFrame.Select} A media workflow.
 			 */
@@ -128,21 +128,21 @@
 				}
 
 				this._frame = wp.media({
-					state:  image.key,
-					states: [ new wp.media.controller.termImages[ image.name ](), new wp.media.controller.EditImage() ]
+					state:  media.key,
+					states: [ new wp.media.controller.termMedias[ media.name ](), new wp.media.controller.EditImage() ]
 				});
 
-				this._frame.on( 'toolbar:create:' + image.key, function( toolbar ) {
+				this._frame.on( 'toolbar:create:' + media.key, function( toolbar ) {
 					/**
 					 * @this wp.media.view.MediaFrame.Select
 					 */
 					this.createSelectToolbar( toolbar, {
-						text: image.l10n.setTermImage
+						text: media.l10n.setTermMedia
 					});
 				}, this._frame );
 
-				this._frame.on( 'content:render:edit-image', function() {
-					var selection = this.state( image.key ).get('selection'),
+				this._frame.on( 'content:render:edit-media', function() {
+					var selection = this.state( media.key ).get('selection'),
 						view = new wp.media.view.EditImage( { model: selection.single(), controller: this } ).render();
 
 					this.content.set( view );
@@ -152,12 +152,12 @@
 
 				}, this._frame );
 
-				this._frame.state( image.key ).on( 'select', this.select );
+				this._frame.state( media.key ).on( 'select', this.select );
 				return this._frame;
 			},
 			/**
-			 * 'select' callback for Term Image workflow, triggered when
-			 *  the 'Set Term Image' button is clicked in the media modal.
+			 * 'select' callback for Term Media workflow, triggered when
+			 *  the 'Set Term Media' button is clicked in the media modal.
 			 *
 			 * @global wp.media.view.settings
 			 *
@@ -166,29 +166,29 @@
 			select: function() {
 				var selection = this.get('selection').single();
 
-				if ( ! wp.media.view.settings.termImages[ image.metaKey ] ) {
+				if ( ! wp.media.view.settings.termMedias[ media.metaKey ] ) {
 					return;
 				}
 
-				wp.media.termImages[ image.name ].set( selection ? selection.id : -1 );
+				wp.media.termMedias[ media.name ].set( selection ? selection.id : -1 );
 			},
 			/**
-			 * Open the content media manager to the 'term image' tab when
-			 * the term image is clicked.
+			 * Open the content media manager to the 'term media' tab when
+			 * the term media is clicked.
 			 *
-			 * Update the term image id when the 'remove' link is clicked.
+			 * Update the term media id when the 'remove' link is clicked.
 			 *
 			 * @global wp.media.view.settings
 			 */
 			init: function() {
-				$( image.parentEl ).on( 'click', image.wrapEl + ' .wp-term-image-set', function( event ) {
+				$( media.parentEl ).on( 'click', media.wrapEl + ' .wp-term-media-set', function( event ) {
 					event.preventDefault();
 					// Stop propagation to prevent thickbox from activating.
 					event.stopPropagation();
 
-					wp.media.termImages[ image.name ].context( event ).frame().open();
-				}).on( 'click', image.wrapEl + ' .wp-term-image-remove', function( event ) {
-					wp.media.termImages[ image.name ].context( event ).remove();
+					wp.media.termMedias[ media.name ].context( event ).frame().open();
+				}).on( 'click', media.wrapEl + ' .wp-term-media-remove', function( event ) {
+					wp.media.termMedias[ media.name ].context( event ).remove();
 					return false;
 				});
 			},
@@ -204,16 +204,16 @@
 			 * Set the term id from the provided event context
 			 *
 			 * @param {object} event The context's event object
-			 * @returns {wp.media.termImages} Returns itself to allow chaining
+			 * @returns {wp.media.termMedias} Returns itself to allow chaining
 			 */
 			context: function( event ) {
-				var $term  = $( event.target ).parents( '.wp-term-image' );
+				var $term  = $( event.target ).parents( '.wp-term-media' );
 				this._term = $term.data( 'term' );
 
 				// Add newly created terms to the global settings
-				if ( typeof wp.media.view.settings.termImages[ image.metaKey ][ this._term ] === 'undefined' ) {
-					wp.media.view.settings.termImages[ image.metaKey ][ this._term ] = {
-						'image': -1,
+				if ( typeof wp.media.view.settings.termMedias[ media.metaKey ][ this._term ] === 'undefined' ) {
+					wp.media.view.settings.termMedias[ media.metaKey ][ this._term ] = {
+						'media': -1,
 						'nonce': $term.data( 'nonce' )
 					};
 				}
@@ -222,7 +222,7 @@
 			}
 		};
 
-		$( wp.media.termImages[ image.name ].init );
+		$( wp.media.termMedias[ media.name ].init );
 	};
 
 }( jQuery, _ ) );

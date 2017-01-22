@@ -333,8 +333,8 @@ function paco2017_admin_setting_callback_magazine( $args = array() ) {
 		'description' => esc_html__( 'Select the magazine landing page', 'paco2017-content' )
 	) );
 
-	// Download field
-	wp_setting_image_field( array(
+	// Download attachment field
+	wp_setting_media_field( array(
 		'setting'     => '_paco2017_magazine_download',
 		'description' => esc_html__( 'Select the magazine file that is offered for download', 'paco2017-content' )
 	) );

@@ -1,24 +1,24 @@
 <?php
 
 /**
- * Term Image Class
+ * Term Media Class
  *
  * @since 0.1.0
  * @author Laurens Offereins <https://github.com/lmoffereins>
  *
- * @package Plugins/Terms/Metadata/Image
+ * @package Plugins/Terms/Metadata/Media
  */
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WP_Term_Image' ) ) :
+if ( ! class_exists( 'WP_Term_Media' ) ) :
 /**
- * Main WP Term Image class
+ * Main WP Term Media class
  *
  * @since 0.1.0
  */
-final class WP_Term_Image extends WP_Term_Meta_UI {
+final class WP_Term_Media extends WP_Term_Meta_UI {
 
 	/**
 	 * @var string Plugin version
@@ -33,7 +33,7 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 	/**
 	 * @var string Metadata key
 	 */
-	public $meta_key = 'image';
+	public $meta_key = 'media';
 
 	/**
 	 * @var string|array Attachment mime type
@@ -41,12 +41,12 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 	public $mime_type = 'image';
 
 	/**
-	 * @var string Image size to generate
+	 * @var string Media size to generate
 	 */
 	public $image_size = '';
 
 	/**
-	 * @var string Image size to generate
+	 * @var string Media size to generate
 	 */
 	public $ajax_action = '';
 
@@ -59,7 +59,7 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 
 		// Parse the defaults
 		$args = wp_parse_args( $args, array(
-			'meta_key'   => 'image',
+			'meta_key'   => 'media',
 			'mime_type'  => 'image',
 			'labels'     => array(),
 			'image_size' => '',
@@ -70,19 +70,19 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 		$this->meta_key   = $args['meta_key'];
 		$this->mime_type  = $args['mime_type'];
 		$this->labels     = wp_parse_args( $args['labels'], array(
-			'singular'        => esc_html__( 'Image',  'wp-term-image' ),
-			'plural'          => esc_html__( 'Images', 'wp-term-image' ),
-			'description'     => esc_html__( 'Assign an image to uniquely identify each item.', 'wp-term-image' ),
+			'singular'        => esc_html__( 'Media',  'wp-term-media' ),
+			'plural'          => esc_html__( 'Medias', 'wp-term-media' ),
+			'description'     => esc_html__( 'Assign an image to uniquely identify each item.', 'wp-term-media' ),
 
 			// Help tab
-			'help_title'      => esc_html__( 'Term Image', 'wp-term-image' ),
-			'help_content'    => esc_html__( 'Terms can have unique images to visually identify them.', 'wp-term-image' ),
+			'help_title'      => esc_html__( 'Term Media', 'wp-term-media' ),
+			'help_content'    => esc_html__( 'Terms can have unique images to visually identify them.', 'wp-term-media' ),
 
 			// JS interface
-			'setTermImage'    => esc_html__( 'Set %s image', 'wp-term-image' ),
-			'termImageTitle'  => esc_html__( '%s image', 'wp-term-image' ),
-			'removeTermImage' => esc_html__( 'Remove %s image', 'wp-term-image' ),
-			'error'           => esc_html__( 'Could not set that as the %s image. Try a different attachment.', 'wp-term-image' ),
+			'setTermMedia'    => esc_html__( 'Set %s image', 'wp-term-media' ),
+			'termMediaTitle'  => esc_html__( '%s image', 'wp-term-media' ),
+			'removeTermMedia' => esc_html__( 'Remove %s image', 'wp-term-media' ),
+			'error'           => esc_html__( 'Could not set that as the %s image. Try a different attachment.', 'wp-term-media' ),
 		) );
 		$this->image_size = $args['image_size'];
 		$this->element    = $args['element'];
@@ -145,9 +145,9 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 	 * @since 0.1.0
 	 *
 	 * @param int $term_id Term ID
-	 * @return bool Term meta has image
+	 * @return bool Term media has image
 	 */
-	public function meta_has_image( $term_id ) {
+	public function media_has_image( $term_id ) {
 		$attachment_id = $this->get_meta( $term_id );
 		$is_image = $attachment_id && wp_attachment_is_image( $attachment_id );
 
@@ -157,11 +157,11 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 	/** Assets ****************************************************************/
 
 	/**
-	 * Return the collection of details of the current post image
+	 * Return the collection of details of the current post media
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return array Post image details
+	 * @return array Post media details
 	 */
 	public function get_js_data() {
 
@@ -173,8 +173,8 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 		);
 
 		$data = array(
-			'name'       => "termImage_{$this->meta_key}",
-			'key'        => "term-image-{$this->meta_key}",
+			'name'       => "termMedia_{$this->meta_key}",
+			'key'        => "term-media-{$this->meta_key}",
 			'metaKey'    => $this->meta_key,
 			'mimeType'   => $this->mime_type,
 			'l10n'       => $labels,
@@ -196,27 +196,27 @@ final class WP_Term_Image extends WP_Term_Meta_UI {
 		// Enqueue media scripts
 		wp_enqueue_media();
 
-		// Enqueue fancy image selecting
-		wp_enqueue_script( 'term-image', $this->url . 'assets/js/term-image.js',  array( 'media-editor' ), $this->db_version, true );
-		wp_enqueue_style( 'term-image', $this->url . 'assets/css/term-image.css', array(), $this->db_version );
+		// Enqueue fancy media selecting
+		wp_enqueue_script( 'term-media', $this->url . 'assets/js/term-media.js',  array( 'media-editor' ), $this->db_version, true );
+		wp_enqueue_style( 'term-media', $this->url . 'assets/css/term-media.css', array(), $this->db_version );
 
 		// Add script to setup the js instance
-		wp_add_inline_script( 'term-image', "
+		wp_add_inline_script( 'term-media', "
 /* global wp */
 jQuery(document).ready( function( $ ) {
-	if ( typeof wp.media.wpTermImage === 'undefined' )
+	if ( typeof wp.media.wpTermMedia === 'undefined' )
 		return;
 
-	// Setup image selector
-	if ( $( '.wp-term-image', '" . $this->element . "' ).length ) {
-		wp.media.wpTermImage( " . json_encode( $this->get_js_data() ) . " );
+	// Setup media selector
+	if ( $( '.wp-term-media', '" . $this->element . "' ).length ) {
+		wp.media.wpTermMedia( " . json_encode( $this->get_js_data() ) . " );
 	}
 } );
 " );
 	}
 
 	/**
-	 * Add help tabs for `image` column
+	 * Add help tabs for `media` column
 	 *
 	 * @since 0.1.0
 	 */
@@ -260,7 +260,7 @@ jQuery(document).ready( function( $ ) {
 	protected function format_output( $term_id = 0 ) {
 
 		// Define element attributes
-		$attr  = ' class="wp-term-image' . ( $this->meta_has_image( $term_id ) ? ' has-image' : '' ) . '"';
+		$attr  = ' class="wp-term-media' . ( $this->media_has_image( $term_id ) ? ' has-image' : '' ) . '"';
 		$attr .= ' data-term="' . esc_attr( $term_id ) . '"';
 
 		// When adding a single row through AJAX
@@ -268,7 +268,7 @@ jQuery(document).ready( function( $ ) {
 			$attr .= ' data-nonce="' . wp_create_nonce( "update-term_{$term_id}" ) . '"';
 		}
 
-		return '<span' . $attr . '>' . $this->_image_input_html( $term_id ) . '</span>';
+		return '<span' . $attr . '>' . $this->_media_input_html( $term_id ) . '</span>';
 	}
 
 	/**
@@ -288,7 +288,7 @@ jQuery(document).ready( function( $ ) {
 
 				<p class="description">
 					<?php echo esc_html( $this->labels['description'] ); ?>
-					<?php esc_html_e( 'You can select an image for the term, once the term has been created and added to the list.', 'wp-term-image' ); ?>
+					<?php esc_html_e( 'You can select an attachment for the term, once the term has been created and added to the list.', 'wp-term-media' ); ?>
 				</p>
 
 			<?php endif; ?>
@@ -317,7 +317,7 @@ jQuery(document).ready( function( $ ) {
 	public function quick_edit_meta( $column_name = '', $screen = '', $name = '' ) { /* Nothing to display */ }
 
 	/**
-	 * Prevent sorting by image.
+	 * Prevent sorting by media.
 	 *
 	 * @since 0.1.0
 	 *
@@ -329,10 +329,10 @@ jQuery(document).ready( function( $ ) {
 		return $columns;
 	}
 
-	/** Image Handling ********************************************************/
+	/** Media Handling ********************************************************/
 
 	/**
-	 * Modify the page's media settings for the term image
+	 * Modify the page's media settings for the term media
 	 *
 	 * @since 0.1.0
 	 *
@@ -344,20 +344,20 @@ jQuery(document).ready( function( $ ) {
 		// When editing terms
 		if ( $this->is_term_edit() ) {
 
-			// Define post images collection
-			if ( ! isset( $settings['termImages'] ) || ! is_array( $settings['termImages'] ) ) {
-				$settings['termImages'] = array();
+			// Define post medias collection
+			if ( ! isset( $settings['termMedias'] ) || ! is_array( $settings['termMedias'] ) ) {
+				$settings['termMedias'] = array();
 			}
 
-			// Define this post image's collection
-			if ( ! isset( $settings['termImages'][ $this->meta_key ] ) || ! is_array( $settings['termImages'][ $this->meta_key ] ) ) {
-				$settings['termImages'][ $this->meta_key ] = array();
+			// Define this post media's collection
+			if ( ! isset( $settings['termMedias'][ $this->meta_key ] ) || ! is_array( $settings['termMedias'][ $this->meta_key ] ) ) {
+				$settings['termMedias'][ $this->meta_key ] = array();
 			}
 
 			foreach ( $this->get_displayed_terms() as $term_id ) {
 				$attachment_id = $this->get_meta( $term_id );
-				$settings['termImages'][ $this->meta_key ][ $term_id ] = array(
-					'image' => $attachment_id ? $attachment_id : -1,
+				$settings['termMedias'][ $this->meta_key ][ $term_id ] = array(
+					'media' => $attachment_id ? $attachment_id : -1,
 					'nonce' => wp_create_nonce( "update-term_{$term_id}" )
 				);
 			}
@@ -426,22 +426,22 @@ jQuery(document).ready( function( $ ) {
 	}
 
 	/**
-	 * Return the post image input HTML
+	 * Return the post media input HTML
 	 *
 	 * @since 0.1.0
 	 *
 	 * @param int $term_id Term ID
 	 * @return string Input HTML
 	 */
-	private function _image_input_html( $term_id = 0 ) {
+	private function _media_input_html( $term_id = 0 ) {
 
 		// Define local variables
 		$term            = get_term( $term_id );
 		$taxonomy        = get_taxonomy( $term->taxonomy );
-		$set_action_text = sprintf( $this->labels['setTermImage'], $taxonomy->labels->singular_name );
-		$set_image_link  = '<span class="hide-if-no-js"><a title="%s" href="#" class="wp-term-image-set">%s</a></span>';
+		$set_action_text = sprintf( $this->labels['setTermMedia'], $taxonomy->labels->singular_name );
+		$set_media_link  = '<span class="hide-if-no-js"><a title="%s" href="#" class="wp-term-media-set">%s</a></span>';
 
-		$content = sprintf( $set_image_link,
+		$content = sprintf( $set_media_link,
 			esc_attr( $set_action_text ),
 			esc_html( $set_action_text )
 		);
@@ -452,7 +452,7 @@ jQuery(document).ready( function( $ ) {
 		if ( $attachment_id ) {
 			$att_html = '';
 
-			if ( $this->meta_has_image( $term_id ) ) {
+			if ( $this->media_has_image( $term_id ) ) {
 				// Get image in predefined width for admin metabox
 				$att_html = wp_get_attachment_image( $attachment_id, array( 150, 150 ) );
 			} else {
@@ -460,13 +460,13 @@ jQuery(document).ready( function( $ ) {
 			}
 
 			if ( ! empty( $att_html ) ) {
-				$remove_action_text = sprintf( $this->labels['removeTermImage'], $taxonomy->labels->singular_name );
-				$remove_image_link  = ' <span class="hide-if-no-js delete"><a href="#" class="wp-term-image-remove aria-button-if-js" aria-label="%s"><span class="screen-reader-text">' . __( 'Delete' ) . '</span></a></span>';
+				$remove_action_text = sprintf( $this->labels['removeTermMedia'], $taxonomy->labels->singular_name );
+				$remove_media_link  = ' <span class="hide-if-no-js delete"><a href="#" class="wp-term-media-remove aria-button-if-js" aria-label="%s"><span class="screen-reader-text">' . __( 'Delete' ) . '</span></a></span>';
 
-				$content = sprintf( $set_image_link,
+				$content = sprintf( $set_media_link,
 					esc_attr( $set_action_text ),
 					$att_html
-				) . sprintf( $remove_image_link,
+				) . sprintf( $remove_media_link,
 					esc_attr( $remove_action_text )
 				);
 			}
@@ -476,7 +476,7 @@ jQuery(document).ready( function( $ ) {
 	}
 
 	/**
-	 * Save a term image input on AJAX update
+	 * Save a term media input on AJAX update
 	 *
 	 * @since 0.1.0
 	 *
@@ -493,15 +493,15 @@ jQuery(document).ready( function( $ ) {
 		if ( ! current_user_can( 'edit_term', $term_ID ) )
 			wp_die( -1 );
 
-		$attachment_id = intval( $_POST['term_image_id'] );
+		$attachment_id = intval( $_POST['term_media_id'] );
 
 		if ( $json ) {
 			check_ajax_referer( "update-term_{$term_ID}" );
 		} else {
-			check_ajax_referer( "wp-term-image-set_{$this->meta_key}-{$term_ID}" );
+			check_ajax_referer( "wp-term-media-set_{$this->meta_key}-{$term_ID}" );
 		}
 
-		// Delete term image
+		// Delete term media
 		if ( $attachment_id == '-1' ) {
 			if ( delete_term_meta( $term_ID, $this->meta_key ) ) {
 				$return = $this->ajax_get_return_data( $term_ID, false );
@@ -511,11 +511,13 @@ jQuery(document).ready( function( $ ) {
 			}
 		}
 
-		// Update term image
+		// Update term media
 		if ( update_term_meta( $term_ID, $this->meta_key, $attachment_id ) ) {
 
 			// Maybe resize the image
-			$this->maybe_resize_image( $attachment_id );
+			if ( $this->media_has_image( $term_ID ) ) {
+				$this->maybe_resize_image( $attachment_id );
+			}
 
 			$return = $this->ajax_get_return_data( $term_ID );
 			$json ? wp_send_json_success( $return ) : wp_die( $return );
@@ -535,8 +537,8 @@ jQuery(document).ready( function( $ ) {
 	 */
 	public function ajax_get_return_data( $term_id, $update = true ) {
 		return array(
-			'html'          => $this->_image_input_html( $term_id ),
-			'setImageClass' => $update ? $this->meta_has_image( $term_id ) : false,
+			'html'          => $this->_media_input_html( $term_id ),
+			'setImageClass' => $update ? $this->media_has_image( $term_id ) : false,
 			'nonce'         => wp_create_nonce( "update-term_{$term_id}" ),
 		);
 	}

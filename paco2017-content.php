@@ -134,13 +134,13 @@ final class Paco2017_Content {
 
 		/** Classes *****************************************************/
 
-		require( $this->includes_dir . 'classes/class-wp-post-image.php'     );
-		require( $this->includes_dir . 'classes/class-wp-setting-image.php'  );
+		require( $this->includes_dir . 'classes/class-wp-post-media.php'     );
+		require( $this->includes_dir . 'classes/class-wp-setting-media.php'  );
 		require( $this->includes_dir . 'classes/class-wp-term-meta-ui.php'   );
 		require( $this->includes_dir . 'classes/class-wp-term-adverbial.php' );
 		require( $this->includes_dir . 'classes/class-wp-term-colors.php'    );
 		require( $this->includes_dir . 'classes/class-wp-term-date.php'      );
-		require( $this->includes_dir . 'classes/class-wp-term-image.php'     );
+		require( $this->includes_dir . 'classes/class-wp-term-media.php'     );
 
 		/** Widgets *****************************************************/
 
@@ -331,14 +331,14 @@ final class Paco2017_Content {
 
 		/** Meta ********************************************************/
 
-		wp_post_image( $this->file, 'logo', array(
+		wp_post_media( $this->file, 'logo', array(
 			'post_type'  => paco2017_get_partner_post_type(),
 			'element'    => '#partner_logo',
 			'image_size' => 'paco2017-partner-logo',
 			'labels'     => array(
-				'setPostImage'    => __( 'Set Partner Logo',    'paco2017-content' ),
-				'postImageTitle'  => __( 'Partner Logo',        'paco2017-content' ),
-				'removePostImage' => __( 'Remove Partner Logo', 'paco2017-content' ),
+				'setPostMedia'    => __( 'Set Partner Logo',    'paco2017-content' ),
+				'postMediaTitle'  => __( 'Partner Logo',        'paco2017-content' ),
+				'removePostMedia' => __( 'Remove Partner Logo', 'paco2017-content' ),
 			),
 		) );
 	}
@@ -536,26 +536,26 @@ final class Paco2017_Content {
 		new WP_Term_Adverbial( $this->file );
 		new WP_Term_Colors( $this->file );
 		new WP_Term_Date( $this->file );
-		new WP_Term_Image( $this->file, array(
+		new WP_Term_Media( $this->file, array(
 			'meta_key'   => 'logo',
 			'image_size' => array( 300, 300 ),
 			'labels'     => array(
 				'singular' => esc_html__( 'Logo', 'paco2017-content' ),
 				'plural'   => esc_html__( 'Logos', 'paco2017-content' ),
-				'setTermImage'    => esc_html__( 'Set %s logo', 'paco2017-content' ),
-				'termImageTitle'  => esc_html__( '%s logo', 'paco2017-content' ),
-				'removeTermImage' => esc_html__( 'Remove %s logo', 'paco2017-content' ),
+				'setTermMedia'    => esc_html__( 'Set %s logo', 'paco2017-content' ),
+				'termMediaTitle'  => esc_html__( '%s logo', 'paco2017-content' ),
+				'removeTermMedia' => esc_html__( 'Remove %s logo', 'paco2017-content' ),
 			)
 		) );
-		new WP_Term_Image( $this->file, array(
+		new WP_Term_Media( $this->file, array(
 			'meta_key'   => 'photo',
 			'image_size' => array( 150, 150 ),
 			'labels'     => array(
 				'singular' => esc_html__( 'Photo', 'paco2017-content' ),
 				'plural'   => esc_html__( 'Photos', 'paco2017-content' ),
-				'setTermImage'    => esc_html__( 'Set %s photo', 'paco2017-content' ),
-				'termImageTitle'  => esc_html__( '%s photo', 'paco2017-content' ),
-				'removeTermImage' => esc_html__( 'Remove %s photo', 'paco2017-content' ),
+				'setTermMedia'    => esc_html__( 'Set %s photo', 'paco2017-content' ),
+				'termMediaTitle'  => esc_html__( '%s photo', 'paco2017-content' ),
+				'removeTermMedia' => esc_html__( 'Remove %s photo', 'paco2017-content' ),
 			)
 		) );
 	}

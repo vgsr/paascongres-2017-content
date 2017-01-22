@@ -2,35 +2,35 @@
 ( function( $, _ ) {
 
 	// Bail when method already exists
-	if ( typeof wp.media.wpSettingImage !== 'undefined' )
+	if ( typeof wp.media.wpSettingMedia !== 'undefined' )
 		return;
 
 	/**
-	 * The Setting Image constructor which creates instances for the given image
+	 * The Setting Media constructor which creates instances for the given media
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param {object} image Image details
+	 * @param {object} media Media details
 	 */
-	wp.media.wpSettingImage = function( image ) {
+	wp.media.wpSettingMedia = function( media ) {
 		var Attachment = wp.media.model.Attachment,
 		    FeaturedImage = wp.media.controller.FeaturedImage;
 
-		// Define collection of settingImages controller and media instances
-		if ( typeof wp.media.controller.settingImages === 'undefined' ) {
-			wp.media.controller.settingImages = {};
-			wp.media.settingImages = {};
+		// Define collection of settingMedias controller and media instances
+		if ( typeof wp.media.controller.settingMedias === 'undefined' ) {
+			wp.media.controller.settingMedias = {};
+			wp.media.settingMedias = {};
 		}
 
 		/**
 		 * Construct implementation of the FeaturedImage modal controller
-		 * for the Setting Image
+		 * for the Setting Media
 		 */
-		wp.media.controller.settingImages[ image.name ] = FeaturedImage.extend({
+		wp.media.controller.settingMedias[ media.name ] = FeaturedImage.extend({
 			defaults: _.defaults({
-				id:      image.key,
-				title:   image.l10n.settingImageTitle,
-				toolbar: image.key
+				id:      media.key,
+				title:   media.l10n.settingMediaTitle,
+				toolbar: media.key
 			}, FeaturedImage.prototype.defaults ),
 
 			/**
@@ -41,7 +41,7 @@
 
 				// If we haven't been provided a `library`, create a `Selection`.
 				if ( ! this.get('library') ) {
-					this.set( 'library', wp.media.query({ type: image.mimeType }) );
+					this.set( 'library', wp.media.query({ type: media.mimeType }) );
 				}
 
 				FeaturedImage.prototype.initialize.apply( this, arguments );
@@ -54,7 +54,7 @@
 			 */
 			updateSelection: function() {
 				var selection = this.get('selection'),
-					id = wp.media.view.settings.settingImages[ image.settingKey ].image,
+					id = wp.media.view.settings.settingMedias[ media.settingKey ].media,
 					attachment;
 
 				if ( '' !== id && -1 !== id ) {
@@ -67,55 +67,55 @@
 		});
 
 		/**
-		 * wp.media.settingImages
+		 * wp.media.settingMedias
 		 * @namespace
 		 *
-		 * @see wp.media.featuredImage wp-includes/js/media-editor.js
+		 * @see wp.media.featuredMedia wp-includes/js/media-editor.js
 		 */
-		wp.media.settingImages[ image.name ] = {
+		wp.media.settingMedias[ media.name ] = {
 			/**
-			 * Set the setting image id, save the setting image data and
-			 * set the HTML in the setting meta box to the new setting image.
+			 * Set the setting media id, save the setting media data and
+			 * set the HTML in the setting meta box to the new setting media.
 			 *
 			 * @global wp.media.view.settings
 			 * @global wp.media.post
 			 *
-			 * @param {number} id The post ID of the setting image, or -1 to unset it.
+			 * @param {number} id The post ID of the setting media, or -1 to unset it.
 			 */
 			set: function( id ) {
-				var settings = wp.media.view.settings.settingImages, key = image.settingKey;
+				var settings = wp.media.view.settings.settingMedias, key = media.settingKey;
 
-				settings[ key ].image = id;
+				settings[ key ].media = id;
 
-				wp.media.post( image.ajaxAction, {
+				wp.media.post( media.ajaxAction, {
 					json:             true,
 					setting_key:      key,
-					setting_image_id: settings[ key ].image,
+					setting_media_id: settings[ key ].media,
 					_wpnonce:         settings[ key ].nonce,
 				}).done( function( resp ) {
 					if ( resp == '0' ) {
-						window.alert( image.l10n.error );
+						window.alert( media.l10n.error );
 						return;
 					}
-					$( '.wp-setting-image', image.parentEl )
+					$( '.wp-setting-media', media.parentEl )
 						.toggleClass( 'has-image', resp.setImageClass )
 						.html( resp.html );
 				});
 			},
 			/**
-			 * Remove the setting image id, save the setting image data and
-			 * set the HTML in the setting meta box to no setting image.
+			 * Remove the setting media id, save the setting media data and
+			 * set the HTML in the setting meta box to no setting media.
 			 */
 			remove: function() {
-				wp.media.settingImages[ image.name ].set( -1 );
+				wp.media.settingMedias[ media.name ].set( -1 );
 			},
 			/**
-			 * The Setting Image workflow
+			 * The Setting Media workflow
 			 *
 			 * @global wp.media.controller.FeaturedImage
 			 * @global wp.media.view.l10n
 			 *
-			 * @this wp.media.settingImages
+			 * @this wp.media.settingMedias
 			 *
 			 * @returns {wp.media.view.MediaFrame.Select} A media workflow.
 			 */
@@ -126,21 +126,21 @@
 				}
 
 				this._frame = wp.media({
-					state:  image.key,
-					states: [ new wp.media.controller.settingImages[ image.name ](), new wp.media.controller.EditImage() ]
+					state:  media.key,
+					states: [ new wp.media.controller.settingMedias[ media.name ](), new wp.media.controller.EditImage() ]
 				});
 
-				this._frame.on( 'toolbar:create:' + image.key, function( toolbar ) {
+				this._frame.on( 'toolbar:create:' + media.key, function( toolbar ) {
 					/**
 					 * @this wp.media.view.MediaFrame.Select
 					 */
 					this.createSelectToolbar( toolbar, {
-						text: image.l10n.setSettingImage
+						text: media.l10n.setSettingMedia
 					});
 				}, this._frame );
 
 				this._frame.on( 'content:render:edit-image', function() {
-					var selection = this.state( image.key ).get('selection'),
+					var selection = this.state( media.key ).get('selection'),
 						view = new wp.media.view.EditImage( { model: selection.single(), controller: this } ).render();
 
 					this.content.set( view );
@@ -150,12 +150,12 @@
 
 				}, this._frame );
 
-				this._frame.state( image.key ).on( 'select', this.select );
+				this._frame.state( media.key ).on( 'select', this.select );
 				return this._frame;
 			},
 			/**
-			 * 'select' callback for Setting Image workflow, triggered when
-			 *  the 'Set Setting Image' button is clicked in the media modal.
+			 * 'select' callback for Setting Media workflow, triggered when
+			 *  the 'Set Setting Media' button is clicked in the media modal.
 			 *
 			 * @global wp.media.view.settings
 			 *
@@ -164,35 +164,35 @@
 			select: function() {
 				var selection = this.get('selection').single();
 
-				if ( ! wp.media.view.settings.settingImages[ image.settingKey ] ) {
+				if ( ! wp.media.view.settings.settingMedias[ media.settingKey ] ) {
 					return;
 				}
 
-				wp.media.settingImages[ image.name ].set( selection ? selection.id : -1 );
+				wp.media.settingMedias[ media.name ].set( selection ? selection.id : -1 );
 			},
 			/**
-			 * Open the content media manager to the 'setting image' tab when
-			 * the setting image is clicked.
+			 * Open the content media manager to the 'setting media' tab when
+			 * the setting media is clicked.
 			 *
-			 * Update the setting image id when the 'remove' link is clicked.
+			 * Update the setting media id when the 'remove' link is clicked.
 			 *
 			 * @global wp.media.view.settings
 			 */
 			init: function() {
-				$( image.parentEl ).on( 'click', '.wp-setting-image-set', function( event ) {
+				$( media.parentEl ).on( 'click', '.wp-setting-media-set', function( event ) {
 					event.preventDefault();
 					// Stop propagation to prevent thickbox from activating.
 					event.stopPropagation();
 
-					wp.media.settingImages[ image.name ].frame().open();
-				}).on( 'click', '.wp-setting-image-remove', function() {
-					wp.media.settingImages[ image.name ].remove();
+					wp.media.settingMedias[ media.name ].frame().open();
+				}).on( 'click', '.wp-setting-media-remove', function() {
+					wp.media.settingMedias[ media.name ].remove();
 					return false;
 				});
 			},
 		};
 
-		$( wp.media.settingImages[ image.name ].init );
+		$( wp.media.settingMedias[ media.name ].init );
 	};
 
 }( jQuery, _ ) );

@@ -1,0 +1,74 @@
+.wp-post-media {
+	position: relative;
+	max-width: 266px;
+	width: calc( 100% - 6.3em );
+	vertical-align: middle;
+}
+
+.wp-post-media.has-image,
+.wp-post-media.has-image .wp-post-media-set {
+	display: inline-block;
+}
+
+.wp-post-media-set img {
+	max-width: 100%;
+	height: auto;
+	width: auto;
+	vertical-align: bottom;
+}
+
+.wp-post-media .wp-post-media-remove {
+	position: relative;
+	left: -9999em;
+	color: #a00;
+	text-decoration: none;
+}
+
+.wp-post-media .wp-post-media-remove:hover {
+	color: #f00;
+	border: none;
+}
+
+*:hover > .wp-post-media:not(.has-image) .wp-post-media-remove,
+.wp-post-media:not(.has-image) .wp-post-media-remove:focus,
+*:hover > .wp-post-media:not(.has-image) .wp-post-media-remove .screen-reader-text,
+.wp-post-media:not(.has-image) .wp-post-media-remove:focus .screen-reader-text {
+	position: static !important; /* Overrule .screen-reader-text's absolute !important */
+}
+
+.wp-post-media.has-image .wp-post-media-remove {
+	position: absolute;
+	top: 0;
+	background: #fff;
+}
+
+*:hover > .wp-post-media.has-image .wp-post-media-remove,
+.wp-post-media.has-image .wp-post-media-remove:focus {
+	right: 0;
+	left: auto;
+}
+
+.wp-post-media.has-image .wp-post-media-remove:after {
+	content: '\f158'; /* dashicons-no */
+	font-family: dashicons;
+	display: block;
+	width: 32px;
+	height: 32px;
+	text-align: center;
+	font-size: 24px;
+	line-height: 33px;
+}
+
+@media screen and (max-width: 782px) {
+	.wp-post-media.has-image .wp-post-media-remove {
+		right: 0;
+		left: auto;
+	}
+
+	.wp-post-media.has-image .wp-post-media-remove:after {
+		width: 42px;
+		height: 42px;
+		font-size: 32px;
+		line-height: 43px;
+	}
+}
