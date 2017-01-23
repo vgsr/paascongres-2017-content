@@ -146,7 +146,7 @@ function paco2017_bp_members_directory_details() {
 function paco2017_bp_member_name( $name ) {
 
 	// Append enrollment mark
-	if ( paco2017_is_user_enrolled( bp_get_member_user_id() ) ) {
+	if ( paco2017_bp_is_user_enrolled( bp_get_member_user_id() ) ) {
 		$name .= '<i class="dashicons dashicons-yes" title="' . __( 'This member is enrolled for the event.', 'paco2017-content' ) . '"></i>';
 	}
 
@@ -181,7 +181,7 @@ function paco2017_bp_members_item_association_badge() {
 function paco2017_bp_get_member_class( $classes ) {
 
 	// Member is Enrolled
-	if ( paco2017_bp_members_is_enrolled_scope() || paco2017_is_user_enrolled( bp_get_member_user_id() ) ) {
+	if ( paco2017_bp_members_is_enrolled_scope() || paco2017_bp_is_user_enrolled( bp_get_member_user_id() ) ) {
 		$classes[] = 'paco2017-enrolled';
 	}
 
@@ -232,7 +232,7 @@ function paco2017_bp_members_block_member() {
 	 * 1. When the displayed user is enrolled
 	 * 2. When the displayed user is in the same association
 	 */
-	if ( paco2017_is_user_enrolled( bp_displayed_user_id() ) || paco2017_bp_xprofile_association_matches() )
+	if ( paco2017_bp_is_user_enrolled() || paco2017_bp_users_in_same_association() )
 		return;
 
 	// 404 and prevent components from loading their templates

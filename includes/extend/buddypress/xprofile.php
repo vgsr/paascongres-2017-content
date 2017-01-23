@@ -125,34 +125,6 @@ function paco2017_bp_xprofile_get_association_value( $user_id = 0 ) {
 }
 
 /**
- * Return whether two members have a matching associations
- *
- * @since 1.0.0
- *
- * @param int $user1_id Optional. User ID. Defaults to the displayed user.
- * @param int $user2_id Optional. User ID. Defaults to the current user.
- * @return bool Do associations match?
- */
-function paco2017_bp_xprofile_association_matches( $user1_id = 0, $user2_id = 0 ) {
-
-	// Default to the displayed user
-	if ( empty( $user1_id ) ) {
-		$user1_id = bp_displayed_user_id();
-	}
-
-	// Default to the current user
-	if ( empty( $user2_id ) ) {
-		$user2_id = get_current_user_id();
-	}
-
-	$assoc1 = paco2017_bp_xprofile_get_association_value( $user1_id );
-	$assoc2 = paco2017_bp_xprofile_get_association_value( $user2_id );
-	$match  = $assoc1 === $assoc2;
-
-	return (bool) $match;
-}
-
-/**
  * Modify the queried profile groups' fields
  *
  * @since 1.0.0

@@ -513,3 +513,37 @@ function paco2017_get_enrolled_users_for_association_count( $term ) {
 function paco2017_get_enrolled_users_for_association( $term ) {
 	return (array) apply_filters( 'paco2017_get_enrolled_users_for_association', array(), $term );
 }
+
+/**
+ * Return whether two users are in the same association
+ *
+ * @since 1.1.0
+ *
+ * @param int $user1_id User ID. Initial user to check for.
+ * @param int $user2_id Optional. User ID. Defaults to the current user.
+ * @return bool Are users in the same association?
+ */
+function paco2017_users_in_same_association( $user1_id, $user2_id = 0 ) {
+
+	// Require an initial user to check for
+	if ( empty( $user1_id ) ) {
+		return false;
+	}
+
+	// Default to the current user
+	if ( empty( $user2_id ) ) {
+		$user2_id = get_current_user_id();
+	}
+
+	$assoc1 = paco2017_get_user_association( $user1_id );
+	$assoc2 = paco2017_get_user_association( $user2_id );
+
+	// Are associations found?
+	if ( $assoc1 && $assoc2 ) {
+		$same = $assoc1->term_id === $assoc2->term_id;
+	} else {
+		$same = false;
+	}
+
+	return (bool) $same;
+}

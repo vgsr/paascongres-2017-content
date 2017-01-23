@@ -60,10 +60,11 @@ class Paco2017_BuddyPress {
 	 * @since 1.0.0
 	 */
 	private function includes() {
-		require( $this->base_dir . 'actions.php'  );
-		require( $this->base_dir . 'activity.php' );
-		require( $this->base_dir . 'members.php'  );
-		require( $this->base_dir . 'xprofile.php' );
+		require( $this->base_dir . 'actions.php'   );
+		require( $this->base_dir . 'activity.php'  );
+		require( $this->base_dir . 'functions.php' );
+		require( $this->base_dir . 'members.php'   );
+		require( $this->base_dir . 'xprofile.php'  );
 
 		// Admin
 		if ( is_admin() ) {
