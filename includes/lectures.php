@@ -87,3 +87,44 @@ function paco2017_get_lecture_post_type_supports() {
 		'page-attributes',
 	) );
 }
+
+/** Template ******************************************************************/
+
+/**
+ * Return the Lecture
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Post|int $item Optional. Post object or ID. Defaults to the current post.
+ * @return WP_Post|bool Lecture post object or False when not found.
+ */
+function paco2017_get_lecture( $post = 0 ) {
+
+	// Get the post
+	$post = get_post( $post );
+
+	// Return false when this is not a Lecture
+	if ( ! $post || paco2017_get_lecture_post_type() !== $post->post_type ) {
+		$post = false;
+	}
+
+	return $post;
+}
+
+/**
+ * Modify the content of a Lecture post
+ *
+ * @since 1.1.0
+ *
+ * @param string $content Post content
+ * @return string Post content
+ */
+function paco2017_lecture_post_content( $content ) {
+
+	// This is a Lecture
+	if ( paco2017_get_lecture() && ( is_single() || is_archive() ) && ! is_admin() ) {
+		$content = paco2017_buffer_template_part( 'info', 'lecture' ) . $content;
+	}
+
+	return $content;
+}
