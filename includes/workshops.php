@@ -292,8 +292,8 @@ function paco2017_get_workshop_round_tax_rewrite() {
 function paco2017_registered_workshop_round_taxonomy() {
 	add_action( 'paco2017_rest_api_init', 'paco2017_register_workshop_round_rest_fields' );
 
-	// Make category rules work
-	paco2017_prioritize_workshop_cat_rewrite_rules();
+	// Make round rules work
+	paco2017_prioritize_workshop_round_rewrite_rules();
 }
 
 /**
