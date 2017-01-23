@@ -380,6 +380,13 @@ class Paco2017_BuddyPress {
 		// Single member
 		if ( bp_is_user() ) {
 
+			// Add displayed user's enrollment status
+			if ( paco2017_bp_is_user_enrolled() ) {
+				$classes[] = 'paco2017-is-enrolled';
+			} else {
+				$classes[] = 'paco2017-not-enrolled';
+			}
+
 			// Add displayed user's association class
 			if ( $term = paco2017_get_user_association( bp_displayed_user_id() ) ) {
 				$classes[] = 'paco2017-association-' . $term->term_id;

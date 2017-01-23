@@ -10,11 +10,26 @@
 	height: 50px;
 }
 
-#buddypress ul.item-list li .item-title i {
+i.paco2017-enrolled {
+	display: inline-block;
 	font-size: inherit;
 	width: auto;
 	height: auto;
 	line-height: inherit;
+	font-family: dashicons;
+	text-decoration: inherit;
+	font-weight: normal;
+	font-style: normal;
+	vertical-align: top;
+	text-align: center;
+	-webkit-transition: color .1s ease-in 0;
+	transition: color .1s ease-in 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+i.paco2017-enrolled:before {
+	content: "\f147";
 }
 
 /* Association badge */

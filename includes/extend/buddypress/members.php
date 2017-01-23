@@ -147,10 +147,21 @@ function paco2017_bp_member_name( $name ) {
 
 	// Append enrollment mark
 	if ( paco2017_bp_is_user_enrolled( bp_get_member_user_id() ) ) {
-		$name .= '<i class="dashicons dashicons-yes" title="' . __( 'This member is enrolled for the event.', 'paco2017-content' ) . '"></i>';
+		$name .= paco2017_bp_get_enrollment_mark();
 	}
 
 	return $name;
+}
+
+/**
+ * Return the enrollment mark HTML markup
+ *
+ * @since 1.1.0
+ *
+ * @return string Enrollmet mark markup
+ */
+function paco2017_bp_get_enrollment_mark() {
+	return '<i class="paco2017-enrolled" title="' . __( 'This member is enrolled for the event.', 'paco2017-content' ) . '"></i>';
 }
 
 /**
@@ -176,9 +187,11 @@ function paco2017_bp_members_item_association_badge() {
  */
 function paco2017_bp_get_member_class( $classes ) {
 
-	// Member is Enrolled
+	// Member enrollment status
 	if ( paco2017_bp_members_is_enrolled_scope() || paco2017_bp_is_user_enrolled( bp_get_member_user_id() ) ) {
-		$classes[] = 'paco2017-enrolled';
+		$classes[] = 'paco2017-is-enrolled';
+	} else {
+		$classes[] = 'paco2017-not-enrolled';
 	}
 
 	// Member association
@@ -234,6 +247,31 @@ function paco2017_bp_members_block_member() {
 	// 404 and prevent components from loading their templates
 	remove_all_actions( 'bp_template_redirect' );
 	bp_do_404();
+}
+
+/**
+ * Act when theme compat is defined for a single member's page
+ *
+ * @since 1.1.0
+ */
+function paco2017_bp_members_screen_display_profile() {
+	add_action( 'bp_template_include_reset_dummy_post_data', 'paco2017_bp_members_reset_dummy_post', 20 );
+}
+
+/**
+ * Act when theme compat is defined for the members component
+ *
+ * @see BP_Members_Theme_Compat::single_dummy_post()
+ *
+ * @since 1.1.0
+ */
+function paco2017_bp_members_reset_dummy_post() {
+	global $post;
+
+	// Append enrollment mark
+	if ( paco2017_bp_is_user_enrolled() ) {
+		$post->post_title .= paco2017_bp_get_enrollment_mark();
+	}
 }
 
 /**
