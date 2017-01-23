@@ -11,29 +11,27 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Return the member's enrollment status
+ * Modify whether the member is enrolled
  *
  * @since 1.0.0
  *
+ * @param bool $enrolled Whether the user is enrolled
  * @param int $user_id Optional. User ID. Defaults to the current user.
  * @return bool Is the member enrolled?
  */
-function paco2017_bp_xprofile_get_enrollment_status( $user_id = 0 ) {
+function paco2017_bp_xprofile_is_user_enrolled( $enrolled, $user_id = 0 ) {
 
 	// Default to the current user
 	if ( empty( $user_id ) ) {
 		$user_id = get_current_user_id();
 	}
 
-	// Define return value
-	$enrollment = false;
-
 	// Read the user's profile field value
 	if ( $field = paco2017_bp_xprofile_get_enrollment_field() ) {
-		$enrollment = (bool) xprofile_get_field_data( $field->id, $user_id );
+		$enrolled = (bool) xprofile_get_field_data( $field->id, $user_id );
 	}
 
-	return (bool) $enrollment;
+	return $enrolled;
 }
 
 /**

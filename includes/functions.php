@@ -504,27 +504,6 @@ function paco2017_customize_nav_menu_searched_items( $items, $args ) {
 /** Options *******************************************************************/
 
 /**
- * Output the enrolled users count
- *
- * @since 1.0.0
- */
-function paco2017_enrolled_users_count() {
-	echo paco2017_get_enrolled_users_count();
-}
-
-/**
- * Return the enrolled users count
- *
- * @since 1.0.0
- *
- * @uses apply_filters() Calls 'paco2017_get_enrolled_users_count'
- * @return int Enrolled user count
- */
-function paco2017_get_enrolled_users_count() {
-	return apply_filters( 'paco2017_get_enrolled_users_count', 0 );
-}
-
-/**
  * Return the page ID of the Housekeeping page setting
  *
  * @since 1.0.0
@@ -546,6 +525,49 @@ function paco2017_get_housekeeping_page_id() {
  */
 function paco2017_get_magazine_page_id() {
 	return (int) apply_filters( 'paco2017_get_magazine_page_id', get_option( '_paco2017_magazine_page', 0 ) );
+}
+
+/** Enrollments ***************************************************************/
+
+/**
+ * Return whether the user is enrolled
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_is_user_enrolled'
+ *
+ * @param int $user_id Optional. User ID. Defaults to the current user.
+ * @return bool Is the user enrolled?
+ */
+function paco2017_is_user_enrolled( $user_id = 0 ) {
+
+	// Default to the current user
+	if ( empty( $user_id ) ) {
+		$user_id = get_current_user_id();
+	}
+
+	return (bool) apply_filters( 'paco2017_is_user_enrolled', false, $user_id );
+}
+
+/**
+ * Output the enrolled users count
+ *
+ * @since 1.0.0
+ */
+function paco2017_enrolled_users_count() {
+	echo paco2017_get_enrolled_users_count();
+}
+
+/**
+ * Return the enrolled users count
+ *
+ * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_enrolled_users_count'
+ * @return int Enrolled user count
+ */
+function paco2017_get_enrolled_users_count() {
+	return (int) apply_filters( 'paco2017_get_enrolled_users_count', 0 );
 }
 
 /** Magazine ******************************************************************/
