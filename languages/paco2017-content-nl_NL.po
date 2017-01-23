@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Paascongres 2017 Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-20 14:38+0000\n"
-"PO-Revision-Date: 2017-01-20 14:47+0000\n"
+"POT-Creation-Date: 2017-01-23 15:20+0000\n"
+"PO-Revision-Date: 2017-01-23 15:21+0000\n"
 "Last-Translator: laurens <lmoffereins@gmail.com>\n"
-"Language-Team: Dutch (Netherlands)\n"
+"Language-Team: Dutch\n"
 "Language: nl-NL\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
@@ -14,16 +14,36 @@ msgstr ""
 "X-Generator: Loco - https://localise.biz/"
 
 #. 1. Time 2. Date 3. Location adverbial
-#: templates/default/paco2017/info-agenda-related-item.php:28
+#: templates/default/paco2017/info-lecture.php:23
 #, php-format
-msgid "This item is scheduled for %2$s %3$s at %1$s."
-msgstr "Deze activiteit is gepland op %2$s %3$s om %1$s."
+msgid "Starts on %2$s at %1$s %3$s"
+msgstr "Vangt aan op %2$s om %1$s %3$s"
+
+#. 1. Time 2. Date
+#: templates/default/paco2017/info-lecture.php:25
+#, php-format
+msgid "Starts on %2$s at %1$s"
+msgstr "Vangt aan op %2$s om %1$s"
 
 #. 1. Time 2. Location adverbial
-#: templates/default/paco2017/info-agenda-related-item.php:43
+#: templates/default/paco2017/info-lecture.php:37
 #, php-format
-msgid "This item is scheduled at %1$s %2$s."
-msgstr "Deze activiteit is gepland om %1$s %2$s."
+msgid "Starts at %1$s %2$s"
+msgstr "Vangt aan om %1$s %2$s"
+
+#. 1. Time
+#: templates/default/paco2017/info-lecture.php:39
+#, php-format
+msgid "Starts at %1$s"
+msgstr "Vangt aan om %1$s"
+
+#: includes/extend/buddypress/templates/members/single/front.php:17
+msgid "This person will be attending the conference!"
+msgstr ""
+
+#: includes/extend/buddypress/templates/members/single/front.php:21
+msgid "This person is not yet enrolled."
+msgstr ""
 
 #: paco2017-content.php:239
 msgid "Paascongres lectures"
@@ -103,7 +123,7 @@ msgstr "Verwijder %sfoto"
 msgid "Paascongres 2017 Dashboard"
 msgstr "Paascongres 2017 Dashboard"
 
-#: includes/admin.php:90 includes/admin.php:1203 includes/functions.php:431
+#: includes/admin.php:90 includes/admin.php:1203 includes/functions.php:459
 msgid "Paascongres"
 msgstr "Paascongres"
 
@@ -566,43 +586,43 @@ msgstr[1] "%s Partners"
 msgid "There is currently nothing to display here."
 msgstr "Er is hier niets om te tonen."
 
-#: includes/functions.php:231
+#: includes/functions.php:259
 msgid "Agenda page"
 msgstr "Programmapagina"
 
-#: includes/functions.php:232
+#: includes/functions.php:260
 msgctxt "menu type label"
 msgid "Paascongres Agenda page"
 msgstr "PaCo Programmapagina"
 
-#: includes/functions.php:239
+#: includes/functions.php:267
 msgid "Associations page"
 msgstr "Verenigingenpagina"
 
-#: includes/functions.php:240
+#: includes/functions.php:268
 msgctxt "menu type label"
 msgid "Paascongres Associations page"
 msgstr "PaCo Verenigingenpagina"
 
-#: includes/functions.php:247
+#: includes/functions.php:275
 msgid "Speakers page"
 msgstr "Sprekerspagina"
 
-#: includes/functions.php:248
+#: includes/functions.php:276
 msgctxt "menu type label"
 msgid "Paascongres Speakers page"
 msgstr "PaCo Sprekerspagina"
 
-#: includes/functions.php:255
+#: includes/functions.php:283
 msgid "Magazine download link"
 msgstr "Magazine downloadlink"
 
-#: includes/functions.php:256
+#: includes/functions.php:284
 msgctxt "menu type label"
 msgid "Paascongres Magazine Download Link"
 msgstr "PaCo Magazine downloadlink"
 
-#: includes/functions.php:268 includes/functions.php:432
+#: includes/functions.php:296 includes/functions.php:460
 msgctxt "menu type label"
 msgid "Paascongres Page"
 msgstr "PaCo Pagina"
@@ -858,7 +878,7 @@ msgstr "Workshop"
 msgid "Workshop Category"
 msgstr "Workshopcategorie"
 
-#: includes/settings.php:186 includes/workshops.php:259
+#: includes/settings.php:186 includes/workshops.php:242
 msgid "Workshop Round"
 msgstr "Workshopronde"
 
@@ -935,17 +955,17 @@ msgstr "Nieuwe Sprekernaam"
 msgid "View Speaker"
 msgstr "Spreker bekijken"
 
-#: includes/template.php:691 includes/theme-compat.php:76
+#: includes/template.php:760 includes/theme-compat.php:76
 msgctxt "agenda page title"
 msgid "Agenda"
 msgstr "Programma"
 
-#: includes/template.php:695 includes/theme-compat.php:90
+#: includes/template.php:764 includes/theme-compat.php:90
 msgctxt "associations page title"
 msgid "Associations"
 msgstr "Verenigingen"
 
-#: includes/template.php:699 includes/theme-compat.php:104
+#: includes/template.php:768 includes/theme-compat.php:104
 msgctxt "speakers page title"
 msgid "Speakers"
 msgstr "Sprekers"
@@ -1054,43 +1074,43 @@ msgstr "Nieuwe Workshopcategorie naam"
 msgid "View Workshop Category"
 msgstr "Workshopcategorie bekijken"
 
-#: includes/workshops.php:257
+#: includes/workshops.php:240
 msgid "Paascongres Workshop Rounds"
 msgstr "Paascongres Workshopronden"
 
-#: includes/workshops.php:258
+#: includes/workshops.php:241
 msgid "Rounds"
 msgstr "Ronden"
 
-#: includes/workshops.php:260
+#: includes/workshops.php:243
 msgid "Search Workshop Rounds"
 msgstr "Zoek Workshopronden"
 
-#: includes/workshops.php:262
+#: includes/workshops.php:245
 msgid "All Workshop Rounds"
 msgstr "Alle Workshopronden"
 
-#: includes/workshops.php:263
+#: includes/workshops.php:246
 msgid "No Workshop Round"
 msgstr "Geen Workshopronde"
 
-#: includes/workshops.php:264
+#: includes/workshops.php:247
 msgid "Edit Workshop Round"
 msgstr "Workshopronde bewerken"
 
-#: includes/workshops.php:265
+#: includes/workshops.php:248
 msgid "Update Workshop Round"
 msgstr "Workshopronde bijwerken"
 
-#: includes/workshops.php:266
+#: includes/workshops.php:249
 msgid "Add New Workshop Round"
 msgstr "Nieuwe Workshopronde toevoegen"
 
-#: includes/workshops.php:267
+#: includes/workshops.php:250
 msgid "New Workshop Round Name"
 msgstr "Nieuwe Workshopronde naam"
 
-#: includes/workshops.php:268
+#: includes/workshops.php:251
 msgid "View Workshop Round"
 msgstr "Workshopronde bekijken"
 
@@ -1122,8 +1142,8 @@ msgctxt "admin field label"
 msgid "Association Field"
 msgstr "Verenigingsveld"
 
-#: includes/extend/buddypress/buddypress.php:258
-#: includes/extend/buddypress/buddypress.php:283
+#: includes/extend/buddypress/buddypress.php:261
+#: includes/extend/buddypress/buddypress.php:286
 msgid "Enrollment"
 msgstr "Aanmelding"
 
@@ -1144,7 +1164,7 @@ msgid ""
 "The following people from your own association have received an invitation."
 msgstr "De volgende leden van uw vereniging zijn uitgenodigd voor het congres."
 
-#: includes/extend/buddypress/members.php:150
+#: includes/extend/buddypress/members.php:164
 msgid "This member is enrolled for the event."
 msgstr "Dit lid heeft zich aangemeld voor het congres."
 
@@ -1217,15 +1237,12 @@ msgstr "Er zijn geen activiteiten gepland voor deze dag."
 msgid "There are no items scheduled."
 msgstr "Er zijn geen activiteiten gepland."
 
-#: templates/default/paco2017/info-agenda-related-item.php:30
+#: templates/default/paco2017/info-lecture.php:52
+#: templates/default/paco2017/info-workshop.php:27
 #, php-format
-msgid "This item is scheduled for %2$s at %1$s."
-msgstr "Deze activiteit vindt plaats op %2$s om %1$s."
-
-#: templates/default/paco2017/info-agenda-related-item.php:45
-#, php-format
-msgid "This item is scheduled at %1$s."
-msgstr "Deze activiteit vindt plaats om %1$s."
+msgctxt "object taxonomy detail"
+msgid "Speaker: %s"
+msgstr "Spreker: %s"
 
 #: templates/default/paco2017/info-speaker.php:25
 #, php-format
@@ -1244,23 +1261,17 @@ msgctxt "object taxonomy detail"
 msgid "Workshop round: %s"
 msgstr "Workshopronde: %s"
 
-#: templates/default/paco2017/info-workshop.php:27
-#, php-format
-msgctxt "object taxonomy detail"
-msgid "Speaker: %s"
-msgstr "Spreker: %s"
-
 #: templates/default/paco2017/info-workshop.php:34
-#, php-format
-msgctxt "object taxonomy detail"
-msgid "Category: %s"
-msgstr "Categorie: %s"
-
-#: templates/default/paco2017/info-workshop.php:41
 #, php-format
 msgctxt "object taxonomy detail"
 msgid "Location: %s"
 msgstr "Locatie: %s"
+
+#: templates/default/paco2017/info-workshop.php:41
+#, php-format
+msgctxt "object taxonomy detail"
+msgid "Category: %s"
+msgstr "Categorie: %s"
 
 #. Name of the plugin
 msgid "Paascongres 2017 Content"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-20 14:38+0000\n"
+"POT-Creation-Date: 2017-01-23 15:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -92,7 +92,7 @@ msgstr ""
 msgid "Paascongres 2017 Dashboard"
 msgstr ""
 
-#: includes/admin.php:90 includes/admin.php:1203 includes/functions.php:431
+#: includes/admin.php:90 includes/admin.php:1203 includes/functions.php:459
 msgid "Paascongres"
 msgstr ""
 
@@ -555,43 +555,43 @@ msgstr[1] ""
 msgid "There is currently nothing to display here."
 msgstr ""
 
-#: includes/functions.php:231
+#: includes/functions.php:259
 msgid "Agenda page"
 msgstr ""
 
-#: includes/functions.php:232
+#: includes/functions.php:260
 msgctxt "menu type label"
 msgid "Paascongres Agenda page"
 msgstr ""
 
-#: includes/functions.php:239
+#: includes/functions.php:267
 msgid "Associations page"
 msgstr ""
 
-#: includes/functions.php:240
+#: includes/functions.php:268
 msgctxt "menu type label"
 msgid "Paascongres Associations page"
 msgstr ""
 
-#: includes/functions.php:247
+#: includes/functions.php:275
 msgid "Speakers page"
 msgstr ""
 
-#: includes/functions.php:248
+#: includes/functions.php:276
 msgctxt "menu type label"
 msgid "Paascongres Speakers page"
 msgstr ""
 
-#: includes/functions.php:255
+#: includes/functions.php:283
 msgid "Magazine download link"
 msgstr ""
 
-#: includes/functions.php:256
+#: includes/functions.php:284
 msgctxt "menu type label"
 msgid "Paascongres Magazine Download Link"
 msgstr ""
 
-#: includes/functions.php:268 includes/functions.php:432
+#: includes/functions.php:296 includes/functions.php:460
 msgctxt "menu type label"
 msgid "Paascongres Page"
 msgstr ""
@@ -839,7 +839,7 @@ msgstr ""
 msgid "Workshop Category"
 msgstr ""
 
-#: includes/settings.php:186 includes/workshops.php:259
+#: includes/settings.php:186 includes/workshops.php:242
 msgid "Workshop Round"
 msgstr ""
 
@@ -916,17 +916,17 @@ msgstr ""
 msgid "View Speaker"
 msgstr ""
 
-#: includes/template.php:691 includes/theme-compat.php:76
+#: includes/template.php:760 includes/theme-compat.php:76
 msgctxt "agenda page title"
 msgid "Agenda"
 msgstr ""
 
-#: includes/template.php:695 includes/theme-compat.php:90
+#: includes/template.php:764 includes/theme-compat.php:90
 msgctxt "associations page title"
 msgid "Associations"
 msgstr ""
 
-#: includes/template.php:699 includes/theme-compat.php:104
+#: includes/template.php:768 includes/theme-compat.php:104
 msgctxt "speakers page title"
 msgid "Speakers"
 msgstr ""
@@ -1035,43 +1035,43 @@ msgstr ""
 msgid "View Workshop Category"
 msgstr ""
 
-#: includes/workshops.php:257
+#: includes/workshops.php:240
 msgid "Paascongres Workshop Rounds"
 msgstr ""
 
-#: includes/workshops.php:258
+#: includes/workshops.php:241
 msgid "Rounds"
 msgstr ""
 
-#: includes/workshops.php:260
+#: includes/workshops.php:243
 msgid "Search Workshop Rounds"
 msgstr ""
 
-#: includes/workshops.php:262
+#: includes/workshops.php:245
 msgid "All Workshop Rounds"
 msgstr ""
 
-#: includes/workshops.php:263
+#: includes/workshops.php:246
 msgid "No Workshop Round"
 msgstr ""
 
-#: includes/workshops.php:264
+#: includes/workshops.php:247
 msgid "Edit Workshop Round"
 msgstr ""
 
-#: includes/workshops.php:265
+#: includes/workshops.php:248
 msgid "Update Workshop Round"
 msgstr ""
 
-#: includes/workshops.php:266
+#: includes/workshops.php:249
 msgid "Add New Workshop Round"
 msgstr ""
 
-#: includes/workshops.php:267
+#: includes/workshops.php:250
 msgid "New Workshop Round Name"
 msgstr ""
 
-#: includes/workshops.php:268
+#: includes/workshops.php:251
 msgid "View Workshop Round"
 msgstr ""
 
@@ -1103,8 +1103,8 @@ msgctxt "admin field label"
 msgid "Association Field"
 msgstr ""
 
-#: includes/extend/buddypress/buddypress.php:258
-#: includes/extend/buddypress/buddypress.php:283
+#: includes/extend/buddypress/buddypress.php:261
+#: includes/extend/buddypress/buddypress.php:286
 msgid "Enrollment"
 msgstr ""
 
@@ -1125,7 +1125,7 @@ msgid ""
 "The following people from your own association have received an invitation."
 msgstr ""
 
-#: includes/extend/buddypress/members.php:150
+#: includes/extend/buddypress/members.php:164
 msgid "This member is enrolled for the event."
 msgstr ""
 
@@ -1196,25 +1196,34 @@ msgid "There are no items scheduled."
 msgstr ""
 
 #. 1. Time 2. Date 3. Location adverbial
-#: templates/default/paco2017/info-agenda-related-item.php:28
+#: templates/default/paco2017/info-lecture.php:23
 #, php-format
-msgid "This item is scheduled for %2$s %3$s at %1$s."
+msgid "Starts on %2$s at %1$s %3$s"
 msgstr ""
 
-#: templates/default/paco2017/info-agenda-related-item.php:30
+#. 1. Time 2. Date
+#: templates/default/paco2017/info-lecture.php:25
 #, php-format
-msgid "This item is scheduled for %2$s at %1$s."
+msgid "Starts on %2$s at %1$s"
 msgstr ""
 
 #. 1. Time 2. Location adverbial
-#: templates/default/paco2017/info-agenda-related-item.php:43
+#: templates/default/paco2017/info-lecture.php:37
 #, php-format
-msgid "This item is scheduled at %1$s %2$s."
+msgid "Starts at %1$s %2$s"
 msgstr ""
 
-#: templates/default/paco2017/info-agenda-related-item.php:45
+#. 1. Time
+#: templates/default/paco2017/info-lecture.php:39
 #, php-format
-msgid "This item is scheduled at %1$s."
+msgid "Starts at %1$s"
+msgstr ""
+
+#: templates/default/paco2017/info-lecture.php:52
+#: templates/default/paco2017/info-workshop.php:27
+#, php-format
+msgctxt "object taxonomy detail"
+msgid "Speaker: %s"
 msgstr ""
 
 #: templates/default/paco2017/info-speaker.php:25
@@ -1233,22 +1242,24 @@ msgctxt "object taxonomy detail"
 msgid "Workshop round: %s"
 msgstr ""
 
-#: templates/default/paco2017/info-workshop.php:27
-#, php-format
-msgctxt "object taxonomy detail"
-msgid "Speaker: %s"
-msgstr ""
-
 #: templates/default/paco2017/info-workshop.php:34
 #, php-format
 msgctxt "object taxonomy detail"
-msgid "Category: %s"
+msgid "Location: %s"
 msgstr ""
 
 #: templates/default/paco2017/info-workshop.php:41
 #, php-format
 msgctxt "object taxonomy detail"
-msgid "Location: %s"
+msgid "Category: %s"
+msgstr ""
+
+#: includes/extend/buddypress/templates/members/single/front.php:17
+msgid "This person will be attending the conference!"
+msgstr ""
+
+#: includes/extend/buddypress/templates/members/single/front.php:21
+msgid "This person is not yet enrolled."
 msgstr ""
 
 #. Name of the plugin
