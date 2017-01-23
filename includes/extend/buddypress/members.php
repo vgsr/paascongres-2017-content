@@ -31,7 +31,7 @@ function paco2017_bp_members_directory_tabs() {
 	if ( paco2017_bp_xprofile_get_association_field() ) {
 		printf( '<li id="members-%s"><a href="#">%s <span>%s</span></a></li>',
 			paco2017_bp_members_get_association_scope(),
-			paco2017_bp_xprofile_get_association_title(),
+			paco2017_bp_get_association_title(),
 			// __( 'My Association', 'paco2017-content' ),
 			sprintf( '%s/%s', paco2017_bp_get_enrolled_members_count( 'association' ), paco2017_bp_get_members_count( 'association' ) )
 		);

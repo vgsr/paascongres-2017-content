@@ -52,3 +52,31 @@ function paco2017_bp_users_in_same_association( $user1_id = 0, $user2_id = 0 ) {
 
 	return paco2017_users_in_same_association( $user1_id, $user2_id );
 }
+
+/**
+ * Return the user's association title
+ *
+ * @since 1.1.0
+ *
+ * @param int $user_id Optional. Uesr ID. Defaults to the displayed or current user.
+ * @return string User association title
+ */
+function paco2017_bp_get_association_title( $user_id = 0 ) {
+
+	// Default to the displayed user
+	if ( empty( $user_id ) ) {
+		$user_id = bp_displayed_user_id();
+	}
+
+	// Default to the current user
+	if ( empty( $user_id ) ) {
+		$user_id = get_current_user_id();
+	}
+
+	// Bail when there was no user found
+	if ( ! $user_id ) {
+		return '';
+	}
+
+	return paco2017_get_association_title( get_userdata( $user_id ) );
+}

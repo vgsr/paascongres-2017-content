@@ -228,27 +228,31 @@ function paco2017_in_the_association_loop() {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int $item Optional. Term object or ID. Defaults to the current term.
+ * @param WP_Term|int|WP_User $term Optional. Term object or ID or User object. Defaults to the current term.
  * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
  * @return WP_Term|false Associations term object or False when not found.
  */
-function paco2017_get_association( $item = 0, $by = 'id' ) {
+function paco2017_get_association( $term = 0, $by = 'id' ) {
 
-	// Default empty parameter to the item in the loop
-	if ( empty( $item ) && paco2017_in_the_association_loop() ) {
-		$item = paco2017_content()->association_query->term;
+	// Default empty parameter to the term in the loop
+	if ( empty( $term ) && paco2017_in_the_association_loop() ) {
+		$term = paco2017_content()->association_query->term;
+
+	// Get the term by user
+	} elseif ( $term instanceof WP_User ) {
+		$term = paco2017_get_user_association( $term->ID );
 
 	// Get the term by id or slug
-	} elseif ( ! $item instanceof WP_Term ) {
-		$item = get_term_by( $by, $item, paco2017_get_association_tax_id() );
+	} elseif ( ! $term instanceof WP_Term ) {
+		$term = get_term_by( $by, $term, paco2017_get_association_tax_id() );
 	}
 
 	// Reduce error to false
-	if ( ! $item || is_wp_error( $item ) ) {
-		$item = false;
+	if ( ! $term || is_wp_error( $term ) ) {
+		$term = false;
 	}
 
-	return $item;
+	return $term;
 }
 
 /**
