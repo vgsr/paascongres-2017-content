@@ -74,6 +74,40 @@ function paco2017_bp_add_settings_fields( $fields ) {
 				'description' => esc_html__( "Select the field that holds the member's association value.", 'paco2017-content' ),
 			)
 		),
+
+		// Workshop 1 field
+		'_paco2017_bp_xprofile_workshop1_field' => array(
+			'title'             => __( 'Workshop 1 Field', 'paco2017-content' ),
+			'callback'          => 'paco2017_bp_admin_setting_callback_workshop_field',
+			'sanitize_callback' => 'intval',
+			'args'              => array(
+				'setting'     => '_paco2017_bp_xprofile_workshop1_field',
+				'description' => esc_html__( "Select the field that holds the member's first workshop selection.", 'paco2017-content' ),
+			)
+		),
+
+		// Workshop 2 field
+		'_paco2017_bp_xprofile_workshop2_field' => array(
+			'title'             => __( 'Workshop 2 Field', 'paco2017-content' ),
+			'callback'          => 'paco2017_bp_admin_setting_callback_workshop_field',
+			'sanitize_callback' => 'intval',
+			'args'              => array(
+				'setting'     => '_paco2017_bp_xprofile_workshop2_field',
+				'description' => esc_html__( "Select the field that holds the member's second workshop selection.", 'paco2017-content' ),
+			)
+		),
+
+		// Workshop 1 field round
+		'_paco2017_bp_xprofile_workshop1_field_round' => array(
+			'sanitize_callback' => 'intval',
+			'args'              => array()
+		),
+
+		// Workshop 2 field round
+		'_paco2017_bp_xprofile_workshop2_field_round' => array(
+			'sanitize_callback' => 'intval',
+			'args'              => array()
+		),
 	);
 
 	return $fields;
@@ -107,10 +141,8 @@ function paco2017_bp_admin_setting_callback_fields_section() { /* Nothing to dis
 function paco2017_bp_admin_setting_callback_xprofile_field( $args = array() ) {
 
 	// Bail when the setting isn't defined
-	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) ) {
-		_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'This function requires the %s parameter to display the settings field input.', 'paco2017-content' ), '<code>setting</code>' ), '1.0.0' );
+	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) )
 		return;
-	}
 
 	// Bail when the XProfile component is not active
 	if ( ! bp_is_active( 'xprofile' ) ) {
@@ -145,9 +177,9 @@ function paco2017_bp_admin_setting_callback_xprofile_field( $args = array() ) {
 	}
 
 	// Output description
-	if ( isset( $args['description'] ) && ! empty( $args['description'] ) ) : ?>
-		<p class="description"><?php echo esc_html( $args['description'] ); ?></p>
-	<?php endif;
+	if ( isset( $args['description'] ) && ! empty( $args['description'] ) ) {
+		echo '<p class="description">' . esc_html( $args['description'] ) . '</p>';
+	}
 }
 
 /**
@@ -235,6 +267,35 @@ function paco2017_bp_admin_setting_callback_required_fields() {
 	} else {
 		echo '<p class="description">' . esc_html__( 'There are no fields selected yet.', 'paco2017-content' ) . '</p>';
 	}
+}
+
+/**
+ * Display a Workshop field selector settings field
+ *
+ * @since 1.1.0
+ *
+ * @param array $args Settings field arguments
+ */
+function paco2017_bp_admin_setting_callback_workshop_field( $args = array() ) {
+
+	// Bail when the setting isn't defined
+	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) )
+		return;
+
+	// Profile field selection
+	paco2017_bp_admin_setting_callback_xprofile_field( $args );
+
+	// Workshop round selection
+	$round_setting = "{$args['setting']}_round";
+	wp_dropdown_categories( array(
+		'name'              => $round_setting,
+		'taxonomy'          => paco2017_get_workshop_round_tax_id(),
+		'selected'          => get_option( $round_setting ),
+		'option_none_value' => 0,
+		'show_option_none'  => __( '&mdash; No Round &mdash;', 'paco2017-content' )
+	) );
+
+	echo '<p class="description">' . esc_html__( "Optionally select the workshop round to filter the field's options by.", 'paco2017-content' ) . '</p>';
 }
 
 /** Pages ***************************************************************/

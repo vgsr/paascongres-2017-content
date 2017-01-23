@@ -155,6 +155,50 @@ function paco2017_bp_xprofile_sync_association_term( $field_data ) {
 	}
 }
 
+/**
+ * Modify the query arguments for the Relationship field's options
+ *
+ * @since 1.1.0
+ *
+ * @param array $args Field options query arguments
+ * @param string $object Field relationship object
+ * @param BP_XProfile_Field $field The current field
+ * @return array Query arguments
+ */
+function paco2017_bp_xprofile_workshop_options_args( $args, $object, $field ) {
+
+	// Workshop field
+	if ( paco2017_bp_xprofile_is_a_workshop_field( $field ) ) {
+
+		// Workshop 1
+		if ( paco2017_bp_xprofile_is_workshop1_field( $field ) ) {
+			$term = get_option( '_paco2017_bp_xprofile_workshop1_field_round' );
+
+		// Workshop 2
+		} elseif ( paco2017_bp_xprofile_get_workshop2_field( $field ) ) {
+			$term = get_option( '_paco2017_bp_xprofile_workshop2_field_round' );
+
+		// No workshop
+		} else {
+			$term = false;
+		}
+
+		// Term was found
+		if ( ! empty( $term ) ) {
+
+			// Add workshop round taxonomy query
+			$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
+			$tax_query[] = array(
+				'taxonomy' => paco2017_get_workshop_round_tax_id(),
+				'terms'    => array( $term ),
+			);
+			$args['tax_query'] = $tax_query;
+		}
+	}
+
+	return $args;
+}
+
 /** Options ***************************************************************/
 
 /**
@@ -314,4 +358,63 @@ function paco2017_bp_xprofile_get_association_field() {
  */
 function paco2017_bp_xprofile_is_association_field( $field_id = 0 ) {
 	return paco2017_bp_xprofile_is_the_field( '_paco2017_bp_xprofile_association_field', $field_id );
+}
+
+/**
+ * Return the selected Workshop 1 XProfile field
+ *
+ * @since 1.1.0
+ *
+ * @return BP_XProfile_Field|null Profile field when found, else Null.
+ */
+function paco2017_bp_xprofile_get_workshop1_field() {
+	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_workshop1_field' );
+}
+
+/**
+ * Return whether this is the Workshop 1 XProfile field
+ *
+ * @since 1.1.0
+ *
+ * @param int|BP_XProfile_Field $field_id Field ID or object. Optional. Defaults to current field.
+ * @return bool Is this the Workshop 1 field?
+ */
+function paco2017_bp_xprofile_is_workshop1_field( $field_id = 0 ) {
+	return paco2017_bp_xprofile_is_the_field( '_paco2017_bp_xprofile_workshop1_field', $field_id );
+}
+
+/**
+ * Return the selected Workshop 2 XProfile field
+ *
+ * @since 1.1.0
+ *
+ * @return BP_XProfile_Field|null Profile field when found, else Null.
+ */
+function paco2017_bp_xprofile_get_workshop2_field() {
+	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_workshop2_field' );
+}
+
+/**
+ * Return whether this is the Workshop 2 XProfile field
+ *
+ * @since 1.1.0
+ *
+ * @param int|BP_XProfile_Field $field_id Field ID or object. Optional. Defaults to current field.
+ * @return bool Is this the Workshop 2 field?
+ */
+function paco2017_bp_xprofile_is_workshop2_field( $field_id = 0 ) {
+	return paco2017_bp_xprofile_is_the_field( '_paco2017_bp_xprofile_workshop2_field', $field_id );
+}
+
+/**
+ * Return whether this is any Workshop XProfile field
+ *
+ * @since 1.1.0
+ *
+ * @param int|BP_XProfile_Field $field_id Field ID or object. Optional. Defaults to current field.
+ * @return bool Is this any Workshop field?
+ */
+function paco2017_bp_xprofile_is_a_workshop_field( $field_id = 0 ) {
+	return paco2017_bp_xprofile_is_the_field( '_paco2017_bp_xprofile_workshop1_field', $field_id )
+		|| paco2017_bp_xprofile_is_the_field( '_paco2017_bp_xprofile_workshop2_field', $field_id );
 }

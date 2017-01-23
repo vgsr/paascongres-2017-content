@@ -39,6 +39,7 @@ add_filter( 'paco2017_get_enrolled_users_for_association', 'paco2017_bp_get_enro
 // XProfile
 add_filter( 'bp_xprofile_get_groups',   'paco2017_bp_xprofile_no_edit_association_field', 10, 2 );
 add_action( 'xprofile_data_after_save', 'paco2017_bp_xprofile_sync_association_term'            );
+add_filter( 'bp_xprofile_relationship_field_options_query_args', 'paco2017_bp_xprofile_workshop_options_args', 10, 3 );
 
 // Admin
 if ( is_admin() ) {

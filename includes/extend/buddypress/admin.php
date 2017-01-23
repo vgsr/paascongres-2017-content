@@ -151,6 +151,16 @@ class Paco2017_BuddyPress_Admin {
 			$states['association'] = esc_html_x( 'Association Field', 'admin field label', 'paco2017-content' );
 		}
 
+		// Workshop 1 field
+		if ( paco2017_bp_xprofile_is_workshop1_field( $field ) ) {
+			$states['workshop1'] = esc_html_x( 'Workshop 1 Field', 'admin field label', 'paco2017-content' );
+		}
+
+		// Workshop 2 field
+		if ( paco2017_bp_xprofile_is_workshop2_field( $field ) ) {
+			$states['workshop2'] = esc_html_x( 'Workshop 2 Field', 'admin field label', 'paco2017-content' );
+		}
+
 		// Define label wrap
 		if ( ! empty( $states ) ) {
 			printf( '<span class="post-state">&mdash; %s</span>', implode( ', ', $states ) );
