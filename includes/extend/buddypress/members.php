@@ -45,10 +45,10 @@ function paco2017_bp_members_directory_tabs() {
  */
 function paco2017_bp_members_directory_order_options() {
 
-	// Newest Enrolled
-	if ( paco2017_bp_xprofile_get_enrollment_field() ) : ?>
-		<option value="<?php echo paco2017_bp_members_get_enrolled_scope(); ?>"><?php esc_html_e( 'Newest Enrolled', 'paco2017-content' ); ?></option>
-	<?php endif;
+	// Newest Enrolled option
+	if ( paco2017_bp_xprofile_get_enrollment_field() ) {
+		echo '<option value="' . paco2017_bp_members_get_enrolled_scope() . '">' . esc_html__( 'Newest Enrolled', 'paco2017-content' ) . '</option>';
+	}
 }
 
 /**
@@ -160,14 +160,10 @@ function paco2017_bp_member_name( $name ) {
  */
 function paco2017_bp_members_item_association_badge() {
 
-	$user_id = bp_get_member_user_id();
-
 	// Display association badge
-	if ( $association = paco2017_bp_xprofile_get_association_value( $user_id ) ) : ?>
-
-		<i class="paco2017-association-badge"></i>
-
-	<?php endif;
+	if ( paco2017_get_user_association( bp_get_member_user_id() ) ) {
+		echo '<i class="paco2017-association-badge"></i>';
+	}
 }
 
 /**
@@ -186,8 +182,8 @@ function paco2017_bp_get_member_class( $classes ) {
 	}
 
 	// Member association
-	if ( $association = paco2017_bp_xprofile_get_association_value( bp_get_member_user_id() ) ) {
-		$classes[] = 'paco2017-association-' . $association;
+	if ( $term = paco2017_get_user_association( bp_get_member_user_id() ) ) {
+		$classes[] = 'paco2017-association-' . $term->term_id;
 	}
 
 	return $classes;

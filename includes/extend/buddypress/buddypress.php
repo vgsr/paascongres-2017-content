@@ -381,8 +381,8 @@ class Paco2017_BuddyPress {
 		if ( bp_is_user() ) {
 
 			// Add displayed user's association class
-			if ( $association = paco2017_bp_xprofile_get_association_value( bp_displayed_user_id() ) ) {
-				$classes[] = 'paco2017-association-' . $association;
+			if ( $term = paco2017_get_user_association( bp_displayed_user_id() ) ) {
+				$classes[] = 'paco2017-association-' . $term->term_id;
 			}
 		}
 
