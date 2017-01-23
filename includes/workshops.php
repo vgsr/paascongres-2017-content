@@ -150,8 +150,21 @@ function paco2017_get_workshop_cat_tax_rewrite() {
 function paco2017_registered_workshop_cat_taxonomy() {
 	add_action( 'paco2017_rest_api_init', 'paco2017_register_workshop_cat_rest_fields' );
 
-	// Make category rules work
-	paco2017_prioritize_workshop_cat_rewrite_rules();
+	/**
+	 * Prioritize Workshop Category requests over Workshop requests.
+	 *
+	 * This is done because a request for '/workshops/category/cat-name/'
+	 * is catched as a query for a non-existent workshop entry. Instead we'd
+	 * like it to identify a workshop category before attempting to match a
+	 * workshop entry.
+	 *
+	 * This is caused by the prioritization of workshop object requests
+	 * over workshop category requests, based on the order of rewrite rules
+	 * registration. To solve this, we move the workshop object rules
+	 * (permalink structure or 'permastruct') down in the list of registered
+	 * rules to match.
+	 */
+	paco2017_reduce_rewrite_rules_priority( paco2017_get_workshop_post_type() );
 }
 
 /**
@@ -186,36 +199,6 @@ function paco2017_register_workshop_cat_rest_fields() {
  */
 function paco2017_get_workshop_rest_workshop_categories( $object, $field_name, $request ) {
 	return wp_get_object_terms( $object['id'], paco2017_get_workshop_cat_tax_id() );
-}
-
-/**
- * Prioritize Workshop Category requests over Workshop requests.
- *
- * This is done because a request for '/workshops/category/cat-name/'
- * is catched as a query for a non-existent workshop entry. Instead we'd
- * like it to identify a workshop category before attempting to match a
- * workshop entry.
- *
- * This is caused by the prioritization of workshop object requests
- * over workshop category requests, based on the order of rewrite rules
- * registration. To solve this, we move the workshop object rules
- * (permalink structure or 'permastruct') down in the list of registered
- * rules to match.
- *
- * @since 1.0.0
- *
- * @global WP_Rewrite $wp_rewrite
- */
-function paco2017_prioritize_workshop_cat_rewrite_rules() {
-	global $wp_rewrite;
-
-	// Get the current permastruct
-	$name = paco2017_get_workshop_post_type();
-	$args = $wp_rewrite->extra_permastructs[ $name ];
-
-	// Remove and append again at the bottom of the list
-	remove_permastruct( $name );
-	$wp_rewrite->extra_permastructs[ $name ] = $args;
 }
 
 /**
@@ -292,8 +275,21 @@ function paco2017_get_workshop_round_tax_rewrite() {
 function paco2017_registered_workshop_round_taxonomy() {
 	add_action( 'paco2017_rest_api_init', 'paco2017_register_workshop_round_rest_fields' );
 
-	// Make round rules work
-	paco2017_prioritize_workshop_round_rewrite_rules();
+	/**
+	 * Prioritize Workshop Round requests over Workshop requests.
+	 *
+	 * This is done because a request for '/workshops/round/round-name/'
+	 * is catched as a query for a non-existent workshop entry. Instead we'd
+	 * like it to identify a workshop round before attempting to match a
+	 * workshop entry.
+	 *
+	 * This is caused by the prioritization of workshop object requests
+	 * over workshop round requests, based on the order of rewrite rules
+	 * registration. To solve this, we move the workshop object rules
+	 * (permalink structure or 'permastruct') down in the list of registered
+	 * rules to match.
+	 */
+	paco2017_reduce_rewrite_rules_priority( paco2017_get_workshop_post_type() );
 }
 
 /**
@@ -328,36 +324,6 @@ function paco2017_register_workshop_round_rest_fields() {
  */
 function paco2017_get_workshop_rest_workshop_rounds( $object, $field_name, $request ) {
 	return wp_get_object_terms( $object['id'], paco2017_get_workshop_round_tax_id() );
-}
-
-/**
- * Prioritize Workshop Round requests over Workshop requests.
- *
- * This is done because a request for '/workshops/round/round-name/'
- * is catched as a query for a non-existent workshop entry. Instead we'd
- * like it to identify a workshop round before attempting to match a
- * workshop entry.
- *
- * This is caused by the prioritization of workshop object requests
- * over workshop round requests, based on the order of rewrite rules
- * registration. To solve this, we move the workshop object rules
- * (permalink structure or 'permastruct') down in the list of registered
- * rules to match.
- *
- * @since 1.1.0
- *
- * @global WP_Rewrite $wp_rewrite
- */
-function paco2017_prioritize_workshop_round_rewrite_rules() {
-	global $wp_rewrite;
-
-	// Get the current permastruct
-	$name = paco2017_get_workshop_post_type();
-	$args = $wp_rewrite->extra_permastructs[ $name ];
-
-	// Remove and append again at the bottom of the list
-	remove_permastruct( $name );
-	$wp_rewrite->extra_permastructs[ $name ] = $args;
 }
 
 /**

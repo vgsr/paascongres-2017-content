@@ -59,6 +59,32 @@ function paco2017_delete_rewrite_rules() {
 }
 
 /**
+ * Reduce the priority of the given rewrite rules permastruct
+ *
+ * @since 1.0.0
+ *
+ * @global WP_Rewrite $wp_rewrite
+ *
+ * @param string $rule_name The permastruct to reprioritize
+ */
+function paco2017_reduce_rewrite_rules_priority( $rule_name = '' ) {
+	global $wp_rewrite;
+
+	// Bail when the ruleset does not exist
+	if ( ! array_key_exists( $rule_name, $wp_rewrite->extra_permastructs ) )
+		return;
+
+	// Get the current permastruct
+	$args = $wp_rewrite->extra_permastructs[ $rule_name ];
+
+	// Remove and append again at the end of the list
+	remove_permastruct( $rule_name );
+	$wp_rewrite->extra_permastructs[ $rule_name ] = $args;
+}
+
+/** Slugs *********************************************************************/
+
+/**
  * Return the slug for the Lecture post type
  *
  * @since 1.0.0
@@ -171,6 +197,8 @@ function paco2017_sanitize_slug( $slug = '' ) {
 	// Filter the result and return
 	return apply_filters( 'paco2017_sanitize_slug', $value, $slug );
 }
+
+/** URLs **********************************************************************/
 
 /**
  * Return the url for the Speakers page
