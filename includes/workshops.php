@@ -89,6 +89,49 @@ function paco2017_get_workshop_post_type_supports() {
 	) );
 }
 
+/**
+ * Act when the Workshop post type has been registered
+ *
+ * @since 1.1.0
+ */
+function paco2017_registered_workshop_post_type() {
+	add_action( 'paco2017_rest_api_init', 'paco2017_register_workshop_rest_fields' );
+}
+
+/**
+ * Register REST fields for the Workshop post type
+ *
+ * @since 1.1.0
+ */
+function paco2017_register_workshop_rest_fields() {
+
+	// Get assets
+	$workshop = paco2017_get_workshop_post_type();
+
+	// Add location to Agenda Item
+	register_rest_field(
+		$workshop,
+		'user_count',
+		array(
+			'get_callback' => 'paco2017_get_workshop_rest_user_count'
+		)
+	);
+}
+
+/**
+ * Return the value for the 'user_count' workshop REST API field
+ *
+ * @since 1.0.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return array Location term(s)
+ */
+function paco2017_get_workshop_rest_user_count( $object, $field_name, $request ) {
+	return paco2017_get_workshop_enrolled_user_count( $object['id'] );
+}
+
 /** Taxonomy: Workshop Category ***********************************************/
 
 /**
@@ -378,6 +421,46 @@ function paco2017_workshop_post_content( $content ) {
 	}
 
 	return $content;
+}
+
+/**
+ * Return the workshop's enrolled user count
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_enrolled_user_count'
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @return int Enrolled user count.
+ */
+function paco2017_get_workshop_enrolled_user_count( $post = 0 ) {
+	$post  = paco2017_get_workshop( $post );
+	$count = 0;
+
+	if ( $post ) {
+		$users = paco2017_get_workshop_enrolled_users( $post );
+		$count = count( $users );
+	}
+
+	return (int) apply_filters( 'paco2017_get_workshop_enrolled_user_count', $count, $post );
+}
+
+/**
+ * Return the workshop's enrolled users
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_enrolled_users'
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @param bool $object Optional. Whether to return user objects or ids.
+ * @return array Enrolled users objects or ids
+ */
+function paco2017_get_workshop_enrolled_users( $post = 0, $object = false ) {
+	$post  = paco2017_get_workshop( $post );
+	$users = array();
+
+	return (array) apply_filters( 'paco2017_get_workshop_enrolled_users', $users, $post, $object );
 }
 
 /** Template: Workshop Category **************************************************/

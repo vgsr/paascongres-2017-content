@@ -35,6 +35,7 @@ add_action( 'bp_user_query_uid_clauses',            'paco2017_bp_user_query_uid_
 add_filter( 'paco2017_is_user_enrolled',                   'paco2017_bp_xprofile_is_user_enrolled',            10, 2 );
 add_filter( 'paco2017_get_enrolled_users_count',           'paco2017_bp_get_enrolled_members_count'                  );
 add_filter( 'paco2017_get_enrolled_users_for_association', 'paco2017_bp_get_enrolled_members_for_association', 10, 2 );
+add_filter( 'paco2017_get_workshop_enrolled_users',        'paco2017_bp_get_enrolled_members_for_workshop',    10, 2 );
 
 // XProfile
 add_filter( 'bp_xprofile_get_groups',   'paco2017_bp_xprofile_no_edit_association_field', 10, 2 );

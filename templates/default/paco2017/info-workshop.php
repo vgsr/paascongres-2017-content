@@ -43,5 +43,12 @@ defined( 'ABSPATH' ) || exit;
 		);
 	} ?>
 
+	<?php if ( $count = paco2017_get_workshop_enrolled_user_count() ) {
+		printf(
+			'<span class="item-detail workshop-user-count">' . _n( '%d Attendee', '%d Attendees', $count, 'paco2017-content' ) . '</span>',
+			$count
+		);
+	} ?>
+
 	</p>
 </div>
