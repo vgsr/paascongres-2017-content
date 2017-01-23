@@ -1,8 +1,8 @@
 /**
- * Paco2017 Content Styles
+ * Paco2017 Content BuddyPress Styles
  *
  * @package Paco2017 Content
- * @subpackage Main
+ * @subpackage BuddyPress
  */
 
 #buddypress ul.item-list li .item-avatar img.avatar {
@@ -36,16 +36,13 @@ i.paco2017-enrolled:before {
 .paco2017-association-badge {
 	display: inline-block;
 	margin: 0 0 2px 0;
-	padding: 2px 3px;
+	padding: 2px 4px;
 	background: rgba(153, 153, 153, .6);
 	border: 1.5px solid rgb(153, 153, 153);
 	border-radius: 2px;
 	color: #fff;
 	font-style: italic;
+	font-size: .5rem;
 	text-transform: uppercase;
 	vertical-align: middle;
-}
-
-#buddypress ul.item-list li .item-title .paco2017-association-badge {
-	font-size: .45em;
 }

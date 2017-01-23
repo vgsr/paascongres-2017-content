@@ -296,7 +296,7 @@ class Paco2017_BuddyPress {
 	public function enqueue_scripts() {
 
 		wp_enqueue_style( 'dashicons' );
-		wp_enqueue_style( 'paco2017-buddypress', $this->assets_url . 'css/paco2017-buddypress.css' );
+		wp_enqueue_style( 'paco2017-buddypress', $this->assets_url . 'css/paco2017-buddypress.css', array( 'bp-legacy-css' ) );
 
 		// Define customs styles
 		$css = array();
@@ -329,11 +329,12 @@ class Paco2017_BuddyPress {
 
 		/** Companion Styles ********************************************/
 
-		$template  = get_template();
-		$companion = $this->assets_url . "css/paco2017-bp-{$template}.css";
+		$template      = get_template();
+		$companion_dir = $this->assets_dir . "css/paco2017-bp-{$template}.css";
+		$companion_url = $this->assets_url . "css/paco2017-bp-{$template}.css";
 
-		if ( wp_style_is( "bp-{$template}" ) && file_exists( $companion ) ) {
-			wp_enqueue_style( "paco2017-bp-{$template}", $companion, array( "bp-{$template}" ) );
+		if ( wp_style_is( "bp-{$template}" ) && file_exists( $companion_dir ) ) {
+			wp_enqueue_style( "paco2017-bp-{$template}", $companion_url, array( "bp-{$template}" ) );
 		}
 	}
 
