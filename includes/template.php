@@ -789,7 +789,7 @@ function paco2017_document_title_parts( $title = array() ) {
  */
 function paco2017_get_the_archive_title( $title = '' ) {
 
-	// Reset archive title, without the 'Archives: ' prefix
+	// Reset post type archive title, without the 'Archives: ' prefix
 	if ( paco2017_is_lecture_archive() || paco2017_is_workshop_archive() ) {
 		$title = post_type_archive_title( '', false );
 	}

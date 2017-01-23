@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Paco2017 Content - BuddyPress - Members
+ * BuddyPress - Members
  *
  * @package Paco2017 Content
  * @subpackage BuddyPress

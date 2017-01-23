@@ -9,8 +9,8 @@ Content logic for the Paascongres 2017 event site
 This plugin contains the following object structures and features:
 
 * Lectures/Talks (post type) + Speaker (taxonomy)
-* Workshops (post type) + Categories (taxonomy) + Speaker (taxonomy) Locations (taxonomy)
-* Agenda items (post type) + Days (taxonomy) + Locations (taxonomy)
+* Workshops (post type) + Round (taxonomy) + Category (taxonomy) + Speaker (taxonomy) + Location (taxonomy)
+* Agenda items (post type) + Day (taxonomy) + Location (taxonomy)
 * Speakers (taxonomy)
 * Locations (taxonomy)
 * Associations (taxonomy)

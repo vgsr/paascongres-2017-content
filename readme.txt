@@ -33,8 +33,21 @@ This plugin is not hosted in the official WordPress repository. Instead, updatin
 
 == Changelog ==
 
+= 1.1.0 =
+* Added Lecture info box template
+* Added Workshop Round taxonomy
+* Added Workshop info box template
+* Added Workshop users and user count logic, implemented in templates and REST response
+* Added menu ordering for Lectures and Workshops
+* Added Conference Location detail to Agenda Item'd infos
+* Added term adverbial meta logic to Conference Locations
+* Added Dutch translation
+* BP: Added dedicated BP admin settings page
+* BP: Added workshop field selection and options filtering by workshop round
+* BP: Changed to allow all profile field types for assigning the user association term
+
 = 1.0.1 =
-* Fix bug where slug settings were not correctly referenced when setting up rewrite rules
+* Fixed bug where slug settings were not correctly used affecting the setup of rewrite rules
 
 = 1.0.0 =
 * Initial release

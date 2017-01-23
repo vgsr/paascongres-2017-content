@@ -80,7 +80,9 @@ class Paco2017_BuddyPress {
 	 */
 	private function setup_actions() {
 
-		// For guests, hide BuddyPress entirely
+		// For guests, hide BuddyPress entirely. This includes:
+		// - nav menu items
+		// - widgets
 		if ( ! get_current_user_id() ) {
 			add_filter( 'bp_active_components', '__return_empty_array', 99 );
 			return;
