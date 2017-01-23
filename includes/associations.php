@@ -227,6 +227,7 @@ function paco2017_in_the_association_loop() {
  * Return the Association item term
  *
  * @since 1.0.0
+ * @since 1.1.0 Added option to provide a WP_User object for th `$term` parameter.
  *
  * @param WP_Term|int|WP_User $term Optional. Term object or ID or User object. Defaults to the current term.
  * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
