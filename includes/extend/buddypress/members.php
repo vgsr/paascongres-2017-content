@@ -23,17 +23,17 @@ function paco2017_bp_members_directory_tabs() {
 	if ( paco2017_bp_xprofile_get_enrollment_field() ) {
 		printf( '<li class="selected" id="members-all"><a href="#">%s <span>%s</span></a></li>',
 			esc_html__( 'All Enrolled', 'paco2017-content' ),
-			paco2017_bp_get_members_count( 'enrollment' )
+			paco2017_bp_get_enrolled_members_count()
 		);
 	}
 
 	// My Association
-	if ( paco2017_bp_xprofile_get_association_field() ) {
+	if ( paco2017_bp_xprofile_get_association_field() && paco2017_get_user_association() ) {
 		printf( '<li id="members-%s"><a href="#">%s <span>%s</span></a></li>',
 			paco2017_bp_members_get_association_scope(),
 			paco2017_bp_get_association_title(),
 			// __( 'My Association', 'paco2017-content' ),
-			sprintf( '%s/%s', paco2017_bp_get_enrolled_members_count( 'association' ), paco2017_bp_get_members_count( 'association' ) )
+			sprintf( '%s/%s', paco2017_bp_get_enrolled_members_count_by_scope( 'association' ), paco2017_bp_get_members_count( 'association' ) )
 		);
 	}
 }
@@ -344,6 +344,19 @@ function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
 }
 
 /**
+ * Return the count of the enrolled members
+ *
+ * @since 1.0.0
+ *
+ * @return int Member count of enrolled members
+ */
+function paco2017_bp_get_enrolled_members_count() {
+
+	// Get members within the enrollment scope
+	return (int) paco2017_bp_get_members_count( 'enrollment' );
+}
+
+/**
  * Return the member count in a specified subset of the enrolled members
  *
  * @since 1.0.0
@@ -352,10 +365,10 @@ function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
  * @param int $user_id Optional. User ID. Defaults to the current user.
  * @return int Member count of enrolled members within the scope
  */
-function paco2017_bp_get_enrolled_members_count( $scope = '', $user_id = 0 ) {
+function paco2017_bp_get_enrolled_members_count_by_scope( $scope = '', $user_id = 0 ) {
 
 	// Get enrolled members within the scope
-	$members = paco2017_bp_get_enrolled_members( $scope, $user_id );
+	$members = paco2017_bp_get_enrolled_members_by_scope( $scope, $user_id );
 	$count   = count( $members );
 
 	return (int) $count;
@@ -373,7 +386,7 @@ function paco2017_bp_get_enrolled_members_count( $scope = '', $user_id = 0 ) {
  * @param int $user_id Optional. User ID. Defaults to the current user.
  * @return array Enrolled members within the scope
  */
-function paco2017_bp_get_enrolled_members( $scope = '', $user_id = 0 ) {
+function paco2017_bp_get_enrolled_members_by_scope( $scope = '', $user_id = 0 ) {
 
 	// Get the enrolled and scoped members
 	$enrolled = paco2017_bp_get_members( 'enrollment', $user_id );
