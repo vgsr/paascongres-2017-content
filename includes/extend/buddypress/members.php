@@ -238,10 +238,11 @@ function paco2017_bp_members_block_member() {
 	/**
 	 * Bail when the user can view this profile:
 	 *
-	 * 1. When the displayed user is enrolled
-	 * 2. When the displayed user is in the same association
+	 * 1. When this is the user's own profile
+	 * 2. When the displayed user is enrolled
+	 * 3. When the displayed user is in the same association
 	 */
-	if ( paco2017_bp_is_user_enrolled() || paco2017_bp_users_in_same_association() )
+	if ( bp_is_my_profile() || paco2017_bp_is_user_enrolled() || paco2017_bp_users_in_same_association() )
 		return;
 
 	// 404 and prevent components from loading their templates
