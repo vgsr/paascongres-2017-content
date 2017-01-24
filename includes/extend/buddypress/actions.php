@@ -24,6 +24,7 @@ add_filter( 'bp_member_name',                       'paco2017_bp_member_name',  
 add_filter( 'bp_displayed_user_get_front_template', 'paco2017_bp_members_front_page_template'           );
 add_action( 'bp_template_redirect',                 'paco2017_bp_members_block_member',            1    ); // Before bp_actions and bp_screens
 add_action( 'bp_members_screen_display_profile',    'paco2017_bp_members_screen_display_profile'        );
+add_action( 'bp_before_member_header_meta',         'paco2017_bp_members_item_association_badge'        );
 
 // Members: Query
 add_filter( 'bp_ajax_querystring',                  'paco2017_bp_ajax_query_string',              99, 2 );

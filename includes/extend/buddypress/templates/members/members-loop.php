@@ -58,12 +58,10 @@ do_action( 'bp_before_members_loop' ); ?>
 			<div class="item">
 				<div class="item-title">
 					<a href="<?php bp_member_permalink(); ?>"><?php bp_member_name(); ?></a>
-
-					<?php paco2017_bp_members_item_association_badge(); ?>
 				</div>
 
 				<div class="item-meta">
-					<span class="activity" data-livestamp="<?php bp_core_iso8601_date( bp_get_member_last_active( array( 'relative' => false ) ) ); ?>"><?php bp_member_last_active(); ?></span>
+					<?php paco2017_bp_members_item_association_badge(); ?>
 				</div>
 
 				<?php
