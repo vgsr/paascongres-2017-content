@@ -119,6 +119,26 @@
 	text-align: right;
 }
 
+/* Settings */
+
+p.description.warning {
+	color: #f00;
+}
+
+p + select,
+p + fieldset {
+	margin-top: 1.5em;
+}
+
+.form-table fieldset.paco2017-profile-field legend,
+.form-table fieldset.paco2017-profile-field label:not(.option-label) {
+	display: none;
+}
+
+fieldset.paco2017-profile-field label.option-label {
+	width: 100%;
+}
+
 /* List Table */
 
 .tablenav .paco2017-conf-day-link {

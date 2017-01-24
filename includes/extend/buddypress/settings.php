@@ -24,7 +24,7 @@ function paco2017_bp_add_settings_sections( $sections ) {
 
 	// Members settings
 	$sections['buddypress-fields'] = array(
-		'title'    => __( 'Fields', 'paco2017-content' ),
+		'title'    => __( 'Profile Fields', 'paco2017-content' ),
 		'callback' => 'paco2017_bp_admin_setting_callback_fields_section',
 		'page'     => 'paco2017-buddypress',
 	);
@@ -48,12 +48,18 @@ function paco2017_bp_add_settings_fields( $fields ) {
 		// The Enrollment field
 		'_paco2017_bp_xprofile_enrollment_field' => array(
 			'title'             => __( 'Enrollment Field', 'paco2017-content' ),
-			'callback'          => 'paco2017_bp_admin_setting_callback_xprofile_field',
+			'callback'          => 'paco2017_bp_admin_setting_callback_enrollment_field',
 			'sanitize_callback' => 'intval',
 			'args'              => array(
 				'setting'     => '_paco2017_bp_xprofile_enrollment_field',
 				'description' => esc_html__( "Select the field that holds the member's enrollment status.", 'paco2017-content' ),
 			)
+		),
+
+		// Enrollment success data
+		'_paco2017_bp_xprofile_enrollment_field_success_data' => array(
+			'sanitize_callback' => 'strip_tags',
+			'args'              => array()
 		),
 
 		// Required fields
@@ -267,6 +273,97 @@ function paco2017_bp_admin_setting_callback_required_fields() {
 	} else {
 		echo '<p class="description">' . esc_html__( 'There are no fields selected yet.', 'paco2017-content' ) . '</p>';
 	}
+}
+
+/**
+ * Display the Enrollment field selector settings field
+ *
+ * @since 1.1.0
+ *
+ * @param array $args Settings field arguments
+ */
+function paco2017_bp_admin_setting_callback_enrollment_field( $args = array() ) {
+
+	// Bail when the setting isn't defined
+	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) )
+		return;
+
+	// Profile field selection
+	paco2017_bp_admin_setting_callback_xprofile_field( $args );
+
+	// Bail when the field isn't set yet
+	if ( ! $field = paco2017_bp_xprofile_get_enrollment_field() ) {
+		echo '<p class="description warning">' . esc_html__( "NOTE: please return here after saving to define what value counts as enrolled!", 'paco2017-content' ) . '</p>';
+		return;
+	}
+
+	// Preserve global
+	if ( isset( $GLOBALS['field'] ) ) {
+		$_field = $GLOBALS['field'];
+	}
+
+	// Setup success data selection
+	$field->setting_name = "{$args['setting']}_success_data";
+	$field->data->value = get_option( $field->setting_name );
+	$GLOBALS['field'] = $field;
+
+	$type_map = array( 'multiselectbox' => 'multiselect', 'checkbox' => 'checkbox', 'radio' => 'radio', 'selectbox' => 'select' );
+
+	// Define context filters outside the profile template
+	add_filter( 'bp_get_the_profile_field_input_name', 'paco2017_bp_xprofile_get_enrollment_field_input_name' );
+	if ( array_key_exists( $field->type, $type_map ) ) {
+		add_filter( "bp_get_the_profile_field_options_{$type_map[ $field->type ]}", 'paco2017_bp_xprofile_get_enrollment_field_option', 10, 5 );
+	}
+
+	// Output the profile field edit input
+	echo '<fieldset class="paco2017-profile-field">';
+	$field->type_obj->edit_field_html();
+	echo '</fieldset>';
+
+	echo '<p class="description">' . esc_html__( "Define what value the field should have for the user to be enrolled.", 'paco2017-content' ) . '</p>';
+
+	// Remove context filters
+	remove_filter( 'bp_get_the_profile_field_input_name', 'paco2017_bp_xprofile_get_enrollment_field_input_name' );
+	remove_filter( "bp_get_the_profile_field_options_{$type_map[ $field->type ]}", 'paco2017_bp_xprofile_get_enrollment_field_option', 10, 5 );
+
+	// Reset global
+	if ( isset( $_field ) ) {
+		$GLOBALS['field'] = $_field;
+	}
+}
+
+/**
+ * Return the field input name for the Enrollment Success Data settings field
+ *
+ * @since 1.1.0
+ *
+ * @return string Field input name
+ */
+function paco2017_bp_xprofile_get_enrollment_field_input_name() {
+	return $GLOBALS['field']->setting_name;
+}
+
+/**
+ * Modify the field input option for the Enrollment Success Data settings field
+ *
+ * @since 1.1.0
+ *
+ * @param string $option Option HTML markup
+ * @param object $field_option Field option object
+ * @param int $field_id Field id
+ * @param string $selected Selected attribute
+ * @param int $k Option array key
+ * @return string Field input name
+ */
+function paco2017_bp_xprofile_get_enrollment_field_option( $option, $field_option, $field_id, $selected, $k ) {
+
+	// When this field is the one selected in the setting
+	if ( $field_option->name === $GLOBALS['field']->data->value ) {
+		$option = str_replace( '<option', '<option selected="selected"', $option ); // multiselect/select
+		$option = str_replace( '<input',  '<input checked="checked"',    $option ); // checkbox/radio
+	}
+
+	return $option;
 }
 
 /**

@@ -26,9 +26,14 @@ function paco2017_bp_xprofile_is_user_enrolled( $enrolled, $user_id = 0 ) {
 		$user_id = get_current_user_id();
 	}
 
+	// Assume false
+	$is = false;
+
 	// Read the user's profile field value
 	if ( $field = paco2017_bp_xprofile_get_enrollment_field() ) {
-		$enrolled = (bool) xprofile_get_field_data( $field->id, $user_id );
+		$_enrolled = (array) paco2017_bp_xprofile_get_enrollment_success_data();
+		$enrolled  = (array) xprofile_get_field_data( $field->id, $user_id );
+		$is        = $_enrolled === $enrolled;
 	}
 
 	return $enrolled;
@@ -41,20 +46,14 @@ function paco2017_bp_xprofile_is_user_enrolled( $enrolled, $user_id = 0 ) {
  *
  * @return mixed Profile field data for the enrolled status
  */
-function paco2017_bp_xprofile_get_enrolled_status_data() {
+function paco2017_bp_xprofile_get_enrollment_success_data() {
 
 	// Define return value
 	$enrolled = '';
 
 	// Read the user's profile field value
 	if ( $field = paco2017_bp_xprofile_get_enrollment_field() ) {
-
-		/**
-		 * This is a *very* naive way to determine the 'true'-ish field value
-		 * @todo This could cause future trouble!
-		 */
-		$options  = $field->get_children();
-		$enrolled = maybe_serialize( array( $options[0]->name ) );
+		$enrolled = get_option( '_paco2017_bp_xprofile_enrollment_field_success_data', null );
 	}
 
 	return $enrolled;
