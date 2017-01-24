@@ -879,6 +879,7 @@ function paco2017_enqueue_styles() {
 	/** Theme Specific ********************************************************/
 
 	if ( 'twentyseventeen' === $template ) {
+		$css[] = ".colors-dark .paco2017-info:not(.speaker-info) { color: #aaa; }";
 		$css[] = ".speaker-info { margin-top: 2em; padding-top: 2em; border-top: 1px solid #eee; }";
 		$css[] = ".colors-dark .speaker-info { border-top-color: #333; }";
 	}
