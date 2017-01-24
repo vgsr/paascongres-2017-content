@@ -492,6 +492,27 @@ function paco2017_bp_get_enrolled_members_for_workshop( $members = array(), $wor
 	if ( ( ! $workshop1_field && ! $workshop2_field ) || ! $enrollment_field )
 		return $members;
 
+	// Define profile query workshop part
+	$workshop_profile_query = array(
+		'relation' => 'OR'
+	);
+
+	if ( $workshop1_field ) {
+		$workshop_profile_query[] = array(
+			'field_id' => $workshop1_field->id,
+			'value'    => is_a( $workshop, 'WP_Post' ) ? $workshop->ID : $workshop,
+			'compare'  => '=',
+		);
+	}
+
+	if ( $workshop2_field ) {
+		$workshop_profile_query[] = array(
+			'field_id' => $workshop2_field->id,
+			'value'    => is_a( $workshop, 'WP_Post' ) ? $workshop->ID : $workshop,
+			'compare'  => '=',
+		);
+	}
+
 	// Setup members query
 	$query = new BP_User_Query( array(
 		'type'           => false, // Consider all registered users
@@ -501,20 +522,7 @@ function paco2017_bp_get_enrolled_members_for_workshop( $members = array(), $wor
 				'value'    => paco2017_bp_xprofile_get_enrolled_status_data(),
 				'compare'  => '=',
 			),
-
-			array(
-				'relation' => 'OR',
-				array(
-					'field_id' => $workshop1_field->id,
-					'value'    => is_a( $workshop, 'WP_Post' ) ? $workshop->ID : $workshop,
-					'compare'  => '=',
-				),
-				array(
-					'field_id' => $workshop2_field->id,
-					'value'    => is_a( $workshop, 'WP_Post' ) ? $workshop->ID : $workshop,
-					'compare'  => '=',
-				)
-			)
+			$workshop_profile_query
 		)
 	) );
 
