@@ -13,21 +13,21 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Modify whether the member is enrolled
  *
+ * This filters `paco2017_is_user_enrolled()`, use that function when
+ * checking whether a user is enrolled.
+ *
  * @since 1.0.0
  *
  * @param bool $enrolled Whether the user is enrolled
  * @param int $user_id Optional. User ID. Defaults to the current user.
  * @return bool Is the member enrolled?
  */
-function paco2017_bp_xprofile_is_user_enrolled( $enrolled, $user_id = 0 ) {
+function paco2017_bp_xprofile_is_user_enrolled( $is = false, $user_id = 0 ) {
 
 	// Default to the current user
 	if ( empty( $user_id ) ) {
 		$user_id = get_current_user_id();
 	}
-
-	// Assume false
-	$is = false;
 
 	// Read the user's profile field value
 	if ( $field = paco2017_bp_xprofile_get_enrollment_field() ) {
@@ -36,7 +36,7 @@ function paco2017_bp_xprofile_is_user_enrolled( $enrolled, $user_id = 0 ) {
 		$is        = $_enrolled === $enrolled;
 	}
 
-	return $enrolled;
+	return $is;
 }
 
 /**
