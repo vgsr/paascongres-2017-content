@@ -119,7 +119,7 @@ function paco2017_bp_xprofile_sync_association_term( $field_data ) {
 	$field = paco2017_bp_xprofile_get_association_field();
 
 	// Bail when this is not the association profile field
-	if ( ! $field || $field->id !== $field_data->field_id )
+	if ( ! $field || $field->id !== (int) $field_data->field_id )
 		return;
 
 	// Get the taxonomy
@@ -134,7 +134,7 @@ function paco2017_bp_xprofile_sync_association_term( $field_data ) {
 
 	// Try to find the term by name
 	} else {
-		$term = get_term_by( 'name', $term_id_or_name, paco2017_get_association_tax_id() );
+		$term = get_term_by( 'name', $term_id_or_name, $taxonomy );
 
 		// Bail when the term wasn't found
 		if ( $term && ! is_wp_error( $term ) ) {
