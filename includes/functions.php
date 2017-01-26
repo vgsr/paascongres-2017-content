@@ -956,6 +956,79 @@ function paco2017_is_deactivation( $basename = '' ) {
 /** Users *********************************************************************/
 
 /**
+ * In order to keep the user registering or logging in for the site on
+ * the right domain, we modify and add the `redirect_to` form parameters.
+ */
+
+/**
+ * Act at the login init
+ *
+ * @since 1.1.0
+ */
+function paco2017_login_init() {
+
+	// Route to local url
+	add_filter( 'network_site_url', 'paco2017_login_network_site_url',  1, 3 );
+	add_action( 'resetpass_form',   'paco2017_login_redirect_to_input'       );
+	add_filter( 'login_redirect',   'paco2017_login_redirect',         10, 3 );
+}
+
+/**
+ * Modify the network site url to return the local url
+ *
+ * @since 1.1.0
+ *
+ * @param string $url Network site url
+ * @param string $path Route path
+ * @param string $scheme Url scheme
+ * @return string Site url
+ */
+function paco2017_login_network_site_url( $url, $path, $scheme ) {
+	return site_url( $path, $scheme );
+}
+
+/**
+ * Redirect back to $url when attempting to use the login page
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_login_redirect'
+ *
+ * @param string $url The url
+ * @param string $raw_url Raw url
+ * @param object $user User object
+ */
+function paco2017_login_redirect( $url, $raw_url, $user ) {
+
+	// Raw redirect_to was passed, so use it
+	if ( ! empty( $raw_url ) ) {
+		$url = $raw_url;
+
+	// $url was manually set in wp-login.php to redirect to admin
+	} elseif ( admin_url() === $url ) {
+		$url = site_url();
+
+	// $url is empty
+	} elseif ( empty( $url ) ) {
+		$url = site_url();
+	}
+
+	return apply_filters( 'paco2017_login_redirect', $url, $raw_url, $user );
+}
+
+/**
+ * Output the login redirect_to hidden input
+ *
+ * @since 1.1.0
+ */
+function paco2017_login_redirect_to_input() { ?>
+
+	<input type="hidden" name="redirect_to" value="<?php echo esc_url( site_url() ); ?>" />
+
+	<?php
+}
+
+/**
  * Modify the pw expiration time for pw reset
  *
  * @since 1.1.0

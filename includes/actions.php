@@ -81,6 +81,7 @@ add_action( 'paco2017_widgets_init', array( 'Paco2017_Enrollments_Widget', 'regi
 
 /** Users *********************************************************************/
 
+add_action( 'login_init',                'paco2017_login_init'                );
 add_filter( 'password_reset_expiration', 'paco2017_password_reset_expiration' );
 
 /** Admin *********************************************************************/

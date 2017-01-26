@@ -84,6 +84,7 @@ class Paco2017_BuddyPress {
 		// - nav menu items
 		// - widgets
 		if ( ! get_current_user_id() ) {
+			add_filter( 'paco2017_login_redirect', array( $this, 'login_redirect' ) );
 			add_filter( 'bp_active_components', '__return_empty_array', 99 );
 			return;
 		}
@@ -118,6 +119,25 @@ class Paco2017_BuddyPress {
 	}
 
 	/** Public methods **************************************************/
+
+	/**
+	 * Force redirect to the member's account after login
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $url The url
+	 * @param string $raw_url Raw url
+	 * @param object $user User object
+	 */
+	public function login_redirect( $url, $raw_url, $user ) {
+
+		// Raw redirect_to was not passed, so overwrite it
+		if ( is_a( $user, 'WP_User' ) ) {
+			$url = bp_core_get_user_domain( $user->ID );
+		}
+
+		return $url;
+	}
 
 	/**
 	 * Prevent the user from being exposed to certain component parts
