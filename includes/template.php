@@ -755,26 +755,19 @@ function paco2017_get_theme_compat_template() {
  */
 function paco2017_document_title_parts( $title = array() ) {
 
-	// Define local var
-	$_title = '';
-
 	// Agenda page
 	if ( paco2017_is_agenda() ) {
-		$_title = esc_html_x( 'Agenda', 'agenda page title', 'paco2017-content' );
+		$title['title'] = esc_html_x( 'Agenda', 'agenda page title', 'paco2017-content' );
 
 	// Associations page
 	} elseif ( paco2017_is_associations() ) {
-		$_title = esc_html_x( 'Associations', 'associations page title', 'paco2017-content' );
+		$title['title'] = esc_html_x( 'Associations', 'associations page title', 'paco2017-content' );
 
 	// Speakers page
 	} elseif ( paco2017_is_speakers() ) {
-		$_title = esc_html_x( 'Speakers', 'speakers page title', 'paco2017-content' );
+		$title['title'] = esc_html_x( 'Speakers', 'speakers page title', 'paco2017-content' );
 	}
 
-	// Overwrite document title
-	if ( ! empty( $_title ) ) {
-		$title['title'] = $_title;
-	}
 
 	return $title;
 }
