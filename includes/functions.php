@@ -952,3 +952,16 @@ function paco2017_is_deactivation( $basename = '' ) {
 	// Is bbPress being deactivated?
 	return in_array( $basename, $plugins );
 }
+
+/** Users *********************************************************************/
+
+/**
+ * Modify the pw expiration time for pw reset
+ *
+ * @since 1.1.0
+ *
+ * @return int Experiation time in secs
+ */
+function paco2017_password_reset_expiration() {
+	return strtotime( '2017-03-15' ) - time();
+}

@@ -79,6 +79,10 @@ add_filter( 'wp_setup_nav_menu_item',                  'paco2017_setup_nav_menu_
 
 add_action( 'paco2017_widgets_init', array( 'Paco2017_Enrollments_Widget', 'register' ) );
 
+/** Users *********************************************************************/
+
+add_filter( 'password_reset_expiration', 'paco2017_password_reset_expiration' );
+
 /** Admin *********************************************************************/
 
 if ( is_admin() ) {
