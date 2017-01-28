@@ -290,3 +290,22 @@ function paco2017_get_partner_logo( $post = 0 ) {
 
 	return apply_filters( 'paco2017_get_partner_logo', $image, $post );
 }
+
+/**
+ * Return the Partner url
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @return string Partner url
+ */
+function paco2017_get_partner_url( $post = 0 ) {
+	$post = paco2017_get_partner( $post );
+	$url  = '';
+
+	if ( $post ) {
+		$url = get_post_meta( $post->ID, 'partner_url', true );
+	}
+
+	return apply_filters( 'paco2017_get_partner_url', $url, $post );
+}
