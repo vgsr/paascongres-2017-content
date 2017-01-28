@@ -406,6 +406,27 @@ function paco2017_get_workshop( $post = 0 ) {
 }
 
 /**
+ * Return the user limit for a workshop
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_limit'
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @return int Workshop limit. 0 means no limit.
+ */
+function paco2017_get_workshop_limit( $post = 0 ) {
+	$post  = paco2017_get_workshop( $post );
+	$limit = 0;
+
+	if ( $post ) {
+		$limit = (int) get_post_meta( $post->ID, 'limit', true );
+	}
+
+	return (int) apply_filters( 'paco2017_get_workshop_limit', $limit, $post );
+}
+
+/**
  * Modify the content of a Workshop post
  *
  * @since 1.1.0

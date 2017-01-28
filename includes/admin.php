@@ -519,6 +519,18 @@ class Paco2017_Admin {
 			$columns[ $tax_key ] = esc_html__( 'Level', 'paco2017-content' );
 		}
 
+		// Workshop
+		if ( paco2017_get_workshop_post_type() === $post_type ) {
+
+			// Append Limit
+			$loc_pos = array_search( 'taxonomy-' . paco2017_get_conf_location_tax_id(), array_keys( $columns ) );
+			if ( $loc_pos ) {
+				$columns = array_slice( $columns, 0, $loc_pos + 1 ) + array(
+					'limit' => esc_html_x( 'Limit', 'admin column name', 'paco2017-content' ),
+				) + array_slice( $columns, $loc_pos + 1 );
+			}
+		}
+
 		// Agenda
 		if ( paco2017_get_agenda_post_type() === $post_type ) {
 
@@ -526,8 +538,8 @@ class Paco2017_Admin {
 			$day_pos = array_search( 'taxonomy-' . paco2017_get_conf_day_tax_id(), array_keys( $columns ) );
 			if ( $day_pos ) {
 				$columns = array_slice( $columns, 0, $day_pos + 1 ) + array(
-					'time_start' => esc_html_x( 'Start',   'agenda meta column name', 'paco2017-content' ),
-					'time_end'   => esc_html_x( 'End',     'agenda meta column name', 'paco2017-content' ),
+					'time_start' => esc_html_x( 'Start', 'admin column name', 'paco2017-content' ),
+					'time_end'   => esc_html_x( 'End',   'admin column name', 'paco2017-content' ),
 				) + array_slice( $columns, $day_pos + 1 );
 			}
 
@@ -535,7 +547,7 @@ class Paco2017_Admin {
 			$loc_pos = array_search( 'taxonomy-' . paco2017_get_conf_location_tax_id(), array_keys( $columns ) );
 			if ( $loc_pos ) {
 				$columns = array_slice( $columns, 0, $loc_pos + 1 ) + array(
-					'related'    => esc_html_x( 'Related', 'agenda meta column name', 'paco2017-content' ),
+					'related'    => esc_html_x( 'Related', 'admin column name', 'paco2017-content' ),
 				) + array_slice( $columns, $loc_pos + 1 );
 			}
 		}
@@ -549,12 +561,12 @@ class Paco2017_Admin {
 
 				// Insert before 'Title'
 				$columns = array_slice( $columns, 0, $title_pos ) + array(
-					'logo' => esc_html__( 'Logo', 'paco2017-content' ),
+					'logo' => esc_html_x( 'Logo', 'admin column name', 'paco2017-content' ),
 				) + array_slice( $columns, $title_pos );
 
 				// Insert after 'Title'
 				$columns = array_slice( $columns, 0, $title_pos + 2 ) + array(
-					'partner_url' => esc_html__( 'URL', 'paco2017-content' ),
+					'partner_url' => esc_html_x( 'URL', 'admin column name', 'paco2017-content' ),
 				) + array_slice( $columns, $title_pos + 2 );
 			}
 		}
@@ -576,41 +588,58 @@ class Paco2017_Admin {
 
 		switch ( $post_type ) {
 
-			// Agenda Items
-			case paco2017_get_agenda_post_type() :
+			// Workshop
+			case paco2017_get_workshop_post_type() :
 				switch ( $column ) {
-					case 'time_start' :
-					case 'time_end' :
-						$meta = get_post_meta( $post_id, $column, true );
-						echo ( ! empty( $meta ) ) ? $meta : '&mdash;';
-
-						break;
-					case 'related' :
-						echo paco2017_is_agenda_related( $post_id ) ? paco2017_get_agenda_related_link( $post_id ) : '&mdash;';
-
+					case 'limit' :
+						$this->posts_custom_meta_column( $column, $post_id );
 						break;
 				}
 
 				break;
 
-			// Partners
+			// Agenda Item
+			case paco2017_get_agenda_post_type() :
+				switch ( $column ) {
+					case 'time_start' :
+					case 'time_end' :
+						$this->posts_custom_meta_column( $column, $post_id );
+						break;
+					case 'related' :
+						echo paco2017_is_agenda_related( $post_id ) ? paco2017_get_agenda_related_link( $post_id ) : '&mdash;';
+						break;
+				}
+
+				break;
+
+			// Partner
 			case paco2017_get_partner_post_type() :
 				switch ( $column ) {
 					case 'logo' :
 						if ( $logo_id = paco2017_partner_get_logo_id( $post_id ) ) {
 							echo wp_get_attachment_image( $logo_id, array( 38, 38 ) );
 						}
-
 						break;
 					case 'partner_url' :
-						$meta = get_post_meta( $post_id, $column, true );
-						echo ( ! empty( $meta ) ) ? $meta : '&mdash;';
-
+						$this->posts_custom_meta_column( $column, $post_id );
 						break;
 				}
 
 				break;
 		}
+	}
+
+	/**
+	 * Output the default admin meta column content
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $column Column name
+	 * @param int $post_id Post ID
+	 */
+	public function posts_custom_meta_column( $column, $post_id ) {
+		$meta = get_post_meta( $post_id, $column, true );
+		echo ( ! empty( $meta ) ) ? $meta : '&mdash;';
 	}
 
 	/**
@@ -778,6 +807,8 @@ class Paco2017_Admin {
 		$workshop_cat_tax   = paco2017_get_workshop_cat_tax_id();
 		$conf_loc_tax       = paco2017_get_conf_location_tax_id();
 
+		$limit = get_post_meta( $post->ID, 'limit', true );
+
 		?>
 
 		<div class="paco2017_object_details">
@@ -842,6 +873,11 @@ class Paco2017_Admin {
 			?>
 		</p>
 
+		<p>
+			<label for="workshop_limit"><?php esc_html_e( 'Attendee Limit:', 'paco2017-content' ); ?></label>
+			<input type="number" name="workshop_limit" id="workshop_limit" value="<?php echo esc_attr( $limit ); ?>" />
+		</p>
+
 		</div>
 
 		<?php wp_nonce_field( 'workshop_details_metabox', 'workshop_details_metabox_nonce' ); ?>
@@ -884,6 +920,7 @@ class Paco2017_Admin {
 		 * - Speaker taxonomy
 		 * - Workshop Category taxonomy
 		 * - Conference Location taxonomy
+		 * - Workshop limit meta
 		 */
 
 		foreach ( array(
@@ -904,6 +941,15 @@ class Paco2017_Admin {
 			// Remove taxonomy term
 			} elseif ( $terms = wp_get_object_terms( $post_id ) ) {
 				wp_remove_object_terms( $post_id, $terms, $taxonomy );
+			}
+		}
+
+		// Meta
+		foreach ( array(
+			'workshop_limit' => 'limit',
+		) as $posted_key => $meta ) {
+			if ( isset( $_POST[ $posted_key ] ) ) {
+				update_post_meta( $post_id, $meta, $_POST[ $posted_key ] );
 			}
 		}
 	}
