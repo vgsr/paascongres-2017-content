@@ -616,7 +616,7 @@ class Paco2017_Admin {
 			case paco2017_get_partner_post_type() :
 				switch ( $column ) {
 					case 'logo' :
-						if ( $logo_id = paco2017_partner_get_logo_id( $post_id ) ) {
+						if ( $logo_id = paco2017_get_partner_logo_id( $post_id ) ) {
 							echo wp_get_attachment_image( $logo_id, array( 38, 38 ) );
 						}
 						break;

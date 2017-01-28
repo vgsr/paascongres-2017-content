@@ -125,7 +125,7 @@ function paco2017_get_partner_rest_meta( $object, $meta, $request ) {
 
 	// Partner logo
 	if ( 'logo' === $meta ) {
-		$value = paco2017_get_rest_image( paco2017_partner_get_logo_id( $object['id'] ), 'paco2017-partner-logo' );
+		$value = paco2017_get_rest_image( paco2017_get_partner_logo_id( $object['id'] ), 'paco2017-partner-logo' );
 
 	// Other meta
 	} else {
@@ -236,57 +236,57 @@ function paco2017_object_has_partner_level( $post = 0, $term = 0 ) {
  *
  * @since 1.0.0
  *
- * @param WP_Post|int $partner Optional. Post object or ID. Defaults to the current post.
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
  * @return WP_Post|false Partner post object or False when not found.
  */
-function paco2017_get_partner( $partner = 0 ) {
+function paco2017_get_partner( $post = 0 ) {
 
 	// Get the post
-	$partner = get_post( $partner );
+	$post = get_post( $post );
 
 	// Return false when this is not an Partner
-	if ( ! $partner || paco2017_get_partner_post_type() !== $partner->post_type ) {
-		$partner = false;
+	if ( ! $post || paco2017_get_partner_post_type() !== $post->post_type ) {
+		$post = false;
 	}
 
-	return $partner;
+	return $post;
 }
 
 /**
- * Return the attachment ID for the given Partner logo
+ * Return the Partner logo attachment ID
  *
  * @since 1.0.0
  *
- * @param WP_Post|int $partner Optional. Post object or ID. Defaults to the current post.
- * @return int Partner logo ID
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ * @return int Partner logo attachment ID
  */
-function paco2017_partner_get_logo_id( $partner = 0 ) {
-	$partner = paco2017_get_partner( $partner );
+function paco2017_get_partner_logo_id( $post = 0 ) {
+	$post = paco2017_get_partner( $post );
 	$logo_id = 0;
 
-	if ( $partner ) {
-		$logo_id = get_post_meta( $partner->ID, 'logo', true );
+	if ( $post ) {
+		$logo_id = get_post_meta( $post->ID, 'logo', true );
 	}
 
-	return apply_filters( 'paco2017_partner_get_logo_id', $logo_id, $partner );
+	return apply_filters( 'paco2017_get_partner_logo_id', $logo_id, $post );
 }
 
 /**
- * Return the logo image element
+ * Return the Partner logo image element
  *
  * @since 1.0.0
  *
- * @param WP_Post|int $partner Optional. Post object or ID. Defaults to the current post.
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
  * @return string Partner logo image element
  */
-function paco2017_partner_get_logo( $partner = 0 ) {
-	$partner = paco2017_get_partner( $partner );
-	$logo_id = paco2017_partner_get_logo_id( $partner );
+function paco2017_get_partner_logo( $post = 0 ) {
+	$post = paco2017_get_partner( $post );
+	$logo_id = paco2017_get_partner_logo_id( $post );
 	$image   = '';
 
 	if ( $logo_id ) {
 		$image = wp_get_attachment_image( $logo_id, 'paco2017-partner-logo' );
 	}
 
-	return apply_filters( 'paco2017_partner_get_logo', $image, $partner );
+	return apply_filters( 'paco2017_get_partner_logo', $image, $post );
 }
