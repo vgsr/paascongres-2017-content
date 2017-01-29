@@ -318,8 +318,7 @@ function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
 	// Enrolled members
 	if ( 'enrollment' === $scope ) {
 		$field         = true;
-		$enrolled_data = paco2017_bp_xprofile_get_enrollment_success_data();
-		$value         = array( $enrolled_data, serialize( (array) $enrolled_data ) );
+		$value         = paco2017_bp_xprofile_get_enrollment_success_data_for_query();
 		$compare       = 'IN';
 
 	// Members by association
@@ -417,15 +416,13 @@ function paco2017_bp_get_enrolled_members_for_association( $members = array(), $
 	if ( ! $association_field || ! $enrollment_field )
 		return $members;
 
-	$enrolled_data = paco2017_bp_xprofile_get_enrollment_success_data();
-
 	// Setup members query
 	$query = new BP_User_Query( array(
 		'type'           => false, // Consider all registered users
 		'xprofile_query' => array(
 			array(
 				'field_id' => $enrollment_field->id,
-				'value'    => array( $enrolled_data, serialize( (array) $enrolled_data ) ),
+				'value'    => paco2017_bp_xprofile_get_enrollment_success_data_for_query(),
 				'compare'  => 'IN',
 			),
 
@@ -529,15 +526,13 @@ function paco2017_bp_get_enrolled_members_for_workshop( $members = array(), $wor
 		);
 	}
 
-	$enrolled_data = paco2017_bp_xprofile_get_enrollment_success_data();
-
 	// Setup members query
 	$query = new BP_User_Query( array(
 		'type'           => false, // Consider all registered users
 		'xprofile_query' => array(
 			array(
 				'field_id' => $enrollment_field->id,
-				'value'    => array( $enrolled_data, serialize( (array) $enrolled_data ) ),
+				'value'    => paco2017_bp_xprofile_get_enrollment_success_data_for_query(),
 				'compare'  => 'IN',
 			),
 			$workshop_profile_query
@@ -619,9 +614,8 @@ function paco2017_bp_parse_has_members_args( $args = array() ) {
 
 	// Enrolled members
 	if ( 'enrollment' === $scope ) {
-		$enrolled_data = paco2017_bp_xprofile_get_enrollment_success_data();
-		$value         = array( $enrolled_data, serialize( (array) $enrolled_data ) );
-		$compare       = 'IN';
+		$value   = paco2017_bp_xprofile_get_enrollment_success_data_for_query();
+		$compare = 'IN';
 	}
 
 	// Define profile field callback
@@ -744,9 +738,8 @@ function paco2017_bp_user_query_uid_clauses( $sql, $user_query ) {
 		 * To circumvent this, first separate empty values from valid ones - then sort
 		 * by date.
 		 */
-		$enrolled_data  = paco2017_bp_xprofile_get_enrollment_success_data();
-		$enrolled_qstr  = "'$enrolled_data', '" . serialize( (array) $enrolled_data ) . "'";
-		$sql['orderby'] = "ORDER BY ( CASE WHEN enrolled.value NOT IN ( $enrolled_qstr ) THEN 0 ELSE 1 END ) DESC, enrolled.last_updated";
+		$enrolled_data  = paco2017_bp_xprofile_get_enrollment_success_data_for_query( true );
+		$sql['orderby'] = "ORDER BY ( CASE WHEN enrolled.value NOT IN ( $enrolled_data ) THEN 0 ELSE 1 END ) DESC, enrolled.last_updated";
 		$sql['order']   = "DESC";
 	}
 

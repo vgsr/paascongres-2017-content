@@ -40,6 +40,31 @@ function paco2017_bp_xprofile_is_user_enrolled( $is = false, $user_id = 0 ) {
 }
 
 /**
+ * Return the query ready format of the xprofile field data which compares to an enrolled status
+ *
+ * @since 1.1.0
+ *
+ * @param bool $string_format Optional. Whether to return in string format. Defaults to False.
+ * @return array|string Query ready format of the field data for the enrolled status
+ */
+function paco2017_bp_xprofile_get_enrollment_success_data_for_query( $string_format = false ) {
+
+	// Define the data
+	$data   = paco2017_bp_xprofile_get_enrollment_success_data();
+	$retval = '';
+
+	if ( $data ) {
+		if ( $string_format ) {
+			$retval = "'$data', '" . serialize( (array) $data ) . "'";
+		} else {
+			$retval = array( $data, serialize( (array) $data ) );
+		}
+	}
+
+	return $retval;
+}
+
+/**
  * Return the xprofile field data which compares to an enrolled status
  *
  * @since 1.0.0
