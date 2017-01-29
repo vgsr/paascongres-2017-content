@@ -104,7 +104,10 @@ function paco2017_bp_xprofile_no_edit_association_field( $groups, $args ) {
 
 	// Are we editing fields? Front or in admin
 	$editing = bp_is_user_profile_edit() || ( is_admin() && isset( $_GET['page'] ) && 'bp-profile-edit' === $_GET['page'] );
-	$no_edit = ! current_user_can( 'bp_moderate' );
+
+	// Bail when we're not editing fields or the user can moderate
+	if ( ! $editing || current_user_can( 'bp_moderate' ) )
+		return $groups;
 
 	// Walk profile groups
 	foreach ( $groups as $gk => $group ) {
@@ -117,7 +120,7 @@ function paco2017_bp_xprofile_no_edit_association_field( $groups, $args ) {
 		foreach ( $group->fields as $fk => $field ) {
 
 			// Remove association field
-			if ( $editing && $no_edit && $field->id === $association_field->id ) {
+			if ( $field->id === $association_field->id ) {
 				unset( $groups[ $gk ]->fields[ $fk ] );
 
 				// Reset numeric keys
