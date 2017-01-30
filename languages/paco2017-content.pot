@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-30 12:54+0000\n"
+"POT-Creation-Date: 2017-01-30 18:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,76 +14,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: paco2017-content.php:239
+#: paco2017-content.php:240
 msgid "Paascongres lectures"
 msgstr ""
 
-#: paco2017-content.php:264
+#: paco2017-content.php:265
 msgid "Paascongres workshops"
 msgstr ""
 
-#: paco2017-content.php:289
+#: paco2017-content.php:290
 msgid "Paascongres agenda items"
 msgstr ""
 
-#: paco2017-content.php:314
+#: paco2017-content.php:315
 msgid "Paascongres partners"
 msgstr ""
 
-#: paco2017-content.php:339
+#: paco2017-content.php:340
 msgid "Set Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:340
+#: paco2017-content.php:341
 msgid "Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:341
+#: paco2017-content.php:342
 msgid "Remove Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:543
+#: paco2017-content.php:544
 msgid "Logo"
 msgstr ""
 
-#: paco2017-content.php:544
-msgid "Logos"
-msgstr ""
-
 #: paco2017-content.php:545
-#, php-format
-msgid "Set %s logo"
+msgid "Logos"
 msgstr ""
 
 #: paco2017-content.php:546
 #, php-format
-msgid "%s logo"
+msgid "Set %s logo"
 msgstr ""
 
 #: paco2017-content.php:547
 #, php-format
+msgid "%s logo"
+msgstr ""
+
+#: paco2017-content.php:548
+#, php-format
 msgid "Remove %s logo"
 msgstr ""
 
-#: paco2017-content.php:554
+#: paco2017-content.php:555
 msgid "Photo"
 msgstr ""
 
-#: paco2017-content.php:555
-msgid "Photos"
-msgstr ""
-
 #: paco2017-content.php:556
-#, php-format
-msgid "Set %s photo"
+msgid "Photos"
 msgstr ""
 
 #: paco2017-content.php:557
 #, php-format
-msgid "%s photo"
+msgid "Set %s photo"
 msgstr ""
 
 #: paco2017-content.php:558
+#, php-format
+msgid "%s photo"
+msgstr ""
+
+#: paco2017-content.php:559
 #, php-format
 msgid "Remove %s photo"
 msgstr ""
@@ -1124,8 +1124,23 @@ msgid "Workshop Field"
 msgstr ""
 
 #: includes/extend/buddypress/buddypress.php:282
-#: includes/extend/buddypress/buddypress.php:307
+msgctxt "Profile header menu"
 msgid "Enrollment"
+msgstr ""
+
+#: includes/extend/buddypress/buddypress.php:283
+msgctxt "Profile header sub menu"
+msgid "Manage"
+msgstr ""
+
+#: includes/extend/buddypress/buddypress.php:308
+msgctxt "My Account Profile"
+msgid "Enrollment"
+msgstr ""
+
+#: includes/extend/buddypress/buddypress.php:313
+msgctxt "My Account Profile sub nav"
+msgid "Manage"
 msgstr ""
 
 #: includes/extend/buddypress/members.php:25
