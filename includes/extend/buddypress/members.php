@@ -570,6 +570,7 @@ function paco2017_bp_member_workshops( $workshops, $user_id ) {
 	// Append workshop ids
 	if ( $workshop_ids ) {
 		$workshops += array_map( 'intval', $workshop_ids );
+		$workshops  = array_unique( array_filter( $workshops ) );
 	}
 
 	return $workshops;
