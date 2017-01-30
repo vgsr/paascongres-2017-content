@@ -49,8 +49,19 @@ class Paco2017_VGSR {
 	 */
 	public function members_item_member_type_badge() {
 
+		// Displayed or looped member
+		if ( bp_is_user() ) {
+			$user_id = bp_displayed_user_id();
+		} else {
+			$user_id = bp_get_member_user_id();
+		}
+
+		// Bail when there's no member
+		if ( empty( $user_id ) )
+			return;
+
 		// Signal oud-lid members for VGSR
-		if ( is_user_vgsr() && is_user_oudlid( bp_get_member_user_id() ) ) {
+		if ( is_user_vgsr() && is_user_oudlid( $user_id ) ) {
 			$member_type = bp_get_member_type_object( vgsr_bp_oudlid_member_type() );
 			echo '<i class="paco2017-badge member-type-badge">' . $member_type->labels['singular_name'] . '</i>';
 		}
