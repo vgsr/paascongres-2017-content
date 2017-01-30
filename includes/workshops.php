@@ -505,6 +505,42 @@ function paco2017_get_user_workshops( $user_id = 0 ) {
 	return (array) apply_filters( 'paco2017_get_user_workshops', $workshops, $user_id );
 }
 
+/**
+ * Output the list of the given user's workshops
+ *
+ * @since 1.1.0
+ *
+ * @param int $user_id Optional. User ID. Defaults to the current user.
+ */
+function paco2017_the_user_workshops_list( $user_id = 0 ) {
+	echo paco2017_get_user_workshops_list( $user_id );
+}
+
+/**
+ * Return the list of the given user's workshops
+ *
+ * @since 1.1.0
+ *
+ * @param int $user_id Optional. User ID. Defaults to the current user.
+ * @return string User workshops list
+ */
+function paco2017_get_user_workshops_list( $user_id = 0 ) {
+	$workshops = paco2017_get_user_workshops( $user_id );
+	$list      = '';
+
+	if ( $workshops ) {
+
+		// Define list
+		$list = '<ul class="user-workshops">';
+		foreach ( $workshops as $workshop_id ) {
+			$list .= sprintf( '<li><a href="%s">%s</a></li>', get_permalink( $workshop_id ), get_the_title( $workshop_id ) );
+		}
+		$list .= '</ul>';
+	}
+
+	return $list;
+}
+
 /** Template: Workshop Category **************************************************/
 
 /**
