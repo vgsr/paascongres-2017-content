@@ -204,6 +204,7 @@ fieldset.paco2017-profile-field label.option-label {
 	vertical-align: top;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+	word-wrap: break-word;
 }
 
 .paco2017_object_details label + * {
