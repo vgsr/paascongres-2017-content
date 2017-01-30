@@ -522,11 +522,11 @@ class Paco2017_Admin {
 		// Workshop
 		if ( paco2017_get_workshop_post_type() === $post_type ) {
 
-			// Append Limit
+			// Append Attendees
 			$loc_pos = array_search( 'taxonomy-' . paco2017_get_conf_location_tax_id(), array_keys( $columns ) );
 			if ( $loc_pos ) {
 				$columns = array_slice( $columns, 0, $loc_pos + 1 ) + array(
-					'limit' => esc_html_x( 'Limit', 'admin column name', 'paco2017-content' ),
+					'attendees' => esc_html_x( 'Attendees', 'admin column name', 'paco2017-content' ),
 				) + array_slice( $columns, $loc_pos + 1 );
 			}
 		}
@@ -591,8 +591,13 @@ class Paco2017_Admin {
 			// Workshop
 			case paco2017_get_workshop_post_type() :
 				switch ( $column ) {
-					case 'limit' :
-						$this->posts_custom_meta_column( $column, $post_id );
+					case 'attendees' :
+						echo paco2017_get_workshop_enrolled_user_count( $post_id );
+
+						// Display limit
+						if ( $limit = paco2017_get_workshop_limit( $post_id ) ) {
+							echo ' / ' . $limit;
+						}
 						break;
 				}
 

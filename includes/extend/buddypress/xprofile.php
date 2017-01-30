@@ -10,6 +10,8 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+/** Enrollment ************************************************************/
+
 /**
  * Modify whether the member is enrolled
  *
@@ -83,6 +85,8 @@ function paco2017_bp_xprofile_get_enrollment_success_data() {
 
 	return $enrolled;
 }
+
+/** Association ***********************************************************/
 
 /**
  * Modify the queried profile groups' fields
@@ -182,6 +186,8 @@ function paco2017_bp_xprofile_sync_association_term( $field_data ) {
 	}
 }
 
+/** Workshops *************************************************************/
+
 /**
  * Modify the query arguments for the Relationship field's options
  *
@@ -197,36 +203,98 @@ function paco2017_bp_xprofile_workshop_options_args( $args, $object, $field ) {
 	// Workshop field
 	if ( paco2017_bp_xprofile_is_a_workshop_field( $field ) ) {
 
-		// Workshop 1
-		if ( paco2017_bp_xprofile_is_workshop1_field( $field ) ) {
-			$term = get_option( '_paco2017_bp_xprofile_workshop1_field_round' );
+		// Get field's workshop round
+		$term = paco2017_bp_xprofile_get_workshop_field_round( $field->id );
 
-		// Workshop 2
-		} elseif ( paco2017_bp_xprofile_get_workshop2_field( $field ) ) {
-			$term = get_option( '_paco2017_bp_xprofile_workshop2_field_round' );
-
-		// No workshop
-		} else {
-			$term = false;
-		}
-
-		// Term was found
+		// Term was found, query by workshop round
 		if ( ! empty( $term ) ) {
 
 			// Add workshop round taxonomy query
 			$tax_query = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
 			$tax_query[] = array(
 				'taxonomy' => paco2017_get_workshop_round_tax_id(),
-				'terms'    => array( $term ),
+				'terms'    => array( $term->term_id ),
 			);
 			$args['tax_query'] = $tax_query;
 		}
+
+		// Set additional query variable(s)
+		$args['workshop_limit'] = true;
+		$args['workshop_field'] = $field;
 	}
 
 	return $args;
 }
 
-/** Options ***************************************************************/
+/**
+ * Modify the details of the queried Relationship field's options
+ *
+ * @since 1.1.0
+ *
+ * @param array $options Relationship options
+ * @param string $object Relationship object
+ * @param BP_XProfile_Field $field Field object
+ * @param array $query_args Query arguments
+ * @return array Relationship options
+ */
+function paco2017_bp_xprofile_workshop_options( $options, $object, $field, $query_args ) {
+
+	// Workshop field
+	if ( paco2017_bp_xprofile_is_a_workshop_field( $field ) ) {
+
+		// Walk queried posts
+		foreach ( $options as $k => $option ) {
+
+			// Append available limit count
+			if ( $option->id && $limit = paco2017_get_workshop_limit( $option->id ) ) {
+				$available = $limit - paco2017_get_workshop_enrolled_user_count( $option->id );
+				$options[ $k ]->name .= ' (' . $available . ')';
+			}
+		}
+	}
+
+	return $options;
+}
+
+/**
+ * Modify the XProfile field description
+ *
+ * @since 1.1.0
+ *
+ * @param string $description Profile field description
+ * @return string Profile field description
+ */
+function paco2017_bp_xprofile_workshop_field_description( $description ) {
+
+	// When this is a workshop field, append description of limit count
+	if ( paco2017_bp_xprofile_is_a_workshop_field() ) {
+		$description .= ' ' . __( 'Between parentheses is the remaining amount of seats available at the workshop.', 'paco2017-content' );
+	}
+
+	return $description;
+}
+
+/**
+ * Return the Workshop Round of the given Sorkshop XProfile field
+ *
+ * @since 1.1.0
+ *
+ * @param int $field_id Field id
+ * @return WP_Term|bool Workshop round object or False when not found
+ */
+function paco2017_bp_xprofile_get_workshop_field_round( $field_id = 0 ) {
+	$fields = paco2017_bp_xprofile_get_workshop_fields( true );
+	$round  = false;
+
+	if ( $num = array_search( $field_id, $fields ) ) {
+		$round = get_option( "_paco2017_bp_xprofile_workshop{$num}_field_round", false );
+		$round = paco2017_get_workshop_round( $round );
+	}
+
+	return $round;
+}
+
+/** Field Options *********************************************************/
 
 /**
  * Return the requested setting's XProfile field
@@ -399,18 +467,6 @@ function paco2017_bp_xprofile_get_workshop1_field() {
 }
 
 /**
- * Return whether this is the Workshop 1 XProfile field
- *
- * @since 1.1.0
- *
- * @param int|BP_XProfile_Field $field_id Field ID or object. Optional. Defaults to current field.
- * @return bool Is this the Workshop 1 field?
- */
-function paco2017_bp_xprofile_is_workshop1_field( $field_id = 0 ) {
-	return paco2017_bp_xprofile_is_the_field( '_paco2017_bp_xprofile_workshop1_field', $field_id );
-}
-
-/**
  * Return the selected Workshop 2 XProfile field
  *
  * @since 1.1.0
@@ -422,18 +478,6 @@ function paco2017_bp_xprofile_get_workshop2_field() {
 }
 
 /**
- * Return whether this is the Workshop 2 XProfile field
- *
- * @since 1.1.0
- *
- * @param int|BP_XProfile_Field $field_id Field ID or object. Optional. Defaults to current field.
- * @return bool Is this the Workshop 2 field?
- */
-function paco2017_bp_xprofile_is_workshop2_field( $field_id = 0 ) {
-	return paco2017_bp_xprofile_is_the_field( '_paco2017_bp_xprofile_workshop2_field', $field_id );
-}
-
-/**
  * Return whether this is any Workshop XProfile field
  *
  * @since 1.1.0
@@ -442,6 +486,49 @@ function paco2017_bp_xprofile_is_workshop2_field( $field_id = 0 ) {
  * @return bool Is this any Workshop field?
  */
 function paco2017_bp_xprofile_is_a_workshop_field( $field_id = 0 ) {
-	return paco2017_bp_xprofile_is_the_field( '_paco2017_bp_xprofile_workshop1_field', $field_id )
-		|| paco2017_bp_xprofile_is_the_field( '_paco2017_bp_xprofile_workshop2_field', $field_id );
+
+	// Get the field's ID
+	if ( is_a( $field_id, 'BP_XProfile_Field' ) ) {
+		$field_id = $field_id->id;
+
+	// Default to the current fieid
+	} elseif ( empty( $field_id ) && isset( $GLOBALS['field'] ) ) {
+		$field_id = bp_get_the_profile_field_id();
+	}
+
+	$match = false;
+
+	if ( $field_id ) {
+		$field_ids = paco2017_bp_xprofile_get_workshop_fields( true );
+		$match     = in_array( $field_id, $field_ids );
+	}
+
+	return $match;
+}
+
+/**
+ * Return the registered Workshop XProfile fields
+ *
+ * @since 1.1.0
+ *
+ * @param bool $ids Optional. Whether to return field ids. Defaults to False.
+ * @return array Field objects or ids
+ */
+function paco2017_bp_xprofile_get_workshop_fields( $ids = false ) {
+
+	// Collect fields
+	$fields = array(
+		1 => paco2017_bp_xprofile_get_workshop1_field(),
+		2 => paco2017_bp_xprofile_get_workshop2_field(),
+	);
+
+	// Remove fields that do not exist
+	$fields = array_filter( $fields );
+
+	// Pluck ids
+	if ( $ids ) {
+		$fields = wp_list_pluck( $fields, 'id' );
+	}
+
+	return $fields;
 }

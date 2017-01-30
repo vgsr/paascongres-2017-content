@@ -406,7 +406,7 @@ function paco2017_bp_get_enrolled_members_by_scope( $scope = '', $user_id = 0 ) 
  * @param WP_Term|int|string $association Term object or id or name or slug
  * @return array Enrolled association members
  */
-function paco2017_bp_get_enrolled_members_for_association( $members = array(), $association ) {
+function paco2017_bp_enrolled_members_for_association( $members, $association ) {
 
 	// Get profile fields
 	$enrollment_field  = paco2017_bp_xprofile_get_enrollment_field();
@@ -494,15 +494,14 @@ function paco2017_bp_get_members_by_profile_field_value( $field, $user_id, $valu
  * @param WP_Term|int|string $workshop Post object or ID
  * @return array Enrolled workshop members
  */
-function paco2017_bp_get_enrolled_members_for_workshop( $members = array(), $workshop ) {
+function paco2017_bp_enrolled_members_for_workshop( $members, $workshop ) {
 
 	// Get profile fields
 	$enrollment_field  = paco2017_bp_xprofile_get_enrollment_field();
-	$workshop1_field   = paco2017_bp_xprofile_get_workshop1_field();
-	$workshop2_field   = paco2017_bp_xprofile_get_workshop2_field();
+	$workshop_fields   = paco2017_bp_xprofile_get_workshop_fields();
 
 	// Bail when the fields do not exist
-	if ( ( ! $workshop1_field && ! $workshop2_field ) || ! $enrollment_field )
+	if ( ! $workshop_fields || ! $enrollment_field )
 		return $members;
 
 	// Define profile query workshop part
@@ -510,17 +509,9 @@ function paco2017_bp_get_enrolled_members_for_workshop( $members = array(), $wor
 		'relation' => 'OR'
 	);
 
-	if ( $workshop1_field ) {
+	foreach ( $workshop_fields as $field ) {
 		$workshop_profile_query[] = array(
-			'field_id' => $workshop1_field->id,
-			'value'    => is_a( $workshop, 'WP_Post' ) ? $workshop->ID : $workshop,
-			'compare'  => '=',
-		);
-	}
-
-	if ( $workshop2_field ) {
-		$workshop_profile_query[] = array(
-			'field_id' => $workshop2_field->id,
+			'field_id' => $field->id,
 			'value'    => is_a( $workshop, 'WP_Post' ) ? $workshop->ID : $workshop,
 			'compare'  => '=',
 		);
@@ -544,6 +535,44 @@ function paco2017_bp_get_enrolled_members_for_workshop( $members = array(), $wor
 	}
 
 	return $members;
+}
+
+/**
+ * Modify the registered workshops for the given user
+ *
+ * @since 1.1.0
+ *
+ * @param array $workshops Workshop ids
+ * @param int $user_id User ID
+ * @return array Workshop ids
+ */
+function paco2017_bp_member_workshops( $workshops, $user_id ) {
+	global $wpdb;
+
+	// Bail when the user does not exist
+	if ( empty( $user_id ) )
+		return $workshops;
+
+	$workshop_fields = paco2017_bp_xprofile_get_workshop_fields( true );
+
+	// Bail when the fields do not exist
+	if ( ! $workshop_fields )
+		return $workshops;
+
+	$bp = buddypress();
+
+	$field_ids = implode( ',', $workshop_fields );
+
+	// Assume workshops are stored by single post ID as field's value (relationship type)
+	$sql = $wpdb->prepare( "SELECT value FROM {$bp->profile->table_name_data} WHERE user_id = %d AND field_id IN ($field_ids)", $user_id );
+	$workshop_ids = $wpdb->get_col( $sql );
+
+	// Append workshop ids
+	if ( $workshop_ids ) {
+		$workshops += array_map( 'intval', $workshop_ids );
+	}
+
+	return $workshops;
 }
 
 /** Dashboard ***********************************************************/

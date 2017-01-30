@@ -406,7 +406,7 @@ function paco2017_get_workshop( $post = 0 ) {
 }
 
 /**
- * Return the user limit for a workshop
+ * Return the attendee limit for a workshop
  *
  * @since 1.1.0
  *
@@ -482,6 +482,27 @@ function paco2017_get_workshop_enrolled_users( $post = 0, $object = false ) {
 	$users = array();
 
 	return (array) apply_filters( 'paco2017_get_workshop_enrolled_users', $users, $post, $object );
+}
+
+/**
+ * Return the user's registered workshops
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_user_workshops'
+ *
+ * @param int $user_id User ID
+ * @return array Workshop post ids
+ */
+function paco2017_get_user_workshops( $user_id = 0 ) {
+	$workshops = array();
+
+	// Default to the current user
+	if ( empty( $user_id ) ) {
+		$user_id = get_current_user_id();
+	}
+
+	return (array) apply_filters( 'paco2017_get_user_workshops', $workshops, $user_id );
 }
 
 /** Template: Workshop Category **************************************************/

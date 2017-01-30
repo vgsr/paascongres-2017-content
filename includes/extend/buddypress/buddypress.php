@@ -64,6 +64,7 @@ class Paco2017_BuddyPress {
 		require( $this->base_dir . 'activity.php'  );
 		require( $this->base_dir . 'functions.php' );
 		require( $this->base_dir . 'members.php'   );
+		require( $this->base_dir . 'template.php'  );
 		require( $this->base_dir . 'xprofile.php'  );
 
 		// Admin

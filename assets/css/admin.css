@@ -153,7 +153,10 @@ fieldset.paco2017-profile-field label.option-label {
 	margin: 1px 8px 0 0;
 }
 
-.fixed .column-limit,
+.fixed .column-attendees {
+	width: 80px;
+}
+
 .fixed .column-time_start,
 .fixed .column-time_end {
 	width: 50px;
