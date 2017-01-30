@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Paascongres 2017 Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 15:20+0000\n"
-"PO-Revision-Date: 2017-01-23 15:21+0000\n"
-"Last-Translator: laurens <lmoffereins@gmail.com>\n"
+"POT-Creation-Date: 2017-01-30 12:54+0000\n"
+"PO-Revision-Date: 2017-01-30 13:05+0000\n"
+"Last-Translator: Laurens Offereins <lmoffereins@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl-NL\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
@@ -13,37 +13,149 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#. 1. Time 2. Date 3. Location adverbial
-#: templates/default/paco2017/info-lecture.php:23
-#, php-format
-msgid "Starts on %2$s at %1$s %3$s"
-msgstr "Vangt aan op %2$s om %1$s %3$s"
+#: includes/admin.php:529
+msgctxt "admin column name"
+msgid "Attendees"
+msgstr "Aangemeld"
 
-#. 1. Time 2. Date
-#: templates/default/paco2017/info-lecture.php:25
-#, php-format
-msgid "Starts on %2$s at %1$s"
-msgstr "Vangt aan op %2$s om %1$s"
+#: includes/admin.php:541
+msgctxt "admin column name"
+msgid "Start"
+msgstr "Start"
 
-#. 1. Time 2. Location adverbial
-#: templates/default/paco2017/info-lecture.php:37
-#, php-format
-msgid "Starts at %1$s %2$s"
-msgstr "Vangt aan om %1$s %2$s"
+#: includes/admin.php:542
+msgctxt "admin column name"
+msgid "End"
+msgstr "Einde"
 
-#. 1. Time
-#: templates/default/paco2017/info-lecture.php:39
+#: includes/admin.php:550
+msgctxt "admin column name"
+msgid "Related"
+msgstr "Verbonden"
+
+#: includes/admin.php:564
+msgctxt "admin column name"
+msgid "Logo"
+msgstr "Logo"
+
+#: includes/admin.php:569
+msgctxt "admin column name"
+msgid "URL"
+msgstr "URL"
+
+#: includes/admin.php:882
+msgid "Attendee Limit:"
+msgstr "Aanmeldingslimiet"
+
+#: includes/extend/buddypress/admin.php:156
+msgctxt "admin field label"
+msgid "Workshop Field"
+msgstr "Workshopveld"
+
+#: includes/extend/buddypress/settings.php:27
+msgid "Profile Fields"
+msgstr "Profielvelden"
+
+#: includes/extend/buddypress/settings.php:86
+msgid "Workshop 1 Field"
+msgstr "Workshopveld 1"
+
+#: includes/extend/buddypress/settings.php:91
+msgid "Select the field that holds the member's first workshop selection."
+msgstr "Selecteer het veld dat de eerste workshopkeuze bevat."
+
+#: includes/extend/buddypress/settings.php:97
+msgid "Workshop 2 Field"
+msgstr "Workshopveld 2"
+
+#: includes/extend/buddypress/settings.php:102
+msgid "Select the field that holds the member's second workshop selection."
+msgstr "Selecteer het veld dat de tweede workshopkeuze bevat."
+
+#: includes/extend/buddypress/settings.php:296
+msgid ""
+"NOTE: please return here after saving to define what value counts as "
+"enrolled!"
+msgstr ""
+"NB: kom hier na opslaan terug om aan te geven welke waarde geldt als "
+"aangemeld!"
+
+#: includes/extend/buddypress/settings.php:323
+msgid "Define what value the field should have for the user to be enrolled."
+msgstr ""
+"Geef aan welke waarde het veld moet hebben om de gebruiker als aangemeld te "
+"duiden."
+
+#: includes/extend/buddypress/settings.php:395
+msgid "Optionally select the workshop round to filter the field's options by."
+msgstr ""
+"Selecteer eventueel de workshopronde waarop de veldopties moeten worden "
+"gefilterd."
+
+#: includes/extend/buddypress/xprofile.php:271
+msgid ""
+"Between parentheses is the remaining amount of seats available at the "
+"workshop."
+msgstr ""
+"Tussen haakjes staat het aantal beschikbare plaatsen bij de workshop "
+"aangegeven."
+
+#: templates/default/paco2017/info-workshop.php:48
 #, php-format
-msgid "Starts at %1$s"
-msgstr "Vangt aan om %1$s"
+msgid "%d Attendee"
+msgid_plural "%d Attendees"
+msgstr[0] "%d Aangemeld"
+msgstr[1] "%d Aangemeld"
 
 #: includes/extend/buddypress/templates/members/single/front.php:17
-msgid "This person will be attending the conference!"
-msgstr ""
+#, php-format
+msgid "Yes! %s will be attending the conference!"
+msgstr "Yes! %s zal er bij zijn op het congres!"
 
 #: includes/extend/buddypress/templates/members/single/front.php:21
-msgid "This person is not yet enrolled."
+#, php-format
+msgid ""
+"So you haven't decided yet whether you will attend the conference? Go ahead, "
+"ask %s what is so great about going to this event!"
 msgstr ""
+"U heeft dus nog niet besloten of u er bij bent op het congres? Vooruit, "
+"vraag %s wat er zo geweldig aan is om te gaan!"
+
+#: includes/extend/buddypress/templates/members/single/front.php:27
+msgid "This person has subscribed to the following workshops:"
+msgstr "Deze persoon heeft zich aangemeld voor de volgende workshops:"
+
+#: includes/extend/buddypress/templates/members/single/front.php:33
+msgid "This person has not yet subscribed to any workshop."
+msgstr "Deze persoon heeft zich nog niet aangemeld voor een workshop."
+
+#: includes/extend/buddypress/templates/members/single/front.php:41
+#, php-format
+msgid ""
+"%1$s is not yet enrolled. Since you have already decided to attend the "
+"conference, perhaps you can persuade %1$s to join you. If you need any help "
+"in winning this person over, here are some tips to assist you:"
+msgstr ""
+"%1$s komt nog niet naar het Paascongres. Aangezien u al wel heeft besloten "
+"te komen, kunt u wellicht %1$s overhalen mee te gaan. Als u enige hulp nodig "
+"heeft om dit te doen, hebben we hier een aantal suggesties voor u:"
+
+#: includes/extend/buddypress/templates/members/single/front.php:45
+#, php-format
+msgid ""
+"%1$s is not yet enrolled. Would you happen to know whether %1$s is "
+"interested in the theme of the conference or prefers to be in the company of "
+"200+ amicae amicique? Perhaps you can decide to join us together. Here are "
+"some tips that may win you over:"
+msgstr ""
+"%1$s komt nog niet naar het Paascongres. Heeft u een idee of %1$s "
+"geïnteresseerd is in het thema van het congres of zich graag mengt tussen "
+"meer dan 200 amicae amicique? Wellicht kunt u beslissen samen te gaan. Hier "
+"zijn een aantal suggesties om u te overtuigen:"
+
+#: includes/extend/buddypress/templates/members/single/front.php:50
+msgid "The conference magazine"
+msgstr "Het Paascongres Magazine"
 
 #: paco2017-content.php:239
 msgid "Paascongres lectures"
@@ -73,7 +185,7 @@ msgstr "Partnerlogo"
 msgid "Remove Partner Logo"
 msgstr "Verwijder Partnerlogo"
 
-#: paco2017-content.php:543 includes/admin.php:552
+#: paco2017-content.php:543
 msgid "Logo"
 msgstr "Logo"
 
@@ -123,7 +235,7 @@ msgstr "Verwijder %sfoto"
 msgid "Paascongres 2017 Dashboard"
 msgstr "Paascongres 2017 Dashboard"
 
-#: includes/admin.php:90 includes/admin.php:1203 includes/functions.php:459
+#: includes/admin.php:90 includes/admin.php:1254 includes/functions.php:459
 msgid "Paascongres"
 msgstr "Paascongres"
 
@@ -195,114 +307,95 @@ msgstr "Locatie"
 msgid "Level"
 msgstr "Level"
 
-#: includes/admin.php:529
-msgctxt "agenda meta column name"
-msgid "Start"
-msgstr "Start"
-
-#: includes/admin.php:530
-msgctxt "agenda meta column name"
-msgid "End"
-msgstr "Einde"
-
-#: includes/admin.php:538
-msgctxt "agenda meta column name"
-msgid "Related"
-msgstr "Verbonden"
-
-#: includes/admin.php:557
-msgid "URL"
-msgstr "URL"
-
-#: includes/admin.php:630
+#: includes/admin.php:664
 msgid "Lecture Details"
 msgstr "Lezingdetails"
 
-#: includes/admin.php:642
+#: includes/admin.php:676
 msgid "Workshop Details"
 msgstr "Workshopdetails"
 
-#: includes/admin.php:654
+#: includes/admin.php:688
 msgid "Agenda Details"
 msgstr "Programmadetails"
 
-#: includes/admin.php:666
+#: includes/admin.php:700
 msgid "Partner Details"
 msgstr "Partnerdetails"
 
-#: includes/admin.php:692 includes/admin.php:801
+#: includes/admin.php:726 includes/admin.php:837
 msgid "Speaker:"
 msgstr "Spreker:"
 
-#: includes/admin.php:701 includes/admin.php:810
+#: includes/admin.php:735 includes/admin.php:846
 msgid "&mdash; No Speaker &mdash;"
 msgstr "&mdash; Geen spreker &mdash;"
 
-#: includes/admin.php:786
+#: includes/admin.php:822
 msgid "Round:"
 msgstr "Ronde:"
 
-#: includes/admin.php:795
+#: includes/admin.php:831 includes/extend/buddypress/settings.php:392
 msgid "&mdash; No Round &mdash;"
 msgstr "&mdash; Geen ronde &mdash;"
 
-#: includes/admin.php:816
+#: includes/admin.php:852
 msgid "Category:"
 msgstr "Categorie:"
 
-#: includes/admin.php:825
+#: includes/admin.php:861
 msgid "&mdash; No Category &mdash;"
 msgstr "&mdash; Geen categorie &mdash;"
 
-#: includes/admin.php:831 includes/admin.php:969
+#: includes/admin.php:867 includes/admin.php:1020
 msgid "Location:"
 msgstr "Locatie:"
 
-#: includes/admin.php:840 includes/admin.php:978
+#: includes/admin.php:876 includes/admin.php:1029
 msgid "&mdash; No Location &mdash;"
 msgstr "&mdash; Geen locatie &mdash;"
 
-#: includes/admin.php:932
+#: includes/admin.php:983
 msgid "Day:"
 msgstr "Dag:"
 
-#: includes/admin.php:941
+#: includes/admin.php:992
 msgid "&mdash; No Day &mdash;"
 msgstr "&mdash; Geen dag &mdash;"
 
-#: includes/admin.php:947
+#: includes/admin.php:998
 msgid "Time Start:"
 msgstr "Starttijd:"
 
-#: includes/admin.php:958
+#: includes/admin.php:1009
 msgid "Time End:"
 msgstr "Eindtijd:"
 
-#: includes/admin.php:984
+#: includes/admin.php:1035
 msgid "Related:"
 msgstr "Verbonden:"
 
-#: includes/admin.php:989
+#: includes/admin.php:1040
 msgid "&mdash; No Relation &mdash;"
 msgstr "&mdash; Geen verbinding &mdash;"
 
-#: includes/admin.php:1101
+#: includes/admin.php:1152
 msgid "Logo:"
 msgstr "Logo:"
 
-#: includes/admin.php:1106
+#: includes/admin.php:1157
 msgid "Partner URL:"
 msgstr "Partner-URL:"
 
-#: includes/admin.php:1111
+#: includes/admin.php:1162
 msgid "Level:"
 msgstr "Level:"
 
-#: includes/admin.php:1120
+#: includes/admin.php:1171
 msgid "&mdash; No Level &mdash;"
 msgstr "&mdash; Geen level &mdash;"
 
-#: includes/admin.php:1223 includes/associations.php:38
+#: includes/admin.php:1274 includes/associations.php:38
 #: includes/settings.php:216
 msgid "Association"
 msgstr "Vereniging"
@@ -874,11 +967,11 @@ msgstr ""
 msgid "Workshop"
 msgstr "Workshop"
 
-#: includes/settings.php:178 includes/workshops.php:117
+#: includes/settings.php:178 includes/workshops.php:160
 msgid "Workshop Category"
 msgstr "Workshopcategorie"
 
-#: includes/settings.php:186 includes/workshops.php:242
+#: includes/settings.php:186 includes/workshops.php:285
 msgid "Workshop Round"
 msgstr "Workshopronde"
 
@@ -886,7 +979,7 @@ msgstr "Workshopronde"
 msgid "&mdash; No Page &mdash;"
 msgstr "&mdash; Geen Pagina &mdash;"
 
-#: includes/settings.php:312 includes/extend/buddypress/settings.php:143
+#: includes/settings.php:312 includes/extend/buddypress/settings.php:181
 msgid "View"
 msgstr "Bekijken"
 
@@ -1034,83 +1127,83 @@ msgstr "Workshopslijst navigatie"
 msgid "Workshops list"
 msgstr "Workshopslijst"
 
-#: includes/workshops.php:115
+#: includes/workshops.php:158
 msgid "Paascongres Workshop Categories"
 msgstr "Paascongres Workshopcategoriën"
 
-#: includes/workshops.php:116
+#: includes/workshops.php:159
 msgid "Categories"
 msgstr "Categoriën"
 
-#: includes/workshops.php:118
+#: includes/workshops.php:161
 msgid "Search Workshop Categories"
 msgstr "Zoek Workshopcategoriën"
 
-#: includes/workshops.php:120
+#: includes/workshops.php:163
 msgid "All Workshop Categories"
 msgstr "Alle Workshopcategoriën"
 
-#: includes/workshops.php:121
+#: includes/workshops.php:164
 msgid "No Workshop Category"
 msgstr "Geen Workshopcategorie"
 
-#: includes/workshops.php:122
+#: includes/workshops.php:165
 msgid "Edit Workshop Category"
 msgstr "Workshopcategorie bewerken"
 
-#: includes/workshops.php:123
+#: includes/workshops.php:166
 msgid "Update Workshop Category"
 msgstr "Workshopcategorie bijwerken"
 
-#: includes/workshops.php:124
+#: includes/workshops.php:167
 msgid "Add New Workshop Category"
 msgstr "Nieuwe Workshopcategorie toevoegen"
 
-#: includes/workshops.php:125
+#: includes/workshops.php:168
 msgid "New Workshop Category Name"
 msgstr "Nieuwe Workshopcategorie naam"
 
-#: includes/workshops.php:126
+#: includes/workshops.php:169
 msgid "View Workshop Category"
 msgstr "Workshopcategorie bekijken"
 
-#: includes/workshops.php:240
+#: includes/workshops.php:283
 msgid "Paascongres Workshop Rounds"
 msgstr "Paascongres Workshopronden"
 
-#: includes/workshops.php:241
+#: includes/workshops.php:284
 msgid "Rounds"
 msgstr "Ronden"
 
-#: includes/workshops.php:243
+#: includes/workshops.php:286
 msgid "Search Workshop Rounds"
 msgstr "Zoek Workshopronden"
 
-#: includes/workshops.php:245
+#: includes/workshops.php:288
 msgid "All Workshop Rounds"
 msgstr "Alle Workshopronden"
 
-#: includes/workshops.php:246
+#: includes/workshops.php:289
 msgid "No Workshop Round"
 msgstr "Geen Workshopronde"
 
-#: includes/workshops.php:247
+#: includes/workshops.php:290
 msgid "Edit Workshop Round"
 msgstr "Workshopronde bewerken"
 
-#: includes/workshops.php:248
+#: includes/workshops.php:291
 msgid "Update Workshop Round"
 msgstr "Workshopronde bijwerken"
 
-#: includes/workshops.php:249
+#: includes/workshops.php:292
 msgid "Add New Workshop Round"
 msgstr "Nieuwe Workshopronde toevoegen"
 
-#: includes/workshops.php:250
+#: includes/workshops.php:293
 msgid "New Workshop Round Name"
 msgstr "Nieuwe Workshopronde naam"
 
-#: includes/workshops.php:251
+#: includes/workshops.php:294
 msgid "View Workshop Round"
 msgstr "Workshopronde bekijken"
 
@@ -1142,8 +1235,8 @@ msgctxt "admin field label"
 msgid "Association Field"
 msgstr "Verenigingsveld"
 
-#: includes/extend/buddypress/buddypress.php:261
-#: includes/extend/buddypress/buddypress.php:286
+#: includes/extend/buddypress/buddypress.php:282
+#: includes/extend/buddypress/buddypress.php:307
 msgid "Enrollment"
 msgstr "Aanmelding"
 
@@ -1168,10 +1261,6 @@ msgstr "De volgende leden van uw vereniging zijn uitgenodigd voor het congres."
 msgid "This member is enrolled for the event."
 msgstr "Dit lid heeft zich aangemeld voor het congres."
 
-#: includes/extend/buddypress/settings.php:27
-msgid "Fields"
-msgstr "Velden"
-
 #: includes/extend/buddypress/settings.php:50
 msgid "Enrollment Field"
 msgstr "Aanmeldingsveld"
@@ -1180,30 +1269,24 @@ msgstr "Aanmeldingsveld"
 msgid "Select the field that holds the member's enrollment status."
 msgstr "Selecteer het veld dat de aanmeldingstatus bevat van een lid."
 
-#: includes/extend/buddypress/settings.php:61
+#: includes/extend/buddypress/settings.php:67
 msgid "Required Fields"
 msgstr "Verplichte velden"
 
-#: includes/extend/buddypress/settings.php:69
+#: includes/extend/buddypress/settings.php:75
 msgid "Association Field"
 msgstr "Verenigingsveld"
 
-#: includes/extend/buddypress/settings.php:74
+#: includes/extend/buddypress/settings.php:80
 msgid "Select the field that holds the member's association value."
 msgstr "Selecteer het veld dat de vereniging van een lid bevat."
 
-#: includes/extend/buddypress/settings.php:111
-#, php-format
-msgid ""
-"This function requires the %s parameter to display the settings field input."
-msgstr "Deze functie vereist de %s parameter om het instellingsveld te tonen."
-
-#: includes/extend/buddypress/settings.php:117
+#: includes/extend/buddypress/settings.php:155
 msgid "Activate the Extended Profiles component to use this setting."
 msgstr ""
 "Activeer de component Uitgebreide Profielen om deze instelling te gebruiken."
 
-#: includes/extend/buddypress/settings.php:223
+#: includes/extend/buddypress/settings.php:261
 msgid ""
 "These are the required profile fields for this site. You can mark fields as "
 "required when editing the field."
@@ -1211,11 +1294,11 @@ msgstr ""
 "Dit zijn de verplichte velden voor deze site. Je kan velden veprlicht maken "
 "als je het veld bewerkt."
 
-#: includes/extend/buddypress/settings.php:236
+#: includes/extend/buddypress/settings.php:274
 msgid "There are no fields selected yet."
 msgstr "Er zijn nog geen velden geselecteerd."
 
-#: includes/extend/buddypress/settings.php:253
+#: includes/extend/buddypress/settings.php:411
 msgid "Profiles"
 msgstr "Profielen"
 
@@ -1236,6 +1319,30 @@ msgstr "Er zijn geen activiteiten gepland voor deze dag."
 #: templates/default/paco2017/content-agenda.php:58
 msgid "There are no items scheduled."
 msgstr "Er zijn geen activiteiten gepland."
+
+#. 1. Time 2. Date 3. Location adverbial
+#: templates/default/paco2017/info-lecture.php:23
+#, php-format
+msgid "Starts on %2$s at %1$s %3$s"
+msgstr "Vangt aan op %2$s om %1$s %3$s"
+
+#. 1. Time 2. Date
+#: templates/default/paco2017/info-lecture.php:25
+#, php-format
+msgid "Starts on %2$s at %1$s"
+msgstr "Vangt aan op %2$s om %1$s"
+
+#. 1. Time 2. Location adverbial
+#: templates/default/paco2017/info-lecture.php:37
+#, php-format
+msgid "Starts at %1$s %2$s"
+msgstr "Vangt aan om %1$s %2$s"
+
+#. 1. Time
+#: templates/default/paco2017/info-lecture.php:39
+#, php-format
+msgid "Starts at %1$s"
+msgstr "Vangt aan om %1$s"
 
 #: templates/default/paco2017/info-lecture.php:52
 #: templates/default/paco2017/info-workshop.php:27
