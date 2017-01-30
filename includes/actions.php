@@ -93,4 +93,5 @@ if ( is_admin() ) {
 /** Extend ********************************************************************/
 
 add_action( 'bp_core_loaded', 'paco2017_buddypress' );
+add_action( 'vgsr_ready',     'paco2017_vgsr'       );
 add_action( 'paco2017_init',  'paco2017_wpseo'      );
