@@ -173,7 +173,7 @@ function paco2017_bp_members_item_association_badge() {
 
 	// Display association badge
 	if ( paco2017_get_user_association( bp_get_member_user_id() ) ) {
-		echo '<i class="paco2017-association-badge"></i>';
+		echo '<i class="paco2017-badge association-badge"></i>';
 	}
 }
 

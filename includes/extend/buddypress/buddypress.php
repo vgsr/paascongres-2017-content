@@ -340,8 +340,8 @@ class Paco2017_BuddyPress {
 				$textcolor = ! paco2017_light_textcolor_for_background( $rgb ) ? 'color: inherit;' : '';
 
 				// Define badge label and color
-				$css[] = ".paco2017-association-{$term->term_id} .paco2017-association-badge:before { content: '{$term->name}'; }";
-				$css[] = ".paco2017-association-{$term->term_id} .paco2017-association-badge { border-color: {$color}; background-color: rgba({$rgb[0]},{$rgb[1]},{$rgb[2]},.6); {$textcolor} }";
+				$css[] = ".paco2017-association-{$term->term_id} .association-badge:before { content: '{$term->name}'; }";
+				$css[] = ".paco2017-association-{$term->term_id} .association-badge { border-color: {$color}; background-color: rgba({$rgb[0]},{$rgb[1]},{$rgb[2]},.6); {$textcolor} }";
 			}
 		}
 

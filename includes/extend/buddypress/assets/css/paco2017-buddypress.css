@@ -5,6 +5,10 @@
  * @subpackage BuddyPress
  */
 
+#buddypress span.activity {
+	display: none;
+}
+
 #buddypress ul.item-list li .item-avatar img.avatar {
 	width: 50px;
 	height: 50px;
@@ -32,10 +36,10 @@ i.paco2017-enrolled:before {
 	content: "\f147";
 }
 
-/* Association badge */
-.paco2017-association-badge {
+/* Member badge */
+.paco2017-badge {
 	display: inline-block;
-	margin: 0 0 2px 0;
+	margin: 0 6px 2px 0;
 	padding: 2px 4px;
 	background: rgba(153, 153, 153, .6);
 	border: 1.5px solid rgb(153, 153, 153);
