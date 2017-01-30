@@ -279,7 +279,8 @@ class Paco2017_BuddyPress {
 		if ( bp_is_active( 'xprofile' ) ) {
 
 			// Members: alter Profile tab name
-			$bp->members->nav->edit_nav( array( 'name' => __( 'Enrollment', 'paco2017-content' ) ), bp_get_profile_slug() );
+			$bp->members->nav->edit_nav( array( 'name' => _x( 'Enrollment', 'Profile header menu', 'paco2017-content' ) ), bp_get_profile_slug() );
+			$bp->members->nav->edit_nav( array( 'name' => _x( 'Manage', 'Profile header sub menu', 'paco2017-content' ) ), 'edit', bp_get_profile_slug() );
 		}
 
 		if ( bp_is_active( 'settings' ) ) {
@@ -304,7 +305,12 @@ class Paco2017_BuddyPress {
 
 			// Alter Profile parent name
 			if ( 'my-account-xprofile' === $nav['id'] ) {
-				$wp_admin_nav[ $k ]['title'] = __( 'Enrollment', 'paco2017-content' );
+				$wp_admin_nav[ $k ]['title'] = _x( 'Enrollment', 'My Account Profile', 'paco2017-content' );
+			}
+
+			// Alter Profile edit name
+			if ( 'my-account-xprofile-edit' === $nav['id'] ) {
+				$wp_admin_nav[ $k ]['title'] = _x( 'Manage', 'My Account Profile sub nav', 'paco2017-content' );
 			}
 		}
 
