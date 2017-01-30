@@ -128,7 +128,7 @@ class Paco2017_BuddyPress {
 	 *
 	 * @param string $url The url
 	 * @param string $raw_url Raw url
-	 * @param object $user User object
+	 * @param WP_User|WP_Error $user User object or error object
 	 */
 	public function login_redirect( $url, $raw_url, $user ) {
 

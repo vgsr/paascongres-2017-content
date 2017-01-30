@@ -461,7 +461,7 @@ function paco2017_get_association_title_for_user( $user_id = 0 ) {
  *
  * @param WP_Term|int|string $term Term object or id or name or slug.
  * @param string $by Value type to get the term with in {@see get_term_by()}. Defaults to 'term_id'.
- * @return array Association users.
+ * @return array Association user ids
  */
 function paco2017_get_association_users( $term, $by = 'term_id' ) {
 

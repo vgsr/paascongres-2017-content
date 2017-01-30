@@ -261,7 +261,7 @@ function paco2017_get_partner( $post = 0 ) {
  * @return int Partner logo attachment ID
  */
 function paco2017_get_partner_logo_id( $post = 0 ) {
-	$post = paco2017_get_partner( $post );
+	$post    = paco2017_get_partner( $post );
 	$logo_id = 0;
 
 	if ( $post ) {
@@ -280,7 +280,7 @@ function paco2017_get_partner_logo_id( $post = 0 ) {
  * @return string Partner logo image element
  */
 function paco2017_get_partner_logo( $post = 0 ) {
-	$post = paco2017_get_partner( $post );
+	$post    = paco2017_get_partner( $post );
 	$logo_id = paco2017_get_partner_logo_id( $post );
 	$image   = '';
 

@@ -423,7 +423,7 @@ function paco2017_bp_xprofile_get_required_field_ids() {
 	$bp = buddypress();
 
 	/**
-	 * Run a custom query to get fields by meta, since the profile
+	 * Run a custom query to get fields by detail, since the profile
 	 * query logic in BP_XProfile_Group::get() isn't that advanced.
 	 */
 	$field_ids = $wpdb->get_col( $wpdb->prepare( "SELECT id FROM {$bp->profile->table_name_fields} WHERE is_required = %d", 1 ) );

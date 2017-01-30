@@ -491,7 +491,7 @@ function paco2017_get_workshop_enrolled_users( $post = 0, $object = false ) {
  *
  * @uses apply_filters() Calls 'paco2017_get_user_workshops'
  *
- * @param int $user_id User ID
+ * @param int $user_id Optional. User ID. Defaults to the current user.
  * @return array Workshop post ids
  */
 function paco2017_get_user_workshops( $user_id = 0 ) {

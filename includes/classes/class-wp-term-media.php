@@ -12,7 +12,7 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WP_Term_Media' ) ) :
+if ( ! class_exists( 'WP_Term_Media' ) && class_exists( 'WP_Term_Meta_UI' ) ) :
 /**
  * Main WP Term Media class
  *

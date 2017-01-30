@@ -398,7 +398,7 @@ function paco2017_bp_get_enrolled_members_by_scope( $scope = '', $user_id = 0 ) 
 }
 
 /**
- * Return or modify the enrolled members for the given association
+ * Mdify the enrolled members for the given association
  *
  * @since 1.0.0
  *
@@ -486,7 +486,7 @@ function paco2017_bp_get_members_by_profile_field_value( $field, $user_id, $valu
 }
 
 /**
- * Return or modify the enrolled members for the given workshop
+ * Modify the enrolled members for the given workshop
  *
  * @since 1.0.0
  *
@@ -741,11 +741,11 @@ function paco2017_bp_pre_user_query( $user_query ) {
  *
  * @global WPDB $wpdb
  *
- * @param array $sql SQL clauses
+ * @param array $clauses SQL clauses
  * @param BP_User_Query $user_query
  * @return array SQL clauses
  */
-function paco2017_bp_user_query_uid_clauses( $sql, $user_query ) {
+function paco2017_bp_user_query_uid_clauses( $clauses, $user_query ) {
 	global $wpdb;
 
 	// Get BuddyPress
@@ -758,7 +758,7 @@ function paco2017_bp_user_query_uid_clauses( $sql, $user_query ) {
 	if ( paco2017_bp_members_get_enrolled_scope() === $qv['type'] && $field = paco2017_bp_xprofile_get_enrollment_field() ) {
 
 		// Join with profile data
-		$sql['select'] .= $wpdb->prepare( " LEFT JOIN {$bp->profile->table_name_data} enrolled ON u.{$user_query->uid_name} = enrolled.user_id AND enrolled.field_id = %d", $field->id );
+		$clauses['select'] .= $wpdb->prepare( " LEFT JOIN {$bp->profile->table_name_data} enrolled ON u.{$user_query->uid_name} = enrolled.user_id AND enrolled.field_id = %d", $field->id );
 
 		/**
 		 * Order by enrolled date.
@@ -769,9 +769,9 @@ function paco2017_bp_user_query_uid_clauses( $sql, $user_query ) {
 		 * by date.
 		 */
 		$enrolled_data  = paco2017_bp_xprofile_get_enrollment_success_data_for_query( true );
-		$sql['orderby'] = "ORDER BY ( CASE WHEN enrolled.value NOT IN ( $enrolled_data ) THEN 0 ELSE 1 END ) DESC, enrolled.last_updated";
-		$sql['order']   = "DESC";
+		$clauses['orderby'] = "ORDER BY ( CASE WHEN enrolled.value NOT IN ( $enrolled_data ) THEN 0 ELSE 1 END ) DESC, enrolled.last_updated";
+		$clauses['order']   = "DESC";
 	}
 
-	return $sql;
+	return $clauses;
 }
