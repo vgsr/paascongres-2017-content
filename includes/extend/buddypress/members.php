@@ -421,15 +421,15 @@ function paco2017_bp_enrolled_members_for_association( $members, $association ) 
 		'type'           => false, // Consider all registered users
 		'xprofile_query' => array(
 			array(
-				'field_id' => $enrollment_field->id,
+				'field'    => $enrollment_field->id,
 				'value'    => paco2017_bp_xprofile_get_enrollment_success_data_for_query(),
 				'compare'  => 'IN',
 			),
 
 			// Query based on profile field association (so no user tax_query)
 			array(
-				'field_id' => $association_field->id,
-				'value'    => is_a( $association, 'WP_Term' ) ? $association->term_id : $association,
+				'field'    => $association_field->id,
+				'value'    => is_a( $term, 'WP_Term' ) ? $term->term_id : $term,
 				'compare'  => '=',
 			)
 		)
@@ -471,7 +471,7 @@ function paco2017_bp_get_members_by_profile_field_value( $field, $user_id, $valu
 	$query = new BP_User_Query( array(
 		'type'              => false, // Consider all registered users
 		'paco2017-xprofile' => array(
-			'field_id' => $field->id,
+			'field'    => $field->id,
 			'user_id'  => $user_id,
 			'value'    => $value,
 			'compare'  => $compare,
@@ -511,7 +511,7 @@ function paco2017_bp_enrolled_members_for_workshop( $members, $workshop ) {
 
 	foreach ( $workshop_fields as $field ) {
 		$workshop_profile_query[] = array(
-			'field_id' => $field->id,
+			'field'    => $field->id,
 			'value'    => is_a( $workshop, 'WP_Post' ) ? $workshop->ID : $workshop,
 			'compare'  => '=',
 		);
@@ -522,7 +522,7 @@ function paco2017_bp_enrolled_members_for_workshop( $members, $workshop ) {
 		'type'           => false, // Consider all registered users
 		'xprofile_query' => array(
 			array(
-				'field_id' => $enrollment_field->id,
+				'field'    => $enrollment_field->id,
 				'value'    => paco2017_bp_xprofile_get_enrollment_success_data_for_query(),
 				'compare'  => 'IN',
 			),
@@ -654,7 +654,7 @@ function paco2017_bp_parse_has_members_args( $args = array() ) {
 
 		// Append query items
 		$args['type'] = array(
-			'field_id' => $field->id,
+			'field'    => $field->id,
 			'user_id'  => $user_id,
 			'value'    => $value,
 			'compare'  => $compare,
@@ -717,14 +717,14 @@ function paco2017_bp_pre_user_query( $user_query ) {
 
 		// Get raw db field value
 		if ( null === $args['value'] && isset( $args['user_id'] ) ) {
-			$args['value']   = BP_XProfile_ProfileData::get_value_byid( $args['field_id'], $args['user_id'] );
+			$args['value']   = BP_XProfile_ProfileData::get_value_byid( $args['field'], $args['user_id'] );
 			$args['compare'] = '=';
 		}
 
 		// Setup XProfile query
 		$xprofile_query   = $qv['xprofile_query'] ? (array) $qv['xprofile_query'] : array();
 		$xprofile_query[] = array(
-			'field'   => $args['field_id'],
+			'field'   => $args['field'],
 			'value'   => $args['value'],
 			'compare' => $args['compare'],
 		);
