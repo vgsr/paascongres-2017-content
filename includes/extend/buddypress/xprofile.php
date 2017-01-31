@@ -444,6 +444,17 @@ function paco2017_bp_xprofile_get_association_field() {
 }
 
 /**
+ * Return the selected Presence XProfile field
+ *
+ * @since 1.1.0
+ *
+ * @return BP_XProfile_Field|null Profile field when found, else Null.
+ */
+function paco2017_bp_xprofile_get_presence_field() {
+	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_presence_field' );
+}
+
+/**
  * Return whether this is the Association XProfile field
  *
  * @since 1.0.0

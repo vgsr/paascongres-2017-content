@@ -81,6 +81,17 @@ function paco2017_bp_add_settings_fields( $fields ) {
 			)
 		),
 
+		// Presence field
+		'_paco2017_bp_xprofile_presence_field' => array(
+			'title'             => __( 'Presence Field', 'paco2017-content' ),
+			'callback'          => 'paco2017_bp_admin_setting_callback_xprofile_field',
+			'sanitize_callback' => 'intval',
+			'args'              => array(
+				'setting'     => '_paco2017_bp_xprofile_presence_field',
+				'description' => esc_html__( "Select the field that holds the member's presence value.", 'paco2017-content' ),
+			)
+		),
+
 		// Workshop 1 field
 		'_paco2017_bp_xprofile_workshop1_field' => array(
 			'title'             => __( 'Workshop 1 Field', 'paco2017-content' ),

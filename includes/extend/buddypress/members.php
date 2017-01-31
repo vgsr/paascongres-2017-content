@@ -576,6 +576,70 @@ function paco2017_bp_member_workshops( $workshops, $user_id ) {
 	return $workshops;
 }
 
+/** Presence ************************************************************/
+
+/**
+ * Return the data for the given member's Presence XProfile field
+ *
+ * @since 1.1.0
+ *
+ * @param int $user_id Optional. User ID. Defaults to the displayed uers.
+ * @return array Member's presence data
+ */
+function paco2017_bp_get_member_presence( $user_id = 0 ) {
+
+	// Default to the displayed user
+	if ( empty( $user_id ) ) {
+		$user_id = bp_displayed_user_id();
+	}
+
+	$field    = paco2017_bp_xprofile_get_presence_field();
+	$presence = array();
+
+	if ( $user_id && $field ) {
+		$presence = xprofile_get_field_data( $field->id, $user_id );
+	}
+
+	return (array) $presence;
+}
+
+/**
+ * Output the list of member presence details
+ *
+ * @since 1.1.0
+ *
+ * @param int $user_id Optional. User ID. Defaults to the displayed user.
+ */
+function paco2017_bp_the_member_presence_list( $user_id = 0 ) {
+	echo paco2017_bp_get_member_presence_list( $user_id );
+}
+
+
+/**
+ * Output the list of member presence details
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_bp_get_member_presence_list'
+ *
+ * @param int $user_id Optional. User ID. Defaults to the displayed user.
+ * @return string List of member presence details
+ */
+function paco2017_bp_get_member_presence_list( $user_id = 0 ) {
+	$presence = paco2017_bp_get_member_presence( $user_id );
+	$list     = '';
+
+	if ( $presence ) {
+		$list = '<ul class="member-presence">';
+		foreach ( $presence as $pr ) {
+			$list .= '<li>' . $pr . '</li>';
+		}
+		$list .= '</ul>';
+	}
+
+	return apply_filters( 'paco2017_bp_get_member_presence_list', $list, $user_id );
+}
+
 /** Dashboard ***********************************************************/
 
 /**
