@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Paascongres 2017 Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-30 18:43+0000\n"
-"PO-Revision-Date: 2017-01-30 18:43+0000\n"
+"POT-Creation-Date: 2017-01-31 22:44+0000\n"
+"PO-Revision-Date: 2017-01-31 22:48+0000\n"
 "Last-Translator: Laurens Offereins <lmoffereins@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl-NL\n"
@@ -12,26 +12,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
-
-#: includes/extend/buddypress/buddypress.php:282
-msgctxt "Profile header menu"
-msgid "Enrollment"
-msgstr "Aanmelding"
-
-#: includes/extend/buddypress/buddypress.php:283
-msgctxt "Profile header sub menu"
-msgid "Manage"
-msgstr "Beheren"
-
-#: includes/extend/buddypress/buddypress.php:308
-msgctxt "My Account Profile"
-msgid "Enrollment"
-msgstr "Aanmelding"
-
-#: includes/extend/buddypress/buddypress.php:313
-msgctxt "My Account Profile sub nav"
-msgid "Manage"
-msgstr "Beheren"
 
 #: paco2017-content.php:240
 msgid "Paascongres lectures"
@@ -241,7 +221,7 @@ msgstr "&mdash; Geen spreker &mdash;"
 msgid "Round:"
 msgstr "Ronde:"
 
-#: includes/admin.php:831 includes/extend/buddypress/settings.php:392
+#: includes/admin.php:831 includes/extend/buddypress/settings.php:403
 msgid "&mdash; No Round &mdash;"
 msgstr "&mdash; Geen ronde &mdash;"
 
@@ -889,7 +869,7 @@ msgstr "Workshopronde"
 msgid "&mdash; No Page &mdash;"
 msgstr "&mdash; Geen Pagina &mdash;"
 
-#: includes/settings.php:312 includes/extend/buddypress/settings.php:181
+#: includes/settings.php:312 includes/extend/buddypress/settings.php:192
 msgid "View"
 msgstr "Bekijken"
 
@@ -1150,6 +1130,26 @@ msgctxt "admin field label"
 msgid "Workshop Field"
 msgstr "Workshopveld"
 
+#: includes/extend/buddypress/buddypress.php:282
+msgctxt "Profile header menu"
+msgid "Enrollment"
+msgstr "Aanmelding"
+
+#: includes/extend/buddypress/buddypress.php:283
+msgctxt "Profile header sub menu"
+msgid "Manage"
+msgstr "Beheren"
+
+#: includes/extend/buddypress/buddypress.php:308
+msgctxt "My Account Profile"
+msgid "Enrollment"
+msgstr "Aanmelding"
+
+#: includes/extend/buddypress/buddypress.php:313
+msgctxt "My Account Profile sub nav"
+msgid "Manage"
+msgstr "Beheren"
+
 #: includes/extend/buddypress/members.php:25
 msgid "All Enrolled"
 msgstr "Alle aanmeldingen"
@@ -1196,27 +1196,35 @@ msgid "Select the field that holds the member's association value."
 msgstr "Selecteer het veld dat de vereniging van een lid bevat."
 
 #: includes/extend/buddypress/settings.php:86
+msgid "Presence Field"
+msgstr "Aanwezigheidsveld"
+
+#: includes/extend/buddypress/settings.php:91
+msgid "Select the field that holds the member's presence value."
+msgstr "Selecteer het veld dat de aanwezigheid van een lid bevat."
+
+#: includes/extend/buddypress/settings.php:97
 msgid "Workshop 1 Field"
 msgstr "Workshopveld 1"
 
-#: includes/extend/buddypress/settings.php:91
+#: includes/extend/buddypress/settings.php:102
 msgid "Select the field that holds the member's first workshop selection."
 msgstr "Selecteer het veld dat de eerste workshopkeuze bevat."
 
-#: includes/extend/buddypress/settings.php:97
+#: includes/extend/buddypress/settings.php:108
 msgid "Workshop 2 Field"
 msgstr "Workshopveld 2"
 
-#: includes/extend/buddypress/settings.php:102
+#: includes/extend/buddypress/settings.php:113
 msgid "Select the field that holds the member's second workshop selection."
 msgstr "Selecteer het veld dat de tweede workshopkeuze bevat."
 
-#: includes/extend/buddypress/settings.php:155
+#: includes/extend/buddypress/settings.php:166
 msgid "Activate the Extended Profiles component to use this setting."
 msgstr ""
 "Activeer de component Uitgebreide Profielen om deze instelling te gebruiken."
 
-#: includes/extend/buddypress/settings.php:261
+#: includes/extend/buddypress/settings.php:272
 msgid ""
 "These are the required profile fields for this site. You can mark fields as "
 "required when editing the field."
@@ -1224,11 +1232,11 @@ msgstr ""
 "Dit zijn de verplichte velden voor deze site. Je kan velden veprlicht maken "
 "als je het veld bewerkt."
 
-#: includes/extend/buddypress/settings.php:274
+#: includes/extend/buddypress/settings.php:285
 msgid "There are no fields selected yet."
 msgstr "Er zijn nog geen velden geselecteerd."
 
-#: includes/extend/buddypress/settings.php:296
+#: includes/extend/buddypress/settings.php:307
 msgid ""
 "NOTE: please return here after saving to define what value counts as "
 "enrolled!"
@@ -1236,19 +1244,19 @@ msgstr ""
 "NB: kom hier na opslaan terug om aan te geven welke waarde geldt als "
 "aangemeld!"
 
-#: includes/extend/buddypress/settings.php:323
+#: includes/extend/buddypress/settings.php:334
 msgid "Define what value the field should have for the user to be enrolled."
 msgstr ""
 "Geef aan welke waarde het veld moet hebben om de gebruiker als aangemeld te "
 "duiden."
 
-#: includes/extend/buddypress/settings.php:395
+#: includes/extend/buddypress/settings.php:406
 msgid "Optionally select the workshop round to filter the field's options by."
 msgstr ""
 "Selecteer eventueel de workshopronde waarop de veldopties moeten worden "
 "gefilterd."
 
-#: includes/extend/buddypress/settings.php:411
+#: includes/extend/buddypress/settings.php:422
 msgid "Profiles"
 msgstr "Profielen"
 
@@ -1359,15 +1367,24 @@ msgstr ""
 "U heeft dus nog niet besloten of u er bij bent op het congres? Vooruit, "
 "vraag %s wat er zo geweldig aan is om te gaan!"
 
-#: includes/extend/buddypress/templates/members/single/front.php:27
-msgid "This person has subscribed to the following workshops:"
-msgstr "Deze persoon heeft zich aangemeld voor de volgende workshops:"
+#: includes/extend/buddypress/templates/members/single/front.php:29
+#, php-format
+msgid ""
+"%s has planned to be present during the following parts of the conference:"
+msgstr ""
+"%s is van plan om tijdens het congres bij de volgende delen aanwezig te zijn:"
 
-#: includes/extend/buddypress/templates/members/single/front.php:33
-msgid "This person has not yet subscribed to any workshop."
-msgstr "Deze persoon heeft zich nog niet aangemeld voor een workshop."
+#: includes/extend/buddypress/templates/members/single/front.php:39
+#, php-format
+msgid "%s has subscribed to the following workshops:"
+msgstr "%s heeft zich aangemeld voor de volgende workshops:"
 
-#: includes/extend/buddypress/templates/members/single/front.php:41
+#: includes/extend/buddypress/templates/members/single/front.php:45
+#, php-format
+msgid "%s has not yet subscribed to any workshop."
+msgstr "%s heeft zich nog niet aangemeld voor een workshop."
+
+#: includes/extend/buddypress/templates/members/single/front.php:53
 #, php-format
 msgid ""
 "%1$s is not yet enrolled. Since you have already decided to attend the "
@@ -1378,7 +1395,7 @@ msgstr ""
 "te komen, kunt u wellicht %1$s overhalen mee te gaan. Als u enige hulp nodig "
 "heeft om dit te doen, hebben we hier een aantal suggesties voor u:"
 
-#: includes/extend/buddypress/templates/members/single/front.php:45
+#: includes/extend/buddypress/templates/members/single/front.php:57
 #, php-format
 msgid ""
 "%1$s is not yet enrolled. Would you happen to know whether %1$s is "
@@ -1391,7 +1408,7 @@ msgstr ""
 "meer dan 200 amicae amicique? Wellicht kunt u beslissen samen te gaan. Hier "
 "zijn een aantal suggesties om u te overtuigen:"
 
-#: includes/extend/buddypress/templates/members/single/front.php:50
+#: includes/extend/buddypress/templates/members/single/front.php:62
 msgid "The conference magazine"
 msgstr "Het Paascongres Magazine"
 
