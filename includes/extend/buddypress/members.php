@@ -403,10 +403,10 @@ function paco2017_bp_get_enrolled_members_by_scope( $scope = '', $user_id = 0 ) 
  * @since 1.0.0
  *
  * @param array $members Enrolled association members
- * @param WP_Term|int|string $association Term object or id or name or slug
+ * @param WP_Term|int|string $term Term object or id or name or slug
  * @return array Enrolled association members
  */
-function paco2017_bp_enrolled_members_for_association( $members, $association ) {
+function paco2017_bp_enrolled_members_for_association( $members, $term ) {
 
 	// Get profile fields
 	$enrollment_field  = paco2017_bp_xprofile_get_enrollment_field();
