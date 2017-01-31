@@ -22,15 +22,27 @@ defined( 'ABSPATH' ) || exit;
 
 	<?php endif; ?>
 
+	<?php if ( paco2017_bp_users_in_same_association() ) : ?>
+
+		<?php if ( paco2017_bp_get_member_presence() ) : ?>
+
+			<p><?php printf( __( '%s has planned to be present during the following parts of the conference:', 'paco2017-content' ), bp_get_user_firstname() ); ?></p>
+
+			<?php paco2017_bp_the_member_presence_list(); ?>
+
+		<?php endif; ?>
+
+	<?php endif; ?>
+
 	<?php if ( paco2017_get_user_workshops( bp_displayed_user_id() ) ) : ?>
 
-		<p><?php _e( 'This person has subscribed to the following workshops:', 'paco2017-content' ); ?></p>
+		<p><?php printf( __( '%s has subscribed to the following workshops:', 'paco2017-content' ), bp_get_user_firstname() ); ?></p>
 
 		<?php paco2017_the_user_workshops_list( bp_displayed_user_id() ); ?>
 
 	<?php else : ?>
 
-		<p><?php _e( 'This person has not yet subscribed to any workshop.', 'paco2017-content' ); ?></p>
+		<p><?php printf( __( '%s has not yet subscribed to any workshop.', 'paco2017-content' ), bp_get_user_firstname() ); ?></p>
 
 	<?php endif; ?>
 
