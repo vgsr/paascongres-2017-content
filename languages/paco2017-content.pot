@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-30 18:43+0000\n"
+"POT-Creation-Date: 2017-01-31 22:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -222,7 +222,7 @@ msgstr ""
 msgid "Round:"
 msgstr ""
 
-#: includes/admin.php:831 includes/extend/buddypress/settings.php:392
+#: includes/admin.php:831 includes/extend/buddypress/settings.php:403
 msgid "&mdash; No Round &mdash;"
 msgstr ""
 
@@ -862,7 +862,7 @@ msgstr ""
 msgid "&mdash; No Page &mdash;"
 msgstr ""
 
-#: includes/settings.php:312 includes/extend/buddypress/settings.php:181
+#: includes/settings.php:312 includes/extend/buddypress/settings.php:192
 msgid "View"
 msgstr ""
 
@@ -1189,50 +1189,58 @@ msgid "Select the field that holds the member's association value."
 msgstr ""
 
 #: includes/extend/buddypress/settings.php:86
-msgid "Workshop 1 Field"
+msgid "Presence Field"
 msgstr ""
 
 #: includes/extend/buddypress/settings.php:91
-msgid "Select the field that holds the member's first workshop selection."
+msgid "Select the field that holds the member's presence value."
 msgstr ""
 
 #: includes/extend/buddypress/settings.php:97
-msgid "Workshop 2 Field"
+msgid "Workshop 1 Field"
 msgstr ""
 
 #: includes/extend/buddypress/settings.php:102
+msgid "Select the field that holds the member's first workshop selection."
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:108
+msgid "Workshop 2 Field"
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:113
 msgid "Select the field that holds the member's second workshop selection."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:155
+#: includes/extend/buddypress/settings.php:166
 msgid "Activate the Extended Profiles component to use this setting."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:261
+#: includes/extend/buddypress/settings.php:272
 msgid ""
 "These are the required profile fields for this site. You can mark fields as "
 "required when editing the field."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:274
+#: includes/extend/buddypress/settings.php:285
 msgid "There are no fields selected yet."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:296
+#: includes/extend/buddypress/settings.php:307
 msgid ""
 "NOTE: please return here after saving to define what value counts as "
 "enrolled!"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:323
+#: includes/extend/buddypress/settings.php:334
 msgid "Define what value the field should have for the user to be enrolled."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:395
+#: includes/extend/buddypress/settings.php:406
 msgid "Optionally select the workshop round to filter the field's options by."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:411
+#: includes/extend/buddypress/settings.php:422
 msgid "Profiles"
 msgstr ""
 
@@ -1338,15 +1346,23 @@ msgid ""
 "ask %s what is so great about going to this event!"
 msgstr ""
 
-#: includes/extend/buddypress/templates/members/single/front.php:27
-msgid "This person has subscribed to the following workshops:"
+#: includes/extend/buddypress/templates/members/single/front.php:29
+#, php-format
+msgid ""
+"%s has planned to be present during the following parts of the conference:"
 msgstr ""
 
-#: includes/extend/buddypress/templates/members/single/front.php:33
-msgid "This person has not yet subscribed to any workshop."
+#: includes/extend/buddypress/templates/members/single/front.php:39
+#, php-format
+msgid "%s has subscribed to the following workshops:"
 msgstr ""
 
-#: includes/extend/buddypress/templates/members/single/front.php:41
+#: includes/extend/buddypress/templates/members/single/front.php:45
+#, php-format
+msgid "%s has not yet subscribed to any workshop."
+msgstr ""
+
+#: includes/extend/buddypress/templates/members/single/front.php:53
 #, php-format
 msgid ""
 "%1$s is not yet enrolled. Since you have already decided to attend the "
@@ -1354,7 +1370,7 @@ msgid ""
 "in winning this person over, here are some tips to assist you:"
 msgstr ""
 
-#: includes/extend/buddypress/templates/members/single/front.php:45
+#: includes/extend/buddypress/templates/members/single/front.php:57
 #, php-format
 msgid ""
 "%1$s is not yet enrolled. Would you happen to know whether %1$s is "
@@ -1363,7 +1379,7 @@ msgid ""
 "some tips that may win you over:"
 msgstr ""
 
-#: includes/extend/buddypress/templates/members/single/front.php:50
+#: includes/extend/buddypress/templates/members/single/front.php:62
 msgid "The conference magazine"
 msgstr ""
 
