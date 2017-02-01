@@ -1029,12 +1029,22 @@ function paco2017_login_redirect_to_input() { ?>
 }
 
 /**
- * Modify the pw expiration time for pw reset
+ * Modify the expiration time for the pw reset action
+ *
+ * Uses the enrollment deadline setting's value. Defaults to a week.
  *
  * @since 1.1.0
  *
  * @return int Experiation time in secs
  */
 function paco2017_password_reset_expiration() {
-	return strtotime( '2017-03-15' ) - time();
+	$date = mysql2date( 'Y-m-d', get_option( '_paco2017_enrollment_deadline', '' ) );
+
+	if ( $date ) {
+		$time = strtotime( $date ) - time();
+	} else {
+		$time = WEEK_IN_SECONDS;
+	}
+
+	return $time;
 }
