@@ -427,6 +427,24 @@ function paco2017_get_workshop_limit( $post = 0 ) {
 }
 
 /**
+ * Modify the content of a Workshop post before content filters apply
+ *
+ * @since 1.1.0
+ *
+ * @param string $content Post content
+ * @return string Post content
+ */
+function paco2017_workshop_pre_post_content( $content ) {
+
+	// This is a Workshop in an archive
+	if ( paco2017_get_workshop() && is_archive() && ! is_admin() ) {
+		$content = wp_trim_words( $content, 35, '&hellip; <a href="' . esc_url( get_permalink() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'paco2017-content' ) . '</a>' );
+	}
+
+	return $content;
+}
+
+/**
  * Modify the content of a Workshop post
  *
  * @since 1.1.0
