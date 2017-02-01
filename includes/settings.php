@@ -61,6 +61,17 @@ function paco2017_admin_get_settings_fields() {
 
 		'paco2017_settings_main' => array(
 
+			// Enrollment deadline
+			'_paco2017_enrollment_deadline' => array(
+				'title'             => esc_html__( 'Enrollment Deadline', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_date',
+				'sanitize_callback' => 'paco2017_admin_setting_sanitize_date',
+				'args'              => array(
+					'setting'     => '_paco2017_enrollment_deadline',
+					'description' => esc_html__( 'Select the date after which the enrollment will be closed', 'paco2017-content' ),
+				)
+			),
+
 			// Housekeeping page
 			'_paco2017_housekeeping_page' => array(
 				'title'             => esc_html__( 'Housekeeping Page', 'paco2017-content' ),
@@ -281,6 +292,64 @@ function paco2017_admin_page_has_settings( $page = '' ) {
  * @since 1.0.0
  */
 function paco2017_admin_setting_callback_main_section() { /* Nothing to display */ }
+
+/**
+ * Display the content of a Date Selection type settings field
+ *
+ * @since 1.1.0
+ *
+ * @param array $args Setting field arguments
+ */
+function paco2017_admin_setting_callback_date( $args = array() ) {
+
+	// Bail when there was no setting passed
+	if ( ! isset( $args['setting'] ) )
+		return;
+
+	// Get settings field
+	$date = get_option( $args['setting'], false );
+
+	echo '<input type="text" name="' . esc_attr( $args['setting'] ) . '" class="datepicker" value="' . esc_attr( mysql2date( 'd-m-Y', $date ) ) .'" placeholder="dd-mm-yyyy" />';
+
+	if ( isset( $args['description'] ) ) {
+		echo '<p class="description">' . $args['description'] . '</p>';
+	}
+
+	// Enqueue the date picker
+	wp_enqueue_script( 'jquery-ui-datepicker' );
+	wp_enqueue_style( 'term-date', paco2017_content()->assets_url . 'css/term-date.css', array(), paco2017_get_version() );
+
+	// Setup date pickers
+	static $date_script = null;
+	if ( null === $date_script ) {
+		$date_script = "jQuery( document ).ready( function( $ ) { $( '.datepicker' ).datepicker( { dateFormat: 'dd-mm-yy' } ); });";
+		wp_add_inline_script( 'jquery-ui-datepicker', $date_script );
+	}
+}
+
+/**
+ * Sanitize the input from a Date Selection type settings field
+ *
+ * @since 1.1.0
+ *
+ * @param mixed $input Field input
+ * @return string Sanitized date in mysql format
+ */
+function paco2017_admin_setting_sanitize_date( $input ) {
+	$date = DateTime::createFromFormat( 'd-m-Y', $input );
+
+	if ( ! $date ) {
+		$date = DateTime::createFromFormat( 'Y-m-d 00:00:00', $input );
+	}
+
+	if ( $date ) {
+		$input = $date->format( 'Y-m-d 00:00:00' );
+	} else {
+		$input = false;
+	}
+
+	return $input;
+}
 
 /**
  * Display the content of a Page Selection type settings field
