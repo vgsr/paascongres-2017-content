@@ -524,7 +524,7 @@ function paco2017_admin_page() { ?>
 
 	<div class="wrap">
 
-		<h1><?php esc_html_e( 'Paascongres 2017', 'paco2017-content' ); ?></h1>
+		<h1><?php esc_html_e( 'Paascongres', 'paco2017-content' ); ?></h1>
 
 		<h2 class="nav-tab-wrapper"><?php paco2017_admin_page_tabs(); ?></h2>
 

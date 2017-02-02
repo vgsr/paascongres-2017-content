@@ -86,7 +86,7 @@ class Paco2017_Admin {
 
 		// Dashboard admin page
 		$dashboard = add_menu_page(
-			__( 'Paascongres 2017 Dashboard', 'paco2017-content' ),
+			__( 'Paascongres Dashboard', 'paco2017-content' ),
 			__( 'Paascongres', 'paco2017-content' ),
 			'paco2017_admin_page',
 			'paco2017',
@@ -121,7 +121,7 @@ class Paco2017_Admin {
 		if ( paco2017_admin_page_has_settings( 'paco2017' ) ) {
 			add_submenu_page(
 				'paco2017',
-				__( 'Paascongres 2017 Settings', 'paco2017-content' ),
+				__( 'Paascongres Settings', 'paco2017-content' ),
 				__( 'Settings', 'paco2017-content' ),
 				'paco2017_admin_settings_page',
 				'paco2017-settings',
