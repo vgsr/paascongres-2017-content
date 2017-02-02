@@ -532,6 +532,25 @@ function paco2017_customize_nav_menu_searched_items( $items, $args ) {
 /** Options *******************************************************************/
 
 /**
+ * Return the enrollment deadline date setting
+ *
+ * @since 1.1.0
+ *
+ * @param string $format Optional. Date format to return.
+ * @return string Enrollment deadline date
+ */
+function paco2017_get_enrollment_deadline( $format = '' ) {
+	$date = get_option( '_paco2017_enrollment_deadline', false );
+
+	// Format the date
+	if ( $format ) {
+		$date = mysql2date( $format, $date );
+	}
+
+	return apply_filters( 'paco2017_get_enrollment_deadline', $date, $format );
+}
+
+/**
  * Return the page ID of the Housekeeping page setting
  *
  * @since 1.0.0
@@ -1038,10 +1057,12 @@ function paco2017_login_redirect_to_input() { ?>
  * @return int Experiation time in secs
  */
 function paco2017_password_reset_expiration() {
-	$date = mysql2date( 'Y-m-d', get_option( '_paco2017_enrollment_deadline', '' ) );
 
-	if ( $date ) {
+	// Use Enrollment Deadline date
+	if ( $date = paco2017_get_enrollment_deadline( 'Y-m-d' ) ) {
 		$time = strtotime( $date ) - time();
+
+	// Deafult to week length
 	} else {
 		$time = WEEK_IN_SECONDS;
 	}
