@@ -50,3 +50,8 @@ i.paco2017-enrolled:before {
 	text-transform: uppercase;
 	vertical-align: middle;
 }
+
+/* Advertorials */
+.paco2017-advertorial.advertorial-bp_before_profile_content {
+	border-top: 0;
+}

@@ -309,3 +309,113 @@ function paco2017_get_partner_url( $post = 0 ) {
 
 	return apply_filters( 'paco2017_get_partner_url', $url, $post );
 }
+
+/** Advertorials **************************************************************/
+
+/**
+ * Register embed filters for the advertorial item
+ *
+ * @since 1.1.0
+ */
+function paco2017_advertorial_embed( $advertorial ) {
+	add_filter( 'paco2017_embed_context_id',   'paco2017_get_advertorial_id'                   );
+	add_filter( 'paco2017_embed_get_cache',    'paco2017_get_option_autoembed_cache',    10, 3 );
+	add_filter( 'paco2017_embed_update_cache', 'paco2017_update_option_autoembed_cache', 10, 3 );
+
+	// Unhook the above
+	add_filter( 'paco2017_get_advertorial', function( $advertorial ) {
+		remove_filter( 'paco2017_embed_context_id',   'paco2017_get_advertorial_id'                   );
+		remove_filter( 'paco2017_embed_get_cache',    'paco2017_get_option_autoembed_cache',    10, 3 );
+		remove_filter( 'paco2017_embed_update_cache', 'paco2017_update_option_autoembed_cache', 10, 3 );
+
+		return $advertorial;
+	}, 99 );
+
+	return $advertorial;
+}
+add_filter( 'paco2017_get_advertorial', 'paco2017_advertorial_embed', 1 );
+
+/**
+ * Return the location's advertorial setting name
+ *
+ * @since 1.1.0
+ *
+ * @param string $location Optional. Defaults to the current action.
+ * @return string Setting name
+ */
+function paco2017_get_advertorial_id( $location = '' ) {
+	$location = paco2017_get_advertorial_location( $location );
+	$name     = "_paco2017_advertorial_{$location}";
+
+	return $name;
+}
+
+/**
+ * Return the location for the advertorial
+ *
+ * @since 1.1.0
+ *
+ * @param string $location Optional. Defaults to the current action
+ * @return string Advertorial location name
+ */
+function paco2017_get_advertorial_location( $location = '' ) {
+
+	// Default to current action name
+	if ( empty( $location ) ) {
+		$plugin = paco2017_content();
+
+		if ( empty( $plugin->advertorial_location ) ) {
+			$plugin->advertorial_location = current_action();
+		}
+
+		$location = $plugin->advertorial_location;
+	}
+
+	return apply_filters( 'paco2017_get_advertorial_location', $location );
+}
+
+/**
+ * Reset the plugin's global advertorial setting name
+ *
+ * @since 1.1.0
+ *
+ * @param string $advertorial Advertorial content
+ * @return string Advertorial content
+ */
+function paco2017_reset_advertorial_location( $advertorial ) {
+	paco2017_content()->advertorial_location = false;
+	return $advertorial;
+}
+
+/**
+ * Output the advertorial content of the given location
+ *
+ * @since 1.1.0
+ *
+ * @param string $location Optional. Defaults to the current action.
+ */
+function paco2017_the_advertorial( $location = '' ) {
+	$location    = paco2017_get_advertorial_location( $location );
+	$advertorial = paco2017_get_advertorial( $location );
+
+	if ( ! empty( $advertorial ) ) {
+		echo '<div class="paco2017-advertorial advertorial-' . esc_attr( $location ) . '">' . $advertorial . '</div>';
+	}
+}
+
+/**
+ * Return the advertorial content of the given location
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_advertorial'
+ *
+ * @param string $location Optional. Defaults to the current action.
+ * @return string Advertorial content
+ */
+function paco2017_get_advertorial( $location = '' ) {
+	$location    = paco2017_get_advertorial_location( $location );
+	$advertorial = get_option( paco2017_get_advertorial_id( $location ), '' );
+
+	return apply_filters( 'paco2017_get_advertorial', $advertorial, $location );
+}

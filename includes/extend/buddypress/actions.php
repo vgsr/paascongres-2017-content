@@ -56,6 +56,7 @@ add_action( 'bp_before_member_header_meta',         'paco2017_bp_members_item_as
 
 /** Template: XProfile ********************************************************/
 
+add_action( 'bp_before_profile_content',            'paco2017_the_advertorial'                        );
 add_filter( 'bp_get_the_profile_field_description', 'paco2017_bp_xprofile_workshop_field_description' );
 
 /** Admin *********************************************************************/

@@ -518,6 +518,43 @@ function paco2017_admin_setting_callback_workshop_round_slug() {
 	<?php
 }
 
+/** Advertorials Section **************************************************/
+
+/**
+ * Advertorials settings section description for the settings page
+ *
+ * @since 1.1.0
+ */
+function paco2017_admin_setting_callback_advertorials_section() { ?>
+
+	<p><?php esc_html_e( "Define details of the custom partner advertorial sections on this site.", 'paco2017-content' ); ?></p>
+
+	<?php
+}
+
+/**
+ * Editor setting field
+ *
+ * @since 1.1.0
+ *
+ * @param array $args Settings field arguments
+ */
+function paco2017_admin_setting_callback_editor( $args = array() ) {
+
+	// Bail when the setting is not defined
+	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) )
+		return;
+
+	// Output editor
+	wp_editor( get_option( $args['setting'], '' ), $args['setting'], array(
+		'textarea_rows' => 7
+	) );
+
+	if ( isset( $args['description'] ) ) {
+		echo '<p class="description">' .  $args['description'] . '</p>';
+	}
+}
+
 /** Pages ***************************************************************/
 
 /**

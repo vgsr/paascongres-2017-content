@@ -127,6 +127,22 @@ function paco2017_bp_add_settings_fields( $fields ) {
 		),
 	);
 
+	// Advertorials settings
+	$fields['paco2017_settings_advertorials'] = array(
+
+		// Profile Top
+		'_paco2017_advertorial_bp_before_profile_content' => array(
+			'title'             => esc_html__( 'Profile Top', 'paco2017-content' ),
+			'callback'          => 'paco2017_bp_admin_setting_callback_advertorial_bp_before_profile_content',
+			'sanitize_callback' => 'trim',
+			'args'              => array(
+				'setting'     => '_paco2017_advertorial_bp_before_profile_content',
+				'description' => esc_html__( 'This content will be displayed at the top of the profile page', 'paco2017-content' )
+			)
+		),
+	);
+
+
 	return $fields;
 }
 
@@ -386,7 +402,7 @@ function paco2017_bp_xprofile_get_enrollment_field_option( $option, $field_optio
  */
 function paco2017_bp_admin_setting_callback_workshop_field( $args = array() ) {
 
-	// Bail when the setting isn't defined
+	// Bail when the setting is not defined
 	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) )
 		return;
 
@@ -403,7 +419,26 @@ function paco2017_bp_admin_setting_callback_workshop_field( $args = array() ) {
 		'show_option_none'  => __( '&mdash; No Round &mdash;', 'paco2017-content' )
 	) );
 
-	echo '<p class="description">' . esc_html__( "Optionally select the workshop round to filter the field's options by.", 'paco2017-content' ) . '</p>';
+	echo '<p class="description">' . esc_html__( "Optionally select the workshop round to filter the field's options by", 'paco2017-content' ) . '</p>';
+}
+
+/** Advertorials Section ************************************************/
+
+/**
+ * Display the Profile Top advertorial settings field
+ *
+ * @since 1.1.0
+ *
+ * @param array $args Settings field arguments
+ */
+function paco2017_bp_admin_setting_callback_advertorial_bp_before_profile_content( $args = array() ) {
+
+	// Bail when the setting is not defined
+	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) )
+		return;
+
+	// Advertorial setting
+	paco2017_admin_setting_callback_editor( $args );
 }
 
 /** Pages ***************************************************************/

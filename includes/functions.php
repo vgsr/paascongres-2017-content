@@ -895,17 +895,90 @@ function paco2017_enqueue_styles() {
 		$css[] = ".paco2017-speakers .type-{$post_type} .item-object-title:before { content: '{$label}: '; }";
 	}
 
+	/** Advertorials **********************************************************/
+
+	$css[] = ".paco2017-advertorial:before { content: '[" . __( 'Advertorial', 'paco2017-content' ) . "]'; }";
+
 	/** Theme Specific ********************************************************/
 
 	if ( 'twentyseventeen' === $template ) {
 		$css[] = ".colors-dark .paco2017-info:not(.speaker-info) { color: #aaa; }";
 		$css[] = ".speaker-info { margin-top: 2em; padding-top: 2em; border-top: 1px solid #eee; }";
 		$css[] = ".colors-dark .speaker-info { border-top-color: #333; }";
+
+		$css[] = ".colors-dark .paco2017-advertorial { color: #555; }";
 	}
 
 	if ( ! empty( $css ) ) {
 		wp_add_inline_style( 'paco2017-content', implode( "\n", $css ) );
 	}
+}
+
+/** Autoembed *****************************************************************/
+
+/**
+ * Initializes {@link Paco2017_Embed} after everything is loaded.
+ *
+ * @since 1.1.0
+ */
+function paco2017_embed_init() {
+
+	// Get the plugin
+	$plugin = paco2017_content();
+
+	if ( empty( $plugin->embed ) ) {
+		require_once( $plugin->includes_dir . 'classes/class-paco2017-embed.php' );
+
+		$plugin->embed = new Paco2017_Embed();
+	}
+}
+
+/**
+ * Run WP's autoembeds converter on the provided content
+ *
+ * @since 1.1.0
+ *
+ * @param string $content Content
+ * @return string Content
+ */
+function paco2017_content_autoembed( $content ) {
+	$content = paco2017_content()->embed->run_shortcode( $content );
+	$content = paco2017_content()->embed->autoembed( $content );
+
+	return $content;
+}
+
+/**
+ * Return the autoembed cache for the option content's cachekey
+ *
+ * @since 1.1.0
+ *
+ * @param string $cache    Empty initial cache value.
+ * @param int    $id       ID that the caching is for.
+ * @param string $cachekey Key to use for the caching in the database.
+ * @return string Option cache
+ */
+function paco2017_get_option_autoembed_cache( $cache, $id, $cachekey ) {
+
+	// Get option's cache
+	if ( get_option( $id ) && $option = get_option( "{$id}-{$cachekey}" ) ) {
+		$cache = $option;
+	}
+
+	return $cache;
+}
+
+/**
+ * Update the autombed cache for the option content's cachekey
+ *
+ * @since 1.1.0
+ *
+ * @param string $cache    Newly cached HTML markup for embed.
+ * @param string $cachekey Key to use for the caching in the database.
+ * @param int    $id       ID to do the caching for.
+ */
+function paco2017_update_option_autoembed_cache( $cache, $cachekey, $id ) {
+	update_option( "{$id}-{$cachekey}", $cache );
 }
 
 /** Utility *******************************************************************/

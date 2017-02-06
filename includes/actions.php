@@ -46,6 +46,7 @@ add_filter( 'get_next_post_sort',          'paco2017_get_adjacent_post_sort',   
 
 /** Template ******************************************************************/
 
+add_action( 'paco2017_init',               'paco2017_embed_init',                  9    );
 add_action( 'paco2017_after_setup_theme',  'paco2017_load_theme_functions'              );
 add_filter( 'document_title_parts',        'paco2017_document_title_parts'              ); // Since WP 4.4
 add_filter( 'body_class',                  'paco2017_body_class'                        );
@@ -84,6 +85,17 @@ add_action( 'paco2017_widgets_init', array( 'Paco2017_Enrollments_Widget', 'regi
 
 add_action( 'login_init',                'paco2017_login_init'                );
 add_filter( 'password_reset_expiration', 'paco2017_password_reset_expiration' );
+
+/** Advertorials **************************************************************/
+
+add_filter( 'paco2017_get_advertorial', 'paco2017_content_autoembed',            8 );
+add_filter( 'paco2017_get_advertorial', 'wptexturize'                              );
+add_filter( 'paco2017_get_advertorial', 'wpautop'                                  );
+add_filter( 'paco2017_get_advertorial', 'shortcode_unautop'                        );
+add_filter( 'paco2017_get_advertorial', 'wp_make_content_images_responsive'        );
+add_filter( 'paco2017_get_advertorial', 'do_shortcode',                         11 ); // AFTER wpautop()
+add_filter( 'paco2017_get_advertorial', 'convert_smilies',                      20 );
+add_filter( 'paco2017_get_advertorial', 'paco2017_reset_advertorial_location', 999 );
 
 /** Admin *********************************************************************/
 
