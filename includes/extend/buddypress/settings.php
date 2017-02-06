@@ -250,7 +250,7 @@ function paco2017_bp_admin_xprofile_fields_dropdown( $args = array() ) {
 
 	// Start dropdown markup
 	$dd  = sprintf( '<select id="%s" name="%s" %s>', esc_attr( $args['id'] ), esc_attr( $args['name'] ), $args['multiselect'] ? 'multiple="multiple"' : '' );
-	$dd .= '<option value="">' . __( '&mdash; No Field &mdash;', 'vgsr-entity' )  . '</option>';
+	$dd .= '<option value="">' . __( '&mdash; No Field &mdash;', 'paco2017-content' )  . '</option>';
 
 	// Walk profile groups
 	foreach ( $xprofile as $field_group ) {
