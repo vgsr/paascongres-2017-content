@@ -541,13 +541,21 @@ function paco2017_admin_page() { ?>
  *
  * @since 1.0.0
  */
-function paco2017_admin_settings_page() { ?>
+function paco2017_admin_settings_page() {
+
+	// Get the settings page name
+	$settings_page = paco2017_admin_page_get_current_page();
+	if ( 'paco2017-settings' === $settings_page ) {
+		$settings_page = 'paco2017';
+	}
+
+	?>
 
 	<form action="options.php" method="post">
 
-		<?php settings_fields( 'paco2017' ); ?>
+		<?php settings_fields( $settings_page ); ?>
 
-		<?php do_settings_sections( 'paco2017' ); ?>
+		<?php do_settings_sections( $settings_page ); ?>
 
 		<?php submit_button(); ?>
 
