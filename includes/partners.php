@@ -419,3 +419,23 @@ function paco2017_get_advertorial( $location = '' ) {
 
 	return apply_filters( 'paco2017_get_advertorial', $advertorial, $location );
 }
+
+/**
+ * Return the additional advertorial arguments of the given location
+ *
+ * @since 1.1.0
+ *
+ * @param string $location Optional. Defaults to the current action.
+ * @return array Advertorial arguments
+ */
+function paco2017_get_advertorial_args( $location = '' ) {
+	$location = paco2017_get_advertorial_location( $location );
+	$args     = get_option( paco2017_get_advertorial_id( $location ) . '_args', array() );
+
+	// Define args defaults
+	$args = wp_parse_args( $args, array(
+		'page' => ''
+	) );
+
+	return apply_filters( 'paco2017_get_advertorial_args', $args, $location );
+}

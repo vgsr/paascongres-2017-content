@@ -125,8 +125,10 @@ p.description.warning {
 	color: #f00;
 }
 
+p + label,
 p + select,
 p + fieldset {
+	display: block;
 	margin-top: 1.5em;
 }
 

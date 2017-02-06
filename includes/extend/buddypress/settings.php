@@ -130,15 +130,21 @@ function paco2017_bp_add_settings_fields( $fields ) {
 	// Advertorials settings
 	$fields['paco2017_settings_advertorials'] = array(
 
-		// Profile Top
+		// Before Profile Content
 		'_paco2017_advertorial_bp_before_profile_content' => array(
-			'title'             => esc_html__( 'Profile Top', 'paco2017-content' ),
+			'title'             => esc_html__( 'Before Profile Content', 'paco2017-content' ),
 			'callback'          => 'paco2017_bp_admin_setting_callback_advertorial_bp_before_profile_content',
 			'sanitize_callback' => 'trim',
 			'args'              => array(
 				'setting'     => '_paco2017_advertorial_bp_before_profile_content',
-				'description' => esc_html__( 'This content will be displayed at the top of the profile page', 'paco2017-content' )
+				'description' => esc_html__( "This content will be displayed before the member's profile content", 'paco2017-content' )
 			)
+		),
+
+		// Before Profile Content arguments
+		'_paco2017_advertorial_bp_before_profile_content_args' => array(
+			'sanitize_callback' => 'array_filter',
+			'args'              => array()
 		),
 	);
 
@@ -425,7 +431,7 @@ function paco2017_bp_admin_setting_callback_workshop_field( $args = array() ) {
 /** Advertorials Section ************************************************/
 
 /**
- * Display the Profile Top advertorial settings field
+ * Display the Before Profile Content advertorial settings field
  *
  * @since 1.1.0
  *
@@ -439,6 +445,33 @@ function paco2017_bp_admin_setting_callback_advertorial_bp_before_profile_conten
 
 	// Advertorial setting
 	paco2017_admin_setting_callback_editor( $args );
+
+	// Setup additional arguments settings
+	$_setting = $args['setting'] . '_args';
+	$_data    = wp_parse_args( get_option( $_setting, array() ), array(
+		'page' => ''
+	) );
+
+	?>
+
+	<label for="<?php echo $_setting; ?>[page]">
+		<select name="<?php echo $_setting; ?>[page]" id="<?php echo $_setting; ?>[page]">
+			<?php foreach ( array(
+				0                    => esc_html__( '&mdash; All Pages &mdash;', 'paco2017-content' ),
+				'public'             => esc_html__( 'View Profile',              'paco2017-content' ),
+				'edit'               => esc_html__( 'Edit Profile',              'paco2017-content' ),
+				'change-avatar'      => esc_html__( 'Change Avatar',             'paco2017-content' ),
+				'change-cover-image' => esc_html__( 'Change Cover Image',        'paco2017-content' ),
+			) as $page => $label ) : ?>
+
+			<option value="<?php echo $page; ?>" <?php selected( $_data['page'], $page ); ?>><?php echo $label; ?></option>
+
+			<?php endforeach; ?>
+		</select>
+		<?php esc_html_e( 'Select which profile page(s) to display the advertorial on', 'paco2017-content' ); ?>
+	</label>
+
+	<?php
 }
 
 /** Pages ***************************************************************/

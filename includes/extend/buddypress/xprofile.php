@@ -294,6 +294,31 @@ function paco2017_bp_xprofile_get_workshop_field_round( $field_id = 0 ) {
 	return $round;
 }
 
+/** Advertorials **********************************************************/
+
+/**
+ * Modify the advertorial for the current BP page
+ *
+ * @since 1.1.0
+ *
+ * @param string $advertorial Advertorial content
+ * @param string $location Location name
+ * @return string Advertorial content
+ */
+function paco2017_bp_xprofile_filter_advertorial( $advertorial, $location ) {
+
+	if ( 'bp_before_profile_content' === $location ) {
+		$args = paco2017_get_advertorial_args( $location );
+
+		// Remove advertorial for non-assigned pages
+		if ( ! empty( $args['page'] ) && bp_current_action() !== $args['page'] ) {
+			$advertorial = '';
+		}
+	}
+
+	return $advertorial;
+}
+
 /** Field Options *********************************************************/
 
 /**
