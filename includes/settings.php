@@ -79,6 +79,14 @@ function paco2017_admin_get_settings_fields() {
 				)
 			),
 
+			// Contact email
+			'_paco2017_contact_email' => array(
+				'title'             => esc_html__( 'Contact Email', 'paco2017-content' ),
+				'callback'          => 'paco2017_admin_setting_callback_contact_email',
+				'sanitize_callback' => 'sanitize_email',
+				'args'              => array()
+			),
+
 			// Housekeeping page
 			'_paco2017_housekeeping_page' => array(
 				'title'             => esc_html__( 'Housekeeping Page', 'paco2017-content' ),
@@ -301,7 +309,7 @@ function paco2017_admin_page_has_settings( $page = '' ) {
 function paco2017_admin_setting_callback_main_section() { /* Nothing to display */ }
 
 /**
- * Display the content of a Date Selection type settings field
+ * Date selection setting field
  *
  * @since 1.1.0
  *
@@ -309,8 +317,8 @@ function paco2017_admin_setting_callback_main_section() { /* Nothing to display 
  */
 function paco2017_admin_setting_callback_date( $args = array() ) {
 
-	// Bail when there was no setting passed
-	if ( ! isset( $args['setting'] ) )
+	// Bail when the setting is not defined
+	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) )
 		return;
 
 	// Get settings field
@@ -359,7 +367,20 @@ function paco2017_admin_setting_sanitize_date( $input ) {
 }
 
 /**
- * Display the content of a Page Selection type settings field
+ * Display the Contact Email settings field
+ *
+ * @since 1.1.0
+ */
+function paco2017_admin_setting_callback_contact_email() { ?>
+
+	<input type="text" name="_paco2017_contact_email" id="_paco2017_contact_email" class="regular-text" value="<?php echo esc_attr( get_option( '_paco2017_contact_email' ) ); ?>" />
+	<p class="description"><?php esc_html_e( 'Provide the main contact email address for site visitors', 'paco2017-content' ); ?></p>
+
+	<?php
+}
+
+/**
+ * Page selection setting field
  *
  * @since 1.0.0
  *
@@ -367,8 +388,8 @@ function paco2017_admin_setting_sanitize_date( $input ) {
  */
 function paco2017_admin_setting_callback_page( $args = array() ) {
 
-	// Bail when there was no setting passed
-	if ( ! isset( $args['setting'] ) )
+	// Bail when the setting is not defined
+	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) )
 		return;
 
 	// Get settings field
@@ -426,7 +447,7 @@ function paco2017_admin_setting_callback_magazine( $args = array() ) {
 function paco2017_admin_setting_callback_archives_section() { /* Nothing to display */ }
 
 /**
- * Display the content of the Lectures archive description setting field
+ * Description setting field
  *
  * @since 1.0.0
  *
@@ -434,8 +455,8 @@ function paco2017_admin_setting_callback_archives_section() { /* Nothing to disp
  */
 function paco2017_admin_setting_callback_description( $args = array() ) {
 
-	// Bail when there was no setting passed
-	if ( ! isset( $args['setting'] ) )
+	// Bail when the setting is not defined
+	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) )
 		return;
 
 	$setting = esc_attr( $args['setting'] );
@@ -476,8 +497,8 @@ function paco2017_admin_setting_callback_slugs_section() {
  */
 function paco2017_admin_setting_callback_slug( $args = array() ) {
 
-	// Bail when there was no setting passed
-	if ( ! isset( $args['setting'] ) )
+	// Bail when the setting is not defined
+	if ( ! isset( $args['setting'] ) || empty( $args['setting'] ) )
 		return;
 
 	$setting = esc_attr( $args['setting'] );
@@ -487,7 +508,9 @@ function paco2017_admin_setting_callback_slug( $args = array() ) {
 
 	<input name="<?php echo $setting; ?>" id="<?php echo $setting; ?>" type="text" class="regular-text code" value="<?php echo get_option( $args['setting'], $default ); ?>" />
 
-	<?php
+	<?php if ( isset( $args['description'] ) ) {
+		echo '<p class="description">' .  $args['description'] . '</p>';
+	}
 }
 
 /**

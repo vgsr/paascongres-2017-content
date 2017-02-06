@@ -536,6 +536,8 @@ function paco2017_customize_nav_menu_searched_items( $items, $args ) {
  *
  * @since 1.1.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_enrollment_deadline'
+ *
  * @param string $format Optional. Date format to return.
  * @return string Enrollment deadline date
  */
@@ -548,6 +550,51 @@ function paco2017_get_enrollment_deadline( $format = '' ) {
 	}
 
 	return apply_filters( 'paco2017_get_enrollment_deadline', $date, $format );
+}
+
+/**
+ * Return the contact email setting
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_contact_email'
+ * @return string Contact email address
+ */
+function paco2017_get_contact_email() {
+	return apply_filters( 'paco2017_get_contact_email', get_option( '_paco2017_contact_email' ), '' );
+}
+
+/**
+ * Output the contact email link
+ *
+ * @since 1.1.0
+ *
+ * @param string $link_text Optional. The link text to display.
+ */
+function paco2017_the_contact_email_link( $link_text = '' ) {
+	echo paco2017_get_contact_email_link( $link_text );
+}
+
+/**
+ * Return the contact email link
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_contact_email_link'
+ *
+ * @param string $link_text Optional. The link text to display.
+ * @return string Contact email link
+ */
+function paco2017_get_contact_email_link( $link_text = '' ) {
+	$email = paco2017_get_contact_email();
+	$link  = '';
+
+	if ( $email ) {
+		$text = $link_text ? $link_text : $email;
+		$link = '<a href="mailto:' . $email . '">' . $text . '</a>';
+	}
+
+	return apply_filters( 'paco2017_get_contact_email_link', $link, $link_text, $email );
 }
 
 /**
@@ -572,49 +619,6 @@ function paco2017_get_housekeeping_page_id() {
  */
 function paco2017_get_magazine_page_id() {
 	return (int) apply_filters( 'paco2017_get_magazine_page_id', get_option( '_paco2017_magazine_page', 0 ) );
-}
-
-/** Enrollments ***************************************************************/
-
-/**
- * Return whether the user is enrolled
- *
- * @since 1.1.0
- *
- * @uses apply_filters() Calls 'paco2017_is_user_enrolled'
- *
- * @param int $user_id Optional. User ID. Defaults to the current user.
- * @return bool Is the user enrolled?
- */
-function paco2017_is_user_enrolled( $user_id = 0 ) {
-
-	// Default to the current user
-	if ( empty( $user_id ) ) {
-		$user_id = get_current_user_id();
-	}
-
-	return (bool) apply_filters( 'paco2017_is_user_enrolled', false, $user_id );
-}
-
-/**
- * Output the enrolled users count
- *
- * @since 1.0.0
- */
-function paco2017_enrolled_users_count() {
-	echo paco2017_get_enrolled_users_count();
-}
-
-/**
- * Return the enrolled users count
- *
- * @since 1.0.0
- *
- * @uses apply_filters() Calls 'paco2017_get_enrolled_users_count'
- * @return int Enrolled user count
- */
-function paco2017_get_enrolled_users_count() {
-	return (int) apply_filters( 'paco2017_get_enrolled_users_count', 0 );
 }
 
 /** Magazine ******************************************************************/
