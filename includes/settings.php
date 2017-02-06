@@ -43,6 +43,13 @@ function paco2017_admin_get_settings_sections() {
 			'callback' => 'paco2017_admin_setting_callback_slugs_section',
 			'page'     => 'paco2017'
 		),
+
+		// Partner settings
+		'paco2017_settings_advertorials' => array(
+			'title'    => __( 'Advertorials', 'paco2017' ),
+			'callback' => 'paco2017_admin_setting_callback_advertorials_section',
+			'page'     => 'paco2017-partners'
+		),
 	) );
 }
 
@@ -609,6 +616,11 @@ function paco2017_admin_page_get_pages() {
 	// Add the settings page
 	if ( paco2017_admin_page_has_settings( 'paco2017' ) ) {
 		$pages['paco2017-settings'] = esc_html__( 'Settings', 'paco2017-content' );
+	}
+
+	// Add the Partners settings page
+	if ( paco2017_admin_page_has_settings( 'paco2017-partners' ) ) {
+		$pages['paco2017-partners'] = esc_html_x( 'Partners', 'settings tab title', 'paco2017-content' );
 	}
 
 	return (array) apply_filters( 'paco2017_admin_page_get_pages', $pages );

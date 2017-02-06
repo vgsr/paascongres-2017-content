@@ -71,27 +71,7 @@ class Paco2017_BuddyPress_Admin {
 		add_action( 'paco2017_admin_page-paco2017-buddypress', 'paco2017_bp_admin_settings_page' );
 
 		foreach ( $hooks as $hook ) {
-			add_action( "admin_head-{$hook}", array( $this, 'admin_menu_highlight' ) );
-		}
-	}
-
-	/**
-	 * Modify the highlighed menu for the current admin page
-	 *
-	 * @see Paco2017_Admin::admin_menu_highlight()
-	 *
-	 * @since 1.1.0
-	 *
-	 * @global string $parent_file
-	 * @global string $submenu_file
-	 */
-	public function admin_menu_highlight() {
-		global $parent_file, $submenu_file;
-
-		// Highlight settings menu item
-		if ( 'paco2017' === $parent_file ) {
-			$parent_file  = 'paco2017';
-			$submenu_file = 'paco2017-settings';
+			add_action( "admin_head-{$hook}", 'paco2017_admin_menu_highlight' );
 		}
 	}
 

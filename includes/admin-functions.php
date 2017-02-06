@@ -31,6 +31,7 @@ function paco2017_admin_menu_highlight() {
 	 * top menu and submenu item.
 	 */
 
+	// Main post types
 	if ( in_array( $screen->post_type, array(
 		paco2017_get_lecture_post_type(),
 		paco2017_get_workshop_post_type(),
@@ -39,48 +40,48 @@ function paco2017_admin_menu_highlight() {
 	) ) ) {
 		$parent_file  = 'paco2017';
 		$submenu_file = "edit.php?post_type={$screen->post_type}";
-	}
 
-	// Workshop Category
-	if ( in_array( $screen->taxonomy, array(
+	// Workshop specific taxonomies
+	} elseif ( in_array( $screen->taxonomy, array(
 		paco2017_get_workshop_cat_tax_id(),
 		paco2017_get_workshop_round_tax_id(),
 	) ) ) {
 		$parent_file  = 'paco2017';
 		$submenu_file = "edit.php?post_type=" . paco2017_get_workshop_post_type();
-	}
 
-	// Conference Day
-	if ( in_array( $screen->taxonomy, array(
+	// Agenda specific taxonomies
+	} elseif ( in_array( $screen->taxonomy, array(
 		paco2017_get_conf_day_tax_id(),
 	) ) ) {
 		$parent_file  = 'paco2017';
 		$submenu_file = "edit.php?post_type=" . paco2017_get_agenda_post_type();
-	}
+
+	// Partner specific taxonomies
+	} elseif ( in_array( $screen->taxonomy, array(
+		paco2017_get_partner_level_tax_id(),
+	) ) ) {
+		$parent_file  = 'paco2017';
+		$submenu_file = "edit.php?post_type=" . paco2017_get_partner_post_type();
 
 	// Speaker or Conference Location
-	if ( in_array( $screen->taxonomy, array(
+	} elseif ( in_array( $screen->taxonomy, array(
 		paco2017_get_speaker_tax_id(),
 		paco2017_get_conf_location_tax_id(),
 	) ) ) {
 		$parent_file  = 'paco2017';
 		$submenu_file = "edit-tags.php?taxonomy={$screen->taxonomy}";
-	}
 
-	// Partner Level
-	if ( in_array( $screen->taxonomy, array(
-		paco2017_get_partner_level_tax_id(),
-	) ) ) {
-		$parent_file  = 'paco2017';
-		$submenu_file = "edit.php?post_type=" . paco2017_get_partner_post_type();
-	}
-
-	// Association
-	if ( in_array( $screen->taxonomy, array(
+	// User specific taxonomies
+	} elseif ( in_array( $screen->taxonomy, array(
 		paco2017_get_association_tax_id(),
 	) ) ) {
 		$parent_file  = 'paco2017';
 		$submenu_file = "edit-tags.php?taxonomy={$screen->taxonomy}&post_type=user";
+
+	// Default to settings
+	} elseif ( 'paco2017' === $parent_file && null === $submenu_file ) {
+		$parent_file  = 'paco2017';
+		$submenu_file = 'paco2017-settings';
 	}
 }
 

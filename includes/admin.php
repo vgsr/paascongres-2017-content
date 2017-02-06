@@ -35,8 +35,9 @@ class Paco2017_Admin {
 	private function setup_actions() {
 
 		// Core
-		add_action( 'admin_menu',            array( $this, 'admin_menu'        )        );
 		add_action( 'admin_init',            array( $this, 'register_settings' )        );
+		add_action( 'admin_menu',            array( $this, 'admin_menu'        )        );
+		add_action( 'admin_head',            array( $this, 'admin_head'        )        );
 		add_filter( 'map_meta_cap',          array( $this, 'map_meta_caps'     ), 10, 4 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts'   )        );
 
@@ -129,14 +130,36 @@ class Paco2017_Admin {
 			);
 		}
 
+		// Partner settings page
+		if ( paco2017_admin_page_has_settings( 'paco2017-partners' ) ) {
+			$hooks[] = add_submenu_page(
+				'paco2017',
+				__( 'Paascongres Partner Settings', 'paco2017-content' ),
+				__( 'Partner Settings', 'paco2017-content' ),
+				'paco2017_admin_partners_page',
+				'paco2017-partners',
+				'paco2017_admin_page'
+			);
+		}
+
 		// Register admin page hooks
 		add_action( "load-{$dashboard}",                     'paco2017_admin_load_dashboard_page' );
 		add_action( 'paco2017_admin_page-paco2017',          'paco2017_admin_dashboard_page'      );
 		add_action( 'paco2017_admin_page-paco2017-settings', 'paco2017_admin_settings_page'       );
+		add_action( 'paco2017_admin_page-paco2017-partners', 'paco2017_admin_settings_page'       );
 
 		foreach ( $hooks as $hook ) {
 			add_action( "admin_head-{$hook}", 'paco2017_admin_menu_highlight' );
 		}
+	}
+
+	/**
+	 * Remove admin menu items
+	 *
+	 * @since 1.1.0
+	 */
+	public function admin_head() {
+		remove_submenu_page( 'paco2017', 'paco2017-partners' );
 	}
 
 	/**
