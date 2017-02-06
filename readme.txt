@@ -49,15 +49,20 @@ This plugin is not hosted in the official WordPress repository. Instead, updatin
 * Added menu ordering for Lectures and Workshops
 * Added Conference Location detail to Agenda Item'd infos
 * Added term adverbial meta logic to Conference Locations
-* Added login logic filtering to force the user to stay on the (network's sub)site
 * Added template tags for user workshops
 * Added VGSR oud-lid member type badges for VGSR users
+* Added setting for the enrollment deadline date
+* Added setting for the main contact email address
+* Added advertorial logic including custom autoembedding for non-post content
+* Added login logic filtering to force the user to stay on the (network's sub)site
+* Added login message describing enrollment procedure
 * Added Dutch translation
 * BP: Added dedicated BP admin settings page
 * BP: Added workshop field selection and options filtering by workshop round
 * BP: Added filtering for relationship field workshops that reached their attendee limit
 * BP: Changed to allow all profile field types for assigning the user association term
-* BP: Changed single member front template content
+* BP: Changed single member front template content to display presence and workshop subscription details
+* Fixed enrollment widget statistics for non-loggedin users
 
 = 1.0.1 =
 * Fixed bug where slug settings were not correctly used affecting the setup of rewrite rules

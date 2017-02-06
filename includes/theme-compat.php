@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Paco 2017 Content Theme Compatibility Functions
+ * Paco2017 Content Theme Compatibility Functions
  * 
  * @package Paco2017 Content
  * @subpackage Theme

@@ -32,7 +32,6 @@ function paco2017_bp_members_directory_tabs() {
 		printf( '<li id="members-%s"><a href="#">%s <span>%s</span></a></li>',
 			paco2017_bp_members_get_association_scope(),
 			paco2017_bp_get_association_title(),
-			// __( 'My Association', 'paco2017-content' ),
 			sprintf( '%s/%s', paco2017_bp_get_enrolled_members_count_by_scope( 'association' ), paco2017_bp_get_members_count( 'association' ) )
 		);
 	}
@@ -62,12 +61,11 @@ function paco2017_bp_members_get_query_scope() {
 
 	// Get the current member query's args
 	$query_vars = wp_parse_args( bp_ajax_querystring( 'members' ) );
+	$scope = '';
 
 	// Bail when not viewing with a scope
 	if ( isset( $query_vars['scope'] ) ) {
 		$scope = $query_vars['scope'];
-	} else {
-		$scope = '';
 	}
 
 	return $scope;
