@@ -23,7 +23,6 @@ add_action( 'bp_pre_user_query',                           'paco2017_bp_pre_user
 add_action( 'bp_user_query_uid_clauses',                   'paco2017_bp_user_query_uid_clauses',           10, 2 );
 
 add_filter( 'paco2017_is_user_enrolled',                   'paco2017_bp_xprofile_is_user_enrolled',        10, 2 );
-add_filter( 'paco2017_get_enrolled_users_count',           'paco2017_bp_get_enrolled_members_count'              );
 add_filter( 'paco2017_get_enrolled_users_for_association', 'paco2017_bp_enrolled_members_for_association', 10, 2 );
 add_filter( 'paco2017_get_workshop_enrolled_users',        'paco2017_bp_enrolled_members_for_workshop',    10, 2 );
 add_filter( 'paco2017_get_user_workshops',                 'paco2017_bp_member_workshops',                 10, 2 );
@@ -32,6 +31,7 @@ add_filter( 'paco2017_get_user_workshops',                 'paco2017_bp_member_w
 
 add_filter( 'bp_xprofile_get_groups',                            'paco2017_bp_xprofile_no_edit_association_field', 10, 2 );
 add_action( 'xprofile_data_after_save',                          'paco2017_bp_xprofile_sync_association_term'            );
+add_action( 'xprofile_data_after_save',                          'paco2017_bp_xprofile_update_enrolled_users_cache'      );
 add_filter( 'bp_xprofile_relationship_field_options_query_args', 'paco2017_bp_xprofile_workshop_options_args',     10, 3 );
 add_filter( 'bp_xprofile_get_relationship_field_options',        'paco2017_bp_xprofile_workshop_options',          10, 4 );
 

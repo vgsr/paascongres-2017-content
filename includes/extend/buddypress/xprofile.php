@@ -86,6 +86,15 @@ function paco2017_bp_xprofile_get_enrollment_success_data() {
 	return $enrolled;
 }
 
+/**
+ * Update the enrolled users cache on profile update
+ *
+ * @since 1.1.0
+ */
+function paco2017_bp_xprofile_update_enrolled_users_cache() {
+	paco2017_update_enrolled_users_cache( array_keys( paco2017_bp_get_enrolled_members() ) );
+}
+
 /** Association ***********************************************************/
 
 /**

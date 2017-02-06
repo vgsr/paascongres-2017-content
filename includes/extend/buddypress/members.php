@@ -345,13 +345,22 @@ function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
 /**
  * Return the count of the enrolled members
  *
+ * @since 1.1.0
+ *
+ * @return array Member count of enrolled members
+ */
+function paco2017_bp_get_enrolled_members() {
+	return paco2017_bp_get_members( 'enrollment' );
+}
+
+/**
+ * Return the count of the enrolled members
+ *
  * @since 1.0.0
  *
  * @return int Member count of enrolled members
  */
 function paco2017_bp_get_enrolled_members_count() {
-
-	// Get members within the enrollment scope
 	return (int) paco2017_bp_get_members_count( 'enrollment' );
 }
 

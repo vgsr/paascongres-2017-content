@@ -53,14 +53,11 @@ class Paco2017_Enrollments_Widget extends WP_Widget {
 	 */
 	public function widget( $widget_args, $instance ) {
 
-		// Get all associations
-		$associations = get_terms( array(
-			'taxonomy'   => paco2017_get_association_tax_id(),
-			'hide_empty' => false
-		) );
+		// Query enrolled users
+		$users = paco2017_get_enrolled_users_by_association();
 
-		// Bail when no members exist in any association
-		if ( empty( $associations ) )
+		// Bail when no associations were found
+		if ( empty( $users ) )
 			return;
 
 		// Open widget
@@ -73,9 +70,14 @@ class Paco2017_Enrollments_Widget extends WP_Widget {
 
 		echo '<dl>';
 
-		foreach ( $associations as $term ) {
+		foreach ( $users as $term_id => $enrolled ) {
+			$term = get_term( $term_id );
+
+			if ( ! $term || is_wp_error( $term ) )
+				continue;
+
 			echo '<dt class="paco2017-association-' . $term->term_id . '">' . $term->name . '</dt>';
-			echo '<dd>' . paco2017_get_enrolled_users_for_association_count( $term );
+			echo '<dd>' . count( $enrolled );
 			
 			if ( isset( $instance['per_total'] ) && $instance['per_total'] ) {
 				echo ' / ' . $term->count;
