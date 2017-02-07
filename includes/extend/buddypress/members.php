@@ -590,7 +590,7 @@ function paco2017_bp_member_workshops( $workshops, $user_id ) {
  *
  * @since 1.1.0
  *
- * @param int $user_id Optional. User ID. Defaults to the displayed uers.
+ * @param int $user_id Optional. User ID. Defaults to the displayed user.
  * @return array Member's presence data
  */
 function paco2017_bp_get_member_presence( $user_id = 0 ) {
@@ -605,6 +605,11 @@ function paco2017_bp_get_member_presence( $user_id = 0 ) {
 
 	if ( $user_id && $field ) {
 		$presence = xprofile_get_field_data( $field->id, $user_id );
+
+		// Default to an empty array
+		if ( ! $presence ) {
+			$presence = array();
+		}
 	}
 
 	return (array) $presence;
