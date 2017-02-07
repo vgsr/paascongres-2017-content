@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-06 19:00+0000\n"
+"POT-Creation-Date: 2017-02-07 16:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -980,7 +980,7 @@ msgctxt "speakers page title"
 msgid "Speakers"
 msgstr ""
 
-#: includes/users.php:284
+#: includes/users.php:304
 #, php-format
 msgid ""
 "To enroll for the conference, you have to login with the credentials that "
@@ -988,21 +988,21 @@ msgid ""
 "or let us know at %s."
 msgstr ""
 
-#: includes/users.php:286
+#: includes/users.php:306
 msgid ""
 "To enroll for the conference, you have to login with the credentials that "
 "were sent to you. If not, use your email address to request a new password "
 "or let us know."
 msgstr ""
 
-#: includes/users.php:292
+#: includes/users.php:312
 #, php-format
 msgid ""
 "Take note that you can change your enrollment details up to the deadline on "
 "%s."
 msgstr ""
 
-#: includes/users.php:294
+#: includes/users.php:314
 msgid ""
 "Take note that you can change your enrollment details up to the deadline "
 "date."

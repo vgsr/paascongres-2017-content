@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Paascongres 2017 Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-06 19:00+0000\n"
-"PO-Revision-Date: 2017-02-06 19:08+0000\n"
+"POT-Creation-Date: 2017-02-07 16:42+0000\n"
+"PO-Revision-Date: 2017-02-07 16:42+0000\n"
 "Last-Translator: Laurens Offereins <lmoffereins@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl-NL\n"
@@ -12,137 +12,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
-
-#: includes/admin.php:90
-msgid "Paascongres Dashboard"
-msgstr "Paascongres Dashboard"
-
-#: includes/admin.php:125
-msgid "Paascongres Settings"
-msgstr "Paascongres Instellingen"
-
-#: includes/admin.php:137
-msgid "Paascongres Partner Settings"
-msgstr "Paascongres Partner Instellingen"
-
-#: includes/admin.php:138
-msgid "Partner Settings"
-msgstr "Partner Instellingen"
-
-#: includes/functions.php:904
-msgid "Advertorial"
-msgstr "Advertentie"
-
-#: includes/settings.php:73
-msgid "Enrollment Deadline"
-msgstr "Inschrijvingsdeadline"
-
-#: includes/settings.php:78
-msgid "Select the date after which the enrollment will be closed"
-msgstr "Selecteer de datum waarna de inschrijving is gesloten"
-
-#: includes/settings.php:84
-msgid "Contact Email"
-msgstr "Contact E-mail"
-
-#: includes/settings.php:377
-msgid "Provide the main contact email address for site visitors"
-msgstr ""
-"Geef hier aan wat het hoofdzakelijke contact e-mailadres is voor "
-"sitebezoekers"
-
-#: includes/settings.php:553
-msgid "Define details of the custom partner advertorial sections on this site."
-msgstr "Stel hier de speciale partner advertentieruimtes op deze site op."
-
-#: includes/settings.php:683
-msgctxt "settings tab title"
-msgid "Partners"
-msgstr "Partners"
-
-#: includes/users.php:284
-#, php-format
-msgid ""
-"To enroll for the conference, you have to login with the credentials that "
-"were sent to you. If not, use your email address to request a new password "
-"or let us know at %s."
-msgstr ""
-"Gebruik de toegestuurde gegevens om in te loggen en je aan te melden voor "
-"het Paascongres. Geen mail gehad? Gebruik dan je e-mailadres om een nieuw "
-"wachtwoord aan te vragen of laat het ons weten via %s."
-
-#: includes/users.php:286
-msgid ""
-"To enroll for the conference, you have to login with the credentials that "
-"were sent to you. If not, use your email address to request a new password "
-"or let us know."
-msgstr ""
-"Gebruik de toegestuurde gegevens om in te loggen en je aan te melden voor "
-"het Paascongres. Geen mail gehad? Gebruik dan je e-mailadres om een nieuw "
-"wachtwoord aan te vragen of laat het ons weten."
-
-#: includes/users.php:292
-#, php-format
-msgid ""
-"Take note that you can change your enrollment details up to the deadline on "
-"%s."
-msgstr ""
-"Let op: je kan details van je inschrijving wijzigen tot aan de deadline op "
-"%s."
-
-#: includes/users.php:294
-msgid ""
-"Take note that you can change your enrollment details up to the deadline "
-"date."
-msgstr ""
-"Let op: je kan details van je inschrijving wijzigen tot aan de dag van de "
-"deadline."
-
-#: includes/extend/buddypress/admin.php:62
-msgid "Paascongres BuddyPress Settings"
-msgstr "Paascongres BuddyPress Instellingen"
-
-#: includes/extend/buddypress/settings.php:135
-msgid "Before Profile Content"
-msgstr "Voor de Profiel inhoud"
-
-#: includes/extend/buddypress/settings.php:140
-msgid "This content will be displayed before the member's profile content"
-msgstr "Deze tekst wordt getoond voor de inhoud van het persoonlijke profiel"
-
-#: includes/extend/buddypress/settings.php:253
-msgid "&mdash; No Field &mdash;"
-msgstr "&mdash; Geen veld &mdash;"
-
-#: includes/extend/buddypress/settings.php:428
-msgid "Optionally select the workshop round to filter the field's options by"
-msgstr ""
-"Selecteer eventueel de workshopronde waarop je de veld opties wil filteren"
-
-#: includes/extend/buddypress/settings.php:460
-msgid "&mdash; All Pages &mdash;"
-msgstr "&mdash; Alle pagina's &mdash;"
-
-#: includes/extend/buddypress/settings.php:461
-msgid "View Profile"
-msgstr "Profiel bekijken"
-
-#: includes/extend/buddypress/settings.php:462
-msgid "Edit Profile"
-msgstr "Profiel bewerken"
-
-#: includes/extend/buddypress/settings.php:463
-msgid "Change Avatar"
-msgstr "Profielfoto wijzigen"
-
-#: includes/extend/buddypress/settings.php:464
-msgid "Change Cover Image"
-msgstr "Cover Image wijzigen"
-
-#: includes/extend/buddypress/settings.php:471
-msgid "Select which profile page(s) to display the advertorial on"
-msgstr ""
-"Selecteer op welke profielpagina('s) de advertentie getoond moet worden"
 
 #: paco2017-content.php:242
 msgid "Paascongres lectures"
@@ -294,14 +163,30 @@ msgstr "Level:"
 msgid "&mdash; No Level &mdash;"
 msgstr "&mdash; Geen level &mdash;"
 
+#: includes/admin.php:90
+msgid "Paascongres Dashboard"
+msgstr "Paascongres Dashboard"
+
 #: includes/admin.php:91 includes/admin.php:880 includes/functions.php:459
 #: includes/settings.php:594
 msgid "Paascongres"
 msgstr "Paascongres"
 
+#: includes/admin.php:125
+msgid "Paascongres Settings"
+msgstr "Paascongres Instellingen"
+
 #: includes/admin.php:126 includes/settings.php:678
 msgid "Settings"
 msgstr "Instellingen"
+
+#: includes/admin.php:137
+msgid "Paascongres Partner Settings"
+msgstr "Paascongres Partner Instellingen"
+
+#: includes/admin.php:138
+msgid "Partner Settings"
+msgstr "Partner Instellingen"
 
 #: includes/admin.php:215
 msgid "Enrollments"
@@ -734,6 +619,10 @@ msgctxt "menu type label"
 msgid "Paascongres Page"
 msgstr "PaCo Pagina"
 
+#: includes/functions.php:904
+msgid "Advertorial"
+msgstr "Advertentie"
+
 #: includes/lectures.php:36
 msgid "Paascongres Lectures"
 msgstr "Paascongres Lezingen"
@@ -915,6 +804,18 @@ msgstr "Nieuwe Partnerlevel naam"
 msgid "View Partner Level"
 msgstr "Partnerlevel bekijken"
 
+#: includes/settings.php:73
+msgid "Enrollment Deadline"
+msgstr "Inschrijvingsdeadline"
+
+#: includes/settings.php:78
+msgid "Select the date after which the enrollment will be closed"
+msgstr "Selecteer de datum waarna de inschrijving is gesloten"
+
+#: includes/settings.php:84
+msgid "Contact Email"
+msgstr "Contact E-mail"
+
 #: includes/settings.php:92
 msgid "Housekeeping Page"
 msgstr "Huishoudelijke pagina"
@@ -989,6 +890,12 @@ msgstr "Workshopcategorie"
 msgid "Workshop Round"
 msgstr "Workshopronde"
 
+#: includes/settings.php:377
+msgid "Provide the main contact email address for site visitors"
+msgstr ""
+"Geef hier aan wat het hoofdzakelijke contact e-mailadres is voor "
+"sitebezoekers"
+
 #: includes/settings.php:402
 msgid "&mdash; No Page &mdash;"
 msgstr "&mdash; Geen Pagina &mdash;"
@@ -1014,9 +921,18 @@ msgstr "Pas de structuur van de URLs van de congrespagina's aan."
 msgid "Will be used after the workshop slug, like: %s"
 msgstr "Wordt gebruikt na de workshop slug, zoals: %s"
 
+#: includes/settings.php:553
+msgid "Define details of the custom partner advertorial sections on this site."
+msgstr "Stel hier de speciale partner advertentieruimtes op deze site op."
+
 #: includes/settings.php:673
 msgid "Dashboard"
 msgstr "Dashboard"
+
+#: includes/settings.php:683
+msgctxt "settings tab title"
+msgid "Partners"
+msgstr "Partners"
 
 #: includes/speakers.php:36
 msgid "Paascongres Speakers"
@@ -1072,6 +988,44 @@ msgstr "Verenigingen"
 msgctxt "speakers page title"
 msgid "Speakers"
 msgstr "Sprekers"
+
+#: includes/users.php:304
+#, php-format
+msgid ""
+"To enroll for the conference, you have to login with the credentials that "
+"were sent to you. If not, use your email address to request a new password "
+"or let us know at %s."
+msgstr ""
+"Gebruik de toegestuurde gegevens om in te loggen en je aan te melden voor "
+"het Paascongres. Geen mail gehad? Gebruik dan je e-mailadres om een nieuw "
+"wachtwoord aan te vragen of laat het ons weten via %s."
+
+#: includes/users.php:306
+msgid ""
+"To enroll for the conference, you have to login with the credentials that "
+"were sent to you. If not, use your email address to request a new password "
+"or let us know."
+msgstr ""
+"Gebruik de toegestuurde gegevens om in te loggen en je aan te melden voor "
+"het Paascongres. Geen mail gehad? Gebruik dan je e-mailadres om een nieuw "
+"wachtwoord aan te vragen of laat het ons weten."
+
+#: includes/users.php:312
+#, php-format
+msgid ""
+"Take note that you can change your enrollment details up to the deadline on "
+"%s."
+msgstr ""
+"Let op: je kan details van je inschrijving wijzigen tot aan de deadline op "
+"%s."
+
+#: includes/users.php:314
+msgid ""
+"Take note that you can change your enrollment details up to the deadline "
+"date."
+msgstr ""
+"Let op: je kan details van je inschrijving wijzigen tot aan de dag van de "
+"deadline."
 
 #: includes/workshops.php:36
 msgid "Paascongres Workshops"
@@ -1226,6 +1180,10 @@ msgstr "Paascongres Aanmeldingen"
 msgid "List the current enrollment status for all associations"
 msgstr "Toon de huidige aanmeldingen van alle verenigingen"
 
+#: includes/extend/buddypress/admin.php:62
+msgid "Paascongres BuddyPress Settings"
+msgstr "Paascongres BuddyPress Instellingen"
+
 #: includes/extend/buddypress/admin.php:63
 msgctxt "buddypress settings admin menu"
 msgid "Profiles"
@@ -1335,10 +1293,22 @@ msgstr "Workshopveld 2"
 msgid "Select the field that holds the member's second workshop selection."
 msgstr "Selecteer het veld dat de tweede workshopkeuze bevat."
 
+#: includes/extend/buddypress/settings.php:135
+msgid "Before Profile Content"
+msgstr "Voor de Profiel inhoud"
+
+#: includes/extend/buddypress/settings.php:140
+msgid "This content will be displayed before the member's profile content"
+msgstr "Deze tekst wordt getoond voor de inhoud van het persoonlijke profiel"
+
 #: includes/extend/buddypress/settings.php:188
 msgid "Activate the Extended Profiles component to use this setting."
 msgstr ""
 "Activeer de component Uitgebreide Profielen om deze instelling te gebruiken."
+
+#: includes/extend/buddypress/settings.php:253
+msgid "&mdash; No Field &mdash;"
+msgstr "&mdash; Geen veld &mdash;"
 
 #: includes/extend/buddypress/settings.php:294
 msgid ""
@@ -1365,6 +1335,36 @@ msgid "Define what value the field should have for the user to be enrolled."
 msgstr ""
 "Geef aan welke waarde het veld moet hebben om de gebruiker als aangemeld te "
 "duiden."
+
+#: includes/extend/buddypress/settings.php:428
+msgid "Optionally select the workshop round to filter the field's options by"
+msgstr ""
+"Selecteer eventueel de workshopronde waarop je de veld opties wil filteren"
+
+#: includes/extend/buddypress/settings.php:460
+msgid "&mdash; All Pages &mdash;"
+msgstr "&mdash; Alle pagina's &mdash;"
+
+#: includes/extend/buddypress/settings.php:461
+msgid "View Profile"
+msgstr "Profiel bekijken"
+
+#: includes/extend/buddypress/settings.php:462
+msgid "Edit Profile"
+msgstr "Profiel bewerken"
+
+#: includes/extend/buddypress/settings.php:463
+msgid "Change Avatar"
+msgstr "Profielfoto wijzigen"
+
+#: includes/extend/buddypress/settings.php:464
+msgid "Change Cover Image"
+msgstr "Cover Image wijzigen"
+
+#: includes/extend/buddypress/settings.php:471
+msgid "Select which profile page(s) to display the advertorial on"
+msgstr ""
+"Selecteer op welke profielpagina('s) de advertentie getoond moet worden"
 
 #: includes/extend/buddypress/settings.php:490
 msgid "Profiles"
@@ -1492,7 +1492,7 @@ msgstr "%s heeft zich aangemeld voor de volgende workshops:"
 #: includes/extend/buddypress/templates/members/single/front.php:45
 #, php-format
 msgid "%s has not yet subscribed to any workshop."
-msgstr "%s heeft zich nog niet aangemeld voor een workshop."
+msgstr "%s heeft zich nog niet aangemeld voor de volgende workshops:"
 
 #: includes/extend/buddypress/templates/members/single/front.php:53
 #, php-format
