@@ -163,6 +163,26 @@ function paco2017_pre_user_query( $user_query ) {
 	}
 }
 
+/** Admin-Bar *****************************************************************/
+
+/**
+ * Return whether to show the admin bar
+ *
+ * @since 1.0.0
+ *
+ * @param bool $show Whether to show the admin bar
+ * @return bool Whether to show the admin bar
+ */
+function paco2017_show_admin_bar( $show ) {
+
+	// Hide admin bar for non-vgsr users
+	if ( $show && function_exists( 'vgsr' ) && ! is_user_vgsr() ) {
+		$show = false;
+	}
+
+	return $show;
+}
+
 /** Login *********************************************************************/
 
 /**
