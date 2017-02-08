@@ -843,6 +843,34 @@ function paco2017_get_rest_image( $attachment_id, $size = 'thumbnail' ) {
 	return $image;
 }
 
+/**
+ * Return the REST post meta value for the given object's field name
+ *
+ * @since 1.1.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return mixed Post meta value
+ */
+function paco2017_get_rest_post_meta( $object, $field_name, $request ) {
+	return get_post_meta( $object['id'], $field_name, true );
+}
+
+/**
+ * Return the REST term meta value for the given object's field name
+ *
+ * @since 1.1.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return mixed Term meta value
+ */
+function paco2017_get_rest_term_meta( $object, $field_name, $request ) {
+	return get_term_meta( $object['id'], $field_name, true );
+}
+
 /** Theme *********************************************************************/
 
 /**

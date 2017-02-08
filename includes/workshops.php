@@ -108,7 +108,7 @@ function paco2017_register_workshop_rest_fields() {
 	// Get assets
 	$workshop = paco2017_get_workshop_post_type();
 
-	// Add location to Agenda Item
+	// Add user count to Agenda Item
 	register_rest_field(
 		$workshop,
 		'user_count',

@@ -251,9 +251,11 @@ final class Paco2017_Content {
 				'show_ui'             => current_user_can( 'paco2017_lecture_admin' ),
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,
+				'menu_icon'           => 'dashicons-businessman',
+
+				// REST API
 				'show_in_rest'        => true,
 				'rest_base'           => 'paascongres-lectures',
-				'menu_icon'           => 'dashicons-businessman'
 			)
 		);
 
@@ -276,9 +278,11 @@ final class Paco2017_Content {
 				'show_ui'             => current_user_can( 'paco2017_workshop_admin' ),
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,
+				'menu_icon'           => 'dashicons-admin-tools',
+
+				// REST API
 				'show_in_rest'        => true,
 				'rest_base'           => 'paascongres-workshops',
-				'menu_icon'           => 'dashicons-admin-tools'
 			)
 		);
 
@@ -301,9 +305,11 @@ final class Paco2017_Content {
 				'show_ui'             => current_user_can( 'paco2017_agenda_admin' ),
 				'show_in_nav_menus'   => false,
 				'can_export'          => true,
+				'menu_icon'           => 'dashicons-schedule',
+
+				// REST API
 				'show_in_rest'        => true,
 				'rest_base'           => 'paascongres-agenda',
-				'menu_icon'           => 'dashicons-schedule'
 			)
 		);
 
@@ -326,9 +332,11 @@ final class Paco2017_Content {
 				'show_ui'             => current_user_can( 'paco2017_partner_admin' ),
 				'show_in_nav_menus'   => false,
 				'can_export'          => true,
+				'menu_icon'           => 'dashicons-marker',
+
+				// REST API
 				'show_in_rest'        => true,
 				'rest_base'           => 'paascongres-partners',
-				'menu_icon'           => 'dashicons-marker'
 			)
 		);
 

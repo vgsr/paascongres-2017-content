@@ -96,7 +96,7 @@ function paco2017_register_agenda_rest_fields() {
 		$agenda,
 		'time_start',
 		array(
-			'get_callback' => 'paco2017_get_agenda_rest_meta'
+			'get_callback' => 'paco2017_get_rest_post_meta'
 		)
 	);
 
@@ -105,23 +105,32 @@ function paco2017_register_agenda_rest_fields() {
 		$agenda,
 		'time_end',
 		array(
-			'get_callback' => 'paco2017_get_agenda_rest_meta'
+			'get_callback' => 'paco2017_get_rest_post_meta'
+		)
+	);
+
+	// Related
+	register_rest_field(
+		$agenda,
+		'related',
+		array(
+			'get_callback' => 'paco2017_get_agenda_rest_related'
 		)
 	);
 }
 
 /**
- * Return the value for an agenda meta REST API field
+ * Return the value for the 'related' agenda REST API field
  *
- * @since 1.0.0
+ * @since 1.1.0
  *
  * @param array $object Request object
  * @param string $field_name Request field name
  * @param WP_REST_Request $request Current REST request
- * @return array Day term(s)
+ * @return array Location term(s)
  */
-function paco2017_get_agenda_rest_meta( $object, $meta, $request ) {
-	return get_post_meta( $object['id'], $meta, true );
+function paco2017_get_agenda_rest_related( $object, $field_name, $request ) {
+	return paco2017_get_agenda_related_id( $object['id'] );
 }
 
 /** Taxonomy: Conference Day **************************************************/

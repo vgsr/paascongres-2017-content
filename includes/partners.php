@@ -97,7 +97,7 @@ function paco2017_register_partner_rest_fields() {
 		$partner,
 		'partner_url',
 		array(
-			'get_callback' => 'paco2017_get_partner_rest_meta'
+			'get_callback' => 'paco2017_get_rest_post_meta'
 		)
 	);
 
@@ -106,33 +106,23 @@ function paco2017_register_partner_rest_fields() {
 		$partner,
 		'logo',
 		array(
-			'get_callback' => 'paco2017_get_partner_rest_meta'
+			'get_callback' => 'paco2017_get_partner_rest_logo'
 		)
 	);
 }
 
 /**
- * Return the value for a partner meta REST API field
+ * Return the value for the 'logo' partner REST API field
  *
- * @since 1.0.0
+ * @since 1.1.0
  *
  * @param array $object Request object
  * @param string $field_name Request field name
  * @param WP_REST_Request $request Current REST request
  * @return array Day term(s)
  */
-function paco2017_get_partner_rest_meta( $object, $meta, $request ) {
-
-	// Partner logo
-	if ( 'logo' === $meta ) {
-		$value = paco2017_get_rest_image( paco2017_get_partner_logo_id( $object['id'] ), 'paco2017-partner-logo' );
-
-	// Other meta
-	} else {
-		$value = get_post_meta( $object['id'], $meta, true );
-	}
-
-	return $value;
+function paco2017_get_partner_rest_logo( $object, $meta, $request ) {
+	return paco2017_get_rest_image( paco2017_get_partner_logo_id( $object['id'] ), 'paco2017-partner-logo' );
 }
 
 /** Taxonomy: Partner Level ***************************************************/
