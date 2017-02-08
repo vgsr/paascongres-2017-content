@@ -274,6 +274,55 @@ function paco2017_bp_members_reset_dummy_post() {
 }
 
 /**
+ * Modify the pagination count of the members query
+ *
+ * @since 1.1.0
+ *
+ * @param string $pag Members pagination count
+ * @return string Members pagination count
+ */
+function paco2017_bp_members_pagination_count( $pag ) {
+
+	// In the Enrolled scope
+	if ( paco2017_bp_members_is_enrolled_scope() ) {
+		global $members_template;
+
+		$start_num = intval( ( $members_template->pag_page - 1 ) * $members_template->pag_num ) + 1;
+		$from_num  = bp_core_number_format( $start_num );
+		$to_num    = bp_core_number_format( ( $start_num + ( $members_template->pag_num - 1 ) > $members_template->total_member_count ) ? $members_template->total_member_count : $start_num + ( $members_template->pag_num - 1 ) );
+		$total     = bp_core_number_format( $members_template->total_member_count );
+
+		if ( 'active' == $members_template->type ) {
+			if ( 1 == $members_template->total_member_count ) {
+				$pag = __( 'Viewing 1 active participant', 'paco2017-content' );
+			} else {
+				$pag = sprintf( _n( 'Viewing %1$s - %2$s of %3$s active participant', 'Viewing %1$s - %2$s of %3$s active participants', $members_template->total_member_count, 'paco2017-content' ), $from_num, $to_num, $total );
+			}
+		} elseif ( 'popular' == $members_template->type ) {
+			if ( 1 == $members_template->total_member_count ) {
+				$pag = __( 'Viewing 1 participant with friends', 'paco2017-content' );
+			} else {
+				$pag = sprintf( _n( 'Viewing %1$s - %2$s of %3$s participant with friends', 'Viewing %1$s - %2$s of %3$s participants with friends', $members_template->total_member_count, 'paco2017-content' ), $from_num, $to_num, $total );
+			}
+		} elseif ( 'online' == $members_template->type ) {
+			if ( 1 == $members_template->total_member_count ) {
+				$pag = __( 'Viewing 1 online participant', 'paco2017-content' );
+			} else {
+				$pag = sprintf( _n( 'Viewing %1$s - %2$s of %3$s online participant', 'Viewing %1$s - %2$s of %3$s online participants', $members_template->total_member_count, 'paco2017-content' ), $from_num, $to_num, $total );
+			}
+		} else {
+			if ( 1 == $members_template->total_member_count ) {
+				$pag = __( 'Viewing 1 participant', 'paco2017-content' );
+			} else {
+				$pag = sprintf( _n( 'Viewing %1$s - %2$s of %3$s participant', 'Viewing %1$s - %2$s of %3$s participants', $members_template->total_member_count, 'paco2017-content' ), $from_num, $to_num, $total );
+			}
+		}
+	}
+
+	return $pag;
+}
+
+/**
  * Return the member count of the specified subset of the registered members
  *
  * @since 1.0.0
