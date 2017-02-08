@@ -834,18 +834,20 @@ function paco2017_bp_user_query_uid_clauses( $clauses, $user_query ) {
 	if ( paco2017_bp_members_get_enrolled_scope() === $qv['type'] && $field = paco2017_bp_xprofile_get_enrollment_field() ) {
 
 		// Join with profile data
-		$clauses['select'] .= $wpdb->prepare( " LEFT JOIN {$bp->profile->table_name_data} enrolled ON u.{$user_query->uid_name} = enrolled.user_id AND enrolled.field_id = %d", $field->id );
+		$clauses['select'] .= $wpdb->prepare( " INNER JOIN {$bp->profile->table_name_data} enrolled ON u.{$user_query->uid_name} = enrolled.user_id AND enrolled.field_id = %d", $field->id );
 
 		/**
 		 * Order by enrolled date.
 		 *
 		 * When enrollment is cancelled, the field's value is registered in the db as
 		 * an empty serialized array. This has also an actual 'last_updated' recording.
-		 * To circumvent this, first separate empty values from valid ones - then sort
-		 * by date.
+		 * To circumvent this, only include valid values - then sort by updated date.
+		 *
+		 * NB: on profile update, same values will also have their last_updated date bumped.
 		 */
-		$enrolled_data  = paco2017_bp_xprofile_get_enrollment_success_data_for_query( true );
-		$clauses['orderby'] = "ORDER BY ( CASE WHEN enrolled.value NOT IN ( $enrolled_data ) THEN 0 ELSE 1 END ) DESC, enrolled.last_updated";
+		$enrolled_data      = paco2017_bp_xprofile_get_enrollment_success_data_for_query( true );
+		$clauses['where'][] = "enrolled.value IN ( $enrolled_data )";
+		$clauses['orderby'] = "ORDER BY enrolled.last_updated";
 		$clauses['order']   = "DESC";
 	}
 
