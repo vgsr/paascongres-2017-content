@@ -384,6 +384,10 @@ final class Paco2017_Content {
 				// Term meta
 				'term_meta_color'       => true,
 				'term_meta_logo'        => true,
+
+				// REST API
+				'show_in_rest'          => true,
+				'rest_base'             => 'paascongres-associations',
 			)
 		);
 
@@ -412,6 +416,10 @@ final class Paco2017_Content {
 
 				// Term meta
 				'term_meta_photo'       => true,
+
+				// REST API
+				'show_in_rest'          => true,
+				'rest_base'             => 'paascongres-speakers',
 			)
 		);
 
@@ -459,6 +467,10 @@ final class Paco2017_Content {
 				'show_in_nav_menus'     => true,
 				'show_ui'               => current_user_can( 'paco2017_workshop_round_admin' ),
 				'meta_box_cb'           => false, // No metaboxing
+
+				// REST API
+				'show_in_rest'          => true,
+				'rest_base'             => 'paascongres-workshop-rounds',
 			)
 		);
 
@@ -485,6 +497,10 @@ final class Paco2017_Content {
 				// Term meta
 				'term_meta_color'       => true,
 				'term_meta_date'        => true,
+
+				// REST API
+				'show_in_rest'          => true,
+				'rest_base'             => 'paascongres-conference-days',
 			)
 		);
 

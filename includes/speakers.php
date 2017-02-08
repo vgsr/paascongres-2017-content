@@ -86,14 +86,28 @@ function paco2017_registered_speaker_taxonomy() {
  */
 function paco2017_register_speaker_rest_fields() {
 
-	// Filter Speaker terms
-	add_filter( 'get_terms', 'paco2017_speaker_rest_get_terms', 10, 4 );
-
 	// Get assets
+	$speaker  = paco2017_get_speaker_tax_id();
 	$lecture  = paco2017_get_lecture_post_type();
 	$workshop = paco2017_get_workshop_post_type();
 
-	// Add location to Lecture
+	/** Taxonomy terms ********************************************************/
+
+	// Add photo to Speaker
+	register_rest_field(
+		$speaker,
+		'photo',
+		array(
+			'get_callback' => 'paco2017_get_speaker_rest_photo'
+		)
+	);
+
+	/** Post terms ************************************************************/
+
+	// Filter terms for post requests
+	add_filter( 'get_terms', 'paco2017_speaker_rest_get_terms', 10, 4 );
+
+	// Add speaker to Lecture
 	register_rest_field(
 		$lecture,
 		'speakers',
@@ -102,7 +116,7 @@ function paco2017_register_speaker_rest_fields() {
 		)
 	);
 
-	// Add location to Workshop
+	// Add speaker to Workshop
 	register_rest_field(
 		$workshop,
 		'speakers',
@@ -120,10 +134,24 @@ function paco2017_register_speaker_rest_fields() {
  * @param array $object Request object
  * @param string $field_name Request field name
  * @param WP_REST_Request $request Current REST request
- * @return array Location term(s)
+ * @return array Speaker term(s)
  */
 function paco2017_get_object_rest_speakers( $object, $field_name, $request ) {
 	return wp_get_object_terms( $object['id'], paco2017_get_speaker_tax_id() );
+}
+
+/**
+ * Return the value for the 'photo' speaker REST API field
+ *
+ * @since 1.1.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return array Speaker photo details
+ */
+function paco2017_get_speaker_rest_photo( $object, $field_name, $request ) {
+	return paco2017_get_rest_image( paco2017_get_speaker_photo_id( $object['id'] ), array( 150, 150 ) );
 }
 
 /**

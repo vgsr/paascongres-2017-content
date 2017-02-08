@@ -49,6 +49,60 @@ function paco2017_get_association_tax_labels() {
 }
 
 /**
+ * Act when the Association taxonomy has been registered
+ *
+ * @since 1.1.0
+ */
+function paco2017_registered_association_taxonomy() {
+	add_action( 'paco2017_rest_api_init', 'paco2017_register_association_rest_fields' );
+}
+
+/**
+ * Register REST fields for the Association taxonomy
+ *
+ * @since 1.1.0
+ */
+function paco2017_register_association_rest_fields() {
+
+	// Get assets
+	$association = paco2017_get_association_tax_id();
+
+	/** Taxonomy terms ********************************************************/
+
+	// Add color to Association
+	register_rest_field(
+		$association,
+		'color',
+		array(
+			'get_callback' => 'paco2017_get_rest_term_meta'
+		)
+	);
+
+	// Add photo to Association
+	register_rest_field(
+		$association,
+		'logo',
+		array(
+			'get_callback' => 'paco2017_get_association_rest_logo'
+		)
+	);
+}
+
+/**
+ * Return the value for the 'logo' association REST API field
+ *
+ * @since 1.1.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return array Association logo details
+ */
+function paco2017_get_association_rest_logo( $object, $field_name, $request ) {
+	return paco2017_get_rest_image( paco2017_get_association_logo_id( $object['id'] ), array( 150, 150 ) );
+}
+
+/**
  * Modify the link returned for the given association term
  *
  * @since 1.0.0
@@ -193,7 +247,7 @@ function paco2017_the_association() {
 }
 
 /**
- * Rewind the speakers and reset term index
+ * Rewind the associations and reset term index
  *
  * @since 1.0.0
  */
@@ -358,7 +412,7 @@ function paco2017_get_association_logo_id( $term = 0 ) {
  * @since 1.0.0
  *
  * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
- * @return bool Has the speaker a term logo?
+ * @return bool Has the association a term logo?
  */
 function paco2017_has_association_logo( $term = 0 ) {
 	return (bool) paco2017_get_association_logo_id( $term );
