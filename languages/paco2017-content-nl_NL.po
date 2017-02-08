@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Paascongres 2017 Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-07 16:42+0000\n"
-"PO-Revision-Date: 2017-02-07 16:42+0000\n"
+"POT-Creation-Date: 2017-02-08 13:31+0000\n"
+"PO-Revision-Date: 2017-02-08 13:34+0000\n"
 "Last-Translator: Laurens Offereins <lmoffereins@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl-NL\n"
@@ -12,6 +12,50 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
+
+#: includes/extend/buddypress/members.php:297
+msgid "Viewing 1 active participant"
+msgstr "Je bekijkt 1 actieve deelnemer"
+
+#: includes/extend/buddypress/members.php:299
+#, php-format
+msgid "Viewing %1$s - %2$s of %3$s active participant"
+msgid_plural "Viewing %1$s - %2$s of %3$s active participants"
+msgstr[0] "Je bekijkt %1$s - %2$s van %3$s actieve deelnemer"
+msgstr[1] "Je bekijkt %1$s - %2$s van %3$s actieve deelnemers"
+
+#: includes/extend/buddypress/members.php:303
+msgid "Viewing 1 participant with friends"
+msgstr "Je bekijkt 1 deelnemer met vrienden"
+
+#: includes/extend/buddypress/members.php:305
+#, php-format
+msgid "Viewing %1$s - %2$s of %3$s participant with friends"
+msgid_plural "Viewing %1$s - %2$s of %3$s participants with friends"
+msgstr[0] "Je bekijkt %1$s - %2$s van %3$s deelnemer met vrienden"
+msgstr[1] "Je bekijkt %1$s - %2$s van %3$s deelnemers met vrienden"
+
+#: includes/extend/buddypress/members.php:309
+msgid "Viewing 1 online participant"
+msgstr "Je bekijkt 1 online deelnemer"
+
+#: includes/extend/buddypress/members.php:311
+#, php-format
+msgid "Viewing %1$s - %2$s of %3$s online participant"
+msgid_plural "Viewing %1$s - %2$s of %3$s online participants"
+msgstr[0] "Je bekijkt %1$s - %2$s van %3$s online deelnemer"
+msgstr[1] "Je bekijkt %1$s - %2$s van %3$s online deelnemers"
+
+#: includes/extend/buddypress/members.php:315
+msgid "Viewing 1 participant"
+msgstr "Je bekijkt 1 deelnemer"
+
+#: includes/extend/buddypress/members.php:317
+#, php-format
+msgid "Viewing %1$s - %2$s of %3$s participant"
+msgid_plural "Viewing %1$s - %2$s of %3$s participants"
+msgstr[0] "Je bekijkt %1$s - %2$s van %3$s deelnemer"
+msgstr[1] "Je bekijkt %1$s - %2$s van %3$s deelnemers"
 
 #: paco2017-content.php:242
 msgid "Paascongres lectures"

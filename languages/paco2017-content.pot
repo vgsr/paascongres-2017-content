@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-07 16:42+0000\n"
+"POT-Creation-Date: 2017-02-08 13:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -1225,6 +1225,50 @@ msgstr ""
 #: includes/extend/buddypress/members.php:162
 msgid "This member is enrolled for the event."
 msgstr ""
+
+#: includes/extend/buddypress/members.php:297
+msgid "Viewing 1 active participant"
+msgstr ""
+
+#: includes/extend/buddypress/members.php:299
+#, php-format
+msgid "Viewing %1$s - %2$s of %3$s active participant"
+msgid_plural "Viewing %1$s - %2$s of %3$s active participants"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/extend/buddypress/members.php:303
+msgid "Viewing 1 participant with friends"
+msgstr ""
+
+#: includes/extend/buddypress/members.php:305
+#, php-format
+msgid "Viewing %1$s - %2$s of %3$s participant with friends"
+msgid_plural "Viewing %1$s - %2$s of %3$s participants with friends"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/extend/buddypress/members.php:309
+msgid "Viewing 1 online participant"
+msgstr ""
+
+#: includes/extend/buddypress/members.php:311
+#, php-format
+msgid "Viewing %1$s - %2$s of %3$s online participant"
+msgid_plural "Viewing %1$s - %2$s of %3$s online participants"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/extend/buddypress/members.php:315
+msgid "Viewing 1 participant"
+msgstr ""
+
+#: includes/extend/buddypress/members.php:317
+#, php-format
+msgid "Viewing %1$s - %2$s of %3$s participant"
+msgid_plural "Viewing %1$s - %2$s of %3$s participants"
+msgstr[0] ""
+msgstr[1] ""
 
 #: includes/extend/buddypress/settings.php:27
 msgid "Profile Fields"
