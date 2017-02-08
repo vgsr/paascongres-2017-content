@@ -86,6 +86,15 @@ function paco2017_register_association_rest_fields() {
 			'get_callback' => 'paco2017_get_association_rest_logo'
 		)
 	);
+
+	// Add enrolled user count
+	register_rest_field(
+		$association,
+		'enrolled_count',
+		array(
+			'get_callback' => 'paco2017_get_association_rest_enrolled_count'
+		)
+	);
 }
 
 /**
@@ -100,6 +109,20 @@ function paco2017_register_association_rest_fields() {
  */
 function paco2017_get_association_rest_logo( $object, $field_name, $request ) {
 	return paco2017_get_rest_image( paco2017_get_association_logo_id( $object['id'] ), array( 150, 150 ) );
+}
+
+/**
+ * Return the value for the 'enrolled_count' association REST API field
+ *
+ * @since 1.1.0
+ *
+ * @param array $object Request object
+ * @param string $field_name Request field name
+ * @param WP_REST_Request $request Current REST request
+ * @return int Association enrolled count
+ */
+function paco2017_get_association_rest_enrolled_count( $object, $field_name, $request ) {
+	return paco2017_get_enrolled_users_for_association_count( $object['id'] );
 }
 
 /**
