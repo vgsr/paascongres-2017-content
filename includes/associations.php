@@ -304,10 +304,12 @@ function paco2017_in_the_association_loop() {
  * Return the Association item term
  *
  * @since 1.0.0
- * @since 1.1.0 Added option to provide a WP_User object for th `$term` parameter.
+ * @since 1.1.0 Added option to provide a WP_User object for the `$term` parameter.
  *
- * @param WP_Term|int|WP_User $term Optional. Term object or ID or User object. Defaults to the current term.
- * @param string $by Optional. Method to fetch term through `get_term_by()`. Defaults to 'id'.
+ * @param WP_Term|int|string|WP_User $term Optional. Term object or id or name or slug or user object.
+ *                                         Defaults to the current looped association or the current
+ *                                         user's association.
+ * @param string $by Optional. Value type to get the term with in {@see get_term_by()}. Defaults to 'id'.
  * @return WP_Term|false Associations term object or False when not found.
  */
 function paco2017_get_association( $term = 0, $by = 'id' ) {
@@ -537,28 +539,22 @@ function paco2017_get_association_title_for_user( $user_id = 0 ) {
  *
  * @uses apply_filters() Calls 'paco2017_get_association_users'
  *
- * @param WP_Term|int|string $term Term object or id or name or slug.
- * @param string $by Value type to get the term with in {@see get_term_by()}. Defaults to 'term_id'.
+ * @param WP_Term|int|string|WP_User $term Optional. Term object or id or name or slug or user object.
+ *                                         Defaults to the current looped association or the current
+ *                                         user's association.
+ * @param string $by Optional. Value type to get the term with in {@see get_term_by()}. Defaults to 'id'.
  * @return array Association user ids
  */
-function paco2017_get_association_users( $term, $by = 'term_id' ) {
+function paco2017_get_association_users( $term = 0, $by = 'id' ) {
+	$term = paco2017_get_association( $term, $by );
 
-	// Default to the current user
-	if ( empty( $term ) )
+	// Bail when the association is not found
+	if ( ! $term ) {
 		return array();
-
-	$taxonomy = paco2017_get_association_tax_id();
-
-	// Get the term
-	if ( ! is_a( $term, 'WP_Term' ) ) {
-		$term = get_term_by( $by, $term, $taxonomy );
-		if ( ! $term ) {
-			return array();
-		}
 	}
 
 	// Get the term's users
-	$users = get_objects_in_term( $term->term_id, $taxonomy );
+	$users = get_objects_in_term( $term->term_id, paco2017_get_association_tax_id() );
 
 	// Default to empty error
 	if ( ! $users || is_wp_error( $users ) ) {
@@ -573,13 +569,14 @@ function paco2017_get_association_users( $term, $by = 'term_id' ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|string $term Term object or id or name or slug
+ * @param WP_Term|int|string|WP_User $term Optional. Term object or id or name or slug or user object.
+ *                                         Defaults to the current looped association or the current
+ *                                         user's association.
+ * @param string $by Optional. Value type to get the term with in {@see get_term_by()}. Defaults to 'id'.
  * @return int Enrolled association user count
  */
-function paco2017_get_enrolled_users_for_association_count( $term ) {
-
-	// Count the queried users
-	$users = paco2017_get_enrolled_users_for_association( $term );
+function paco2017_get_enrolled_users_for_association_count( $term = 0, $by = 'id' ) {
+	$users = paco2017_get_enrolled_users_for_association( $term, $by );
 	$count = count( $users );
 
 	return $count;
@@ -590,10 +587,20 @@ function paco2017_get_enrolled_users_for_association_count( $term ) {
  *
  * @since 1.0.0
  *
- * @param WP_Term|int|string $term Term object or id or name or slug
+ * @param WP_Term|int|string|WP_User $term Optional. Term object or id or name or slug or user object.
+ *                                         Defaults to the current looped association or the current
+ *                                         user's association.
+ * @param string $by Optional. Value type to get the term with in {@see get_term_by()}. Defaults to 'id'.
  * @return array Enrolled association users
  */
-function paco2017_get_enrolled_users_for_association( $term ) {
+function paco2017_get_enrolled_users_for_association( $term = 0, $by = 'id' ) {
+	$term = paco2017_get_association( $term, $by );
+
+	// Bail when no association was found
+	if ( empty( $term ) ) {
+		return array();
+	}
+
 	return (array) apply_filters( 'paco2017_get_enrolled_users_for_association', array(), $term );
 }
 
