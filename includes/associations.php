@@ -533,7 +533,25 @@ function paco2017_get_association_title_for_user( $user_id = 0 ) {
 }
 
 /**
- * Return the user's association term
+ * Return the count of the association's users
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Term|int|string|WP_User $term Optional. Term object or id or name or slug or user object.
+ *                                         Defaults to the current looped association or the current
+ *                                         user's association.
+ * @param string $by Optional. Value type to get the term with in {@see get_term_by()}. Defaults to 'id'.
+ * @return int Association user count
+ */
+function paco2017_get_association_user_count( $term = 0, $by = 'id' ) {
+	$users = paco2017_get_association_users( $term, $by );
+	$count = count( $users );
+
+	return $count;
+}
+
+/**
+ * Return the association's user ids
  *
  * @since 1.0.0
  *
