@@ -316,9 +316,10 @@ function paco2017_get_association( $term = 0, $by = 'id' ) {
 	if ( empty( $term ) && paco2017_in_the_association_loop() ) {
 		$term = paco2017_content()->association_query->term;
 
-	// Get the term by user
-	} elseif ( $term instanceof WP_User ) {
-		$term = paco2017_get_user_association( $term->ID );
+	// Default to or get the term by user
+	} elseif ( empty( $term ) || $term instanceof WP_User ) {
+		$user_id = empty( $term ) ? 0 : $term->ID;
+		$term    = paco2017_get_user_association( $user_id );
 
 	// Get the term by id or slug
 	} elseif ( ! $term instanceof WP_Term ) {
