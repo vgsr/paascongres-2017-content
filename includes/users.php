@@ -79,13 +79,20 @@ function paco2017_get_enrolled_users() {
  *
  * @since 1.1.0
  *
- * @param bool $object Optional. Whether to return user objects or ids. Defaults to false.
  * @param int|array $term_id Optional. Association term to query the users for. Defaults to all associations.
+ * @param array $args Optional. Additional user query arguments.
  * @return array Enrolled users by association
  */
-function paco2017_get_enrolled_users_by_association( $object = false, $term_id = 0 ) {
+function paco2017_get_enrolled_users_by_association( $term_id = 0, $args = array() ) {
 	$users = paco2017_get_enrolled_users();
 	$users_by_association = array();
+
+	// Parse user query args
+	$args = wp_parse_args( $args, array(
+		'fields'    => 'ID',
+		'include'   => $users,
+		'tax_query' => array()
+	) );
 
 	// Walk associations
 	foreach ( get_terms( array(
@@ -93,18 +100,15 @@ function paco2017_get_enrolled_users_by_association( $object = false, $term_id =
 		'include'  => $term_id ? (array) $term_id : array()
 	) ) as $term ) {
 
-		// Query enrolled users per association
-		$uquery = new WP_User_Query( array(
-			'fields'    => $object ? 'all' : 'ID',
-			'include'   => $users,
-			'tax_query' => array(
-				array(
-					'taxonomy' => paco2017_get_association_tax_id(),
-					'terms'    => array( $term->term_id )
-				)
-			)
-		) );
-		$users_by_association[ $term->term_id ] = $uquery->results;
+		// Setup association tax_query
+		$_args = $args;
+		$_args['tax_query'][] = array(
+			'taxonomy' => paco2017_get_association_tax_id(),
+			'terms'    => array( $term->term_id )
+		);
+
+		// Query users
+		$users_by_association[ $term->term_id ] = get_users( $_args );
 	}
 
 	return $users_by_association;

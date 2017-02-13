@@ -554,6 +554,7 @@ function paco2017_get_association_user_count( $term = 0, $by = 'id' ) {
  * Return the association's user ids
  *
  * @since 1.0.0
+ * @since 1.1.0 Added the `$args` parameter.
  *
  * @uses apply_filters() Calls 'paco2017_get_association_users'
  *
@@ -561,9 +562,10 @@ function paco2017_get_association_user_count( $term = 0, $by = 'id' ) {
  *                                         Defaults to the current looped association or the current
  *                                         user's association.
  * @param string $by Optional. Value type to get the term with in {@see get_term_by()}. Defaults to 'id'.
+ * @param array $args Optional. Additional user query arguments.
  * @return array Association user ids
  */
-function paco2017_get_association_users( $term = 0, $by = 'id' ) {
+function paco2017_get_association_users( $term = 0, $by = 'id', $args = array() ) {
 	$term = paco2017_get_association( $term, $by );
 
 	// Bail when the association is not found
@@ -571,20 +573,22 @@ function paco2017_get_association_users( $term = 0, $by = 'id' ) {
 		return array();
 	}
 
-	// Do user query with tax_query
-	$query = new WP_User_Query( array(
+	// Parse user query args
+	$args = wp_parse_args( $args, array(
 		'fields'    => 'ID',
-		'tax_query' => array(
-			array(
-				'taxonomy' => paco2017_get_association_tax_id(),
-				'terms'    => array( $term->term_id )
-			)
-		)
+		'tax_query' => array()
 	) );
 
-	$users = (array) $query->get_results();
+	// Setup association tax_query
+	$args['tax_query'][] = array(
+		'taxonomy' => paco2017_get_association_tax_id(),
+		'terms'    => array( $term->term_id )
+	);
 
-	return (array) apply_filters( 'paco2017_get_association_users', $users, $term );
+	// Query users
+	$users = get_users( $args );
+
+	return (array) apply_filters( 'paco2017_get_association_users', $users, $term, $args );
 }
 
 /**
