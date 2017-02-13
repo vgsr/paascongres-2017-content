@@ -322,6 +322,8 @@ function paco2017_bp_members_pagination_count( $pag ) {
 	return $pag;
 }
 
+/** Getters *************************************************************/
+
 /**
  * Return the member count of the specified subset of the registered members
  *
@@ -353,7 +355,6 @@ function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
 
 	// Define local variable(s)
 	$users = array();
-	$field = false;
 	$value = null;
 	$compare = '';
 
@@ -364,17 +365,12 @@ function paco2017_bp_get_members( $scope = '', $user_id = 0 ) {
 
 	// Enrolled members
 	if ( 'enrollment' === $scope ) {
-		$field         = true;
-		$value         = paco2017_bp_xprofile_get_enrollment_success_data_for_query();
-		$compare       = 'IN';
-
-	// Members by association
-	} elseif ( 'association' === $scope ) {
-		$field = true;
+		$value   = paco2017_bp_xprofile_get_enrollment_success_data_for_query();
+		$compare = 'IN';
 	}
 
 	// Define profile field callback
-	if ( $field && is_callable( "paco2017_bp_xprofile_get_{$scope}_field" ) ) {
+	if ( $scope && is_callable( "paco2017_bp_xprofile_get_{$scope}_field" ) ) {
 
 		// Query members by profile field value
 		$field = call_user_func( "paco2017_bp_xprofile_get_{$scope}_field" );
@@ -421,12 +417,10 @@ function paco2017_bp_get_enrolled_members_count() {
  * @return int Member count of enrolled members within the scope
  */
 function paco2017_bp_get_enrolled_members_count_by_scope( $scope = '', $user_id = 0 ) {
-
-	// Get enrolled members within the scope
 	$members = paco2017_bp_get_enrolled_members_by_scope( $scope, $user_id );
 	$count   = count( $members );
 
-	return (int) $count;
+	return $count;
 }
 
 /**
@@ -464,30 +458,23 @@ function paco2017_bp_get_enrolled_members_by_scope( $scope = '', $user_id = 0 ) 
  */
 function paco2017_bp_enrolled_members_for_association( $members, $term ) {
 
-	// Get profile fields
-	$enrollment_field  = paco2017_bp_xprofile_get_enrollment_field();
-	$association_field = paco2017_bp_xprofile_get_association_field();
+	// Get profile field
+	$enrollment_field = paco2017_bp_xprofile_get_enrollment_field();
 
-	// Bail when the fields do not exist
-	if ( ! $association_field || ! $enrollment_field )
+	// Bail when the field does not exist
+	if ( ! $enrollment_field )
 		return $members;
 
 	// Setup members query
 	$query = new BP_User_Query( array(
-		'type'           => false, // Consider all registered users
-		'xprofile_query' => array(
+		'type'                 => false, // Consider all registered users
+		'paco2017_association' => is_a( $term, 'WP_Term' ) ? $term->term_id : $term,
+		'xprofile_query'       => array(
 			array(
-				'field'    => $enrollment_field->id,
-				'value'    => paco2017_bp_xprofile_get_enrollment_success_data_for_query(),
-				'compare'  => 'IN',
+				'field'   => $enrollment_field->id,
+				'value'   => paco2017_bp_xprofile_get_enrollment_success_data_for_query(),
+				'compare' => 'IN',
 			),
-
-			// Query based on profile field association (so no user tax_query)
-			array(
-				'field'    => $association_field->id,
-				'value'    => is_a( $term, 'WP_Term' ) ? $term->term_id : $term,
-				'compare'  => '=',
-			)
 		)
 	) );
 
@@ -878,6 +865,37 @@ function paco2017_bp_user_query_uid_clauses( $clauses, $user_query ) {
 
 	// Get the query's vars
 	$qv = $user_query->query_vars;
+
+	// Query by association
+	if ( ! empty( $qv['paco2017_association'] ) ) {
+		$term = $qv['paco2017_association'];
+
+		// Get term from object
+		if ( is_a( $term, 'WP_Term' ) ) {
+			$term = $term->term_id;
+
+		// Get term from current user
+		} elseif ( is_bool( $term ) ) {
+			$term = paco2017_get_user_association();
+			$term = $term->term_id;
+		}
+
+		// Define tax_query
+		$tax_query = new WP_Tax_Query( array(
+			array(
+				'taxonomy' => paco2017_get_association_tax_id(),
+				'terms'    => array( $term ),
+				'field'    => ! is_numeric( $term ) ? 'name' : 'term_id'
+			)
+		) );
+		$tax_clauses = $tax_query->get_sql( 'u', $user_query->uid_name );
+
+		// Append taxonomy query clauses
+		if ( ! empty( $tax_clauses['join'] ) ) {
+			$clauses['select'] .= $tax_clauses['join'];
+			$clauses['where'][] = preg_replace( '/^\s*AND\s*/', '', $tax_clauses['where'] );
+		}
+	}
 
 	// Ordering by Newest Enrolled
 	if ( paco2017_bp_members_get_enrolled_scope() === $qv['type'] && $field = paco2017_bp_xprofile_get_enrollment_field() ) {
