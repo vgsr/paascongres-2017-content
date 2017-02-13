@@ -571,13 +571,18 @@ function paco2017_get_association_users( $term = 0, $by = 'id' ) {
 		return array();
 	}
 
-	// Get the term's users
-	$users = get_objects_in_term( $term->term_id, paco2017_get_association_tax_id() );
+	// Do user query with tax_query
+	$query = new WP_User_Query( array(
+		'fields'    => 'ID',
+		'tax_query' => array(
+			array(
+				'taxonomy' => paco2017_get_association_tax_id(),
+				'terms'    => array( $term->term_id )
+			)
+		)
+	) );
 
-	// Default to empty error
-	if ( ! $users || is_wp_error( $users ) ) {
-		$users = array();
-	}
+	$users = (array) $query->get_results();
 
 	return (array) apply_filters( 'paco2017_get_association_users', $users, $term );
 }
