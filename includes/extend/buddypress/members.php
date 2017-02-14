@@ -51,24 +51,36 @@ function paco2017_bp_members_directory_order_options() {
 }
 
 /**
+ * Return the query argument value from the current members query
+ *
+ * @since 1.1.0
+ *
+ * @param string $arg Query arg key
+ * @return mixed The current members query scope
+ */
+function paco2017_bp_members_get_query_arg( $arg = '' ) {
+
+	// Get the current member query's args
+	$query_vars = wp_parse_args( bp_ajax_querystring( 'members' ) );
+	$scope = null;
+
+	// Get the availabel argument value
+	if ( isset( $query_vars[ $arg ] ) ) {
+		$scope = $query_vars[ $arg ];
+	}
+
+	return $scope;
+}
+
+/**
  * Return the current members query scope
  *
  * @since 1.0.0
  *
- * @return string The current members query scope
+ * @return mixed The current members query scope
  */
 function paco2017_bp_members_get_query_scope() {
-
-	// Get the current member query's args
-	$query_vars = wp_parse_args( bp_ajax_querystring( 'members' ) );
-	$scope = '';
-
-	// Bail when not viewing with a scope
-	if ( isset( $query_vars['scope'] ) ) {
-		$scope = $query_vars['scope'];
-	}
-
-	return $scope;
+	return paco2017_bp_members_get_query_arg( 'scope' );
 }
 
 /**
