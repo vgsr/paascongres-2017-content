@@ -32,10 +32,10 @@ function paco2017_bp_xprofile_is_user_enrolled( $is = false, $user_id = 0 ) {
 	}
 
 	// Read the user's profile field value
-	if ( $field = paco2017_bp_xprofile_get_enrollment_field() ) {
+	if ( $field_id = paco2017_bp_xprofile_get_enrollment_field( true ) ) {
 		$_enrolled = (array) paco2017_bp_xprofile_get_enrollment_success_data();
-		$enrolled  = (array) xprofile_get_field_data( $field->id, $user_id );
-		$is        = $_enrolled === $enrolled;
+		$enrolled  = (array) xprofile_get_field_data( $field_id, $user_id );
+		$is        = $_enrolled && $_enrolled === $enrolled;
 	}
 
 	return $is;
@@ -79,7 +79,7 @@ function paco2017_bp_xprofile_get_enrollment_success_data() {
 	$enrolled = '';
 
 	// Read the user's profile field value
-	if ( $field = paco2017_bp_xprofile_get_enrollment_field() ) {
+	if ( paco2017_bp_xprofile_get_enrollment_field() ) {
 		$enrolled = get_option( '_paco2017_bp_xprofile_enrollment_field_success_data', null );
 	}
 
@@ -113,7 +113,7 @@ function paco2017_bp_xprofile_no_edit_association_field( $groups, $args ) {
 		return $groups;
 
 	// Get association field
-	$association_field = paco2017_bp_xprofile_get_association_field();
+	$association_field_id = paco2017_bp_xprofile_get_association_field( true );
 
 	// Are we editing fields? Front or in admin
 	$editing = bp_is_user_profile_edit() || ( is_admin() && isset( $_GET['page'] ) && 'bp-profile-edit' === $_GET['page'] );
@@ -133,7 +133,7 @@ function paco2017_bp_xprofile_no_edit_association_field( $groups, $args ) {
 		foreach ( $group->fields as $fk => $field ) {
 
 			// Remove association field
-			if ( $field->id === $association_field->id ) {
+			if ( $field->id === $association_field_id ) {
 				unset( $groups[ $gk ]->fields[ $fk ] );
 
 				// Reset numeric keys
@@ -334,17 +334,25 @@ function paco2017_bp_xprofile_filter_advertorial( $advertorial, $location ) {
  * Return the requested setting's XProfile field
  *
  * @since 1.0.0
+ * @since 1.1.0 Added the `$return_id` parameter.
  *
  * @param string $setting Setting name
- * @return BP_XProfile_Field|null Profile field when found, else Null.
+ * @param bool $return_id Optional. Whether to return the field ID. Defaults to false.
+ * @return BP_XProfile_Field|int|null Profile field or ID when found, else Null.
  */
-function paco2017_bp_xprofile_get_setting_field( $setting = '' ) {
+function paco2017_bp_xprofile_get_setting_field( $setting = '', $return_id = false ) {
 
 	// Bail when the XProfile component is not active
 	if ( ! bp_is_active( 'xprofile' ) )
 		return null;
 
-	return xprofile_get_field( get_option( $setting, 0 ) );
+	$field = xprofile_get_field( get_option( $setting, 0 ) );
+
+	if ( $field && $return_id ) {
+		return (int) $field->id;
+	}
+
+	return $field;
 }
 
 /**
@@ -385,11 +393,13 @@ function paco2017_bp_xprofile_is_the_field( $setting_name, $field_id = 0 ) {
  * Return the selected Enrollment XProfile field
  *
  * @since 1.0.0
+ * @since 1.1.0 Added the `$return_id` parameter.
  *
- * @return BP_XProfile_Field|null Profile field when found, else Null.
+ * @param bool $return_id Optional. Whether to return the field ID. Defaults to false.
+ * @return BP_XProfile_Field|int|null Profile field or ID when found, else Null.
  */
-function paco2017_bp_xprofile_get_enrollment_field() {
-	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_enrollment_field' );
+function paco2017_bp_xprofile_get_enrollment_field( $return_id = false ) {
+	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_enrollment_field', $return_id );
 }
 
 /**
@@ -470,11 +480,13 @@ function paco2017_bp_xprofile_get_required_field_ids() {
  * Return the selected Association XProfile field
  *
  * @since 1.0.0
+ * @since 1.1.0 Added the `$return_id` parameter.
  *
- * @return BP_XProfile_Field|null Profile field when found, else Null.
+ * @param bool $return_id Optional. Whether to return the field ID. Defaults to false.
+ * @return BP_XProfile_Field|int|null Profile field or ID when found, else Null.
  */
-function paco2017_bp_xprofile_get_association_field() {
-	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_association_field' );
+function paco2017_bp_xprofile_get_association_field( $return_id = false ) {
+	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_association_field', $return_id );
 }
 
 /**
@@ -482,10 +494,11 @@ function paco2017_bp_xprofile_get_association_field() {
  *
  * @since 1.1.0
  *
- * @return BP_XProfile_Field|null Profile field when found, else Null.
+ * @param bool $return_id Optional. Whether to return the field ID. Defaults to false.
+ * @return BP_XProfile_Field|int|null Profile field or ID when found, else Null.
  */
-function paco2017_bp_xprofile_get_presence_field() {
-	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_presence_field' );
+function paco2017_bp_xprofile_get_presence_field( $return_id = false ) {
+	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_presence_field', $return_id );
 }
 
 /**
@@ -505,10 +518,11 @@ function paco2017_bp_xprofile_is_association_field( $field_id = 0 ) {
  *
  * @since 1.1.0
  *
- * @return BP_XProfile_Field|null Profile field when found, else Null.
+ * @param bool $return_id Optional. Whether to return the field ID. Defaults to false.
+ * @return BP_XProfile_Field|int|null Profile field or ID when found, else Null.
  */
-function paco2017_bp_xprofile_get_workshop1_field() {
-	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_workshop1_field' );
+function paco2017_bp_xprofile_get_workshop1_field( $return_id = false ) {
+	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_workshop1_field', $return_id );
 }
 
 /**
@@ -516,10 +530,11 @@ function paco2017_bp_xprofile_get_workshop1_field() {
  *
  * @since 1.1.0
  *
- * @return BP_XProfile_Field|null Profile field when found, else Null.
+ * @param bool $return_id Optional. Whether to return the field ID. Defaults to false.
+ * @return BP_XProfile_Field|int|null Profile field or ID when found, else Null.
  */
-function paco2017_bp_xprofile_get_workshop2_field() {
-	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_workshop2_field' );
+function paco2017_bp_xprofile_get_workshop2_field( $return_id = false ) {
+	return paco2017_bp_xprofile_get_setting_field( '_paco2017_bp_xprofile_workshop2_field', $return_id );
 }
 
 /**
@@ -556,24 +571,19 @@ function paco2017_bp_xprofile_is_a_workshop_field( $field_id = 0 ) {
  *
  * @since 1.1.0
  *
- * @param bool $ids Optional. Whether to return field ids. Defaults to False.
- * @return array Field objects or ids
+ * @param bool $return_ids Optional. Whether to return field IDs. Defaults to False.
+ * @return array Field objects or IDs
  */
-function paco2017_bp_xprofile_get_workshop_fields( $ids = false ) {
+function paco2017_bp_xprofile_get_workshop_fields( $return_ids = false ) {
 
 	// Collect fields
 	$fields = array(
-		1 => paco2017_bp_xprofile_get_workshop1_field(),
-		2 => paco2017_bp_xprofile_get_workshop2_field(),
+		1 => paco2017_bp_xprofile_get_workshop1_field( $return_ids ),
+		2 => paco2017_bp_xprofile_get_workshop2_field( $return_ids ),
 	);
 
 	// Remove fields that do not exist
 	$fields = array_filter( $fields );
-
-	// Pluck ids
-	if ( $ids ) {
-		$fields = wp_list_pluck( $fields, 'id' );
-	}
 
 	return $fields;
 }
