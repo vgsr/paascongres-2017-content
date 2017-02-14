@@ -32,7 +32,7 @@ function paco2017_bp_members_directory_tabs() {
 		printf( '<li id="members-%s"><a href="#">%s <span>%s</span></a></li>',
 			paco2017_bp_members_get_association_scope(),
 			paco2017_bp_get_association_title(),
-			sprintf( '%s/%s', paco2017_bp_get_enrolled_members_count_by_scope( 'association' ), paco2017_bp_get_members_count( 'association' ) )
+			sprintf( '%s/%s', paco2017_get_enrolled_users_for_association_count(), paco2017_get_association_user_count() )
 		);
 	}
 }
