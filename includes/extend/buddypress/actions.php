@@ -43,17 +43,18 @@ add_filter( 'bp_activity_can_favorite',             '__return_false'            
 
 /** Template: Members *********************************************************/
 
-add_action( 'bp_members_directory_member_types',    'paco2017_bp_members_directory_tabs'                );
-add_action( 'bp_members_directory_order_options',   'paco2017_bp_members_directory_order_options'       );
-add_action( 'bp_before_members_loop',               'paco2017_bp_members_directory_details'             );
-add_filter( 'bp_members_pagination_count',          'paco2017_bp_members_pagination_count'              );
-add_filter( 'bp_get_member_class',                  'paco2017_bp_get_member_class'                      );
-add_filter( 'bp_member_name',                       'paco2017_bp_member_name',                    99    );
-add_action( 'bp_directory_members_item',            'paco2017_bp_members_item_association_badge'        );
-add_filter( 'bp_displayed_user_get_front_template', 'paco2017_bp_members_front_page_template'           );
-add_action( 'bp_template_redirect',                 'paco2017_bp_members_block_member',            1    ); // Before bp_actions and bp_screens
-add_action( 'bp_members_screen_display_profile',    'paco2017_bp_members_screen_display_profile'        );
-add_action( 'bp_before_member_header_meta',         'paco2017_bp_members_item_association_badge'        );
+add_action( 'bp_members_directory_member_types',     'paco2017_bp_members_directory_tabs'                );
+add_action( 'bp_members_directory_order_options',    'paco2017_bp_members_directory_order_options'       );
+add_action( 'bp_members_directory_member_sub_types', 'paco2017_bp_members_association_filter'            );
+add_action( 'bp_before_members_loop',                'paco2017_bp_members_directory_details'             );
+add_filter( 'bp_members_pagination_count',           'paco2017_bp_members_pagination_count'              );
+add_filter( 'bp_get_member_class',                   'paco2017_bp_get_member_class'                      );
+add_filter( 'bp_member_name',                        'paco2017_bp_member_name',                    99    );
+add_action( 'bp_directory_members_item',             'paco2017_bp_members_item_association_badge'        );
+add_filter( 'bp_displayed_user_get_front_template',  'paco2017_bp_members_front_page_template'           );
+add_action( 'bp_template_redirect',                  'paco2017_bp_members_block_member',            1    ); // Before bp_actions and bp_screens
+add_action( 'bp_members_screen_display_profile',     'paco2017_bp_members_screen_display_profile'        );
+add_action( 'bp_before_member_header_meta',          'paco2017_bp_members_item_association_badge'        );
 
 /** Template: XProfile ********************************************************/
 

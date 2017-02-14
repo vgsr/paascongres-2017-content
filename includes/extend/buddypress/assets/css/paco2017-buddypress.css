@@ -14,6 +14,11 @@
 	height: 50px;
 }
 
+.directory.colors-dark #buddypress #subnav.item-list-tabs ul li.last.paco2017-filter {
+	border-top: 0;
+}
+
+/* Marking */
 i.paco2017-enrolled {
 	display: inline-block;
 	font-size: inherit;

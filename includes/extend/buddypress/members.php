@@ -116,6 +116,40 @@ function paco2017_bp_members_is_association_scope() {
 }
 
 /**
+ * Display the association member query filter
+ *
+ * @since 1.1.0
+ */
+function paco2017_bp_members_association_filter() {
+
+	// Bail when no associations exist
+	if ( ! paco2017_query_associations() )
+		return;
+
+	?>
+
+	<li id="members-association-select" class="last paco2017-filter">
+		<label for="members-by-association"><?php _e( 'Association:', 'paco2017-content' ); ?></label>
+		<select id="members-by-association">
+			<option value=""><?php _ex( 'All', 'association member filter', 'paco2017-content' ); ?></option>
+			<?php while ( paco2017_have_associations() ) : paco2017_the_association(); ?>
+
+			<option value="<?php paco2017_the_association_id(); ?>" <?php disabled( ! paco2017_get_enrolled_users_for_association_count() ); ?>>
+				<?php /* translators: 1. Association title 2. Enrolled user count */ ?>
+				<?php printf( _x( '%1$s (%2$s)', 'association member filter', 'paco2017-content' ),
+					paco2017_get_association_title(),
+					paco2017_get_enrolled_users_for_association_count()
+				); ?>
+			</option>
+
+			<?php endwhile; ?>
+		</select>
+	</li>
+
+	<?php
+}
+
+/**
  * Display directory details before the start of the members list
  *
  * @since 1.0.0
@@ -721,9 +755,23 @@ function paco2017_bp_members_dashboard_statuses( $statuses ) {
  */
 function paco2017_bp_ajax_query_string( $query_string, $context = '' ) {
 
+	// Set up the cookies passed on this AJAX request. Store a local var to avoid conflicts.
+	if ( ! empty( $_POST['cookie'] ) ) {
+		$_BP_COOKIE = wp_parse_args( str_replace( '; ', '&', urldecode( $_POST['cookie'] ) ) );
+	} else {
+		$_BP_COOKIE = &$_COOKIE;
+	}
+
 	// Default the primary member query (without scope) to list Enrolled members only (enrolled scope)
 	if ( 'members' === $context && ! array_key_exists( 'scope', wp_parse_args( $query_string ) ) ) {
 		$query_string .= '&scope=' . paco2017_bp_members_get_enrolled_scope();
+
+		// Parse extras for enrolled scope
+		if ( isset( $_BP_COOKIE['bp-' . $context . '-extras'] ) ) {
+
+			// Extras is association term id
+			$query_string .= '&paco2017_association=' . (int) $_BP_COOKIE['bp-' . $context . '-extras'];
+		}
 	}
 
 	return $query_string;

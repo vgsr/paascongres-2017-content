@@ -365,6 +365,10 @@ class Paco2017_BuddyPress {
 		if ( wp_style_is( "bp-{$template}" ) && file_exists( $companion_dir ) ) {
 			wp_enqueue_style( "paco2017-bp-{$template}", $companion_url, array( "bp-{$template}" ) );
 		}
+
+		/** Scripts *****************************************************/
+
+		wp_enqueue_script( 'paco2017-buddypress', $this->assets_url . 'js/paco2017-buddypress.js', array( 'jquery', 'bp-legacy-js' ) );
 	}
 
 	/**
