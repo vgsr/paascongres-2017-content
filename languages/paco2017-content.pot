@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-08 13:31+0000\n"
+"POT-Creation-Date: 2017-02-14 13:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -18,72 +18,72 @@ msgstr ""
 msgid "Paascongres lectures"
 msgstr ""
 
-#: paco2017-content.php:267
+#: paco2017-content.php:269
 msgid "Paascongres workshops"
 msgstr ""
 
-#: paco2017-content.php:292
+#: paco2017-content.php:296
 msgid "Paascongres agenda items"
 msgstr ""
 
-#: paco2017-content.php:317
+#: paco2017-content.php:323
 msgid "Paascongres partners"
 msgstr ""
 
-#: paco2017-content.php:342
+#: paco2017-content.php:350
 msgid "Set Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:343
+#: paco2017-content.php:351
 msgid "Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:344
+#: paco2017-content.php:352
 msgid "Remove Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:546
+#: paco2017-content.php:570
 msgid "Logo"
 msgstr ""
 
-#: paco2017-content.php:547
+#: paco2017-content.php:571
 msgid "Logos"
 msgstr ""
 
-#: paco2017-content.php:548
+#: paco2017-content.php:572
 #, php-format
 msgid "Set %s logo"
 msgstr ""
 
-#: paco2017-content.php:549
+#: paco2017-content.php:573
 #, php-format
 msgid "%s logo"
 msgstr ""
 
-#: paco2017-content.php:550
+#: paco2017-content.php:574
 #, php-format
 msgid "Remove %s logo"
 msgstr ""
 
-#: paco2017-content.php:557
+#: paco2017-content.php:581
 msgid "Photo"
 msgstr ""
 
-#: paco2017-content.php:558
+#: paco2017-content.php:582
 msgid "Photos"
 msgstr ""
 
-#: paco2017-content.php:559
+#: paco2017-content.php:583
 #, php-format
 msgid "Set %s photo"
 msgstr ""
 
-#: paco2017-content.php:560
+#: paco2017-content.php:584
 #, php-format
 msgid "%s photo"
 msgstr ""
 
-#: paco2017-content.php:561
+#: paco2017-content.php:585
 #, php-format
 msgid "Remove %s photo"
 msgstr ""
@@ -373,95 +373,95 @@ msgstr ""
 msgid "Agenda Items list"
 msgstr ""
 
-#: includes/agenda.php:150
+#: includes/agenda.php:159
 msgid "Paascongres Conference Days"
 msgstr ""
 
-#: includes/agenda.php:151
+#: includes/agenda.php:160
 msgid "Conference Days"
 msgstr ""
 
-#: includes/agenda.php:152
+#: includes/agenda.php:161
 msgid "Conference Day"
 msgstr ""
 
-#: includes/agenda.php:153
+#: includes/agenda.php:162
 msgid "Search Conference Days"
 msgstr ""
 
-#: includes/agenda.php:155
+#: includes/agenda.php:164
 msgid "All Conference Days"
 msgstr ""
 
-#: includes/agenda.php:156
+#: includes/agenda.php:165
 msgid "No Conference Day"
 msgstr ""
 
-#: includes/agenda.php:157
+#: includes/agenda.php:166
 msgid "Edit Conference Day"
 msgstr ""
 
-#: includes/agenda.php:158
+#: includes/agenda.php:167
 msgid "Update Conference Day"
 msgstr ""
 
-#: includes/agenda.php:159
+#: includes/agenda.php:168
 msgid "Add New Conference Day"
 msgstr ""
 
-#: includes/agenda.php:160
+#: includes/agenda.php:169
 msgid "New Conference Day Name"
 msgstr ""
 
-#: includes/agenda.php:161
+#: includes/agenda.php:170
 msgid "View Conference Day"
 msgstr ""
 
-#: includes/agenda.php:244
+#: includes/agenda.php:253
 msgid "Paascongres Conference Locations"
 msgstr ""
 
-#: includes/agenda.php:245
+#: includes/agenda.php:254
 msgid "Locations"
 msgstr ""
 
-#: includes/agenda.php:246
+#: includes/agenda.php:255
 msgid "Conference Location"
 msgstr ""
 
-#: includes/agenda.php:247
+#: includes/agenda.php:256
 msgid "Search Conference Locations"
 msgstr ""
 
-#: includes/agenda.php:249
+#: includes/agenda.php:258
 msgid "All Conference Locations"
 msgstr ""
 
-#: includes/agenda.php:250
+#: includes/agenda.php:259
 msgid "No Conference Location"
 msgstr ""
 
-#: includes/agenda.php:251
+#: includes/agenda.php:260
 msgid "Edit Conference Location"
 msgstr ""
 
-#: includes/agenda.php:252
+#: includes/agenda.php:261
 msgid "Update Conference Location"
 msgstr ""
 
-#: includes/agenda.php:253
+#: includes/agenda.php:262
 msgid "Add New Conference Location"
 msgstr ""
 
-#: includes/agenda.php:254
+#: includes/agenda.php:263
 msgid "New Conference Location Name"
 msgstr ""
 
-#: includes/agenda.php:255
+#: includes/agenda.php:264
 msgid "View Conference Location"
 msgstr ""
 
-#: includes/agenda.php:881 includes/workshops.php:441
+#: includes/agenda.php:890 includes/workshops.php:441
 msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
@@ -620,7 +620,7 @@ msgctxt "menu type label"
 msgid "Paascongres Page"
 msgstr ""
 
-#: includes/functions.php:904
+#: includes/functions.php:932
 msgid "Advertorial"
 msgstr ""
 
@@ -760,47 +760,47 @@ msgstr ""
 msgid "Partners list"
 msgstr ""
 
-#: includes/partners.php:161
+#: includes/partners.php:151
 msgid "Paascongres Partner Levels"
 msgstr ""
 
-#: includes/partners.php:162
+#: includes/partners.php:152
 msgid "Partner Levels"
 msgstr ""
 
-#: includes/partners.php:163
+#: includes/partners.php:153
 msgid "Partner Level"
 msgstr ""
 
-#: includes/partners.php:164
+#: includes/partners.php:154
 msgid "Search Partner Levels"
 msgstr ""
 
-#: includes/partners.php:166
+#: includes/partners.php:156
 msgid "All Partner Levels"
 msgstr ""
 
-#: includes/partners.php:167
+#: includes/partners.php:157
 msgid "No Partner Level"
 msgstr ""
 
-#: includes/partners.php:168
+#: includes/partners.php:158
 msgid "Edit Partner Level"
 msgstr ""
 
-#: includes/partners.php:169
+#: includes/partners.php:159
 msgid "Update Partner Level"
 msgstr ""
 
-#: includes/partners.php:170
+#: includes/partners.php:160
 msgid "Add New Partner Level"
 msgstr ""
 
-#: includes/partners.php:171
+#: includes/partners.php:161
 msgid "New Partner Level Name"
 msgstr ""
 
-#: includes/partners.php:172
+#: includes/partners.php:162
 msgid "View Partner Level"
 msgstr ""
 
@@ -980,7 +980,7 @@ msgctxt "speakers page title"
 msgid "Speakers"
 msgstr ""
 
-#: includes/users.php:304
+#: includes/users.php:308
 #, php-format
 msgid ""
 "To enroll for the conference, you have to login with the credentials that "
@@ -988,21 +988,21 @@ msgid ""
 "or let us know at %s."
 msgstr ""
 
-#: includes/users.php:306
+#: includes/users.php:310
 msgid ""
 "To enroll for the conference, you have to login with the credentials that "
 "were sent to you. If not, use your email address to request a new password "
 "or let us know."
 msgstr ""
 
-#: includes/users.php:312
+#: includes/users.php:316
 #, php-format
 msgid ""
 "Take note that you can change your enrollment details up to the deadline on "
 "%s."
 msgstr ""
 
-#: includes/users.php:314
+#: includes/users.php:318
 msgid ""
 "Take note that you can change your enrollment details up to the deadline "
 "date."
@@ -1213,57 +1213,78 @@ msgstr ""
 msgid "Newest Enrolled"
 msgstr ""
 
-#: includes/extend/buddypress/members.php:127
+#: includes/extend/buddypress/members.php:144
+msgid "Association:"
+msgstr ""
+
+#: includes/extend/buddypress/members.php:146
+msgctxt "association member filter"
+msgid "All"
+msgstr ""
+
+#. 1. Association title 2. Enrolled user count
+#: includes/extend/buddypress/members.php:151
+#, php-format
+msgctxt "association member filter"
+msgid "%1$s (%2$s)"
+msgstr ""
+
+#: includes/extend/buddypress/members.php:175
+#, php-format
+msgid "The following %s members have enrolled for the event."
+msgstr ""
+
+#: includes/extend/buddypress/members.php:177
 msgid "The following people have enrolled for the event."
 msgstr ""
 
-#: includes/extend/buddypress/members.php:132
+#: includes/extend/buddypress/members.php:183
 msgid ""
 "The following people from your own association have received an invitation."
 msgstr ""
 
-#: includes/extend/buddypress/members.php:162
+#: includes/extend/buddypress/members.php:213
 msgid "This member is enrolled for the event."
 msgstr ""
 
-#: includes/extend/buddypress/members.php:297
+#: includes/extend/buddypress/members.php:348
 msgid "Viewing 1 active participant"
 msgstr ""
 
-#: includes/extend/buddypress/members.php:299
+#: includes/extend/buddypress/members.php:350
 #, php-format
 msgid "Viewing %1$s - %2$s of %3$s active participant"
 msgid_plural "Viewing %1$s - %2$s of %3$s active participants"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/extend/buddypress/members.php:303
+#: includes/extend/buddypress/members.php:354
 msgid "Viewing 1 participant with friends"
 msgstr ""
 
-#: includes/extend/buddypress/members.php:305
+#: includes/extend/buddypress/members.php:356
 #, php-format
 msgid "Viewing %1$s - %2$s of %3$s participant with friends"
 msgid_plural "Viewing %1$s - %2$s of %3$s participants with friends"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/extend/buddypress/members.php:309
+#: includes/extend/buddypress/members.php:360
 msgid "Viewing 1 online participant"
 msgstr ""
 
-#: includes/extend/buddypress/members.php:311
+#: includes/extend/buddypress/members.php:362
 #, php-format
 msgid "Viewing %1$s - %2$s of %3$s online participant"
 msgid_plural "Viewing %1$s - %2$s of %3$s online participants"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/extend/buddypress/members.php:315
+#: includes/extend/buddypress/members.php:366
 msgid "Viewing 1 participant"
 msgstr ""
 
-#: includes/extend/buddypress/members.php:317
+#: includes/extend/buddypress/members.php:368
 #, php-format
 msgid "Viewing %1$s - %2$s of %3$s participant"
 msgid_plural "Viewing %1$s - %2$s of %3$s participants"
