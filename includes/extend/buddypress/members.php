@@ -171,6 +171,7 @@ function paco2017_bp_members_directory_details() {
 	// Enrolled
 	if ( paco2017_bp_members_is_enrolled_scope() ) {
 
+		// Is association filter applied
 		if ( $term_id = paco2017_bp_members_get_query_arg( 'paco2017_association' ) ) {
 			printf( esc_html__( 'The following %s members have enrolled for the event.', 'paco2017-content' ), paco2017_get_association_title( $term_id ) );
 		} else {
@@ -180,7 +181,19 @@ function paco2017_bp_members_directory_details() {
 
 	// My Association
 	if ( paco2017_bp_members_is_association_scope() ) {
-		esc_html_e( 'The following people from your own association have received an invitation.', 'paco2017-content' );
+
+		// Consider the filter/type context
+		switch ( paco2017_bp_members_get_query_arg( 'type' ) ) {
+			case 'paco2017_enrollment' :
+				esc_html_e( 'The following people from your own association have enrolled for the event.', 'paco2017-content' );
+				break;
+			case 'active' :
+				esc_html_e( 'The following people from your own association were recently active on this site.', 'paco2017-content' );
+				break;
+			default :
+				esc_html_e( 'The following people from your own association have received an invitation.', 'paco2017-content' );
+				break;
+		}
 	}
 }
 
