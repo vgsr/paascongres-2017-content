@@ -732,6 +732,8 @@ function paco2017_bp_ajax_query_string( $query_string, $context = '' ) {
 /**
  * Modify the parsed members query arguments
  *
+ * Since BP's directory queries do not allow for custom query arg parsing,
+ * we hack around this by hijacking the `type` arg and resetting it later.
  * This filter is paired with {@see paco2017_bp_parse_core_get_users_args()}.
  *
  * @since 1.0.0
@@ -744,37 +746,28 @@ function paco2017_bp_parse_has_members_args( $args = array() ) {
 	// Fetch template scope
 	$scope = isset( $args['scope'] ) ? str_replace( 'paco2017_', '', $args['scope'] ) : false;
 
-	// Bail when this is not a custom profile field scope
-	if ( ! $scope || ! in_array( $scope, array( 'enrollment', 'association' ) ) )
+	// Bail when this is not a custom scope
+	if ( ! in_array( $scope, array( 'enrollment', 'association' ), true ) )
 		return $args;
 
-	// Define profile field variable(s)
-	$user_id = get_current_user_id();
-	$field = false;
-	$value = null;
-	$compare = null;
+	// Define type argument container
+	$container = array( '_type' => $args['type'], 'xprofile' => array(), 'association' => null );
 
 	// Enrolled members
-	if ( 'enrollment' === $scope ) {
-		$value   = paco2017_bp_xprofile_get_enrollment_success_data_for_query();
-		$compare = 'IN';
+	if ( 'enrollment' === $scope && $value = paco2017_bp_xprofile_get_enrollment_success_data_for_query() ) {
+		$container['xprofile']['field']   = paco2017_bp_xprofile_get_enrollment_field( true );
+		$container['xprofile']['user_id'] = get_current_user_id();
+		$container['xprofile']['value']   = $value;
+		$container['xprofile']['compare'] = 'IN';
 	}
 
-	// Define profile field callback
-	if ( is_callable( "paco2017_bp_xprofile_get_{$scope}_field" ) ) {
-		$field = call_user_func( "paco2017_bp_xprofile_get_{$scope}_field" );
-
-		// Append query items
-		$args['type'] = array(
-			'field'    => $field->id,
-			'user_id'  => $user_id,
-			'value'    => $value,
-			'compare'  => $compare,
-
-			// Take the real type along. Later we'll reset it
-			'_type'    => $args['type'],
-		);
+	// Association members
+	if ( 'association' === $scope || ! empty( $args['paco2017_association'] ) ) {
+		$container['association'] = paco2017_get_association_id( 'association' === $scope ? 0 : $args['paco2017_association'] );
 	}
+
+	// Hijack `type` argument
+	$args['type'] = $container;
 
 	return $args;
 }
@@ -782,12 +775,14 @@ function paco2017_bp_parse_has_members_args( $args = array() ) {
 /**
  * Modify the to-parse members query arguments
  *
+ * Since BP's directory queries do not allow for custom query arg parsing,
+ * we hack around this by hijacking the `type` arg and resetting it here.
  * This filter is paired with {@see paco2017_bp_parse_has_members_args()}.
  *
  * @since 1.0.0
  *
- * @param array $args Args to-parse
- * @return array Args to-parse
+ * @param array $args Args to parse
+ * @return array Args to parse
  */
 function paco2017_bp_parse_core_get_users_args( $args = array() ) {
 
@@ -798,8 +793,9 @@ function paco2017_bp_parse_core_get_users_args( $args = array() ) {
 		$type = $args['type']['_type'];
 		unset( $args['type']['_type'] );
 
-		// Define query modifier
-		$args['paco2017-xprofile'] = $args['type'];
+		// Define query modifiers
+		$args['paco2017-xprofile']    = $args['type']['xprofile'];
+		$args['paco2017_association'] = $args['type']['association'];
 
 		// Reset `type` argument
 		$args['type'] = $type;
@@ -823,6 +819,7 @@ function paco2017_bp_pre_user_query( $user_query ) {
 	// Query by profile field
 	if ( bp_is_active( 'xprofile' ) && isset( $qv['paco2017-xprofile'] ) ) {
 		$args = wp_parse_args( $qv['paco2017-xprofile'], array(
+			'field'   => null,
 			'value'   => null,
 			'compare' => null
 		) );
