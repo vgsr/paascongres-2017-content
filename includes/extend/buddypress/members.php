@@ -170,7 +170,12 @@ function paco2017_bp_members_directory_details() {
 
 	// Enrolled
 	if ( paco2017_bp_members_is_enrolled_scope() ) {
-		esc_html_e( 'The following people have enrolled for the event.', 'paco2017-content' );
+
+		if ( $term_id = paco2017_bp_members_get_query_arg( 'paco2017_association' ) ) {
+			printf( esc_html__( 'The following %s members have enrolled for the event.', 'paco2017-content' ), paco2017_get_association_title( $term_id ) );
+		} else {
+			esc_html_e( 'The following people have enrolled for the event.', 'paco2017-content' );
+		}
 	}
 
 	// My Association
