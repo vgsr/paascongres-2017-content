@@ -304,7 +304,7 @@ function paco2017_in_the_association_loop() {
  * Return the Association item term
  *
  * @since 1.0.0
- * @since 1.1.0 Added option to provide a WP_User object for the `$term` parameter.
+ * @since 1.1.0 Accept a WP_User object for the `$term` parameter.
  *
  * @param WP_Term|int|string|WP_User $term Optional. Term object or id or name or slug or user object.
  *                                         Defaults to the current looped association or the current
@@ -334,6 +334,36 @@ function paco2017_get_association( $term = 0, $by = 'id' ) {
 	}
 
 	return $term;
+}
+
+/**
+ * Output the Association id
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ */
+function paco2017_the_association_id( $term = 0 ) {
+	echo paco2017_get_association_id( $term );
+}
+
+/**
+ * Output the Association id
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Term|int $term Optional. Term object or ID. Defaults to the current term.
+ * @return int Association term id.
+ */
+function paco2017_get_association_id( $term = 0 ) {
+	$term = paco2017_get_association( $term );
+	$id   = 0;
+
+	if ( $term ) {
+		$id = $term->term_id;
+	}
+
+	return $id;
 }
 
 /**
@@ -422,7 +452,7 @@ function paco2017_the_association_logo_id( $term = 0 ) {
  * @return int Term logo attachment ID
  */
 function paco2017_get_association_logo_id( $term = 0 ) {
-	$term     = paco2017_get_association( $term );
+	$term    = paco2017_get_association( $term );
 	$logo_id = 0;
 
 	if ( $term ) {
@@ -470,8 +500,8 @@ function paco2017_the_association_logo( $term = 0, $size = 'thumbnail', $args = 
  * @return string Term logo
  */
 function paco2017_get_association_logo( $term = 0, $size = 'thumbnail', $args = array() ) {
-	$term     = paco2017_get_association( $term );
-	$image    = '';
+	$term  = paco2017_get_association( $term );
+	$image = '';
 
 	if ( $term ) {
 		$logo_id = paco2017_get_association_logo_id( $term );
