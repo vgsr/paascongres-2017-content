@@ -105,9 +105,14 @@ class Paco2017_BuddyPress {
 		add_action( 'bp_setup_canonical_stack', array( $this, 'setup_canonical_stack' ),  5    );
 		add_action( 'bp_setup_nav',             array( $this, 'setup_profile_nav'     ), 90    );
 		add_action( 'bp_xprofile_admin_nav',    array( $this, 'setup_admin_nav'       ), 99    );
+
+		// Cosmetics
 		add_action( 'bp_enqueue_scripts',       array( $this, 'enqueue_scripts'       ), 90    );
-		add_filter( 'bp_map_meta_caps',         array( $this, 'map_meta_cap'          ), 20, 4 );
 		add_filter( 'bp_get_the_body_class',    array( $this, 'body_class'            ), 10, 4 );
+
+		// Misc
+		add_action( 'bp_register_member_types', array( $this, 'register_member_types' )        );
+		add_filter( 'bp_map_meta_caps',         array( $this, 'map_meta_cap'          ), 20, 4 );
 
 		// Unhide BuddyPress from VGSR
 		if ( function_exists( 'vgsr' ) ) {
@@ -317,6 +322,8 @@ class Paco2017_BuddyPress {
 		return $wp_admin_nav;
 	}
 
+	/** Cosmetics *******************************************************/
+
 	/**
 	 * Enqueue scripts and styles
 	 *
@@ -372,33 +379,6 @@ class Paco2017_BuddyPress {
 	}
 
 	/**
-	 * Modify the mapped capabilities
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $caps Mapped caps
-	 * @param string $cap Required cap
-	 * @param int $user_id User ID
-	 * @param array $args Arguments
-	 * @return array Mapped caps
-	 */
-	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
-
-		switch ( $cap ) {
-			case 'bp_xprofile_change_field_visibility' :
-
-				// Prevent chaning field visibility for non-admins
-				if ( ! user_can( $user_id, 'bp_moderate' ) ) {
-					$caps = array( 'do_not_allow' );
-				}
-
-				break;
-		}
-
-		return $caps;
-	}
-
-	/**
 	 * Modify BP's body classes
 	 *
 	 * @since 1.0.0
@@ -428,6 +408,82 @@ class Paco2017_BuddyPress {
 		}
 
 		return $classes;
+	}
+
+	/** Misc ************************************************************/
+
+	/**
+	 * Register custom member types
+	 *
+	 * @since 1.1.0
+	 */
+	public function register_member_types() {
+
+		// Amicaal Oud-lid
+		bp_register_member_type(
+			paco2017_bp_oudlid_member_type(),
+			array(
+				'labels' => array(
+					'name'          => __( 'Amicaal Oud-lid', 'paco2017-content' ),
+					'singular_name' => __( 'Amicaal Oud-lid', 'paco2017-content' )
+				),
+				'has_directory' => false,
+			)
+		);
+
+		add_action( 'bp_directory_members_item',    array( $this, 'members_item_member_type_badge' ) );
+		add_action( 'bp_before_member_header_meta', array( $this, 'members_item_member_type_badge' ) );
+	}
+
+	/**
+	 * Output member-type badges
+	 *
+	 * @since 1.1.0
+	 */
+	public function members_item_member_type_badge() {
+
+		// Displayed or looped member
+		if ( bp_is_user() ) {
+			$user_id = bp_displayed_user_id();
+		} else {
+			$user_id = bp_get_member_user_id();
+		}
+
+		// Bail when there's no member
+		if ( empty( $user_id ) )
+			return;
+
+		// Signal oud-lid members for all
+		if ( bp_has_member_type( $user_id, paco2017_bp_oudlid_member_type() ) ) {
+			echo '<i class="paco2017-badge member-type-badge">' . _x( 'Oud-lid', 'amicaal member type label', 'paco2017-content' ) . '</i>';
+		}
+	}
+
+	/**
+	 * Modify the mapped capabilities
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $caps Mapped caps
+	 * @param string $cap Required cap
+	 * @param int $user_id User ID
+	 * @param array $args Arguments
+	 * @return array Mapped caps
+	 */
+	public function map_meta_cap( $caps, $cap, $user_id, $args ) {
+
+		switch ( $cap ) {
+			case 'bp_xprofile_change_field_visibility' :
+
+				// Prevent chaning field visibility for non-admins
+				if ( ! user_can( $user_id, 'bp_moderate' ) ) {
+					$caps = array( 'do_not_allow' );
+				}
+
+				break;
+		}
+
+		return $caps;
 	}
 }
 

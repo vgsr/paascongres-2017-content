@@ -11,6 +11,17 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Return the Amicaal Oud-lid member type
+ *
+ * @since 1.1.0
+ *
+ * @return string Member type name
+ */
+function paco2017_bp_oudlid_member_type() {
+	return 'amicaal_oudlid';
+}
+
+/**
  * Return whether the user is enrolled
  *
  * BP equivalent of `paco2017_is_user_enrolled()`, except that it defaults
