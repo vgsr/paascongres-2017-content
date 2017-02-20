@@ -247,6 +247,8 @@ function paco2017_get_partner( $post = 0 ) {
  *
  * @since 1.0.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_partner_logo_id'
+ *
  * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
  * @return int Partner logo attachment ID
  */
@@ -262,9 +264,22 @@ function paco2017_get_partner_logo_id( $post = 0 ) {
 }
 
 /**
+ * Output the Partner logo image element
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ */
+function paco2017_the_partner_logo( $post = 0 ) {
+	echo paco2017_get_partner_logo( $post );
+}
+
+/**
  * Return the Partner logo image element
  *
  * @since 1.0.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_partner_logo'
  *
  * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
  * @return string Partner logo image element
@@ -282,9 +297,22 @@ function paco2017_get_partner_logo( $post = 0 ) {
 }
 
 /**
+ * Output the Partner url
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
+ */
+function paco2017_the_partner_url( $post = 0 ) {
+	echo paco2017_get_partner_url( $post );
+}
+
+/**
  * Return the Partner url
  *
  * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_partner_url'
  *
  * @param WP_Post|int $post Optional. Post object or ID. Defaults to the current post.
  * @return string Partner url
