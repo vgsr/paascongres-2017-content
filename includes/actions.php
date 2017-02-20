@@ -80,6 +80,7 @@ add_filter( 'wp_setup_nav_menu_item',                  'paco2017_setup_nav_menu_
 /** Widgets *******************************************************************/
 
 add_action( 'paco2017_widgets_init', array( 'Paco2017_Enrollments_Widget', 'register' ) );
+add_action( 'paco2017_widgets_init', array( 'Paco2017_Partners_Widget',    'register' ) );
 
 /** Users *********************************************************************/
 

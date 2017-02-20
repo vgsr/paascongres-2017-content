@@ -146,6 +146,7 @@ final class Paco2017_Content {
 		/** Widgets *****************************************************/
 
 		require( $this->includes_dir . 'classes/class-paco2017-enrollments-widget.php'  );
+		require( $this->includes_dir . 'classes/class-paco2017-partners-widget.php'     );
 
 		/** Admin *******************************************************/
 
