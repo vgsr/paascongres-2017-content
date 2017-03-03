@@ -277,9 +277,9 @@ function paco2017_login_redirect_to_input() { ?>
  */
 function paco2017_password_reset_expiration() {
 
-	// Use Enrollment Deadline date
+	// Use Enrollment Deadline date itself
 	if ( $date = paco2017_get_enrollment_deadline( 'Y-m-d' ) ) {
-		$time = strtotime( $date ) - time();
+		$time = strtotime( $date ) - time() + DAY_IN_SECONDS;
 
 	// Default to week timespan
 	} else {
