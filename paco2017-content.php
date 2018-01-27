@@ -240,7 +240,7 @@ final class Paco2017_Content {
 			array(
 				'labels'              => paco2017_get_lecture_post_type_labels(),
 				'supports'            => paco2017_get_lecture_post_type_supports(),
-				'description'         => __( 'Paascongres lectures', 'paco2017-content' ),
+				'description'         => esc_html__( 'Paascongres lectures', 'paco2017-content' ),
 				'capabilities'        => paco2017_get_lecture_post_type_caps(),
 				'capability_type'     => array( 'paco2017_lecture', 'paco2017_lectures' ),
 				'hierarchical'        => false,
@@ -267,7 +267,7 @@ final class Paco2017_Content {
 			array(
 				'labels'              => paco2017_get_workshop_post_type_labels(),
 				'supports'            => paco2017_get_workshop_post_type_supports(),
-				'description'         => __( 'Paascongres workshops', 'paco2017-content' ),
+				'description'         => esc_html__( 'Paascongres workshops', 'paco2017-content' ),
 				'capabilities'        => paco2017_get_workshop_post_type_caps(),
 				'capability_type'     => array( 'paco2017_workshop', 'paco2017_workshops' ),
 				'hierarchical'        => false,
@@ -294,7 +294,7 @@ final class Paco2017_Content {
 			array(
 				'labels'              => paco2017_get_agenda_post_type_labels(),
 				'supports'            => paco2017_get_agenda_post_type_supports(),
-				'description'         => __( 'Paascongres agenda items', 'paco2017-content' ),
+				'description'         => esc_html__( 'Paascongres agenda items', 'paco2017-content' ),
 				'capabilities'        => paco2017_get_agenda_post_type_caps(),
 				'capability_type'     => array( 'paco2017_agenda', 'paco2017_agendas' ),
 				'hierarchical'        => false,
@@ -321,7 +321,7 @@ final class Paco2017_Content {
 			array(
 				'labels'              => paco2017_get_partner_post_type_labels(),
 				'supports'            => paco2017_get_partner_post_type_supports(),
-				'description'         => __( 'Paascongres partners', 'paco2017-content' ),
+				'description'         => esc_html__( 'Paascongres partners', 'paco2017-content' ),
 				'capabilities'        => paco2017_get_partner_post_type_caps(),
 				'capability_type'     => array( 'paco2017_partner', 'paco2017_partners' ),
 				'hierarchical'        => false,
@@ -348,9 +348,9 @@ final class Paco2017_Content {
 			'element'    => '#partner_logo',
 			'image_size' => 'paco2017-partner-logo',
 			'labels'     => array(
-				'setPostMedia'    => __( 'Set Partner Logo',    'paco2017-content' ),
-				'postMediaTitle'  => __( 'Partner Logo',        'paco2017-content' ),
-				'removePostMedia' => __( 'Remove Partner Logo', 'paco2017-content' ),
+				'setPostMedia'    => esc_html__( 'Set Partner Logo',    'paco2017-content' ),
+				'postMediaTitle'  => esc_html__( 'Partner Logo',        'paco2017-content' ),
+				'removePostMedia' => esc_html__( 'Remove Partner Logo', 'paco2017-content' ),
 			),
 		) );
 	}

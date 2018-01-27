@@ -20,9 +20,9 @@ defined( 'ABSPATH' ) || exit;
 		<?php if ( paco2017_has_conf_day_date( $item ) ) {
 			$start_text = paco2017_object_has_conf_location( $item )
 				/* translators: 1. Time 2. Date 3. Location adverbial */
-				? __( 'Starts on %2$s at %1$s %3$s', 'paco2017-content' )
+				? esc_html__( 'Starts on %2$s at %1$s %3$s', 'paco2017-content' )
 				/* translators: 1. Time 2. Date */
-				: __( 'Starts on %2$s at %1$s', 'paco2017-content' );
+				: esc_html__( 'Starts on %2$s at %1$s', 'paco2017-content' );
 
 			printf(
 				'<span class="item-detail agenda-related">' . $start_text . '</span>',
@@ -34,9 +34,9 @@ defined( 'ABSPATH' ) || exit;
 		} else {
 			$start_text = paco2017_object_has_conf_location( $item )
 				/* translators: 1. Time 2. Location adverbial */
-				? __( 'Starts at %1$s %2$s', 'paco2017-content' )
+				? esc_html__( 'Starts at %1$s %2$s', 'paco2017-content' )
 				/* translators: 1. Time */
-				: __( 'Starts at %1$s', 'paco2017-content' );
+				: esc_html__( 'Starts at %1$s', 'paco2017-content' );
 
 			printf(
 				'<span class="item-detail agenda-related">' . $start_text . '</span>',

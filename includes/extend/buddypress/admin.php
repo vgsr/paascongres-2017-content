@@ -59,8 +59,8 @@ class Paco2017_BuddyPress_Admin {
 		if ( paco2017_admin_page_has_settings( 'paco2017-buddypress' ) ) {
 			$hooks[] = add_submenu_page(
 				'paco2017',
-				__( 'Paascongres BuddyPress Settings', 'paco2017-content' ),
-				_x( 'Profiles', 'buddypress settings admin menu', 'paco2017-content' ),
+				esc_html__( 'Paascongres BuddyPress Settings', 'paco2017-content' ),
+				esc_html_x( 'Profiles', 'buddypress settings admin menu', 'paco2017-content' ),
 				'paco2017_bp_admin_settings_page',
 				'paco2017-buddypress',
 				'paco2017_admin_page'

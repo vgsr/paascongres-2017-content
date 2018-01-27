@@ -223,7 +223,7 @@ function paco2017_bp_member_name( $name ) {
  * @return string Enrollmet mark markup
  */
 function paco2017_bp_get_enrollment_mark() {
-	return '<i class="paco2017-enrolled" title="' . __( 'This member is enrolled for the event.', 'paco2017-content' ) . '"></i>';
+	return '<i class="paco2017-enrolled" title="' . esc_html__( 'This member is enrolled for the event.', 'paco2017-content' ) . '"></i>';
 }
 
 /**

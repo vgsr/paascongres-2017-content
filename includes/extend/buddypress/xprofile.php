@@ -277,7 +277,7 @@ function paco2017_bp_xprofile_workshop_field_description( $description ) {
 
 	// When this is a workshop field, append description of limit count
 	if ( paco2017_bp_xprofile_is_a_workshop_field() ) {
-		$description .= ' ' . __( 'Between parentheses is the remaining amount of seats available at the workshop.', 'paco2017-content' );
+		$description .= ' ' . esc_html__( 'Between parentheses is the remaining amount of seats available at the workshop.', 'paco2017-content' );
 	}
 
 	return $description;

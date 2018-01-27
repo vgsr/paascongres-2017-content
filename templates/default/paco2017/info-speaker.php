@@ -22,7 +22,7 @@ if ( ! $description = paco2017_get_speaker_content() )
 		<div class="speaker-avatar"><?php paco2017_the_speaker_photo(); ?></div>
 		<?php endif; ?>
 
-		<h4 class="speaker-title"><?php printf( __( 'About %s', 'paco2017-content' ), paco2017_get_speaker_title() ); ?></h4>
+		<h4 class="speaker-title"><?php printf( esc_html__( 'About %s', 'paco2017-content' ), paco2017_get_speaker_title() ); ?></h4>
 	</div>
 
 	<div class="speaker-content">

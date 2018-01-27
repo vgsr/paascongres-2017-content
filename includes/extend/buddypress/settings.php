@@ -24,7 +24,7 @@ function paco2017_bp_add_settings_sections( $sections ) {
 
 	// Members settings
 	$sections['buddypress-fields'] = array(
-		'title'    => __( 'Profile Fields', 'paco2017-content' ),
+		'title'    => esc_html__( 'Profile Fields', 'paco2017-content' ),
 		'callback' => 'paco2017_bp_admin_setting_callback_fields_section',
 		'page'     => 'paco2017-buddypress',
 	);
@@ -47,7 +47,7 @@ function paco2017_bp_add_settings_fields( $fields ) {
 
 		// The Enrollment field
 		'_paco2017_bp_xprofile_enrollment_field' => array(
-			'title'             => __( 'Enrollment Field', 'paco2017-content' ),
+			'title'             => esc_html__( 'Enrollment Field', 'paco2017-content' ),
 			'callback'          => 'paco2017_bp_admin_setting_callback_enrollment_field',
 			'sanitize_callback' => 'intval',
 			'args'              => array(
@@ -64,7 +64,7 @@ function paco2017_bp_add_settings_fields( $fields ) {
 
 		// Required fields
 		'_paco2017_bp_xprofile_required_fields' => array(
-			'title'             => __( 'Required Fields', 'paco2017-content' ),
+			'title'             => esc_html__( 'Required Fields', 'paco2017-content' ),
 			'callback'          => 'paco2017_bp_admin_setting_callback_required_fields',
 			'sanitize_callback' => null, // This is not an actual setting
 			'args'              => array()
@@ -72,7 +72,7 @@ function paco2017_bp_add_settings_fields( $fields ) {
 
 		// Association field
 		'_paco2017_bp_xprofile_association_field' => array(
-			'title'             => __( 'Association Field', 'paco2017-content' ),
+			'title'             => esc_html__( 'Association Field', 'paco2017-content' ),
 			'callback'          => 'paco2017_bp_admin_setting_callback_xprofile_field',
 			'sanitize_callback' => 'intval',
 			'args'              => array(
@@ -83,7 +83,7 @@ function paco2017_bp_add_settings_fields( $fields ) {
 
 		// Presence field
 		'_paco2017_bp_xprofile_presence_field' => array(
-			'title'             => __( 'Presence Field', 'paco2017-content' ),
+			'title'             => esc_html__( 'Presence Field', 'paco2017-content' ),
 			'callback'          => 'paco2017_bp_admin_setting_callback_xprofile_field',
 			'sanitize_callback' => 'intval',
 			'args'              => array(
@@ -94,7 +94,7 @@ function paco2017_bp_add_settings_fields( $fields ) {
 
 		// Workshop 1 field
 		'_paco2017_bp_xprofile_workshop1_field' => array(
-			'title'             => __( 'Workshop 1 Field', 'paco2017-content' ),
+			'title'             => esc_html__( 'Workshop 1 Field', 'paco2017-content' ),
 			'callback'          => 'paco2017_bp_admin_setting_callback_workshop_field',
 			'sanitize_callback' => 'intval',
 			'args'              => array(
@@ -105,7 +105,7 @@ function paco2017_bp_add_settings_fields( $fields ) {
 
 		// Workshop 2 field
 		'_paco2017_bp_xprofile_workshop2_field' => array(
-			'title'             => __( 'Workshop 2 Field', 'paco2017-content' ),
+			'title'             => esc_html__( 'Workshop 2 Field', 'paco2017-content' ),
 			'callback'          => 'paco2017_bp_admin_setting_callback_workshop_field',
 			'sanitize_callback' => 'intval',
 			'args'              => array(
@@ -185,7 +185,7 @@ function paco2017_bp_admin_setting_callback_xprofile_field( $args = array() ) {
 
 	// Bail when the XProfile component is not active
 	if ( ! bp_is_active( 'xprofile' ) ) {
-		echo '<p>'. __( 'Activate the Extended Profiles component to use this setting.', 'paco2017-content' ) . '</p>';
+		echo '<p>'. esc_html__( 'Activate the Extended Profiles component to use this setting.', 'paco2017-content' ) . '</p>';
 		return;
 	}
 
@@ -250,7 +250,7 @@ function paco2017_bp_admin_xprofile_fields_dropdown( $args = array() ) {
 
 	// Start dropdown markup
 	$dd  = sprintf( '<select id="%s" name="%s" %s>', esc_attr( $args['id'] ), esc_attr( $args['name'] ), $args['multiselect'] ? 'multiple="multiple"' : '' );
-	$dd .= '<option value="">' . __( '&mdash; No Field &mdash;', 'paco2017-content' )  . '</option>';
+	$dd .= '<option value="">' . esc_html__( '&mdash; No Field &mdash;', 'paco2017-content' )  . '</option>';
 
 	// Walk profile groups
 	foreach ( $xprofile as $field_group ) {
@@ -422,7 +422,7 @@ function paco2017_bp_admin_setting_callback_workshop_field( $args = array() ) {
 		'taxonomy'          => paco2017_get_workshop_round_tax_id(),
 		'selected'          => get_option( $round_setting ),
 		'option_none_value' => 0,
-		'show_option_none'  => __( '&mdash; No Round &mdash;', 'paco2017-content' )
+		'show_option_none'  => esc_html__( '&mdash; No Round &mdash;', 'paco2017-content' )
 	) );
 
 	echo '<p class="description">' . esc_html__( "Optionally select the workshop round to filter the field's options by", 'paco2017-content' ) . '</p>';

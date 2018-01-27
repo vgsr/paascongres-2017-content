@@ -284,8 +284,8 @@ class Paco2017_BuddyPress {
 		if ( bp_is_active( 'xprofile' ) ) {
 
 			// Members: alter Profile tab name
-			$bp->members->nav->edit_nav( array( 'name' => _x( 'Enrollment', 'Profile header menu', 'paco2017-content' ) ), bp_get_profile_slug() );
-			$bp->members->nav->edit_nav( array( 'name' => _x( 'Manage', 'Profile header sub menu', 'paco2017-content' ) ), 'edit', bp_get_profile_slug() );
+			$bp->members->nav->edit_nav( array( 'name' => esc_html_x( 'Enrollment', 'Profile header menu', 'paco2017-content' ) ), bp_get_profile_slug() );
+			$bp->members->nav->edit_nav( array( 'name' => esc_html_x( 'Manage', 'Profile header sub menu', 'paco2017-content' ) ), 'edit', bp_get_profile_slug() );
 		}
 
 		if ( bp_is_active( 'settings' ) ) {
@@ -310,12 +310,12 @@ class Paco2017_BuddyPress {
 
 			// Alter Profile parent name
 			if ( 'my-account-xprofile' === $nav['id'] ) {
-				$wp_admin_nav[ $k ]['title'] = _x( 'Enrollment', 'My Account Profile', 'paco2017-content' );
+				$wp_admin_nav[ $k ]['title'] = esc_html_x( 'Enrollment', 'My Account Profile', 'paco2017-content' );
 			}
 
 			// Alter Profile edit name
 			if ( 'my-account-xprofile-edit' === $nav['id'] ) {
-				$wp_admin_nav[ $k ]['title'] = _x( 'Manage', 'My Account Profile sub nav', 'paco2017-content' );
+				$wp_admin_nav[ $k ]['title'] = esc_html_x( 'Manage', 'My Account Profile sub nav', 'paco2017-content' );
 			}
 		}
 
@@ -424,8 +424,8 @@ class Paco2017_BuddyPress {
 			paco2017_bp_oudlid_member_type(),
 			array(
 				'labels' => array(
-					'name'          => __( 'Amicaal Oud-lid', 'paco2017-content' ),
-					'singular_name' => __( 'Amicaal Oud-lid', 'paco2017-content' )
+					'name'          => esc_html__( 'Amicaal Oud-lid', 'paco2017-content' ),
+					'singular_name' => esc_html__( 'Amicaal Oud-lid', 'paco2017-content' )
 				),
 				'has_directory' => false,
 			)
@@ -455,7 +455,7 @@ class Paco2017_BuddyPress {
 
 		// Signal oud-lid members for all
 		if ( bp_has_member_type( $user_id, paco2017_bp_oudlid_member_type() ) ) {
-			echo '<i class="paco2017-badge member-type-badge">' . _x( 'Oud-lid', 'amicaal member type label', 'paco2017-content' ) . '</i>';
+			echo '<i class="paco2017-badge member-type-badge">' . esc_html_x( 'Oud-lid', 'amicaal member type label', 'paco2017-content' ) . '</i>';
 		}
 	}
 
