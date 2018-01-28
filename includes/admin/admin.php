@@ -24,7 +24,34 @@ class Paco2017_Admin {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
+		$this->setup_globals();
+		$this->includes();
 		$this->setup_actions();
+	}
+
+	/**
+	 * Setup default class globals
+	 *
+	 * @since 1.1.0
+	 */
+	private function setup_globals() {
+
+		/** Paths *******************************************************/
+
+		// Includes
+		$this->admin_dir = trailingslashit( paco2017_content()->includes_dir . 'admin' );
+		$this->admin_url = trailingslashit( paco2017_content()->includes_url . 'admin' );
+	}
+
+	/**
+	 * Include the required files
+	 *
+	 * @since 1.1.0
+	 */
+	private function includes() {
+		require( $this->admin_dir . 'dashboard.php' );
+		require( $this->admin_dir . 'functions.php' );
+		require( $this->admin_dir . 'settings.php'  );
 	}
 
 	/**

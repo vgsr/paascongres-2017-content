@@ -151,10 +151,7 @@ final class Paco2017_Content {
 		/** Admin *******************************************************/
 
 		if ( is_admin() ) {
-			require( $this->includes_dir . 'admin.php'           );
-			require( $this->includes_dir . 'admin-functions.php' );
-			require( $this->includes_dir . 'dashboard.php'       );
-			require( $this->includes_dir . 'settings.php'        );
+			require( $this->includes_dir . 'admin/admin.php' );
 		}
 
 		/** Extend ******************************************************/
