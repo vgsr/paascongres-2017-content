@@ -17,10 +17,11 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 1.0.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_agenda_post_type'
  * @return string Post type name
  */
 function paco2017_get_agenda_post_type() {
-	return 'paco2017_agenda';
+	return apply_filters( 'paco2017_get_agenda_post_type', paco2017_content()->agenda_post_type );
 }
 
 /**
@@ -140,10 +141,11 @@ function paco2017_get_agenda_rest_related( $object, $field_name, $request ) {
  *
  * @since 1.0.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_conf_day_tax_id'
  * @return string Taxonomy name
  */
 function paco2017_get_conf_day_tax_id() {
-	return 'paco2017_conf_day';
+	return apply_filters( 'paco2017_get_conf_day_tax_id', paco2017_content()->conf_day_tax_id );
 }
 
 /**
@@ -234,10 +236,11 @@ function paco2017_object_has_conf_day( $post = 0, $term = 0 ) {
  *
  * @since 1.0.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_conf_location_tax_id'
  * @return string Taxonomy name
  */
 function paco2017_get_conf_location_tax_id() {
-	return 'paco2017_conf_location';
+	return apply_filters( 'paco2017_get_conf_location_tax_id', paco2017_content()->conf_location_tax_id );
 }
 
 /**

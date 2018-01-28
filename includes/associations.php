@@ -17,10 +17,11 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 1.0.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_association_tax_id'
  * @return string Taxonomy name
  */
 function paco2017_get_association_tax_id() {
-	return 'paco2017_association';
+	return apply_filters( 'paco2017_get_association_tax_id', paco2017_content()->association_tax_id );
 }
 
 /**

@@ -17,10 +17,11 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 1.0.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_post_type'
  * @return string Post type name
  */
 function paco2017_get_workshop_post_type() {
-	return 'paco2017_workshop';
+	return apply_filters( 'paco2017_get_workshop_post_type', paco2017_content()->workshop_post_type );
 }
 
 /**
@@ -139,10 +140,11 @@ function paco2017_get_workshop_rest_user_count( $object, $field_name, $request )
  *
  * @since 1.0.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_cat_tax_id'
  * @return string Taxonomy name
  */
 function paco2017_get_workshop_cat_tax_id() {
-	return 'paco2017_workshop_category';
+	return apply_filters( 'paco2017_get_workshop_cat_tax_id', paco2017_content()->workshop_cat_tax_id );
 }
 
 /**
@@ -264,10 +266,11 @@ function paco2017_object_has_workshop_cat( $post = 0, $term = 0 ) {
  *
  * @since 1.1.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_workshop_round_tax_id'
  * @return string Taxonomy name
  */
 function paco2017_get_workshop_round_tax_id() {
-	return 'paco2017_workshop_round';
+	return apply_filters( 'paco2017_get_workshop_round_tax_id', paco2017_content()->workshop_round_tax_id );
 }
 
 /**

@@ -95,7 +95,24 @@ final class Paco2017_Content {
 		// Languages
 		$this->lang_dir     = trailingslashit( $this->plugin_dir . 'languages' );
 
-		/** Queries ***********************************************************/
+		/** Identifiers *************************************************/
+
+		// Post types
+		$this->lecture_post_type     = apply_filters( 'paco2017_lecture_post_type',  'paco2017_lecture'  );
+		$this->workshop_post_type    = apply_filters( 'paco2017_workshop_post_type', 'paco2017_workshop' );
+		$this->agenda_post_type      = apply_filters( 'paco2017_agenda_post_type',   'paco2017_agenda'   );
+		$this->partner_post_type     = apply_filters( 'paco2017_partner_post_type',  'paco2017_partner'  );
+
+		// Taxonomies
+		$this->association_tax_id    = apply_filters( 'paco2017_association_tax_id',    'paco2017_association'       );
+		$this->speaker_tax_id        = apply_filters( 'paco2017_speaker_tax_id',        'paco2017_speaker'           );
+		$this->workshop_cat_tax_id   = apply_filters( 'paco2017_workshop_cat_tax_id',   'paco2017_workshop_category' );
+		$this->workshop_round_tax_id = apply_filters( 'paco2017_workshop_round_tax_id', 'paco2017_workshop_round'    );
+		$this->conf_day_tax_id       = apply_filters( 'paco2017_conf_day_tax_id',       'paco2017_conf_day'          );
+		$this->conf_location_tax_id  = apply_filters( 'paco2017_conf_location_tax_id',  'paco2017_conf_location'     );
+		$this->partner_level_tax_id  = apply_filters( 'paco2017_partner_level_tax_id',  'paco2017_partner_level'     );
+
+		/** Queries *****************************************************/
 
 		$this->agenda_query      = new WP_Query();      // Main Agenda query
 		$this->conf_day_query    = new WP_Term_Query(); // Main Conference Day query

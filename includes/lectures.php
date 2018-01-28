@@ -17,10 +17,11 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 1.0.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_lecture_post_type'
  * @return string Post type name
  */
 function paco2017_get_lecture_post_type() {
-	return 'paco2017_lecture';
+	return apply_filters( 'paco2017_get_lecture_post_type', paco2017_content()->lecture_post_type );
 }
 
 /**

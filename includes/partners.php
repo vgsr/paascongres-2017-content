@@ -17,10 +17,11 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 1.0.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_partner_post_type'
  * @return string Post type name
  */
 function paco2017_get_partner_post_type() {
-	return 'paco2017_partner';
+	return apply_filters( 'paco2017_get_partner_post_type', paco2017_content()->partner_post_type );
 }
 
 /**
@@ -132,10 +133,11 @@ function paco2017_get_partner_rest_logo( $object, $meta, $request ) {
  *
  * @since 1.0.0
  *
+ * @uses apply_filters() Calls 'paco2017_get_partner_level_tax_id'
  * @return string Taxonomy name
  */
 function paco2017_get_partner_level_tax_id() {
-	return 'paco2017_partner_level';
+	return apply_filters( 'paco2017_get_partner_level_tax_id', paco2017_content()->partner_level_tax_id );
 }
 
 /**
