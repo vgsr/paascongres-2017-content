@@ -87,13 +87,13 @@ function paco2017_admin_get_settings_fields() {
 				'args'              => array()
 			),
 
-			// Housekeeping page
-			'_paco2017_housekeeping_page' => array(
-				'title'             => esc_html__( 'Housekeeping Page', 'paco2017-content' ),
+			// General Notices page
+			'_paco2017_general_notices_page' => array(
+				'title'             => esc_html__( 'General Notices Page', 'paco2017-content' ),
 				'callback'          => 'paco2017_admin_setting_callback_page',
 				'sanitize_callback' => 'intval',
 				'args'              => array(
-					'setting'     => '_paco2017_housekeeping_page',
+					'setting'     => '_paco2017_general_notices_page',
 					'description' => esc_html__( 'Select the page that contains the housekeeping information', 'paco2017-content' ),
 				)
 			),

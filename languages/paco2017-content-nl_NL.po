@@ -217,7 +217,7 @@ msgid "Remove magazine download file"
 msgstr "Verwijder magazine downloadbestand"
 
 #: includes/admin.php:323
-msgid "Housekeeping"
+msgid "General Notices"
 msgstr "Huishoudelijk"
 
 #: includes/admin.php:348
@@ -829,7 +829,7 @@ msgid "Contact Email"
 msgstr "Contact E-mail"
 
 #: includes/settings.php:92
-msgid "Housekeeping Page"
+msgid "General Notices Page"
 msgstr "Huishoudelijke pagina"
 
 #: includes/settings.php:97

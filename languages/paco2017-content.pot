@@ -206,7 +206,7 @@ msgid "Remove magazine download file"
 msgstr ""
 
 #: includes/admin.php:323
-msgid "Housekeeping"
+msgid "General Notices"
 msgstr ""
 
 #: includes/admin.php:348
@@ -817,7 +817,7 @@ msgid "Contact Email"
 msgstr ""
 
 #: includes/settings.php:92
-msgid "Housekeeping Page"
+msgid "General Notices Page"
 msgstr ""
 
 #: includes/settings.php:97

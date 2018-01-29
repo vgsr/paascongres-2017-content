@@ -660,15 +660,15 @@ function paco2017_get_contact_email_link( $link_text = '' ) {
 }
 
 /**
- * Return the page ID of the Housekeeping page setting
+ * Return the page ID of the General Notices page setting
  *
  * @since 1.0.0
  *
- * @uses apply_filters() Calls 'paco2017_get_housekeeping_page_id'
+ * @uses apply_filters() Calls 'paco2017_get_general_notices_page_id'
  * @return int Page ID
  */
-function paco2017_get_housekeeping_page_id() {
-	return (int) apply_filters( 'paco2017_get_housekeeping_page_id', get_option( '_paco2017_housekeeping_page', 0 ) );
+function paco2017_get_general_notices_page_id() {
+	return (int) apply_filters( 'paco2017_get_general_notices_page_id', get_option( '_paco2017_general_notices_page', 0 ) );
 }
 
 /**

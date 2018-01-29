@@ -345,9 +345,9 @@ class Paco2017_Admin {
 	 */
 	public function post_states( $states, $post ) {
 
-		// Mark the Housekeeping page
-		if ( paco2017_get_housekeeping_page_id() === $post->ID ) {
-			$states['housekeeping_page'] = esc_html__( 'Housekeeping', 'paco2017-content' );
+		// Mark the General Notices page
+		if ( paco2017_get_general_notices_page_id() === $post->ID ) {
+			$states['general_notices_page'] = esc_html__( 'General Notices', 'paco2017-content' );
 		}
 
 		return $states;
