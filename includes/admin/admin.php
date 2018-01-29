@@ -947,7 +947,7 @@ class Paco2017_Admin {
 			$association = wp_get_object_terms( $user_id, paco2017_get_association_tax_id() );
 
 			if ( ! empty( $association ) ) {
-				$url = add_query_arg( array( 'paco2017-association' => urlencode( $association[0]->term_id ) ) );
+				$url = add_query_arg( array( paco2017_get_association_tax_id() => urlencode( $association[0]->term_id ) ) );
 				$content .= '<a href="' . esc_url( $url ) . '">' . $association[0]->name . '</a>';
 			} else {
 				$content = '&mdash;';
@@ -971,13 +971,13 @@ class Paco2017_Admin {
 		global $wpdb, $pagenow;
 
 		// Filter by Association
-		if ( is_admin() && 'users.php' === $pagenow && ! empty( $_REQUEST['paco2017-association'] ) ) {
+		if ( is_admin() && 'users.php' === $pagenow && ! empty( $_REQUEST[ paco2017_get_association_tax_id() ] ) ) {
 
 			// Setup profile query
 			$tax_query = new WP_Tax_Query( array(
 				array(
 					'taxonomy' => paco2017_get_association_tax_id(),
-					'terms'    => array( urldecode( $_REQUEST['paco2017-association'] ) ),
+					'terms'    => array( urldecode( $_REQUEST[ paco2017_get_association_tax_id() ] ) ),
 				)
 			) );
 			$tax_clauses = $tax_query->get_sql( $wpdb->users, 'ID' );
