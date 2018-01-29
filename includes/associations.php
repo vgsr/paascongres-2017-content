@@ -34,18 +34,18 @@ function paco2017_get_association_tax_id() {
  */
 function paco2017_get_association_tax_labels() {
 	return apply_filters( 'paco2017_get_association_tax_labels', array(
-		'name'          => __( 'Paascongres Associations', 'paco2017-content' ),
-		'menu_name'     => __( 'Associations',             'paco2017-content' ),
-		'singular_name' => __( 'Association',              'paco2017-content' ),
-		'search_items'  => __( 'Search Associations',      'paco2017-content' ),
+		'name'          => esc_html__( 'Paascongres Associations', 'paco2017-content' ),
+		'menu_name'     => esc_html__( 'Associations',             'paco2017-content' ),
+		'singular_name' => esc_html__( 'Association',              'paco2017-content' ),
+		'search_items'  => esc_html__( 'Search Associations',      'paco2017-content' ),
 		'popular_items' => null, // Disable tagcloud
-		'all_items'     => __( 'All Associations',         'paco2017-content' ),
-		'no_items'      => __( 'No Association',           'paco2017-content' ),
-		'edit_item'     => __( 'Edit Association',         'paco2017-content' ),
-		'update_item'   => __( 'Update Association',       'paco2017-content' ),
-		'add_new_item'  => __( 'Add New Association',      'paco2017-content' ),
-		'new_item_name' => __( 'New Association Name',     'paco2017-content' ),
-		'view_item'     => __( 'View Association',         'paco2017-content' )
+		'all_items'     => esc_html__( 'All Associations',         'paco2017-content' ),
+		'no_items'      => esc_html__( 'No Association',           'paco2017-content' ),
+		'edit_item'     => esc_html__( 'Edit Association',         'paco2017-content' ),
+		'update_item'   => esc_html__( 'Update Association',       'paco2017-content' ),
+		'add_new_item'  => esc_html__( 'Add New Association',      'paco2017-content' ),
+		'new_item_name' => esc_html__( 'New Association Name',     'paco2017-content' ),
+		'view_item'     => esc_html__( 'View Association',         'paco2017-content' )
 	) );
 }
 

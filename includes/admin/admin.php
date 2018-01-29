@@ -238,9 +238,9 @@ class Paco2017_Admin {
 	 * @since 1.0.0
 	 */
 	public function add_dashboard_widgets() {
-		wp_add_dashboard_widget( 'paco2017_dashboard_status', __( 'At a Glance' ), 'paco2017_dashboard_status' );
-		wp_add_dashboard_widget( 'paco2017_dashboard_enrollments', __( 'Enrollments', 'paco2017-content' ), 'paco2017_dashboard_enrollments' );
-		wp_add_dashboard_widget( 'dashboard_activity', __( 'Activity' ), 'wp_dashboard_site_activity' );
+		wp_add_dashboard_widget( 'paco2017_dashboard_status', esc_html__( 'At a Glance' ), 'paco2017_dashboard_status' );
+		wp_add_dashboard_widget( 'paco2017_dashboard_enrollments', esc_html__( 'Enrollments', 'paco2017-content' ), 'paco2017_dashboard_enrollments' );
+		wp_add_dashboard_widget( 'dashboard_activity', esc_html__( 'Activity' ), 'wp_dashboard_site_activity' );
 	}
 
 	/**
@@ -347,7 +347,7 @@ class Paco2017_Admin {
 
 		// Mark the Housekeeping page
 		if ( paco2017_get_housekeeping_page_id() === $post->ID ) {
-			$states['housekeeping_page'] = __( 'Housekeeping', 'paco2017-content' );
+			$states['housekeeping_page'] = esc_html__( 'Housekeeping', 'paco2017-content' );
 		}
 
 		return $states;
@@ -904,7 +904,7 @@ class Paco2017_Admin {
 	 * @since 1.0.0
 	 */
 	public function add_nav_menu_meta_box() {
-		add_meta_box( 'add-paco2017-nav-menu', __( 'Paascongres', 'paco2017-content' ), 'paco2017_nav_menu_metabox', 'nav-menus', 'side', 'default' );
+		add_meta_box( 'add-paco2017-nav-menu', esc_html__( 'Paascongres', 'paco2017-content' ), 'paco2017_nav_menu_metabox', 'nav-menus', 'side', 'default' );
 	}
 
 	/** Users ***********************************************************/

@@ -34,26 +34,26 @@ function paco2017_get_agenda_post_type() {
  */
 function paco2017_get_agenda_post_type_labels() {
 	return apply_filters( 'paco2017_get_agenda_post_type_labels', array(
-		'name'                  => __( 'Paascongres Agenda Items',       'paco2017-content' ),
-		'menu_name'             => __( 'Agenda',                         'paco2017-content' ),
-		'singular_name'         => __( 'Agenda Item',                    'paco2017-content' ),
-		'all_items'             => __( 'All Agenda Items',               'paco2017-content' ),
-		'add_new'               => __( 'New Agenda Item',                'paco2017-content' ),
-		'add_new_item'          => __( 'Create New Agenda Item',         'paco2017-content' ),
-		'edit'                  => __( 'Edit',                           'paco2017-content' ),
-		'edit_item'             => __( 'Edit Agenda Item',               'paco2017-content' ),
-		'new_item'              => __( 'New Agenda Item',                'paco2017-content' ),
-		'view'                  => __( 'View Agenda Item',               'paco2017-content' ),
-		'view_item'             => __( 'View Agenda Item',               'paco2017-content' ),
-		'view_items'            => __( 'View Agenda Items',              'paco2017-content' ), // Since WP 4.7
-		'search_items'          => __( 'Search Agenda Items',            'paco2017-content' ),
-		'not_found'             => __( 'No agenda items found',          'paco2017-content' ),
-		'not_found_in_trash'    => __( 'No agenda items found in Trash', 'paco2017-content' ),
-		'insert_into_item'      => __( 'Insert into agenda item',        'paco2017-content' ),
-		'uploaded_to_this_item' => __( 'Uploaded to this agenda item',   'paco2017-content' ),
-		'filter_items_list'     => __( 'Filter agenda items list',       'paco2017-content' ),
-		'items_list_navigation' => __( 'Agenda Items list navigation',   'paco2017-content' ),
-		'items_list'            => __( 'Agenda Items list',              'paco2017-content' ),
+		'name'                  => esc_html__( 'Paascongres Agenda Items',       'paco2017-content' ),
+		'menu_name'             => esc_html__( 'Agenda',                         'paco2017-content' ),
+		'singular_name'         => esc_html__( 'Agenda Item',                    'paco2017-content' ),
+		'all_items'             => esc_html__( 'All Agenda Items',               'paco2017-content' ),
+		'add_new'               => esc_html__( 'New Agenda Item',                'paco2017-content' ),
+		'add_new_item'          => esc_html__( 'Create New Agenda Item',         'paco2017-content' ),
+		'edit'                  => esc_html__( 'Edit',                           'paco2017-content' ),
+		'edit_item'             => esc_html__( 'Edit Agenda Item',               'paco2017-content' ),
+		'new_item'              => esc_html__( 'New Agenda Item',                'paco2017-content' ),
+		'view'                  => esc_html__( 'View Agenda Item',               'paco2017-content' ),
+		'view_item'             => esc_html__( 'View Agenda Item',               'paco2017-content' ),
+		'view_items'            => esc_html__( 'View Agenda Items',              'paco2017-content' ), // Since WP 4.7
+		'search_items'          => esc_html__( 'Search Agenda Items',            'paco2017-content' ),
+		'not_found'             => esc_html__( 'No agenda items found',          'paco2017-content' ),
+		'not_found_in_trash'    => esc_html__( 'No agenda items found in Trash', 'paco2017-content' ),
+		'insert_into_item'      => esc_html__( 'Insert into agenda item',        'paco2017-content' ),
+		'uploaded_to_this_item' => esc_html__( 'Uploaded to this agenda item',   'paco2017-content' ),
+		'filter_items_list'     => esc_html__( 'Filter agenda items list',       'paco2017-content' ),
+		'items_list_navigation' => esc_html__( 'Agenda Items list navigation',   'paco2017-content' ),
+		'items_list'            => esc_html__( 'Agenda Items list',              'paco2017-content' ),
 	) );
 }
 
@@ -158,18 +158,18 @@ function paco2017_get_conf_day_tax_id() {
  */
 function paco2017_get_conf_day_tax_labels() {
 	return apply_filters( 'paco2017_get_conf_day_tax_labels', array(
-		'name'          => __( 'Paascongres Conference Days', 'paco2017-content' ),
-		'menu_name'     => __( 'Conference Days',             'paco2017-content' ),
-		'singular_name' => __( 'Conference Day',              'paco2017-content' ),
-		'search_items'  => __( 'Search Conference Days',      'paco2017-content' ),
+		'name'          => esc_html__( 'Paascongres Conference Days', 'paco2017-content' ),
+		'menu_name'     => esc_html__( 'Conference Days',             'paco2017-content' ),
+		'singular_name' => esc_html__( 'Conference Day',              'paco2017-content' ),
+		'search_items'  => esc_html__( 'Search Conference Days',      'paco2017-content' ),
 		'popular_items' => null, // Disable tagcloud
-		'all_items'     => __( 'All Conference Days',         'paco2017-content' ),
-		'no_items'      => __( 'No Conference Day',           'paco2017-content' ),
-		'edit_item'     => __( 'Edit Conference Day',         'paco2017-content' ),
-		'update_item'   => __( 'Update Conference Day',       'paco2017-content' ),
-		'add_new_item'  => __( 'Add New Conference Day',      'paco2017-content' ),
-		'new_item_name' => __( 'New Conference Day Name',     'paco2017-content' ),
-		'view_item'     => __( 'View Conference Day',         'paco2017-content' )
+		'all_items'     => esc_html__( 'All Conference Days',         'paco2017-content' ),
+		'no_items'      => esc_html__( 'No Conference Day',           'paco2017-content' ),
+		'edit_item'     => esc_html__( 'Edit Conference Day',         'paco2017-content' ),
+		'update_item'   => esc_html__( 'Update Conference Day',       'paco2017-content' ),
+		'add_new_item'  => esc_html__( 'Add New Conference Day',      'paco2017-content' ),
+		'new_item_name' => esc_html__( 'New Conference Day Name',     'paco2017-content' ),
+		'view_item'     => esc_html__( 'View Conference Day',         'paco2017-content' )
 	) );
 }
 
@@ -253,18 +253,18 @@ function paco2017_get_conf_location_tax_id() {
  */
 function paco2017_get_conf_location_tax_labels() {
 	return apply_filters( 'paco2017_get_conf_location_tax_labels', array(
-		'name'          => __( 'Paascongres Conference Locations', 'paco2017-content' ),
-		'menu_name'     => __( 'Locations',                        'paco2017-content' ),
-		'singular_name' => __( 'Conference Location',              'paco2017-content' ),
-		'search_items'  => __( 'Search Conference Locations',      'paco2017-content' ),
+		'name'          => esc_html__( 'Paascongres Conference Locations', 'paco2017-content' ),
+		'menu_name'     => esc_html__( 'Locations',                        'paco2017-content' ),
+		'singular_name' => esc_html__( 'Conference Location',              'paco2017-content' ),
+		'search_items'  => esc_html__( 'Search Conference Locations',      'paco2017-content' ),
 		'popular_items' => null, // Disable tagcloud
-		'all_items'     => __( 'All Conference Locations',         'paco2017-content' ),
-		'no_items'      => __( 'No Conference Location',           'paco2017-content' ),
-		'edit_item'     => __( 'Edit Conference Location',         'paco2017-content' ),
-		'update_item'   => __( 'Update Conference Location',       'paco2017-content' ),
-		'add_new_item'  => __( 'Add New Conference Location',      'paco2017-content' ),
-		'new_item_name' => __( 'New Conference Location Name',     'paco2017-content' ),
-		'view_item'     => __( 'View Conference Location',         'paco2017-content' )
+		'all_items'     => esc_html__( 'All Conference Locations',         'paco2017-content' ),
+		'no_items'      => esc_html__( 'No Conference Location',           'paco2017-content' ),
+		'edit_item'     => esc_html__( 'Edit Conference Location',         'paco2017-content' ),
+		'update_item'   => esc_html__( 'Update Conference Location',       'paco2017-content' ),
+		'add_new_item'  => esc_html__( 'Add New Conference Location',      'paco2017-content' ),
+		'new_item_name' => esc_html__( 'New Conference Location Name',     'paco2017-content' ),
+		'view_item'     => esc_html__( 'View Conference Location',         'paco2017-content' )
 	) );
 }
 

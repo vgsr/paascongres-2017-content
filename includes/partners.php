@@ -34,26 +34,26 @@ function paco2017_get_partner_post_type() {
  */
 function paco2017_get_partner_post_type_labels() {
 	return apply_filters( 'paco2017_get_partner_post_type_labels', array(
-		'name'                  => __( 'Paascongres Partners',       'paco2017-content' ),
-		'menu_name'             => __( 'Partners',                   'paco2017-content' ),
-		'singular_name'         => __( 'Partner',                    'paco2017-content' ),
-		'all_items'             => __( 'All Partners',               'paco2017-content' ),
-		'add_new'               => __( 'New Partner',                'paco2017-content' ),
-		'add_new_item'          => __( 'Create New Partner',         'paco2017-content' ),
-		'edit'                  => __( 'Edit',                       'paco2017-content' ),
-		'edit_item'             => __( 'Edit Partner',               'paco2017-content' ),
-		'new_item'              => __( 'New Partner',                'paco2017-content' ),
-		'view'                  => __( 'View Partner',               'paco2017-content' ),
-		'view_item'             => __( 'View Partner',               'paco2017-content' ),
-		'view_items'            => __( 'View Partners',              'paco2017-content' ), // Since WP 4.7
-		'search_items'          => __( 'Search Partners',            'paco2017-content' ),
-		'not_found'             => __( 'No partners found',          'paco2017-content' ),
-		'not_found_in_trash'    => __( 'No partners found in Trash', 'paco2017-content' ),
-		'insert_into_item'      => __( 'Insert into partner',        'paco2017-content' ),
-		'uploaded_to_this_item' => __( 'Uploaded to this partner',   'paco2017-content' ),
-		'filter_items_list'     => __( 'Filter partners list',       'paco2017-content' ),
-		'items_list_navigation' => __( 'Partners list navigation',   'paco2017-content' ),
-		'items_list'            => __( 'Partners list',              'paco2017-content' ),
+		'name'                  => esc_html__( 'Paascongres Partners',       'paco2017-content' ),
+		'menu_name'             => esc_html__( 'Partners',                   'paco2017-content' ),
+		'singular_name'         => esc_html__( 'Partner',                    'paco2017-content' ),
+		'all_items'             => esc_html__( 'All Partners',               'paco2017-content' ),
+		'add_new'               => esc_html__( 'New Partner',                'paco2017-content' ),
+		'add_new_item'          => esc_html__( 'Create New Partner',         'paco2017-content' ),
+		'edit'                  => esc_html__( 'Edit',                       'paco2017-content' ),
+		'edit_item'             => esc_html__( 'Edit Partner',               'paco2017-content' ),
+		'new_item'              => esc_html__( 'New Partner',                'paco2017-content' ),
+		'view'                  => esc_html__( 'View Partner',               'paco2017-content' ),
+		'view_item'             => esc_html__( 'View Partner',               'paco2017-content' ),
+		'view_items'            => esc_html__( 'View Partners',              'paco2017-content' ), // Since WP 4.7
+		'search_items'          => esc_html__( 'Search Partners',            'paco2017-content' ),
+		'not_found'             => esc_html__( 'No partners found',          'paco2017-content' ),
+		'not_found_in_trash'    => esc_html__( 'No partners found in Trash', 'paco2017-content' ),
+		'insert_into_item'      => esc_html__( 'Insert into partner',        'paco2017-content' ),
+		'uploaded_to_this_item' => esc_html__( 'Uploaded to this partner',   'paco2017-content' ),
+		'filter_items_list'     => esc_html__( 'Filter partners list',       'paco2017-content' ),
+		'items_list_navigation' => esc_html__( 'Partners list navigation',   'paco2017-content' ),
+		'items_list'            => esc_html__( 'Partners list',              'paco2017-content' ),
 	) );
 }
 
@@ -150,18 +150,18 @@ function paco2017_get_partner_level_tax_id() {
  */
 function paco2017_get_partner_level_tax_labels() {
 	return apply_filters( 'paco2017_get_partner_level_tax_labels', array(
-		'name'          => __( 'Paascongres Partner Levels', 'paco2017-content' ),
-		'menu_name'     => __( 'Partner Levels',             'paco2017-content' ),
-		'singular_name' => __( 'Partner Level',              'paco2017-content' ),
-		'search_items'  => __( 'Search Partner Levels',      'paco2017-content' ),
+		'name'          => esc_html__( 'Paascongres Partner Levels', 'paco2017-content' ),
+		'menu_name'     => esc_html__( 'Partner Levels',             'paco2017-content' ),
+		'singular_name' => esc_html__( 'Partner Level',              'paco2017-content' ),
+		'search_items'  => esc_html__( 'Search Partner Levels',      'paco2017-content' ),
 		'popular_items' => null, // Disable tagcloud
-		'all_items'     => __( 'All Partner Levels',         'paco2017-content' ),
-		'no_items'      => __( 'No Partner Level',           'paco2017-content' ),
-		'edit_item'     => __( 'Edit Partner Level',         'paco2017-content' ),
-		'update_item'   => __( 'Update Partner Level',       'paco2017-content' ),
-		'add_new_item'  => __( 'Add New Partner Level',      'paco2017-content' ),
-		'new_item_name' => __( 'New Partner Level Name',     'paco2017-content' ),
-		'view_item'     => __( 'View Partner Level',         'paco2017-content' )
+		'all_items'     => esc_html__( 'All Partner Levels',         'paco2017-content' ),
+		'no_items'      => esc_html__( 'No Partner Level',           'paco2017-content' ),
+		'edit_item'     => esc_html__( 'Edit Partner Level',         'paco2017-content' ),
+		'update_item'   => esc_html__( 'Update Partner Level',       'paco2017-content' ),
+		'add_new_item'  => esc_html__( 'Add New Partner Level',      'paco2017-content' ),
+		'new_item_name' => esc_html__( 'New Partner Level Name',     'paco2017-content' ),
+		'view_item'     => esc_html__( 'View Partner Level',         'paco2017-content' )
 	) );
 }
 

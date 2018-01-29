@@ -34,18 +34,18 @@ function paco2017_get_speaker_tax_id() {
  */
 function paco2017_get_speaker_tax_labels() {
 	return apply_filters( 'paco2017_get_speaker_tax_labels', array(
-		'name'          => __( 'Paascongres Speakers', 'paco2017-content' ),
-		'menu_name'     => __( 'Speakers',             'paco2017-content' ),
-		'singular_name' => __( 'Speaker',              'paco2017-content' ),
-		'search_items'  => __( 'Search Speakers',      'paco2017-content' ),
+		'name'          => esc_html__( 'Paascongres Speakers', 'paco2017-content' ),
+		'menu_name'     => esc_html__( 'Speakers',             'paco2017-content' ),
+		'singular_name' => esc_html__( 'Speaker',              'paco2017-content' ),
+		'search_items'  => esc_html__( 'Search Speakers',      'paco2017-content' ),
 		'popular_items' => null, // Disable tagcloud
-		'all_items'     => __( 'All Speakers',         'paco2017-content' ),
-		'no_items'      => __( 'No Speaker',           'paco2017-content' ),
-		'edit_item'     => __( 'Edit Speaker',         'paco2017-content' ),
-		'update_item'   => __( 'Update Speaker',       'paco2017-content' ),
-		'add_new_item'  => __( 'Add New Speaker',      'paco2017-content' ),
-		'new_item_name' => __( 'New Speaker Name',     'paco2017-content' ),
-		'view_item'     => __( 'View Speaker',         'paco2017-content' )
+		'all_items'     => esc_html__( 'All Speakers',         'paco2017-content' ),
+		'no_items'      => esc_html__( 'No Speaker',           'paco2017-content' ),
+		'edit_item'     => esc_html__( 'Edit Speaker',         'paco2017-content' ),
+		'update_item'   => esc_html__( 'Update Speaker',       'paco2017-content' ),
+		'add_new_item'  => esc_html__( 'Add New Speaker',      'paco2017-content' ),
+		'new_item_name' => esc_html__( 'New Speaker Name',     'paco2017-content' ),
+		'view_item'     => esc_html__( 'View Speaker',         'paco2017-content' )
 	) );
 }
 

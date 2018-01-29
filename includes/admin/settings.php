@@ -25,28 +25,28 @@ function paco2017_admin_get_settings_sections() {
 
 		// Main settings
 		'paco2017_settings_main' => array(
-			'title'    => __( 'Main Settings', 'paco2017' ),
+			'title'    => esc_html__( 'Main Settings', 'paco2017' ),
 			'callback' => 'paco2017_admin_setting_callback_main_section',
 			'page'     => 'paco2017'
 		),
 
 		// Archive settings
 		'paco2017_settings_archives' => array(
-			'title'    => __( 'Archive Settings', 'paco2017' ),
+			'title'    => esc_html__( 'Archive Settings', 'paco2017' ),
 			'callback' => 'paco2017_admin_setting_callback_archives_section',
 			'page'     => 'paco2017'
 		),
 
 		// Slug settings
 		'paco2017_settings_slugs' => array(
-			'title'    => __( 'Slug Settings', 'paco2017' ),
+			'title'    => esc_html__( 'Slug Settings', 'paco2017' ),
 			'callback' => 'paco2017_admin_setting_callback_slugs_section',
 			'page'     => 'paco2017'
 		),
 
 		// Partner settings
 		'paco2017_settings_advertorials' => array(
-			'title'    => __( 'Advertorials', 'paco2017' ),
+			'title'    => esc_html__( 'Advertorials', 'paco2017' ),
 			'callback' => 'paco2017_admin_setting_callback_advertorials_section',
 			'page'     => 'paco2017-partners'
 		),
@@ -399,7 +399,7 @@ function paco2017_admin_setting_callback_page( $args = array() ) {
 	wp_dropdown_pages( array(
 		'name'             => $args['setting'],
 		'selected'         => $page_id,
-		'show_option_none' => __( '&mdash; No Page &mdash;', 'paco2017-content' ),
+		'show_option_none' => esc_html__( '&mdash; No Page &mdash;', 'paco2017-content' ),
 	) );
 
 	// Display View link
