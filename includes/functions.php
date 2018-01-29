@@ -10,6 +10,68 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+/** Versions ******************************************************************/
+
+/**
+ * Output the plugin version
+ *
+ * @since 1.1.0
+ */
+function paco2017_version() {
+	echo paco2017_get_version();
+}
+
+	/**
+	 * Return the plugin version
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string The plugin version
+	 */
+	function paco2017_get_version() {
+		return paco2017_content()->version;
+	}
+
+/**
+ * Output the plugin database version
+ *
+ * @since 1.1.0
+ */
+function paco2017_db_version() {
+	echo paco2017_get_db_version();
+}
+
+	/**
+	 * Return the plugin database version
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return string The plugin version
+	 */
+	function paco2017_get_db_version() {
+		return paco2017_content()->db_version;
+	}
+
+/**
+ * Output the plugin database version directly from the database
+ *
+ * @since 1.1.0
+ */
+function paco2017_db_version_raw() {
+	echo paco2017_get_db_version_raw();
+}
+
+	/**
+	 * Return the plugin database version directly from the database
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return string The current plugin version
+	 */
+	function paco2017_get_db_version_raw() {
+		return get_option( '_paco2017_db_version', '' );
+	}
+
 /** Rewrite *******************************************************************/
 
 /**
@@ -1014,17 +1076,6 @@ function paco2017_update_option_autoembed_cache( $cache, $cachekey, $id ) {
 }
 
 /** Utility *******************************************************************/
-
-/**
- * Return the current plugin's version
- *
- * @since 1.0.0
- *
- * @return string Plugin version
- */
-function paco2017_get_version() {
-	return paco2017_content()->version;
-}
 
 /**
  * Determine if this plugin is being deactivated
