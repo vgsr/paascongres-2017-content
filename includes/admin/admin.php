@@ -89,6 +89,9 @@ class Paco2017_Admin {
 		add_filter( 'manage_users_columns',       array( $this, 'users_add_columns'   )        );
 		add_filter( 'manage_users_custom_column', array( $this, 'users_custom_column' ), 10, 3 );
 		add_action( 'pre_user_query',             array( $this, 'pre_user_query'      )        );
+
+		// Updater
+		add_action( 'admin_init', 'paco2017_setup_updater', 999 );
 	}
 
 	/** Public methods **************************************************/

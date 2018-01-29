@@ -149,6 +149,7 @@ final class Paco2017_Content {
 		require( $this->includes_dir . 'template.php'     );
 		require( $this->includes_dir . 'theme-compat.php' );
 		require( $this->includes_dir . 'users.php'        );
+		require( $this->includes_dir . 'update.php'       );
 		require( $this->includes_dir . 'workshops.php'    );
 
 		/** Classes *****************************************************/
