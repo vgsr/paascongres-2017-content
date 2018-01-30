@@ -106,25 +106,13 @@ class Paco2017_Admin {
 	 * Register the admin menu pages
 	 *
 	 * @since 1.0.0
-	 *
-	 * @global array $submenu
 	 */
 	public function admin_menu() {
 
-		// Collect highlightable pages
-		$hooks = array(
-			// Post type
-			'post-new.php',
-			'post.php',
-			// Taxonomy
-			'edit-tags.php',
-			'term.php',
-		);
-
 		// Dashboard admin page
 		$dashboard = add_menu_page(
-			__( 'Paascongres Dashboard', 'paco2017-content' ),
-			__( 'Paascongres', 'paco2017-content' ),
+			esc_html__( 'Paascongres Dashboard', 'paco2017-content' ),
+			esc_html__( 'Paascongres', 'paco2017-content' ),
 			'paco2017_admin_page',
 			'paco2017',
 			'paco2017_admin_page',
@@ -132,34 +120,21 @@ class Paco2017_Admin {
 			4
 		);
 
-		// Manage Lectures
-		$hooks[] = paco2017_admin_submenu_post_type( paco2017_get_lecture_post_type() );
-
-		// Manage Workshops
-		$hooks[] = paco2017_admin_submenu_post_type( paco2017_get_workshop_post_type() );
-
-		// Manage Speakers
+		// Manage post types and taxonomies
+		paco2017_admin_submenu_post_type( paco2017_get_lecture_post_type() );
+		paco2017_admin_submenu_post_type( paco2017_get_workshop_post_type() );
 		paco2017_admin_submenu_taxonomy( paco2017_get_speaker_tax_id() );
-
-		// Manage Agenda
-		$hooks[] = paco2017_admin_submenu_post_type( paco2017_get_agenda_post_type() );
-
-		// Manage Locations
+		paco2017_admin_submenu_post_type( paco2017_get_agenda_post_type() );
 		paco2017_admin_submenu_taxonomy( paco2017_get_conf_location_tax_id() );
-
-		// Manage Partners
-		$hooks[] = paco2017_admin_submenu_post_type( paco2017_get_partner_post_type() );
-
-		// Manage Associations
-		$association = paco2017_get_association_tax_id();
-		paco2017_admin_submenu_taxonomy( $association, "edit-tags.php?taxonomy={$association}&post_type=user" );
+		paco2017_admin_submenu_post_type( paco2017_get_partner_post_type() );
+		paco2017_admin_submenu_taxonomy( paco2017_get_association_tax_id(), sprintf( "edit-tags.php?taxonomy=%s&post_type=user", paco2017_get_association_tax_id() ) );
 
 		// Settings page
 		if ( paco2017_admin_page_has_settings( 'paco2017' ) ) {
 			add_submenu_page(
 				'paco2017',
-				__( 'Paascongres Settings', 'paco2017-content' ),
-				__( 'Settings', 'paco2017-content' ),
+				esc_html__( 'Paascongres Settings', 'paco2017-content' ),
+				esc_html__( 'Settings', 'paco2017-content' ),
 				'paco2017_admin_settings_page',
 				'paco2017-settings',
 				'paco2017_admin_page'
@@ -168,10 +143,10 @@ class Paco2017_Admin {
 
 		// Partner settings page
 		if ( paco2017_admin_page_has_settings( 'paco2017-partners' ) ) {
-			$hooks[] = add_submenu_page(
+			add_submenu_page(
 				'paco2017',
-				__( 'Paascongres Partner Settings', 'paco2017-content' ),
-				__( 'Partner Settings', 'paco2017-content' ),
+				esc_html__( 'Paascongres Partner Settings', 'paco2017-content' ),
+				esc_html__( 'Partner Settings', 'paco2017-content' ),
 				'paco2017_admin_partners_page',
 				'paco2017-partners',
 				'paco2017_admin_page'
@@ -180,13 +155,11 @@ class Paco2017_Admin {
 
 		// Register admin page hooks
 		add_action( "load-{$dashboard}",                     'paco2017_admin_load_dashboard_page' );
+		add_action( 'current_screen',                        'paco2017_admin_menu_highlight'      ); // Modify current screen data
+		add_action( 'admin_head',                            'paco2017_admin_menu_highlight'      ); // Modify admin menu pointers
 		add_action( 'paco2017_admin_page-paco2017',          'paco2017_admin_dashboard_page'      );
 		add_action( 'paco2017_admin_page-paco2017-settings', 'paco2017_admin_settings_page'       );
 		add_action( 'paco2017_admin_page-paco2017-partners', 'paco2017_admin_settings_page'       );
-
-		foreach ( $hooks as $hook ) {
-			add_action( "admin_head-{$hook}", 'paco2017_admin_menu_highlight' );
-		}
 	}
 
 	/**

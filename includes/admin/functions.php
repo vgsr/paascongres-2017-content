@@ -19,12 +19,16 @@ defined( 'ABSPATH' ) || exit;
  *
  * @global string $parent_file
  * @global string $submenu_file
+ *
+ * @param WP_Screen $screen Current screen
  */
-function paco2017_admin_menu_highlight() {
+function paco2017_admin_menu_highlight( $screen = '' ) {
 	global $parent_file, $submenu_file;
 
-	// Get the screen
-	$screen = get_current_screen();
+	// Fetch the current screen when not provided
+	if ( empty( $screen ) ) {
+		$screen = get_current_screen();
+	}
 
 	/**
 	 * Tweak the post type and taxonomy subnav menus to show the right
@@ -83,6 +87,9 @@ function paco2017_admin_menu_highlight() {
 		$parent_file  = 'paco2017';
 		$submenu_file = 'paco2017-settings';
 	}
+
+	// Overwrite new parent file in the screen
+	$screen->parent_file = $parent_file;
 }
 
 /**
