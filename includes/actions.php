@@ -104,7 +104,7 @@ add_filter( 'paco2017_get_advertorial', 'paco2017_reset_advertorial_location', 9
 /** Admin *********************************************************************/
 
 if ( is_admin() ) {
-	add_action( 'init', 'paco2017_admin' );
+	add_action( 'paco2017_init', 'paco2017_admin' );
 }
 
 /** Extend ********************************************************************/
