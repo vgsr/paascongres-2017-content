@@ -141,7 +141,7 @@ fieldset.paco2017-profile-field label.option-label {
 	width: 100%;
 }
 
-/* List Table */
+/* Post List Table */
 
 .tablenav .paco2017-conf-day-link {
 	overflow: initial;
@@ -224,4 +224,11 @@ fieldset.paco2017-profile-field label.option-label {
 
 .paco2017_object_details .time-part {
 	width: 45%;
+}
+
+/* Taxonomies */
+
+.edit-tags-php .fixed .column-logo,
+.edit-tags-php .fixed .column-photo {
+	width: 75px;
 }
