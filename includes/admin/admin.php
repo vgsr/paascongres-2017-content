@@ -103,6 +103,17 @@ class Paco2017_Admin {
 	/** Public methods **************************************************/
 
 	/**
+	 * Return whether we're not on a plugin admin page
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return bool Is this not a plugin admin page?
+	 */
+	public function bail() {
+		return ! ( is_admin() && 'paco2017' === get_current_screen()->parent_file );
+	}
+
+	/**
 	 * Register the admin menu pages
 	 *
 	 * @since 1.0.0
