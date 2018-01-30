@@ -50,12 +50,30 @@ function paco2017_get_association_tax_labels() {
 }
 
 /**
+ * Return the additional labels for the Assocation taxonomy
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_get_additional_association_tax_labels'
+ * @return array Additional Association taxonomy labels
+ */
+function paco2017_get_additional_association_tax_labels() {
+	return apply_filters( 'paco2017_get_additional_association_tax_labels', array(
+		'add_new' => esc_html__( 'New Association', 'paco2017-content' ),
+	) );
+}
+
+/**
  * Act when the Association taxonomy has been registered
  *
  * @since 1.1.0
  */
 function paco2017_registered_association_taxonomy() {
 	add_action( 'paco2017_rest_api_init', 'paco2017_register_association_rest_fields' );
+
+	// Add additional labels
+	$taxonomy = get_taxonomy( paco2017_get_association_tax_id() );
+	$taxonomy->labels = (object) ((array) $taxonomy->labels + paco2017_get_additional_association_tax_labels());
 }
 
 /**
