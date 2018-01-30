@@ -232,3 +232,8 @@ fieldset.paco2017-profile-field label.option-label {
 .edit-tags-php .fixed .column-photo {
 	width: 75px;
 }
+
+.fixed .column-users {
+	width: 74px;
+	text-align: center;
+}

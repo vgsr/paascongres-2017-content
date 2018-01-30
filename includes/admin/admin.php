@@ -60,6 +60,7 @@ class Paco2017_Admin {
 	 * @since 1.0.0
 	 */
 	private function setup_actions() {
+		$association = paco2017_get_association_tax_id();
 
 		// Core
 		add_action( 'admin_init',            array( $this, 'register_settings' )        );
@@ -78,6 +79,11 @@ class Paco2017_Admin {
 		add_action( 'save_post',                   array( $this, 'workshop_save_metabox' ), 10, 2 );
 		add_action( 'save_post',                   array( $this, 'agenda_save_metabox'   ), 10, 2 );
 		add_action( 'save_post',                   array( $this, 'partner_save_metabox'  ), 10, 2 );
+
+		// Terms
+		add_filter( "manage_edit-{$association}_columns",          array( $this, 'terms_add_columns'      )        );
+		add_filter( "manage_edit-{$association}_sortable_columns", array( $this, 'terms_sortable_columns' )        );
+		add_filter( "manage_{$association}_custom_column",         array( $this, 'terms_custom_column'    ), 11, 3 );
 
 		// Nav Menus
 		add_action( 'load-nav-menus.php', array( $this, 'add_nav_menu_meta_box' ) );
@@ -897,6 +903,83 @@ class Paco2017_Admin {
 				update_post_meta( $post_id, $meta, $_POST[ $posted_key ] );
 			}
 		}
+	}
+
+	/** Terms *********************************************************/
+
+	/**
+	 * Modify the list of columns in the terms list table
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param  array $columns Columns
+	 * @return array Columns
+	 */
+	public function terms_add_columns( $columns ) {
+
+		// Association
+		if ( paco2017_get_association_tax_id() === get_current_screen()->taxonomy ) {
+
+			// Replace posts with users
+			$column_keys = array_keys( $columns );
+			$column_keys[ array_search( 'posts', $column_keys ) ] = 'users';
+			$columns = array_combine( $column_keys, array_values( $columns ) );
+		}
+
+		return $columns;
+	}
+
+	/**
+	 * Modify the list of sortable columns in the terms list table
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param  array $columns Sortable columns
+	 * @return array Sortable columns
+	 */
+	public function terms_sortable_columns( $columns ) {
+
+		// Association
+		if ( paco2017_get_association_tax_id() === get_current_screen()->taxonomy ) {
+
+			// Replace posts with users
+			$column_keys = array_keys( $columns );
+			$column_keys[ array_search( 'posts', $column_keys ) ] = 'users';
+			$columns = array_combine( $column_keys, array_values( $columns ) );
+		}
+
+		return $columns;
+	}
+
+	/**
+	 * Output content of the terms list table columns
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param  string $content Column content
+	 * @param  string $column  Column name
+	 * @param  int    $term_id Term ID
+	 * @return string Column content
+	 */
+	public function terms_custom_column( $content, $column, $term_id ) {
+
+		// Get term
+		$taxonomy = get_current_screen()->taxonomy;
+		$term     = get_term( $term_id, $taxonomy );
+
+		// Association
+		if ( paco2017_get_association_tax_id() === $taxonomy ) {
+
+			switch ( $column ) {
+
+				// Users count
+				case 'users' :
+					$content = sprintf( '<a href="%s">%s</a>', esc_url( add_query_arg( array( $taxonomy => $term_id ), 'users.php' ) ), $term->count );
+					break;
+			}
+		}
+
+		return $content;
 	}
 
 	/** Nav Menus *****************************************************/
