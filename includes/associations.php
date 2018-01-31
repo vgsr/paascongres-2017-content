@@ -161,7 +161,7 @@ function paco2017_get_association_term_link( $link, $term, $taxonomy ) {
 
 		// For admins, link to the association-filtered admin user list
 		if ( current_user_can( 'edit_users' ) ) {
-			$link = add_query_arg( array( 'paco2017-association' => $term->term_id ), admin_url( 'users.php' ) );
+			$link = add_query_arg( array( $taxonomy => $term->term_id ), admin_url( 'users.php' ) );
 		}
 	}
 
