@@ -530,6 +530,8 @@ function paco2017_get_association_logo( $term = 0, $size = 'thumbnail', $args = 
 	return apply_filters( 'paco2017_get_association_logo', $logo, $term );
 }
 
+/** Users *********************************************************************/
+
 /**
  * Return the user's association term
  *
@@ -638,6 +640,47 @@ function paco2017_get_association_users( $term = 0, $by = 'id', $args = array() 
 	$users = get_users( $args );
 
 	return (array) apply_filters( 'paco2017_get_association_users', $users, $term, $args );
+}
+
+/**
+ * Delete the association's users
+ *
+ * NOTE: check for proper current user permissions before calling this function.
+ *
+ * @since 1.1.0
+ *
+ * @uses apply_filters() Calls 'paco2017_delete_association_users'
+ *
+ * @param WP_Term|int $term Optional. Term object or id. Defaults to the current looped association.
+ * @param bool $network Optional. Whether to delete users from the entire network.
+ * @return bool Deletion success.
+ */
+function paco2017_delete_association_users( $term = 0, $network = false ) {
+	$term  = paco2017_get_association( $term, $by );
+	$users = paco2017_get_association_users( $term );
+
+	// Enable user filtering
+	$users = apply_filters( 'paco2017_delete_association_users', $users, $term, $network );
+
+	// Bail when there are no users found
+	if ( ! $users ) {
+		return false;
+	}
+
+	// Load file to use user functions
+	require_once( ABSPATH . 'wp-admin/includes/user.php' );
+
+	foreach ( $users as $user_id ) {
+		if ( is_multisite() && $network ) {
+			if ( ! wpmu_delete_user( $user_id ) ) {
+				return false;
+			}
+		} else ( ! wp_delete_user( $user_id ) ) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 /**
