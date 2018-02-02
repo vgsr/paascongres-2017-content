@@ -84,11 +84,13 @@ add_action( 'paco2017_widgets_init', array( 'Paco2017_Partners_Widget',    'regi
 
 /** Users *********************************************************************/
 
-add_action( 'pre_user_query',              'paco2017_pre_user_query'              );
-add_filter( 'paco2017_get_enrolled_users', 'paco2017_get_enrolled_users_cache', 1 );
-add_filter( 'show_admin_bar',              'paco2017_show_admin_bar'              );
-add_action( 'login_init',                  'paco2017_login_init'                  );
-add_filter( 'password_reset_expiration',   'paco2017_password_reset_expiration'   );
+add_action( 'pre_user_query',              'paco2017_pre_user_query'                 );
+add_filter( 'paco2017_get_enrolled_users', 'paco2017_get_enrolled_users_cache', 1    );
+add_filter( 'show_admin_bar',              'paco2017_show_admin_bar'                 );
+add_action( 'login_init',                  'paco2017_login_init'                     );
+add_filter( 'password_reset_expiration',   'paco2017_password_reset_expiration'      );
+add_action( 'remove_user_from_blog',       'paco2017_delete_user_term_relationships' );
+add_action( 'deleted_user',                'paco2017_delete_user_term_relationships' );
 
 /** Advertorials **************************************************************/
 

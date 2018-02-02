@@ -874,6 +874,19 @@ function paco2017_query_terms_found_rows( $query_args ) {
 	return (int) $count;
 }
 
+/**
+ * Delete the user's term relationships
+ *
+ * @since 1.1.0
+ *
+ * @param int $user_id User ID
+ */
+function paco2017_delete_user_term_relationships( $user_id ) {
+	wp_delete_object_term_relationships( $user_id, array(
+		paco2017_get_association_tax_id() // Association
+	) );
+}
+
 /** Rest **********************************************************************/
 
 /**
