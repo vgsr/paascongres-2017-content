@@ -656,7 +656,7 @@ function paco2017_get_association_users( $term = 0, $by = 'id', $args = array() 
  * @return bool Deletion success.
  */
 function paco2017_delete_association_users( $term = 0, $network = false ) {
-	$term  = paco2017_get_association( $term, $by );
+	$term  = paco2017_get_association( $term );
 	$users = paco2017_get_association_users( $term );
 
 	// Enable user filtering
@@ -664,7 +664,7 @@ function paco2017_delete_association_users( $term = 0, $network = false ) {
 
 	// Bail when there are no users found
 	if ( ! $users ) {
-		return false;
+		return true;
 	}
 
 	// Load file to use user functions
@@ -675,7 +675,7 @@ function paco2017_delete_association_users( $term = 0, $network = false ) {
 			if ( ! wpmu_delete_user( $user_id ) ) {
 				return false;
 			}
-		} else ( ! wp_delete_user( $user_id ) ) {
+		} elseif ( ! wp_delete_user( $user_id ) ) {
 			return false;
 		}
 	}
