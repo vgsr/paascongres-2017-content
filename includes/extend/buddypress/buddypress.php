@@ -85,7 +85,7 @@ class Paco2017_BuddyPress {
 		// - nav menu items
 		// - widgets
 		if ( ! get_current_user_id() ) {
-			add_filter( 'paco2017_login_redirect', array( $this, 'login_redirect' ) );
+			add_filter( 'paco2017_login_redirect', array( $this, 'login_redirect' ), 10, 3 );
 			add_filter( 'bp_active_components', '__return_empty_array', 99 );
 			return;
 		}
