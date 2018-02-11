@@ -188,7 +188,14 @@ class Paco2017_Admin {
 	 * @since 1.0.0
 	 */
 	public function enqueue_scripts() {
+
+		// Bail when not on a plugin admin page
+		if ( $this->bail() )
+			return;
+
 		wp_enqueue_style( 'paco2017-admin', paco2017_content()->assets_url . 'css/admin.css', array( 'common' ) );
+
+		/** Custom styles *********************************************************/
 
 		// Define additional custom styles
 		$css = array();
