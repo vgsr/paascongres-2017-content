@@ -49,6 +49,7 @@ class Paco2017_Admin {
 	 * @since 1.1.0
 	 */
 	private function includes() {
+		require( $this->admin_dir . 'accounts.php'  );
 		require( $this->admin_dir . 'dashboard.php' );
 		require( $this->admin_dir . 'functions.php' );
 		require( $this->admin_dir . 'settings.php'  );
@@ -61,13 +62,15 @@ class Paco2017_Admin {
 	 */
 	private function setup_actions() {
 		$association = paco2017_get_association_tax_id();
+		$assoc_scrn  = "edit-{$association}";
 
 		// Core
-		add_action( 'admin_init',            array( $this, 'register_settings' )        );
-		add_action( 'admin_menu',            array( $this, 'admin_menu'        )        );
-		add_action( 'admin_head',            array( $this, 'admin_head'        )        );
-		add_filter( 'map_meta_cap',          array( $this, 'map_meta_caps'     ), 10, 4 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts'   )        );
+		add_action( 'admin_page_access_denied', array( $this, 'redirect_requests' )        );
+		add_action( 'admin_init',               array( $this, 'register_settings' )        );
+		add_action( 'admin_menu',               array( $this, 'admin_menu'        )        );
+		add_action( 'admin_head',               array( $this, 'admin_head'        )        );
+		add_filter( 'map_meta_cap',             array( $this, 'map_meta_caps'     ), 10, 4 );
+		add_action( 'admin_enqueue_scripts',    array( $this, 'enqueue_scripts'   )        );
 
 		// Posts
 		add_filter( 'display_post_states',         array( $this, 'post_states'           ), 10, 2 );
@@ -81,9 +84,12 @@ class Paco2017_Admin {
 		add_action( 'save_post',                   array( $this, 'partner_save_metabox'  ), 10, 2 );
 
 		// Terms
-		add_filter( "manage_edit-{$association}_columns",          array( $this, 'terms_add_columns'      )        );
-		add_filter( "manage_edit-{$association}_sortable_columns", array( $this, 'terms_sortable_columns' )        );
-		add_filter( "manage_{$association}_custom_column",         array( $this, 'terms_custom_column'    ), 11, 3 );
+		add_filter( "manage_{$assoc_scrn}_columns",          array( $this, 'terms_add_columns'         )        );
+		add_filter( "manage_{$assoc_scrn}_sortable_columns", array( $this, 'terms_sortable_columns'    )        );
+		add_filter( "manage_{$association}_custom_column",   array( $this, 'terms_custom_column'       ), 11, 3 );
+		add_filter( "bulk_actions-{$assoc_scrn}",            array( $this, 'terms_bulk_actions'        )        );
+		add_filter( "handle_bulk_actions-{$assoc_scrn}",     array( $this, 'terms_handle_bulk_actions' ), 10, 3 );
+		add_filter( "{$association}_row_actions",            array( $this, 'terms_row_actions'         ), 10, 2 );
 
 		// Nav Menus
 		add_action( 'load-nav-menus.php', array( $this, 'add_nav_menu_meta_box' ) );
@@ -95,6 +101,9 @@ class Paco2017_Admin {
 		add_filter( 'manage_users_columns',       array( $this, 'users_add_columns'   )        );
 		add_filter( 'manage_users_custom_column', array( $this, 'users_custom_column' ), 10, 3 );
 		add_action( 'pre_user_query',             array( $this, 'pre_user_query'      )        );
+
+		// AJAX
+		add_action( 'wp_ajax_paco2017-delete-association-users', 'paco2017_admin_ajax_delete_association_users' );
 
 		// Updater
 		add_action( 'admin_init', 'paco2017_setup_updater', 999 );
@@ -111,6 +120,28 @@ class Paco2017_Admin {
 	 */
 	public function bail() {
 		return ! ( is_admin() && 'paco2017' === get_current_screen()->parent_file );
+	}
+
+	/**
+	 * Redirect specific admin requests
+	 *
+	 * @since 1.1.0
+	 */
+	public function redirect_requests() {
+		$location = '';
+
+		// Accounts page
+		if ( paco2017_admin_is_current_page( 'paco2017-accounts' ) ) {
+
+			// Redirect to plugin home page
+			$location = add_query_arg( array( 'page' => 'paco2017' ), 'admin.php' );
+		}
+
+		// Catch location
+		if ( $location ) {
+			wp_safe_redirect( $location );
+			exit;
+		}
 	}
 
 	/**
@@ -164,13 +195,27 @@ class Paco2017_Admin {
 			);
 		}
 
+		// Accounts settings page
+		if ( current_user_can( 'paco2017_manage_accounts' ) ) {
+			$accounts = add_submenu_page(
+				'paco2017',
+				esc_html__( 'Paascongres Accounts Settings', 'paco2017-content' ),
+				esc_html__( 'Accounts Settings', 'paco2017-content' ),
+				'paco2017_admin_accounts_page',
+				'paco2017-accounts',
+				'paco2017_admin_page'
+			);
+		}
+
 		// Register admin page hooks
 		add_action( "load-{$dashboard}",                     'paco2017_admin_load_dashboard_page' );
+		add_action( "load-{$accounts}",                      'paco2017_admin_load_accounts_page'  );
 		add_action( 'current_screen',                        'paco2017_admin_menu_highlight'      ); // Modify current screen data
 		add_action( 'admin_head',                            'paco2017_admin_menu_highlight'      ); // Modify admin menu pointers
 		add_action( 'paco2017_admin_page-paco2017',          'paco2017_admin_dashboard_page'      );
 		add_action( 'paco2017_admin_page-paco2017-settings', 'paco2017_admin_settings_page'       );
 		add_action( 'paco2017_admin_page-paco2017-partners', 'paco2017_admin_settings_page'       );
+		add_action( 'paco2017_admin_page-paco2017-accounts', 'paco2017_admin_accounts_page'       );
 	}
 
 	/**
@@ -180,6 +225,7 @@ class Paco2017_Admin {
 	 */
 	public function admin_head() {
 		remove_submenu_page( 'paco2017', 'paco2017-partners' );
+		remove_submenu_page( 'paco2017', 'paco2017-accounts' );
 	}
 
 	/**
@@ -193,7 +239,16 @@ class Paco2017_Admin {
 		if ( $this->bail() )
 			return;
 
+		wp_enqueue_script( 'paco2017-admin', paco2017_content()->assets_url . 'js/admin.js', array( 'common' ) );
 		wp_enqueue_style( 'paco2017-admin', paco2017_content()->assets_url . 'css/admin.css', array( 'common' ) );
+
+		/** Custom scripts ********************************************************/
+
+		wp_localize_script( 'paco2017-admin', 'paco2017Admin', array(
+			'l10n' => array(
+				'aysDeleteAssociationUsers' => esc_html__( 'Caution: these accounts may be active on your site. Are you sure you want to delete the selected user accounts? This action is irreversible.', 'paco2017-content' )
+			)
+		) );
 
 		/** Custom styles *********************************************************/
 
@@ -324,8 +379,14 @@ class Paco2017_Admin {
 		switch ( $cap ) {
 
 			// Admin pages
-			case 'paco2017_admin_page':
-			case 'paco2017_admin_settings_page':
+			case 'paco2017_admin_page' :
+			case 'paco2017_admin_settings_page' :
+			case 'paco2017_admin_partners_page' :
+				break;
+
+			// Accounts page
+			case 'paco2017_manage_accounts' :
+				$caps = array( 'delete_users' );
 				break;
 		}
 
@@ -971,6 +1032,91 @@ class Paco2017_Admin {
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Modify the bulk actions in the terms list table
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param  array $actions Bulk actions
+	 * @return array Bulk actions
+	 */
+	public function terms_bulk_actions( $actions ) {
+		$taxonomy = get_current_screen()->taxonomy;
+
+		// Association
+		if ( paco2017_get_association_tax_id() === $taxonomy ) {
+
+			// Delete accounts
+			if ( current_user_can( 'paco2017_manage_accounts' ) ) {
+				$actions['delete_accounts'] = esc_html__( 'Delete Accounts', 'paco2017-content' );
+			}
+		}
+
+		return $actions;
+	}
+
+	/**
+	 * Handle custom bulk actions for terms
+	 *
+	 * Nonce check is already applied before this filter is applied.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param  bool|string $location False or redirect url
+	 * @param  string      $action   Action
+	 * @param  array       $term_ids Selected term ids
+	 * @return bool|string False or redirect url
+	 */
+	public function terms_handle_bulk_actions( $location, $action, $term_ids ) {
+
+		// Deleting accounts
+		if ( 'delete_accounts' === $action ) {
+			$location = add_query_arg( array(
+				'page'   => 'paco2017-accounts',
+				'action' => 'delete-by-association',
+				'terms'  => $term_ids,
+			), 'admin.php' );
+
+			// Do the redirection already
+			wp_redirect( $location );
+			exit;
+		}
+
+		return $location;
+	}
+
+	/**
+	 * Modify the row actions in the terms list table
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param  arrray  $actions Row actions
+	 * @param  WP_Term $term    Term data
+	 * @return array Row actions
+	 */
+	public function terms_row_actions( $actions, $term ) {
+		$taxonomy = get_current_screen()->taxonomy;
+
+		// Association
+		if ( paco2017_get_association_tax_id() === $taxonomy ) {
+
+			// Delete accounts
+			if ( current_user_can( 'paco2017_manage_accounts' ) ) {
+				$actions['delete_accounts'] = sprintf( '<a href="%s">%s</a>',
+					// Simulate bulk action method through GET, for single term
+					esc_url( add_query_arg( array(
+						'page'   => 'paco2017-accounts',
+						'action' => 'delete-by-association',
+						'terms'  => array( $term->term_id )
+					), 'admin.php' ) ),
+					esc_html__( 'Delete Accounts', 'paco2017-content' )
+				);
+			}
+		}
+
+		return $actions;
 	}
 
 	/** Nav Menus *****************************************************/

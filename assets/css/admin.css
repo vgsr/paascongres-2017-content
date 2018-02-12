@@ -195,6 +195,11 @@ fieldset.paco2017-profile-field label.option-label {
 	}
 }
 
+#delete-association-members .spinner {
+	float: none;
+	margin-left: 5px;
+}
+
 /* Single Post */
 
 .paco2017_object_details label {
@@ -233,7 +238,20 @@ fieldset.paco2017-profile-field label.option-label {
 	width: 75px;
 }
 
+.edit-tags-php .fixed .column-slug {
+	width: 12%;
+}
+
 .fixed .column-users {
 	width: 74px;
 	text-align: center;
+}
+
+.row-actions span.delete_accounts a {
+	color: #a00;
+}
+
+.row-actions span.delete_accounts a:hover {
+	color: #dc3232;
+	border: none;
 }
