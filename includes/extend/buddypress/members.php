@@ -340,6 +340,8 @@ function paco2017_bp_members_reset_dummy_post() {
 /**
  * Modify the pagination count of the members query
  *
+ * @see bp_get_members_pagination_count()
+ *
  * @since 1.1.0
  *
  * @param string $pag Members pagination count

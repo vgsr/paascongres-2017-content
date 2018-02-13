@@ -164,8 +164,8 @@ final class Paco2017_Content {
 
 		/** Widgets *****************************************************/
 
-		require( $this->includes_dir . 'classes/class-paco2017-enrollments-widget.php'  );
-		require( $this->includes_dir . 'classes/class-paco2017-partners-widget.php'     );
+		require( $this->includes_dir . 'classes/class-paco2017-enrollments-widget.php' );
+		require( $this->includes_dir . 'classes/class-paco2017-partners-widget.php'    );
 
 		/** Admin *******************************************************/
 
@@ -359,6 +359,7 @@ final class Paco2017_Content {
 
 		/** Meta ********************************************************/
 
+		// Post media: partner logo
 		wp_post_media( $this->file, 'logo', array(
 			'post_type'  => paco2017_get_partner_post_type(),
 			'element'    => '#partner_logo',
@@ -577,9 +578,16 @@ final class Paco2017_Content {
 
 		/** Meta ********************************************************/
 
+		// Term adverbials
 		new WP_Term_Adverbial( $this->file );
+
+		// Term colors
 		new WP_Term_Colors( $this->file );
+
+		// Term dates
 		new WP_Term_Date( $this->file );
+
+		// Term media: logo
 		new WP_Term_Media( $this->file, array(
 			'meta_key'   => 'logo',
 			'image_size' => array( 300, 300 ),
@@ -591,6 +599,8 @@ final class Paco2017_Content {
 				'removeTermMedia' => esc_html__( 'Remove %s logo', 'paco2017-content' ),
 			)
 		) );
+
+		// Term media: photo
 		new WP_Term_Media( $this->file, array(
 			'meta_key'   => 'photo',
 			'image_size' => array( 150, 150 ),
