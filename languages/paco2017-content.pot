@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-14 16:36+0000\n"
+"POT-Creation-Date: 2018-02-13 20:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,954 +14,562 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: paco2017-content.php:242
+#: paco2017-content.php:259
 msgid "Paascongres lectures"
 msgstr ""
 
-#: paco2017-content.php:269
+#: paco2017-content.php:286
 msgid "Paascongres workshops"
 msgstr ""
 
-#: paco2017-content.php:296
+#: paco2017-content.php:313
 msgid "Paascongres agenda items"
 msgstr ""
 
-#: paco2017-content.php:323
+#: paco2017-content.php:340
 msgid "Paascongres partners"
 msgstr ""
 
-#: paco2017-content.php:350
+#: paco2017-content.php:368
 msgid "Set Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:351
+#: paco2017-content.php:369
 msgid "Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:352
+#: paco2017-content.php:370
 msgid "Remove Partner Logo"
 msgstr ""
 
-#: paco2017-content.php:570
+#: paco2017-content.php:595
 msgid "Logo"
 msgstr ""
 
-#: paco2017-content.php:571
+#: paco2017-content.php:596
 msgid "Logos"
 msgstr ""
 
-#: paco2017-content.php:572
+#: paco2017-content.php:597
 #, php-format
 msgid "Set %s logo"
 msgstr ""
 
-#: paco2017-content.php:573
+#: paco2017-content.php:598
 #, php-format
 msgid "%s logo"
 msgstr ""
 
-#: paco2017-content.php:574
+#: paco2017-content.php:599
 #, php-format
 msgid "Remove %s logo"
 msgstr ""
 
-#: paco2017-content.php:581
+#: paco2017-content.php:608
 msgid "Photo"
 msgstr ""
 
-#: paco2017-content.php:582
+#: paco2017-content.php:609
 msgid "Photos"
 msgstr ""
 
-#: paco2017-content.php:583
+#: paco2017-content.php:610
 #, php-format
 msgid "Set %s photo"
 msgstr ""
 
-#: paco2017-content.php:584
+#: paco2017-content.php:611
 #, php-format
 msgid "%s photo"
 msgstr ""
 
-#: paco2017-content.php:585
+#: paco2017-content.php:612
 #, php-format
 msgid "Remove %s photo"
 msgstr ""
 
-#: includes/admin-functions.php:160 includes/admin-functions.php:218
-msgid "Speaker:"
-msgstr ""
-
-#: includes/admin-functions.php:169 includes/admin-functions.php:227
-msgid "&mdash; No Speaker &mdash;"
-msgstr ""
-
-#: includes/admin-functions.php:203
-msgid "Round:"
-msgstr ""
-
-#: includes/admin-functions.php:212 includes/extend/buddypress/settings.php:425
-msgid "&mdash; No Round &mdash;"
-msgstr ""
-
-#: includes/admin-functions.php:233
-msgid "Category:"
-msgstr ""
-
-#: includes/admin-functions.php:242
-msgid "&mdash; No Category &mdash;"
-msgstr ""
-
-#: includes/admin-functions.php:248 includes/admin-functions.php:332
-msgid "Location:"
-msgstr ""
-
-#: includes/admin-functions.php:257 includes/admin-functions.php:341
-msgid "&mdash; No Location &mdash;"
-msgstr ""
-
-#: includes/admin-functions.php:263
-msgid "Attendee Limit:"
-msgstr ""
-
-#: includes/admin-functions.php:295
-msgid "Day:"
-msgstr ""
-
-#: includes/admin-functions.php:304
-msgid "&mdash; No Day &mdash;"
-msgstr ""
-
-#: includes/admin-functions.php:310
-msgid "Time Start:"
-msgstr ""
-
-#: includes/admin-functions.php:321
-msgid "Time End:"
-msgstr ""
-
-#: includes/admin-functions.php:347
-msgid "Related:"
-msgstr ""
-
-#: includes/admin-functions.php:352
-msgid "&mdash; No Relation &mdash;"
-msgstr ""
-
-#: includes/admin-functions.php:384
-msgid "Logo:"
-msgstr ""
-
-#: includes/admin-functions.php:389
-msgid "Partner URL:"
-msgstr ""
-
-#: includes/admin-functions.php:394
-msgid "Level:"
-msgstr ""
-
-#: includes/admin-functions.php:403
-msgid "&mdash; No Level &mdash;"
-msgstr ""
-
-#: includes/admin.php:90
-msgid "Paascongres Dashboard"
-msgstr ""
-
-#: includes/admin.php:91 includes/admin.php:880 includes/functions.php:459
-#: includes/settings.php:594
-msgid "Paascongres"
-msgstr ""
-
-#: includes/admin.php:125
-msgid "Paascongres Settings"
-msgstr ""
-
-#: includes/admin.php:126 includes/settings.php:678
-msgid "Settings"
-msgstr ""
-
-#: includes/admin.php:137
-msgid "Paascongres Partner Settings"
-msgstr ""
-
-#: includes/admin.php:138
-msgid "Partner Settings"
-msgstr ""
-
-#: includes/admin.php:215
-msgid "Enrollments"
-msgstr ""
-
-#: includes/admin.php:277
-msgid "Set magazine download file"
-msgstr ""
-
-#: includes/admin.php:278
-msgid "Magazine Download File"
-msgstr ""
-
-#: includes/admin.php:279
-msgid "Remove magazine download file"
-msgstr ""
-
-#: includes/admin.php:323
-msgid "General Notices"
-msgstr ""
-
-#: includes/admin.php:348
-msgid "Manage Workshop Categories"
-msgstr ""
-
-#: includes/admin.php:351
-msgid "Manage Workshop Rounds"
-msgstr ""
-
-#: includes/admin.php:359
-msgid "Manage Conference Days"
-msgstr ""
-
-#: includes/admin.php:367
-msgid "Manage Partner Levels"
-msgstr ""
-
-#: includes/admin.php:387 includes/settings.php:220 includes/speakers.php:38
-msgid "Speaker"
-msgstr ""
-
-#: includes/admin.php:393
-msgid "Category"
-msgstr ""
-
-#: includes/admin.php:399
-msgid "Round"
-msgstr ""
-
-#: includes/admin.php:405
-msgid "Day"
-msgstr ""
-
-#: includes/admin.php:411
-msgid "Location"
-msgstr ""
-
-#: includes/admin.php:417
-msgid "Level"
-msgstr ""
-
-#: includes/admin.php:427
-msgctxt "admin column name"
-msgid "Attendees"
-msgstr ""
-
-#: includes/admin.php:439
-msgctxt "admin column name"
-msgid "Start"
-msgstr ""
-
-#: includes/admin.php:440
-msgctxt "admin column name"
-msgid "End"
-msgstr ""
-
-#: includes/admin.php:448
-msgctxt "admin column name"
-msgid "Related"
-msgstr ""
-
-#: includes/admin.php:462
-msgctxt "admin column name"
-msgid "Logo"
-msgstr ""
-
-#: includes/admin.php:467
-msgctxt "admin column name"
-msgid "URL"
-msgstr ""
-
-#: includes/admin.php:562
-msgid "Lecture Details"
-msgstr ""
-
-#: includes/admin.php:574
-msgid "Workshop Details"
-msgstr ""
-
-#: includes/admin.php:586
-msgid "Agenda Details"
-msgstr ""
-
-#: includes/admin.php:598
-msgid "Partner Details"
-msgstr ""
-
-#: includes/admin.php:900 includes/associations.php:38
-#: includes/settings.php:242
-msgid "Association"
-msgstr ""
-
-#: includes/agenda.php:36
+#: includes/agenda.php:37
 msgid "Paascongres Agenda Items"
 msgstr ""
 
-#: includes/agenda.php:37 includes/settings.php:231
+#: includes/agenda.php:38 includes/admin/settings.php:231
 msgid "Agenda"
 msgstr ""
 
-#: includes/agenda.php:38
+#: includes/agenda.php:39
 msgid "Agenda Item"
 msgstr ""
 
-#: includes/agenda.php:39
+#: includes/agenda.php:40
 msgid "All Agenda Items"
 msgstr ""
 
-#: includes/agenda.php:40 includes/agenda.php:44
+#: includes/agenda.php:41 includes/agenda.php:45
 msgid "New Agenda Item"
 msgstr ""
 
-#: includes/agenda.php:41
+#: includes/agenda.php:42
 msgid "Create New Agenda Item"
 msgstr ""
 
-#: includes/agenda.php:42 includes/lectures.php:42 includes/partners.php:42
-#: includes/workshops.php:42
+#: includes/agenda.php:43 includes/lectures.php:43 includes/partners.php:43
+#: includes/workshops.php:43
 msgid "Edit"
 msgstr ""
 
-#: includes/agenda.php:43
+#: includes/agenda.php:44
 msgid "Edit Agenda Item"
 msgstr ""
 
-#: includes/agenda.php:45 includes/agenda.php:46
+#: includes/agenda.php:46 includes/agenda.php:47
 msgid "View Agenda Item"
 msgstr ""
 
-#: includes/agenda.php:47
+#: includes/agenda.php:48
 msgid "View Agenda Items"
 msgstr ""
 
-#: includes/agenda.php:48
+#: includes/agenda.php:49
 msgid "Search Agenda Items"
 msgstr ""
 
-#: includes/agenda.php:49
+#: includes/agenda.php:50
 msgid "No agenda items found"
 msgstr ""
 
-#: includes/agenda.php:50
+#: includes/agenda.php:51
 msgid "No agenda items found in Trash"
 msgstr ""
 
-#: includes/agenda.php:51
+#: includes/agenda.php:52
 msgid "Insert into agenda item"
 msgstr ""
 
-#: includes/agenda.php:52
+#: includes/agenda.php:53
 msgid "Uploaded to this agenda item"
 msgstr ""
 
-#: includes/agenda.php:53
+#: includes/agenda.php:54
 msgid "Filter agenda items list"
 msgstr ""
 
-#: includes/agenda.php:54
+#: includes/agenda.php:55
 msgid "Agenda Items list navigation"
 msgstr ""
 
-#: includes/agenda.php:55
+#: includes/agenda.php:56
 msgid "Agenda Items list"
 msgstr ""
 
-#: includes/agenda.php:159
+#: includes/agenda.php:161
 msgid "Paascongres Conference Days"
 msgstr ""
 
-#: includes/agenda.php:160
+#: includes/agenda.php:162
 msgid "Conference Days"
 msgstr ""
 
-#: includes/agenda.php:161
+#: includes/agenda.php:163
 msgid "Conference Day"
 msgstr ""
 
-#: includes/agenda.php:162
+#: includes/agenda.php:164
 msgid "Search Conference Days"
 msgstr ""
 
-#: includes/agenda.php:164
+#: includes/agenda.php:166
 msgid "All Conference Days"
 msgstr ""
 
-#: includes/agenda.php:165
+#: includes/agenda.php:167
 msgid "No Conference Day"
 msgstr ""
 
-#: includes/agenda.php:166
+#: includes/agenda.php:168
 msgid "Edit Conference Day"
 msgstr ""
 
-#: includes/agenda.php:167
+#: includes/agenda.php:169
 msgid "Update Conference Day"
 msgstr ""
 
-#: includes/agenda.php:168
+#: includes/agenda.php:170
 msgid "Add New Conference Day"
 msgstr ""
 
-#: includes/agenda.php:169
+#: includes/agenda.php:171
 msgid "New Conference Day Name"
 msgstr ""
 
-#: includes/agenda.php:170
+#: includes/agenda.php:172
 msgid "View Conference Day"
 msgstr ""
 
-#: includes/agenda.php:253
+#: includes/agenda.php:256
 msgid "Paascongres Conference Locations"
 msgstr ""
 
-#: includes/agenda.php:254
+#: includes/agenda.php:257
 msgid "Locations"
 msgstr ""
 
-#: includes/agenda.php:255
+#: includes/agenda.php:258
 msgid "Conference Location"
 msgstr ""
 
-#: includes/agenda.php:256
+#: includes/agenda.php:259
 msgid "Search Conference Locations"
 msgstr ""
 
-#: includes/agenda.php:258
+#: includes/agenda.php:261
 msgid "All Conference Locations"
 msgstr ""
 
-#: includes/agenda.php:259
+#: includes/agenda.php:262
 msgid "No Conference Location"
 msgstr ""
 
-#: includes/agenda.php:260
+#: includes/agenda.php:263
 msgid "Edit Conference Location"
 msgstr ""
 
-#: includes/agenda.php:261
+#: includes/agenda.php:264
 msgid "Update Conference Location"
 msgstr ""
 
-#: includes/agenda.php:262
+#: includes/agenda.php:265
 msgid "Add New Conference Location"
 msgstr ""
 
-#: includes/agenda.php:263
+#: includes/agenda.php:266
 msgid "New Conference Location Name"
 msgstr ""
 
-#: includes/agenda.php:264
+#: includes/agenda.php:267
 msgid "View Conference Location"
 msgstr ""
 
-#: includes/agenda.php:890 includes/workshops.php:441
+#: includes/agenda.php:893 includes/workshops.php:444
 msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: includes/associations.php:36
+#: includes/associations.php:37
 msgid "Paascongres Associations"
 msgstr ""
 
-#: includes/associations.php:37
+#: includes/associations.php:38
 msgid "Associations"
 msgstr ""
 
-#: includes/associations.php:39
+#: includes/associations.php:39 includes/admin/admin.php:1150
+#: includes/admin/settings.php:242
+msgid "Association"
+msgstr ""
+
+#: includes/associations.php:40
 msgid "Search Associations"
 msgstr ""
 
-#: includes/associations.php:41
+#: includes/associations.php:42
 msgid "All Associations"
 msgstr ""
 
-#: includes/associations.php:42
+#: includes/associations.php:43
 msgid "No Association"
 msgstr ""
 
-#: includes/associations.php:43
+#: includes/associations.php:44
 msgid "Edit Association"
 msgstr ""
 
-#: includes/associations.php:44
+#: includes/associations.php:45
 msgid "Update Association"
 msgstr ""
 
-#: includes/associations.php:45
+#: includes/associations.php:46
 msgid "Add New Association"
 msgstr ""
 
-#: includes/associations.php:46
+#: includes/associations.php:47
 msgid "New Association Name"
 msgstr ""
 
-#: includes/associations.php:47
+#: includes/associations.php:48
 msgid "View Association"
 msgstr ""
 
-#: includes/dashboard.php:97
-#, php-format
-msgid "%s Enrolled"
-msgid_plural "%s Enrolled"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/dashboard.php:103
-#, php-format
-msgid "%s Account"
-msgid_plural "%s Accounts"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/dashboard.php:109
-#, php-format
-msgid "%s Association"
-msgid_plural "%s Associations"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/dashboard.php:115
-#, php-format
-msgid "%s Lecture"
-msgid_plural "%s Lectures"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/dashboard.php:121
-#, php-format
-msgid "%s Workshop"
-msgid_plural "%s Workshops"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/dashboard.php:127
-#, php-format
-msgid "%s Speaker"
-msgid_plural "%s Speakers"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/dashboard.php:133
-#, php-format
-msgid "%s Day"
-msgid_plural "%s Days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/dashboard.php:139
-#, php-format
-msgid "%s Agenda Item"
-msgid_plural "%s Agenda Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/dashboard.php:145
-#, php-format
-msgid "%s Location"
-msgid_plural "%s Locations"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/dashboard.php:151
-#, php-format
-msgid "%s Partner"
-msgid_plural "%s Partners"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/dashboard.php:170
-msgid "There is currently nothing to display here."
-msgstr ""
-
-#: includes/functions.php:259
+#: includes/functions.php:321
 msgid "Agenda page"
 msgstr ""
 
-#: includes/functions.php:260
+#: includes/functions.php:322
 msgctxt "menu type label"
 msgid "Paascongres Agenda page"
 msgstr ""
 
-#: includes/functions.php:267
+#: includes/functions.php:329
 msgid "Associations page"
 msgstr ""
 
-#: includes/functions.php:268
+#: includes/functions.php:330
 msgctxt "menu type label"
 msgid "Paascongres Associations page"
 msgstr ""
 
-#: includes/functions.php:275
+#: includes/functions.php:337
 msgid "Speakers page"
 msgstr ""
 
-#: includes/functions.php:276
+#: includes/functions.php:338
 msgctxt "menu type label"
 msgid "Paascongres Speakers page"
 msgstr ""
 
-#: includes/functions.php:283
+#: includes/functions.php:345
 msgid "Magazine download link"
 msgstr ""
 
-#: includes/functions.php:284
+#: includes/functions.php:346
 msgctxt "menu type label"
 msgid "Paascongres Magazine Download Link"
 msgstr ""
 
-#: includes/functions.php:296 includes/functions.php:460
+#: includes/functions.php:358 includes/functions.php:522
 msgctxt "menu type label"
 msgid "Paascongres Page"
 msgstr ""
 
-#: includes/functions.php:932
+#: includes/functions.php:521 includes/admin/admin.php:157
+#: includes/admin/admin.php:1130 includes/admin/functions.php:161
+msgid "Paascongres"
+msgstr ""
+
+#: includes/functions.php:1007
 msgid "Advertorial"
 msgstr ""
 
-#: includes/lectures.php:36
+#: includes/lectures.php:37
 msgid "Paascongres Lectures"
 msgstr ""
 
-#: includes/lectures.php:37
+#: includes/lectures.php:38
 msgid "Lectures"
 msgstr ""
 
-#: includes/lectures.php:38 includes/settings.php:182
+#: includes/lectures.php:39 includes/admin/settings.php:182
 msgid "Lecture"
 msgstr ""
 
-#: includes/lectures.php:39
+#: includes/lectures.php:40
 msgid "All Lectures"
 msgstr ""
 
-#: includes/lectures.php:40 includes/lectures.php:44
+#: includes/lectures.php:41 includes/lectures.php:45
 msgid "New Lecture"
 msgstr ""
 
-#: includes/lectures.php:41
+#: includes/lectures.php:42
 msgid "Create New Lecture"
 msgstr ""
 
-#: includes/lectures.php:43
+#: includes/lectures.php:44
 msgid "Edit Lecture"
 msgstr ""
 
-#: includes/lectures.php:45 includes/lectures.php:46
+#: includes/lectures.php:46 includes/lectures.php:47
 msgid "View Lecture"
 msgstr ""
 
-#: includes/lectures.php:47
+#: includes/lectures.php:48
 msgid "View Lectures"
 msgstr ""
 
-#: includes/lectures.php:48
+#: includes/lectures.php:49
 msgid "Search Lectures"
 msgstr ""
 
-#: includes/lectures.php:49
+#: includes/lectures.php:50
 msgid "No lectures found"
 msgstr ""
 
-#: includes/lectures.php:50
+#: includes/lectures.php:51
 msgid "No lectures found in Trash"
 msgstr ""
 
-#: includes/lectures.php:51
+#: includes/lectures.php:52
 msgid "Insert into lecture"
 msgstr ""
 
-#: includes/lectures.php:52
+#: includes/lectures.php:53
 msgid "Uploaded to this lecture"
 msgstr ""
 
-#: includes/lectures.php:53
+#: includes/lectures.php:54
 msgid "Filter lectures list"
 msgstr ""
 
-#: includes/lectures.php:54
+#: includes/lectures.php:55
 msgid "Lectures list navigation"
 msgstr ""
 
-#: includes/lectures.php:55
+#: includes/lectures.php:56
 msgid "Lectures list"
 msgstr ""
 
-#: includes/partners.php:36
+#: includes/partners.php:37
 msgid "Paascongres Partners"
 msgstr ""
 
-#: includes/partners.php:37
-msgid "Partners"
-msgstr ""
-
 #: includes/partners.php:38
-msgid "Partner"
+msgid "Partners"
 msgstr ""
 
 #: includes/partners.php:39
+msgid "Partner"
+msgstr ""
+
+#: includes/partners.php:40
 msgid "All Partners"
 msgstr ""
 
-#: includes/partners.php:40 includes/partners.php:44
+#: includes/partners.php:41 includes/partners.php:45
 msgid "New Partner"
 msgstr ""
 
-#: includes/partners.php:41
+#: includes/partners.php:42
 msgid "Create New Partner"
 msgstr ""
 
-#: includes/partners.php:43
+#: includes/partners.php:44
 msgid "Edit Partner"
 msgstr ""
 
-#: includes/partners.php:45 includes/partners.php:46
+#: includes/partners.php:46 includes/partners.php:47
 msgid "View Partner"
 msgstr ""
 
-#: includes/partners.php:47
+#: includes/partners.php:48
 msgid "View Partners"
 msgstr ""
 
-#: includes/partners.php:48
+#: includes/partners.php:49
 msgid "Search Partners"
 msgstr ""
 
-#: includes/partners.php:49
+#: includes/partners.php:50
 msgid "No partners found"
 msgstr ""
 
-#: includes/partners.php:50
+#: includes/partners.php:51
 msgid "No partners found in Trash"
 msgstr ""
 
-#: includes/partners.php:51
+#: includes/partners.php:52
 msgid "Insert into partner"
 msgstr ""
 
-#: includes/partners.php:52
+#: includes/partners.php:53
 msgid "Uploaded to this partner"
 msgstr ""
 
-#: includes/partners.php:53
+#: includes/partners.php:54
 msgid "Filter partners list"
 msgstr ""
 
-#: includes/partners.php:54
+#: includes/partners.php:55
 msgid "Partners list navigation"
 msgstr ""
 
-#: includes/partners.php:55
+#: includes/partners.php:56
 msgid "Partners list"
 msgstr ""
 
-#: includes/partners.php:151
+#: includes/partners.php:153
 msgid "Paascongres Partner Levels"
 msgstr ""
 
-#: includes/partners.php:152
+#: includes/partners.php:154
 msgid "Partner Levels"
 msgstr ""
 
-#: includes/partners.php:153
+#: includes/partners.php:155
 msgid "Partner Level"
 msgstr ""
 
-#: includes/partners.php:154
+#: includes/partners.php:156
 msgid "Search Partner Levels"
 msgstr ""
 
-#: includes/partners.php:156
+#: includes/partners.php:158
 msgid "All Partner Levels"
 msgstr ""
 
-#: includes/partners.php:157
+#: includes/partners.php:159
 msgid "No Partner Level"
 msgstr ""
 
-#: includes/partners.php:158
+#: includes/partners.php:160
 msgid "Edit Partner Level"
 msgstr ""
 
-#: includes/partners.php:159
+#: includes/partners.php:161
 msgid "Update Partner Level"
 msgstr ""
 
-#: includes/partners.php:160
+#: includes/partners.php:162
 msgid "Add New Partner Level"
 msgstr ""
 
-#: includes/partners.php:161
+#: includes/partners.php:163
 msgid "New Partner Level Name"
 msgstr ""
 
-#: includes/partners.php:162
+#: includes/partners.php:164
 msgid "View Partner Level"
 msgstr ""
 
-#: includes/settings.php:73
-msgid "Enrollment Deadline"
-msgstr ""
-
-#: includes/settings.php:78
-msgid "Select the date after which the enrollment will be closed"
-msgstr ""
-
-#: includes/settings.php:84
-msgid "Contact Email"
-msgstr ""
-
-#: includes/settings.php:92
-msgid "General Notices Page"
-msgstr ""
-
-#: includes/settings.php:97
-msgid "Select the page that contains the housekeeping information"
-msgstr ""
-
-#: includes/settings.php:103
-msgid "Magazine"
-msgstr ""
-
-#: includes/settings.php:122
-msgid "Lectures Description"
-msgstr ""
-
-#: includes/settings.php:127
-msgid ""
-"This description text appears as an introduction to the lecture archive page"
-msgstr ""
-
-#: includes/settings.php:133
-msgid "Workshops Description"
-msgstr ""
-
-#: includes/settings.php:138
-msgid ""
-"This description text appears as an introduction to the workshop archive page"
-msgstr ""
-
-#: includes/settings.php:144
-msgid "Agenda Description"
-msgstr ""
-
-#: includes/settings.php:149
-msgid "This description text appears as an introduction to the agenda page"
-msgstr ""
-
-#: includes/settings.php:155
-msgid "Speakers Description"
-msgstr ""
-
-#: includes/settings.php:160
-msgid "This description text appears as an introduction to the speakers page"
-msgstr ""
-
-#: includes/settings.php:166
-msgid "Associations Description"
-msgstr ""
-
-#: includes/settings.php:171
-msgid ""
-"This description text appears as an introduction to the associations page"
-msgstr ""
-
-#: includes/settings.php:193 includes/workshops.php:38
-msgid "Workshop"
-msgstr ""
-
-#: includes/settings.php:204 includes/workshops.php:160
-msgid "Workshop Category"
-msgstr ""
-
-#: includes/settings.php:212 includes/workshops.php:285
-msgid "Workshop Round"
-msgstr ""
-
-#: includes/settings.php:377
-msgid "Provide the main contact email address for site visitors"
-msgstr ""
-
-#: includes/settings.php:402
-msgid "&mdash; No Page &mdash;"
-msgstr ""
-
-#: includes/settings.php:409 includes/extend/buddypress/settings.php:214
-msgid "View"
-msgstr ""
-
-#: includes/settings.php:430
-msgid "Select the magazine landing page"
-msgstr ""
-
-#: includes/settings.php:436
-msgid "Select the magazine file that is offered for download"
-msgstr ""
-
-#: includes/settings.php:486
-msgid "Customize the structure of your conference page urls."
-msgstr ""
-
-#: includes/settings.php:525 includes/settings.php:539
-#, php-format
-msgid "Will be used after the workshop slug, like: %s"
-msgstr ""
-
-#: includes/settings.php:553
-msgid "Define details of the custom partner advertorial sections on this site."
-msgstr ""
-
-#: includes/settings.php:673
-msgid "Dashboard"
-msgstr ""
-
-#: includes/settings.php:683
-msgctxt "settings tab title"
-msgid "Partners"
-msgstr ""
-
-#: includes/speakers.php:36
+#: includes/speakers.php:37
 msgid "Paascongres Speakers"
 msgstr ""
 
-#: includes/speakers.php:37
+#: includes/speakers.php:38
 msgid "Speakers"
 msgstr ""
 
-#: includes/speakers.php:39
+#: includes/speakers.php:39 includes/admin/admin.php:475
+#: includes/admin/settings.php:220
+msgid "Speaker"
+msgstr ""
+
+#: includes/speakers.php:40
 msgid "Search Speakers"
 msgstr ""
 
-#: includes/speakers.php:41
+#: includes/speakers.php:42
 msgid "All Speakers"
 msgstr ""
 
-#: includes/speakers.php:42
+#: includes/speakers.php:43
 msgid "No Speaker"
 msgstr ""
 
-#: includes/speakers.php:43
+#: includes/speakers.php:44
 msgid "Edit Speaker"
 msgstr ""
 
-#: includes/speakers.php:44
+#: includes/speakers.php:45
 msgid "Update Speaker"
 msgstr ""
 
-#: includes/speakers.php:45
+#: includes/speakers.php:46
 msgid "Add New Speaker"
 msgstr ""
 
-#: includes/speakers.php:46
+#: includes/speakers.php:47
 msgid "New Speaker Name"
 msgstr ""
 
-#: includes/speakers.php:47
+#: includes/speakers.php:48
 msgid "View Speaker"
 msgstr ""
 
@@ -1008,148 +616,610 @@ msgid ""
 "date."
 msgstr ""
 
-#: includes/workshops.php:36
+#: includes/workshops.php:37
 msgid "Paascongres Workshops"
 msgstr ""
 
-#: includes/workshops.php:37
+#: includes/workshops.php:38
 msgid "Workshops"
 msgstr ""
 
-#: includes/workshops.php:39
+#: includes/workshops.php:39 includes/admin/settings.php:193
+msgid "Workshop"
+msgstr ""
+
+#: includes/workshops.php:40
 msgid "All Workshops"
 msgstr ""
 
-#: includes/workshops.php:40 includes/workshops.php:44
+#: includes/workshops.php:41 includes/workshops.php:45
 msgid "New Workshop"
 msgstr ""
 
-#: includes/workshops.php:41
+#: includes/workshops.php:42
 msgid "Create New Workshop"
 msgstr ""
 
-#: includes/workshops.php:43
+#: includes/workshops.php:44
 msgid "Edit Workshop"
 msgstr ""
 
-#: includes/workshops.php:45 includes/workshops.php:46
+#: includes/workshops.php:46 includes/workshops.php:47
 msgid "View Workshop"
 msgstr ""
 
-#: includes/workshops.php:47
+#: includes/workshops.php:48
 msgid "View Workshops"
 msgstr ""
 
-#: includes/workshops.php:48
+#: includes/workshops.php:49
 msgid "Search Workshops"
 msgstr ""
 
-#: includes/workshops.php:49
+#: includes/workshops.php:50
 msgid "No workshops found"
 msgstr ""
 
-#: includes/workshops.php:50
+#: includes/workshops.php:51
 msgid "No workshops found in Trash"
 msgstr ""
 
-#: includes/workshops.php:51
+#: includes/workshops.php:52
 msgid "Insert into workshop"
 msgstr ""
 
-#: includes/workshops.php:52
+#: includes/workshops.php:53
 msgid "Uploaded to this workshop"
 msgstr ""
 
-#: includes/workshops.php:53
+#: includes/workshops.php:54
 msgid "Filter workshops list"
 msgstr ""
 
-#: includes/workshops.php:54
+#: includes/workshops.php:55
 msgid "Workshops list navigation"
 msgstr ""
 
-#: includes/workshops.php:55
+#: includes/workshops.php:56
 msgid "Workshops list"
 msgstr ""
 
-#: includes/workshops.php:158
+#: includes/workshops.php:160
 msgid "Paascongres Workshop Categories"
 msgstr ""
 
-#: includes/workshops.php:159
+#: includes/workshops.php:161
 msgid "Categories"
 msgstr ""
 
-#: includes/workshops.php:161
-msgid "Search Workshop Categories"
+#: includes/workshops.php:162 includes/admin/settings.php:204
+msgid "Workshop Category"
 msgstr ""
 
 #: includes/workshops.php:163
-msgid "All Workshop Categories"
-msgstr ""
-
-#: includes/workshops.php:164
-msgid "No Workshop Category"
+msgid "Search Workshop Categories"
 msgstr ""
 
 #: includes/workshops.php:165
-msgid "Edit Workshop Category"
+msgid "All Workshop Categories"
 msgstr ""
 
 #: includes/workshops.php:166
-msgid "Update Workshop Category"
+msgid "No Workshop Category"
 msgstr ""
 
 #: includes/workshops.php:167
-msgid "Add New Workshop Category"
+msgid "Edit Workshop Category"
 msgstr ""
 
 #: includes/workshops.php:168
-msgid "New Workshop Category Name"
+msgid "Update Workshop Category"
 msgstr ""
 
 #: includes/workshops.php:169
+msgid "Add New Workshop Category"
+msgstr ""
+
+#: includes/workshops.php:170
+msgid "New Workshop Category Name"
+msgstr ""
+
+#: includes/workshops.php:171
 msgid "View Workshop Category"
 msgstr ""
 
-#: includes/workshops.php:283
+#: includes/workshops.php:286
 msgid "Paascongres Workshop Rounds"
 msgstr ""
 
-#: includes/workshops.php:284
+#: includes/workshops.php:287
 msgid "Rounds"
 msgstr ""
 
-#: includes/workshops.php:286
-msgid "Search Workshop Rounds"
-msgstr ""
-
-#: includes/workshops.php:288
-msgid "All Workshop Rounds"
+#: includes/workshops.php:288 includes/admin/settings.php:212
+msgid "Workshop Round"
 msgstr ""
 
 #: includes/workshops.php:289
-msgid "No Workshop Round"
-msgstr ""
-
-#: includes/workshops.php:290
-msgid "Edit Workshop Round"
+msgid "Search Workshop Rounds"
 msgstr ""
 
 #: includes/workshops.php:291
-msgid "Update Workshop Round"
+msgid "All Workshop Rounds"
 msgstr ""
 
 #: includes/workshops.php:292
-msgid "Add New Workshop Round"
+msgid "No Workshop Round"
 msgstr ""
 
 #: includes/workshops.php:293
-msgid "New Workshop Round Name"
+msgid "Edit Workshop Round"
 msgstr ""
 
 #: includes/workshops.php:294
+msgid "Update Workshop Round"
+msgstr ""
+
+#: includes/workshops.php:295
+msgid "Add New Workshop Round"
+msgstr ""
+
+#: includes/workshops.php:296
+msgid "New Workshop Round Name"
+msgstr ""
+
+#: includes/workshops.php:297
 msgid "View Workshop Round"
+msgstr ""
+
+#: includes/admin/accounts.php:46
+msgid "Accounts"
+msgstr ""
+
+#: includes/admin/accounts.php:56
+msgid "There are no valid associations selected."
+msgstr ""
+
+#: includes/admin/accounts.php:62
+msgid ""
+"You are about to delete all member accounts related to the following "
+"associations. Please confirm your actions."
+msgstr ""
+
+#: includes/admin/accounts.php:79
+msgid "Create accounts"
+msgstr ""
+
+#: includes/admin/accounts.php:80
+#, php-format
+msgid "Delete %d account"
+msgid_plural "Delete %d accounts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/accounts.php:108
+msgid "You are not allowed to delete user accounts."
+msgstr ""
+
+#: includes/admin/accounts.php:125
+msgid "Deleting user accounts failed."
+msgstr ""
+
+#. 1. Association name, 2. Account count
+#: includes/admin/accounts.php:133
+#, php-format
+msgid "Delete %2$d %1$s account"
+msgid_plural "Delete %2$d %1$s accounts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/accounts.php:141
+#, php-format
+msgid "Deleting accounts for %s was successful!"
+msgstr ""
+
+#: includes/admin/admin.php:156
+msgid "Paascongres Dashboard"
+msgstr ""
+
+#: includes/admin/admin.php:178
+msgid "Paascongres Settings"
+msgstr ""
+
+#: includes/admin/admin.php:179 includes/admin/functions.php:217
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/admin.php:190
+msgid "Paascongres Partner Settings"
+msgstr ""
+
+#: includes/admin/admin.php:191
+msgid "Partner Settings"
+msgstr ""
+
+#: includes/admin/admin.php:202
+msgid "Paascongres Accounts Settings"
+msgstr ""
+
+#: includes/admin/admin.php:203
+msgid "Accounts Settings"
+msgstr ""
+
+#: includes/admin/admin.php:249
+msgid ""
+"Caution: these accounts may be active on your site. Are you sure you want to "
+"delete the selected user accounts? This action is irreversible."
+msgstr ""
+
+#: includes/admin/admin.php:297
+msgid "Enrollments"
+msgstr ""
+
+#: includes/admin/admin.php:359
+msgid "Set magazine download file"
+msgstr ""
+
+#: includes/admin/admin.php:360
+msgid "Magazine Download File"
+msgstr ""
+
+#: includes/admin/admin.php:361
+msgid "Remove magazine download file"
+msgstr ""
+
+#: includes/admin/admin.php:411
+msgid "General Notices"
+msgstr ""
+
+#: includes/admin/admin.php:436
+msgid "Manage Workshop Categories"
+msgstr ""
+
+#: includes/admin/admin.php:439
+msgid "Manage Workshop Rounds"
+msgstr ""
+
+#: includes/admin/admin.php:447
+msgid "Manage Conference Days"
+msgstr ""
+
+#: includes/admin/admin.php:455
+msgid "Manage Partner Levels"
+msgstr ""
+
+#: includes/admin/admin.php:481
+msgid "Category"
+msgstr ""
+
+#: includes/admin/admin.php:487
+msgid "Round"
+msgstr ""
+
+#: includes/admin/admin.php:493
+msgid "Day"
+msgstr ""
+
+#: includes/admin/admin.php:499
+msgid "Location"
+msgstr ""
+
+#: includes/admin/admin.php:505
+msgid "Level"
+msgstr ""
+
+#: includes/admin/admin.php:515
+msgctxt "admin column name"
+msgid "Attendees"
+msgstr ""
+
+#: includes/admin/admin.php:527
+msgctxt "admin column name"
+msgid "Start"
+msgstr ""
+
+#: includes/admin/admin.php:528
+msgctxt "admin column name"
+msgid "End"
+msgstr ""
+
+#: includes/admin/admin.php:536
+msgctxt "admin column name"
+msgid "Related"
+msgstr ""
+
+#: includes/admin/admin.php:550
+msgctxt "admin column name"
+msgid "Logo"
+msgstr ""
+
+#: includes/admin/admin.php:555
+msgctxt "admin column name"
+msgid "URL"
+msgstr ""
+
+#: includes/admin/admin.php:650
+msgid "Lecture Details"
+msgstr ""
+
+#: includes/admin/admin.php:662
+msgid "Workshop Details"
+msgstr ""
+
+#: includes/admin/admin.php:674
+msgid "Agenda Details"
+msgstr ""
+
+#: includes/admin/admin.php:686
+msgid "Partner Details"
+msgstr ""
+
+#: includes/admin/admin.php:1053 includes/admin/admin.php:1114
+msgid "Delete Accounts"
+msgstr ""
+
+#: includes/admin/dashboard.php:97
+#, php-format
+msgid "%s Enrolled"
+msgid_plural "%s Enrolled"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard.php:103
+#, php-format
+msgid "%s Account"
+msgid_plural "%s Accounts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard.php:109
+#, php-format
+msgid "%s Association"
+msgid_plural "%s Associations"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard.php:115
+#, php-format
+msgid "%s Lecture"
+msgid_plural "%s Lectures"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard.php:121
+#, php-format
+msgid "%s Workshop"
+msgid_plural "%s Workshops"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard.php:127
+#, php-format
+msgid "%s Speaker"
+msgid_plural "%s Speakers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard.php:133
+#, php-format
+msgid "%s Day"
+msgid_plural "%s Days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard.php:139
+#, php-format
+msgid "%s Agenda Item"
+msgid_plural "%s Agenda Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard.php:145
+#, php-format
+msgid "%s Location"
+msgid_plural "%s Locations"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard.php:151
+#, php-format
+msgid "%s Partner"
+msgid_plural "%s Partners"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/dashboard.php:170
+msgid "There is currently nothing to display here."
+msgstr ""
+
+#: includes/admin/functions.php:212
+msgid "Dashboard"
+msgstr ""
+
+#: includes/admin/functions.php:222
+msgctxt "settings tab title"
+msgid "Partners"
+msgstr ""
+
+#: includes/admin/functions.php:227
+msgctxt "settings tab title"
+msgid "Accounts"
+msgstr ""
+
+#: includes/admin/functions.php:295 includes/admin/functions.php:353
+msgid "Speaker:"
+msgstr ""
+
+#: includes/admin/functions.php:304 includes/admin/functions.php:362
+msgid "&mdash; No Speaker &mdash;"
+msgstr ""
+
+#: includes/admin/functions.php:338
+msgid "Round:"
+msgstr ""
+
+#: includes/admin/functions.php:347 includes/extend/buddypress/settings.php:461
+msgid "&mdash; No Round &mdash;"
+msgstr ""
+
+#: includes/admin/functions.php:368
+msgid "Category:"
+msgstr ""
+
+#: includes/admin/functions.php:377
+msgid "&mdash; No Category &mdash;"
+msgstr ""
+
+#: includes/admin/functions.php:383 includes/admin/functions.php:467
+msgid "Location:"
+msgstr ""
+
+#: includes/admin/functions.php:392 includes/admin/functions.php:476
+msgid "&mdash; No Location &mdash;"
+msgstr ""
+
+#: includes/admin/functions.php:398
+msgid "Attendee Limit:"
+msgstr ""
+
+#: includes/admin/functions.php:430
+msgid "Day:"
+msgstr ""
+
+#: includes/admin/functions.php:439
+msgid "&mdash; No Day &mdash;"
+msgstr ""
+
+#: includes/admin/functions.php:445
+msgid "Time Start:"
+msgstr ""
+
+#: includes/admin/functions.php:456
+msgid "Time End:"
+msgstr ""
+
+#: includes/admin/functions.php:482
+msgid "Related:"
+msgstr ""
+
+#: includes/admin/functions.php:487
+msgid "&mdash; No Relation &mdash;"
+msgstr ""
+
+#: includes/admin/functions.php:519
+msgid "Logo:"
+msgstr ""
+
+#: includes/admin/functions.php:524
+msgid "Partner URL:"
+msgstr ""
+
+#: includes/admin/functions.php:529
+msgid "Level:"
+msgstr ""
+
+#: includes/admin/functions.php:538
+msgid "&mdash; No Level &mdash;"
+msgstr ""
+
+#: includes/admin/settings.php:73
+msgid "Enrollment Deadline"
+msgstr ""
+
+#: includes/admin/settings.php:78
+msgid "Select the date after which the enrollment will be closed"
+msgstr ""
+
+#: includes/admin/settings.php:84
+msgid "Contact Email"
+msgstr ""
+
+#: includes/admin/settings.php:92
+msgid "General Notices Page"
+msgstr ""
+
+#: includes/admin/settings.php:97
+msgid "Select the page that contains the housekeeping information"
+msgstr ""
+
+#: includes/admin/settings.php:103
+msgid "Magazine"
+msgstr ""
+
+#: includes/admin/settings.php:122
+msgid "Lectures Description"
+msgstr ""
+
+#: includes/admin/settings.php:127
+msgid ""
+"This description text appears as an introduction to the lecture archive page"
+msgstr ""
+
+#: includes/admin/settings.php:133
+msgid "Workshops Description"
+msgstr ""
+
+#: includes/admin/settings.php:138
+msgid ""
+"This description text appears as an introduction to the workshop archive page"
+msgstr ""
+
+#: includes/admin/settings.php:144
+msgid "Agenda Description"
+msgstr ""
+
+#: includes/admin/settings.php:149
+msgid "This description text appears as an introduction to the agenda page"
+msgstr ""
+
+#: includes/admin/settings.php:155
+msgid "Speakers Description"
+msgstr ""
+
+#: includes/admin/settings.php:160
+msgid "This description text appears as an introduction to the speakers page"
+msgstr ""
+
+#: includes/admin/settings.php:166
+msgid "Associations Description"
+msgstr ""
+
+#: includes/admin/settings.php:171
+msgid ""
+"This description text appears as an introduction to the associations page"
+msgstr ""
+
+#: includes/admin/settings.php:377
+msgid "Provide the main contact email address for site visitors"
+msgstr ""
+
+#: includes/admin/settings.php:402
+msgid "&mdash; No Page &mdash;"
+msgstr ""
+
+#: includes/admin/settings.php:409 includes/extend/buddypress/settings.php:250
+msgid "View"
+msgstr ""
+
+#: includes/admin/settings.php:430
+msgid "Select the magazine landing page"
+msgstr ""
+
+#: includes/admin/settings.php:436
+msgid "Select the magazine file that is offered for download"
+msgstr ""
+
+#: includes/admin/settings.php:486
+msgid "Customize the structure of your conference page urls."
+msgstr ""
+
+#: includes/admin/settings.php:525 includes/admin/settings.php:539
+#, php-format
+msgid "Will be used after the workshop slug, like: %s"
+msgstr ""
+
+#: includes/admin/settings.php:553
+msgid "Define details of the custom partner advertorial sections on this site."
 msgstr ""
 
 #: includes/classes/class-paco2017-enrollments-widget.php:29
@@ -1159,6 +1229,15 @@ msgstr ""
 
 #: includes/classes/class-paco2017-enrollments-widget.php:31
 msgid "List the current enrollment status for all associations"
+msgstr ""
+
+#: includes/classes/class-paco2017-partners-widget.php:29
+msgctxt "widget title"
+msgid "Paascongres Partners"
+msgstr ""
+
+#: includes/classes/class-paco2017-partners-widget.php:31
+msgid "Display the partner sponsor links"
 msgstr ""
 
 #: includes/extend/buddypress/admin.php:62
@@ -1185,24 +1264,34 @@ msgctxt "admin field label"
 msgid "Workshop Field"
 msgstr ""
 
-#: includes/extend/buddypress/buddypress.php:282
+#: includes/extend/buddypress/buddypress.php:287
 msgctxt "Profile header menu"
 msgid "Enrollment"
 msgstr ""
 
-#: includes/extend/buddypress/buddypress.php:283
+#: includes/extend/buddypress/buddypress.php:288
 msgctxt "Profile header sub menu"
 msgid "Manage"
 msgstr ""
 
-#: includes/extend/buddypress/buddypress.php:308
+#: includes/extend/buddypress/buddypress.php:313
 msgctxt "My Account Profile"
 msgid "Enrollment"
 msgstr ""
 
-#: includes/extend/buddypress/buddypress.php:313
+#: includes/extend/buddypress/buddypress.php:318
 msgctxt "My Account Profile sub nav"
 msgid "Manage"
+msgstr ""
+
+#: includes/extend/buddypress/buddypress.php:427
+#: includes/extend/buddypress/buddypress.php:428
+msgid "Amicaal Oud-lid"
+msgstr ""
+
+#: includes/extend/buddypress/buddypress.php:458
+msgctxt "amicaal member type label"
+msgid "Oud-lid"
 msgstr ""
 
 #: includes/extend/buddypress/members.php:25
@@ -1258,44 +1347,44 @@ msgstr ""
 msgid "This member is enrolled for the event."
 msgstr ""
 
-#: includes/extend/buddypress/members.php:361
+#: includes/extend/buddypress/members.php:363
 msgid "Viewing 1 active participant"
 msgstr ""
 
-#: includes/extend/buddypress/members.php:363
+#: includes/extend/buddypress/members.php:365
 #, php-format
 msgid "Viewing %1$s - %2$s of %3$s active participant"
 msgid_plural "Viewing %1$s - %2$s of %3$s active participants"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/extend/buddypress/members.php:367
+#: includes/extend/buddypress/members.php:369
 msgid "Viewing 1 participant with friends"
 msgstr ""
 
-#: includes/extend/buddypress/members.php:369
+#: includes/extend/buddypress/members.php:371
 #, php-format
 msgid "Viewing %1$s - %2$s of %3$s participant with friends"
 msgid_plural "Viewing %1$s - %2$s of %3$s participants with friends"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/extend/buddypress/members.php:373
+#: includes/extend/buddypress/members.php:375
 msgid "Viewing 1 online participant"
 msgstr ""
 
-#: includes/extend/buddypress/members.php:375
+#: includes/extend/buddypress/members.php:377
 #, php-format
 msgid "Viewing %1$s - %2$s of %3$s online participant"
 msgid_plural "Viewing %1$s - %2$s of %3$s online participants"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/extend/buddypress/members.php:379
+#: includes/extend/buddypress/members.php:381
 msgid "Viewing 1 participant"
 msgstr ""
 
-#: includes/extend/buddypress/members.php:381
+#: includes/extend/buddypress/members.php:383
 #, php-format
 msgid "Viewing %1$s - %2$s of %3$s participant"
 msgid_plural "Viewing %1$s - %2$s of %3$s participants"
@@ -1303,118 +1392,136 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: includes/extend/buddypress/settings.php:27
+msgid "General"
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:34
 msgid "Profile Fields"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:50
+#: includes/extend/buddypress/settings.php:57
+msgid "Account Management"
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:69
 msgid "Enrollment Field"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:55
+#: includes/extend/buddypress/settings.php:74
 msgid "Select the field that holds the member's enrollment status."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:67
+#: includes/extend/buddypress/settings.php:86
 msgid "Required Fields"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:75
+#: includes/extend/buddypress/settings.php:94
 msgid "Association Field"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:80
+#: includes/extend/buddypress/settings.php:99
 msgid "Select the field that holds the member's association value."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:86
+#: includes/extend/buddypress/settings.php:105
 msgid "Presence Field"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:91
+#: includes/extend/buddypress/settings.php:110
 msgid "Select the field that holds the member's presence value."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:97
+#: includes/extend/buddypress/settings.php:116
 msgid "Workshop 1 Field"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:102
+#: includes/extend/buddypress/settings.php:121
 msgid "Select the field that holds the member's first workshop selection."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:108
+#: includes/extend/buddypress/settings.php:127
 msgid "Workshop 2 Field"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:113
+#: includes/extend/buddypress/settings.php:132
 msgid "Select the field that holds the member's second workshop selection."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:135
+#: includes/extend/buddypress/settings.php:154
 msgid "Before Profile Content"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:140
+#: includes/extend/buddypress/settings.php:159
 msgid "This content will be displayed before the member's profile content"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:188
+#: includes/extend/buddypress/settings.php:194
+#, php-format
+msgid ""
+"To manage user accounts, navigate to the <a href=\"%s\">Accounts page</a>."
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:196
+msgid "You do not have sufficient capabilities to manage user accounts."
+msgstr ""
+
+#: includes/extend/buddypress/settings.php:224
 msgid "Activate the Extended Profiles component to use this setting."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:253
+#: includes/extend/buddypress/settings.php:289
 msgid "&mdash; No Field &mdash;"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:294
+#: includes/extend/buddypress/settings.php:330
 msgid ""
 "These are the required profile fields for this site. You can mark fields as "
 "required when editing the field."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:307
+#: includes/extend/buddypress/settings.php:343
 msgid "There are no fields selected yet."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:329
+#: includes/extend/buddypress/settings.php:365
 msgid ""
 "NOTE: please return here after saving to define what value counts as "
 "enrolled!"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:356
+#: includes/extend/buddypress/settings.php:392
 msgid "Define what value the field should have for the user to be enrolled."
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:428
+#: includes/extend/buddypress/settings.php:464
 msgid "Optionally select the workshop round to filter the field's options by"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:460
+#: includes/extend/buddypress/settings.php:496
 msgid "&mdash; All Pages &mdash;"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:461
+#: includes/extend/buddypress/settings.php:497
 msgid "View Profile"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:462
+#: includes/extend/buddypress/settings.php:498
 msgid "Edit Profile"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:463
+#: includes/extend/buddypress/settings.php:499
 msgid "Change Avatar"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:464
+#: includes/extend/buddypress/settings.php:500
 msgid "Change Cover Image"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:471
+#: includes/extend/buddypress/settings.php:507
 msgid "Select which profile page(s) to display the advertorial on"
 msgstr ""
 
-#: includes/extend/buddypress/settings.php:490
+#: includes/extend/buddypress/settings.php:526
 msgid "Profiles"
 msgstr ""
 
