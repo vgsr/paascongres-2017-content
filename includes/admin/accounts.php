@@ -61,7 +61,7 @@ function paco2017_admin_accounts_page() {
 
 		<p><?php esc_html_e( 'You are about to delete all member accounts related to the following associations. Please confirm your actions.', 'paco2017-content' ); ?></p>
 
-		<ul id="delete-association-members">
+		<ul id="delete-association-users">
 			<?php foreach ( $terms as $term ) :
 
 				// Use raw count

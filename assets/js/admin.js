@@ -9,7 +9,7 @@
 jQuery(document).ready( function($) {
 
 	var l10n = paco2017Admin.l10n || {},
-	    $accountsDeleteMembers = $('#delete-association-members');
+	    $accountsDeleteMembers = $('#delete-association-users');
 
 	// Bail when this is not the right page
 	if ( ! $accountsDeleteMembers.length ) {
@@ -18,14 +18,14 @@ jQuery(document).ready( function($) {
 
 	// Handle button click
 	$accountsDeleteMembers.on( 'click', '.delete-me:not(.is-active)', function() {
-		var $this = $(this), options = {
+		var $this = $(this), termId = $this.data('term_id'), options = {
 			$el: $this,
-			termId: $this.data('term_id'),
-			nonce: $this.next('#_ajax_nonce-' + $this.data('term_id')).val()
+			termId: termId,
+			nonce: $this.next('#_ajax_nonce-' + termId).val()
 		};
 
 		// Bail when not confirmed
-		if ( ! window.confirm( l10n.aysDeleteAssociationUsers ) ) {
+		if ( ! termId || ! window.confirm( l10n.aysDeleteAssociationUsers ) ) {
 			return;
 		}
 
@@ -94,5 +94,4 @@ jQuery(document).ready( function($) {
 			$accountsDeleteMembers.find('.delete-me').attr('disabled', false);
 		}
 	}
-
 });
