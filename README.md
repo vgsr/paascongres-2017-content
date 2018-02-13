@@ -16,7 +16,14 @@ This plugin contains the following object structures and features:
 * Associations (taxonomy)
 * Settings for permalink structures and enrollment logic
 
-The plugin supports BuddyPress for attendee profiles and enrollment.
+The plugin is built with the following (unforced) plugin requirements in mind:
+* [BuddyPress](https://wordpress.org/plugins/buddypress/) for attendee profiles and enrollment
+* [BP XProfile Relationship Field](https://github.com/lmoffereins/bp-xprofile-relationship-field/) for workshop selection in a profile field
+
+The following plugins are suggested for use, depending on your configuration:
+* [BP Multiblog Mode](https://github.com/lmoffereins/bp-multiblog-mode/) for using a dedicated BuddyPress configuration in your Multisite subsite
+* [BP XProfile Field Read Only](https://github.com/lmoffereins/bp-xprofile-field-read-only/) for marking profile fields uneditable
+* [WP Term Order](https://wordpress.org/plugins/wp-term-order/) to order taxonomy terms (associations, speakers, workshop rounds, etc.)
 
 ## Installation ##
 
