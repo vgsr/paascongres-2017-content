@@ -239,7 +239,7 @@ class Paco2017_Admin {
 		if ( $this->bail() )
 			return;
 
-		wp_enqueue_script( 'paco2017-admin', paco2017_content()->assets_url . 'js/admin.js', array( 'common' ) );
+		wp_enqueue_script( 'paco2017-admin', paco2017_content()->assets_url . 'js/admin.js', array( 'jquery' ), paco2017_get_version(), true );
 		wp_enqueue_style( 'paco2017-admin', paco2017_content()->assets_url . 'css/admin.css', array( 'common' ) );
 
 		/** Custom scripts ********************************************************/
