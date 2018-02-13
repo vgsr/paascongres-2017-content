@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Paascongres 2017 Content\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-13 20:23+0000\n"
-"PO-Revision-Date: 2018-02-13 20:28+0000\n"
+"PO-Revision-Date: 2018-02-13 21:09+0000\n"
 "Last-Translator: Laurens Offereins <lmoffereins@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl-NL\n"
@@ -933,7 +933,7 @@ msgstr "Verwijder magazine downloadbestand"
 
 #: includes/admin/admin.php:411
 msgid "General Notices"
-msgstr "Huishoudelijk"
+msgstr "Huishoudelijke Opmerkingen"
 
 #: includes/admin/admin.php:436
 msgid "Manage Workshop Categories"
@@ -1190,7 +1190,7 @@ msgstr "Contact E-mail"
 
 #: includes/admin/settings.php:92
 msgid "General Notices Page"
-msgstr "Huishoudelijke pagina"
+msgstr "Huishoudelijke Opmerkingen pagina"
 
 #: includes/admin/settings.php:97
 msgid "Select the page that contains the housekeeping information"
