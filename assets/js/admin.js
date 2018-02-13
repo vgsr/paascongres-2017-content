@@ -12,7 +12,7 @@ jQuery(document).ready( function($) {
 	    $accountsDeleteMembers = $('#delete-association-members');
 
 	// Bail when this is not the right page
-	if ( ! $accountsDeleteMembers ) {
+	if ( ! $accountsDeleteMembers.length ) {
 		return;
 	}
 
